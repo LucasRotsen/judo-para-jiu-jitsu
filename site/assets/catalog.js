@@ -13,5 +13,6 @@ window.JUDO_CATALOG = [
  {"id": "sankaku-jime", "name": "Sankaku Jime", "group": "ne"},
  {"id": "hadaka-jime", "name": "Hadaka Jime", "group": "ne"},
  {"id": "juji-gatame", "name": "Juji Gatame", "group": "ne"},
- {"id": "ude-garami", "name": "Ude Garami", "group": "ne"}
+ {"id": "ude-garami", "name": "Ude Garami", "group": "ne"},
+ {"id": "passagem-toreando", "name": "Passagem toreando", "group": "ne", "origin": "bjj"}
 ];
