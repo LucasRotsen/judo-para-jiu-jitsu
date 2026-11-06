@@ -30,6 +30,17 @@ tools/sheet.sh sankaku-jime 1,4,6.5 out/sk.png "views=1"   # folha de quadros p/
 npm test                              # smoke test: todas as páginas carregam sem erro de JS
 ```
 
+## Adicionando uma técnica
+
+1. Acrescente `{id, name, group}` em `site/assets/catalog.js` (`group`: `nage` ou `ne`).
+2. Crie `site/assets/tecnicas/<id>.js`. Use `Judo.register3d` quando a ação acontece em
+   profundidade (veja `sankaku-jime.js`) e `Judo.register` para quedas de perfil
+   (veja `ippon-seoi-nage.js`).
+3. Inclua o script no índice: `tools/templates/index.body.html` não precisa mudar; rode
+   `python3 tools/build.py` para gerar a página e atualizar o índice.
+4. Revise quadro a quadro: `tools/sheet.sh <id> 1,3,5 out/x.png "views=1"`.
+5. `npm test`.
+
 ## Arquitetura e decisões
 
 Ver [`docs/adr`](docs/adr).

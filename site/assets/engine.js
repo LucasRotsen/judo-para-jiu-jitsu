@@ -4,18 +4,7 @@
 'use strict';
 const D=Math.PI/180, LEN={th:.44,sh:.44,ua:.29,fa:.27};
 
-const CATALOG=[
- {id:'ippon-seoi-nage',name:'Ippon Seoi Nage',group:'nage'},
- {id:'o-soto-gari',name:'O Soto Gari',group:'nage'},
- {id:'o-goshi',name:'O Goshi',group:'nage'},
- {id:'de-ashi-barai',name:'De Ashi Barai',group:'nage'},
- {id:'tomoe-nage',name:'Tomoe Nage',group:'nage'},
- {id:'morote-gari',name:'Morote Gari',group:'nage'},
- {id:'tate-shiho-gatame',name:'Tate Shiho Gatame',group:'ne'},
- {id:'kami-shiho-gatame',name:'Kami Shiho Gatame',group:'ne'},
- {id:'sankaku-jime',name:'Sankaku Jime',group:'ne'},
- {id:'hadaka-jime',name:'Hadaka Jime',group:'ne'},
-];
+const CATALOG=window.JUDO_CATALOG||[];
 const techs={};
 
 /* ---------- specs ---------- */

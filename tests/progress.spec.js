@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const CATALOG = require('./catalog');
 
 test('marcar estudada e favorita aparece no índice e persiste', async ({ page }) => {
   await page.goto('/o-goshi.html');
@@ -10,7 +11,7 @@ test('marcar estudada e favorita aparece no índice e persiste', async ({ page }
   await page.goto('/');
   const card = page.locator('a.tcard[href="o-goshi.html"]');
   await expect(card.locator('.badge.done')).toBeVisible();
-  await expect(page.locator('#progress')).toContainText('1 de 10');
+  await expect(page.locator('#progress')).toContainText(`1 de ${CATALOG.length}`);
   await page.locator('.chip[data-g="fav"]').click();
   await expect(page.locator('a.tcard:visible')).toHaveCount(1);
 
@@ -30,6 +31,6 @@ test('sem localStorage a página continua funcionando', async ({ page }) => {
   await page.goto('/sankaku-jime.html');
   await page.locator('#fav').click();
   await page.goto('/');
-  await expect(page.locator('#grid a')).toHaveCount(10);
+  await expect(page.locator('#grid a')).toHaveCount(CATALOG.length);
   expect(errors).toEqual([]);
 });
