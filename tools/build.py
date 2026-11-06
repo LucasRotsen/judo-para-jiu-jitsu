@@ -119,12 +119,27 @@ def service_worker() -> str:
             .replace("__FILES__", json.dumps(files, indent=1)))
 
 
+SIM_DESC = (
+    "Simulador: monte a situação (posição, pegadas e o que o oponente está fazendo) "
+    "e veja as suas opções de judô e jiu-jitsu, com o porquê de cada uma."
+)
+
+
+def simulator_page() -> str:
+    return (head(f"Simulador · {SITE_NAME}", SIM_DESC, "simulador.html", "og/index.png")
+            + '<main class="page" id="app"></main>\n' + SCRIPTS
+            + '<script src="assets/simulador/situacoes.js"></script>\n'
+            + '<script src="assets/simulador/simulador.js"></script>\n'
+            + "<script>JudoSim.mount();</script>\n</body>\n</html>\n")
+
+
 def main() -> None:
     (SITE / "index.html").write_text(index_page(), encoding="utf-8")
+    (SITE / "simulador.html").write_text(simulator_page(), encoding="utf-8")
     for tid, name in CATALOG:
         (SITE / f"{tid}.html").write_text(technique_page(tid, name), encoding="utf-8")
     (SITE / "sw.js").write_text(service_worker(), encoding="utf-8")
-    print("ok", len(CATALOG) + 1, "páginas + sw.js")
+    print("ok", len(CATALOG) + 2, "páginas + sw.js")
 
 
 if __name__ == "__main__":
