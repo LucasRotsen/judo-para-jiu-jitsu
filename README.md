@@ -48,8 +48,10 @@ gi e diz o que ele está fazendo; a página lista as opções com o porquê de c
    (veja `ippon-seoi-nage.js`).
 3. Inclua o script no índice: `tools/templates/index.body.html` não precisa mudar; rode
    `python3 tools/build.py` para gerar a página e atualizar o índice.
-4. Revise quadro a quadro: `tools/sheet.sh <id> 1,3,5 out/x.png "views=1"`.
-5. `npm test`.
+4. Confira que nenhum membro atravessa o outro corpo: `node tools/interpenetracao.js <id>`
+   (lista cada instante em que um membro entra mais de 6 cm no tronco ou na cabeça do outro).
+5. Revise quadro a quadro: `tools/sheet.sh <id> 1,3,5 out/x.png "views=1"`.
+6. `npm test`.
 
 ## Arquitetura e decisões
 
