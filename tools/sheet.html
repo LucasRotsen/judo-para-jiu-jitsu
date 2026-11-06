@@ -1,0 +1,16 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../site/assets/site.css"></head>
+<body style="margin:0">
+<script>window.onerror=(m,s,l)=>{document.body.insertAdjacentHTML('afterbegin','<pre style="color:red;font-size:20px">'+m+' @'+s+':'+l+'</pre>');};</script>
+<script src="../site/assets/engine.js"></script><script src="../site/assets/engine3d.js"></script>
+<script>const Q=new URLSearchParams(location.hash.slice(1));document.write('<script src="../site/assets/tecnicas/'+Q.get('id')+'.js"><\/script>');</script>
+<script>
+addEventListener('load',()=>{const def=Judo.techs[Q.get('id')];if(!def)throw new Error('técnica não registrada');
+ const ts=(Q.get('t')||'0').split(',').map(Number),W=+(Q.get('w')||600),H=W/1.5,cols=+(Q.get('cols')||3),annot=Q.get('annot')!=='0';
+ const view=Q.get('view')?Object.fromEntries(['x0','y0','w','h'].map((k,i)=>[k,+Q.get('view').split(',')[i]])):def.view;
+ const cv=document.createElement('canvas');cv.width=W*cols;cv.height=H*Math.ceil(ts.length/cols);document.body.appendChild(cv);
+ const ctx=cv.getContext('2d');Judo.readTheme();
+ const jobs=Q.get('views')?ts.flatMap(t=>[0,1,2].map(v=>[t,v])):ts.map(t=>[t,+(Q.get('vi')||0)]);
+ cv.height=H*Math.ceil(jobs.length/cols);
+ jobs.forEach(([t,vi],i)=>{ctx.save();ctx.translate((i%cols)*W,Math.floor(i/cols)*H);ctx.beginPath();ctx.rect(0,0,W,H);ctx.clip();Judo.renderDef(ctx,W,H,def.is3d?def:Object.assign({},def,{view}),t,{annot},vi);
+  ctx.fillStyle='red';ctx.font='bold 16px sans-serif';ctx.fillText('t='+t+' v'+vi,6,18);ctx.restore();});});
+</script></body></html>

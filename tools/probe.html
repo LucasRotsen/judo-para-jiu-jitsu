@@ -1,0 +1,6 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../site/assets/site.css"></head><body><pre id="o"></pre>
+<script src="../site/assets/engine.js"></script><script src="../site/assets/engine3d.js"></script><script src="../site/assets/tecnicas/sankaku-jime.js"></script>
+<script>const F=Judo.pose3(Judo.techs['sankaku-jime'],6.6),r=v=>v.map(x=>x.toFixed(2)).join(',');
+let s='';for(const w of ['tori','uke']){const o=F[w];s+=w+' hip '+r(o.hip)+' neck '+r(o.neck)+' head '+r(o.head)+'\n';
+for(const k of ['legR','legL','armR','armL'])s+='  '+k+' root '+r(o[k].root)+' E '+r(o[k].E)+' H '+r(o[k].H)+'\n';}
+document.getElementById('o').textContent=s;</script></body></html>

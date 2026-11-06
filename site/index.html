@@ -1,0 +1,69 @@
+<title>Judô para Jiu-Jitsu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+
+<div class="page">
+  <header class="ihero">
+    <div>
+      <div class="eyebrow">Catálogo animado · 10 técnicas</div>
+      <h1>Judô para <em>Jiu-Jitsu</em></h1>
+      <p class="lede">Quedas e controles do judô explicados quadro a quadro, para quem treina jiu-jitsu. Cada técnica tem uma animação com as fases do golpe, os pontos de atenção, os erros comuns e o nome que ela recebe no jiu-jitsu.</p>
+    </div>
+    <div class="legend" aria-label="Legenda">
+      <div><span class="sw"></span><span><b>Tori</b>, de gi branco, aplica a técnica</span></div>
+      <div><span class="sw u"></span><span><b>Uke</b>, de gi azul, recebe a técnica</span></div>
+      <div><span>Passe o mouse num card para ver a animação</span></div>
+    </div>
+  </header>
+
+  <div class="filters" role="group" aria-label="Filtrar técnicas">
+    <button class="chip" data-g="all" aria-pressed="true">Todas</button>
+    <button class="chip" data-g="nage" aria-pressed="false">Nage-waza · em pé</button>
+    <button class="chip" data-g="ne" aria-pressed="false">Ne-waza · no chão</button>
+  </div>
+
+  <section class="grid" id="grid" aria-label="Técnicas"></section>
+
+  <section class="guide">
+    <div>
+      <h2>Como ler as animações</h2>
+      <p>Toda projeção do judô tem três tempos: <b>kuzushi</b> (tirar o equilíbrio), <b>tsukuri</b> (entrar e encaixar) e <b>kake</b> (executar). A linha do tempo de cada técnica segue essa ordem.</p>
+      <p>Setas vermelhas mostram força e direção. Linhas pontilhadas azuis mostram o caminho do corpo de Uke. Use 0,25× para estudar os detalhes.</p>
+    </div>
+    <div>
+      <h2>Judô e jiu-jitsu</h2>
+      <dl>
+        <dt>Nage-waza</dt><dd>Quedas, o “jogo em pé”</dd>
+        <dt>Ne-waza</dt><dd>Luta de solo</dd>
+        <dt>Osaekomi</dt><dd>Imobilização: estabilizar a posição por cima</dd>
+        <dt>Shime-waza</dt><dd>Estrangulamentos</dd>
+        <dt>Ukemi</dt><dd>Técnicas de queda</dd>
+        <dt>Maitta</dt><dd>“Desisto”: o equivalente a bater</dd>
+      </dl>
+    </div>
+    <div>
+      <h2>Antes de treinar</h2>
+      <p>As animações servem para estudo. Aprenda as quedas com um professor qualificado, em tatame, e só projete um parceiro que já domina o ukemi.</p>
+      <p>Nos estrangulamentos, solte assim que o parceiro bater, e nunca force a posição para ganhar a finalização.</p>
+    </div>
+  </section>
+
+  <p class="foot">Nomes e classificações seguem o Kodokan. Os nomes no jiu-jitsu são os mais usados nas academias brasileiras.</p>
+</div>
+
+<script src="assets/engine.js"></script>
+<script src="assets/engine3d.js"></script>
+<script src="assets/tecnicas/ippon-seoi-nage.js"></script>
+<script src="assets/tecnicas/o-soto-gari.js"></script>
+<script src="assets/tecnicas/o-goshi.js"></script>
+<script src="assets/tecnicas/de-ashi-barai.js"></script>
+<script src="assets/tecnicas/tomoe-nage.js"></script>
+<script src="assets/tecnicas/morote-gari.js"></script>
+<script src="assets/tecnicas/tate-shiho-gatame.js"></script>
+<script src="assets/tecnicas/kami-shiho-gatame.js"></script>
+<script src="assets/tecnicas/sankaku-jime.js"></script>
+<script src="assets/tecnicas/hadaka-jime.js"></script>
+<script>Judo.mountIndex();</script>
