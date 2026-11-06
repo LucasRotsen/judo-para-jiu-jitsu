@@ -65,7 +65,7 @@ Judo.register3d({
  [10.5,{}]],
  names:F=>({tori:[F.tori.head[0]-.05,F.tori.head[1]+.2,F.tori.head[2]+.05],uke:[F.uke.legL.E[0],F.uke.legL.E[1]+.14,F.uke.legL.E[2]]}),
  glow:{s:2.2,e:6.2,limbs:{'T.R.arm':'force','T.L.arm':'gold'}},
- stamp:{s:8.0,e:10.5,big:'一本',small:'MAITTA'},
+ stamp:{s:8.0,e:10.5,big:'参った',small:'MAITTA'},
  annotate:(api,F,vi)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
   a=win(t,0,2.4);
   api.tag('ganchos por dentro das coxas',T.legR.H,6,3,C.force,a);
