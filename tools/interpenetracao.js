@@ -1,6 +1,6 @@
 /* Mede quanto um membro de um boneco entra no tronco/cabeça do outro, em todas as técnicas 3D.
    Uso: node tools/interpenetracao.js [id ...]  (com ids, lista cada instante acima do limite)   (precisa de `npm run serve` ou usa servidor próprio)
-   Saída: pior penetração por técnica, com tempo e membro. Contato (até LIMITE) é permitido. */
+   Também mede tronco contra tronco/cabeça. Saída: pior penetração por técnica, com tempo e membro. Contato (até LIMITE) é permitido. */
 const { chromium } = require('@playwright/test');
 const http = require('http');
 const path = require('path');
@@ -53,7 +53,8 @@ function serve() {
       for (let t = 0; t <= def.end; t += 0.05) {
         const F = J.pose3(def, t);
         for (const [a, b, an, bn] of [[F.tori, F.uke, 'Tori', 'Uke'], [F.uke, F.tori, 'Uke', 'Tori']])
-          for (const [ln, p1, q1, r1] of limbs(a)) for (const [bnm, p2, q2, r2] of body(b)) {
+          for (const [ln, p1, q1, r1] of [...limbs(a), ...(an === 'Tori' ? body(a).slice(0, 2).map(([, p, q, r]) => ['tronco', p, q, r]) : [])])
+            for (const [bnm, p2, q2, r2] of body(b)) {
             const pen = r1 + r2 - segDist(p1, q1, p2, q2);
             if (pen > worst.pen) worst = { pen, t: +t.toFixed(2), what: `${ln} de ${an} dentro do ${bnm} de ${bn}` };
             if (pen > LIMITE && only.length) linha.push(`${t.toFixed(2)}s ${pen.toFixed(3)} ${ln} de ${an} → ${bnm} de ${bn}`);
