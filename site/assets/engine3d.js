@@ -79,7 +79,7 @@ function camera(v){const a=v.a*D,e=v.e*D;const c=[Math.sin(a)*Math.cos(e),Math.s
 function makeView(w,h,view){const cam=camera(view),sc=Math.min(w,h*1.5)/view.span;
  const cx=dot(view.center,cam.R),cy=dot(view.center,cam.U);
  const S=p=>[w/2+(dot(p,cam.R)-cx)*sc,h/2-(dot(p,cam.U)-cy)*sc];
- return {w,h,sc,S,cam,depth:p=>dot(p,cam.c),lw:Math.max(1,sc*.011),fs:clamp(w/60,10.5,13.5)};}
+ return {w,h,sc,S,cam,bias:view.bias,depth:p=>dot(p,cam.c),lw:Math.max(1,sc*.011),fs:clamp(w/60,10.5,13.5)};}
 
 /* ---------- primitives ---------- */
 function pal(who,C){return who==='U'?{gi:C.uke,gi2:C['uke-2'],line:C['uke-line'],lapel:C['uke-2']}:{gi:C.tori,gi2:C['tori-2'],line:C['tori-line'],lapel:C['tori-2']};}
@@ -105,7 +105,9 @@ function buildPrims(F,def,ga){const P=[],g=def.glow;
    cap(A.root,A.E,.06,'gi',side,{key:ak});cap(A.E,cuff,.055,'gi',side,{key:ak});cap(cuff,A.H,.03,'skin',null,{key:ak});
    P.push({k:'sph',c:A.H,r:.047,kind:'skin',who,key:ak});}}
  return P;}
-function primDepth(p,V){return (p.k==='cap'?V.depth(lerp3(p.a,p.b,.5)):V.depth(p.c))+(p.bias||0);}
+/* view.bias {'T.R.arm':.15}: empurra um membro para frente na ordenação desta vista (cápsulas longas sobrepostas) */
+function primDepth(p,V){const vb=V.bias&&p.key?V.bias[p.key]||0:0;
+ return (p.k==='cap'?V.depth(lerp3(p.a,p.b,.5)):V.depth(p.c))+(p.bias||0)+vb;}
 function drawPrim(ctx,V,p,F,C){
  const P=pal(p.who,C),o=p.who==='T'?F.tori:F.uke;
  const far=p.side?dot(o.r,V.cam.c)*(p.side==='R'?1:-1)<-.05:false;
