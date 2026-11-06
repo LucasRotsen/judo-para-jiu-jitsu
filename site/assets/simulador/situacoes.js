@@ -19,6 +19,18 @@ const GRIPS_GROUND={
  'faixa':{name:'Sua faixa / quadril',spec:h=>B('o',.13,.04,h==='R'?-.12:.12)},
  'livre':GRIPS_STANDING.livre};
 
+const GRIPS_BACK={
+ 'pescoco':{name:'Seu pescoço (braço em volta)',spec:h=>B('o',.17,.36,h==='R'?-.08:.08)},
+ 'peito':{name:'Seu peito, por baixo do braço',spec:h=>B('o',.12,.24,h==='R'?-.06:.06)},
+ 'gola-esq':GRIPS_STANDING['gola-esq'],'gola-dir':GRIPS_STANDING['gola-dir'],
+ 'livre':GRIPS_STANDING.livre};
+const GRIPS_SIDE={
+ 'nuca':{name:'Sua nuca (por baixo da cabeça)',spec:()=>B('o',-.02,.68,-.1)},
+ 'faixa':{name:'Seu quadril do lado de lá',spec:()=>B('o',.1,.05,.24)},
+ 'gola-esq':GRIPS_STANDING['gola-esq'],'gola-dir':GRIPS_STANDING['gola-dir'],
+ 'manga-dir':GRIPS_STANDING['manga-dir'],'manga-esq':GRIPS_STANDING['manga-esq'],
+ 'livre':GRIPS_STANDING.livre};
+
 const POSICOES={
  'em-pe':{name:'Em pé',lede:'Os dois em pé, na pegada.',
   grips:GRIPS_STANDING,defaults:{R:'gola-esq',L:'manga-dir',f:'parado'},
@@ -80,6 +92,36 @@ const POSICOES={
    const op={x:baixo?-.05:.05,y:baixo?.36:.40,z:0,yaw:180,pitch:baixo?62:8,h:baixo?-25:0,gf:1,
     leg:{R:W3(.27,.05,-.33),L:W3(.27,.05,.33)},
     pole:{legR:[1,-.5,.5],legL:[1,-.5,-.5],armR:[-.6,-.7,.4],armL:[-.6,-.7,-.4]}};
+   return {op,me};},
+  force(s){return null;}},
+
+ '100kg-baixo':{name:'100 quilos (você por baixo)',lede:'Ele atravessado no seu peito, você de costas.',
+  grips:GRIPS_SIDE,defaults:{R:'faixa',L:'nuca',f:'pesado'},
+  acoes:{pesado:'Peito no peito, pesado',subindo:'Subindo para montar'},
+  views:[{name:'Diagonal',a:-150,e:36,center:[.05,.3,.25],span:2.7},{name:'Pela cabeça',a:-90,e:24,center:[.05,.3,.25],span:2.5},
+   {name:'De cima',a:-90,e:90,center:[.3,0,.25],span:2.9}],
+  pose(s){const sub=s.f==='subindo';
+   const me={x:.15,y:.13,z:0,yaw:0,pitch:-90,h:8,gf:0,
+    leg:{R:W3(1.0,.06,.16),L:W3(1.0,.06,-.16)},arm:{R:B('o',.05,.45,0),L:B('o',.0,.02,.05)},
+    pole:{armR:[.6,-.3,.6],armL:[-.3,-.6,-1],legR:[1,-.2,.15],legL:[1,-.2,-.15]}};
+   const op={x:-.15,y:sub?.50:.42,z:.57,yaw:90,pitch:sub?50:84,h:-25,gf:0,
+    leg:{R:W3(sub?.35:.15,sub?.30:.05,sub?.35:.75),L:W3(-.45,.05,.75)},
+    pole:{legR:[.3,1,.15],legL:[.3,1,-.15],armR:[-.6,-.7,.4],armL:[-.6,-.7,-.4]}};
+   return {op,me};},
+  force(s){return null;}},
+
+ 'costas':{name:'Ele nas suas costas',lede:'Você sentado, ele atrás com os ganchos.',
+  grips:GRIPS_BACK,defaults:{R:'pescoco',L:'peito',f:'ganchos'},
+  acoes:{ganchos:'Ganchos colocados, ajustando',estrangulando:'Apertando o pescoço'},
+  views:[{name:'Frente',a:80,e:14,center:[.42,.58,.24],span:2.2},{name:'Lado esquerdo',a:150,e:28,center:[.42,.62,-.05],span:2.2},
+   {name:'Por trás',a:-120,e:45,center:[.38,.45,0],span:2.2}],
+  pose(s){const ap=s.f==='estrangulando';
+   const me={x:.45,y:.13,z:0,yaw:0,pitch:ap?-28:-20,h:ap?18:10,gf:1,
+    leg:{R:W3(1.08,.05,.26),L:W3(1.08,.05,-.26)},arm:{R:{sleeveOf:'R'},L:{sleeveOf:'R'}},
+    pole:{legR:[.3,1,.25],legL:[.3,1,-.25],armR:[.3,-.8,.6],armL:[.3,-.8,-.6]}};
+   const op={x:.15,y:.13,z:.06,yaw:0,pitch:ap?-10:-6,roll:0,h:5,gf:1,
+    leg:{R:W3(.74,.17,.06),L:W3(.74,.17,-.06)},
+    pole:{legR:[0,1,1.3],legL:[0,1,-1.3],armR:[.1,.6,.8],armL:[.2,-.8,-.5]}};
    return {op,me};},
   force(s){return null;}}};
 
@@ -194,7 +236,39 @@ const OPCOES=[
  {id:'braco-esticado',pos:'montada-baixo',tipo:'Cuidado',nome:'Não empurre com os braços esticados',tech:'juji-gatame',
   score:s=>s.f==='alto'?3:1,
   porque:()=>'Empurrar o peito dele com os braços retos é a porta da chave de braço. Mantenha os cotovelos dobrados e colados.',
-  passos:['Cotovelos dentro, perto das costelas','Empurre o quadril, não o peito','Se ele subir a montada, proteja os braços primeiro']}];
+  passos:['Cotovelos dentro, perto das costelas','Empurre o quadril, não o peito','Se ele subir a montada, proteja os braços primeiro']},
+ /* 100 quilos, você por baixo */
+ {id:'enquadrar',pos:'100kg-baixo',tipo:'Fuga',nome:'Enquadrar e repor a guarda',
+  score:s=>s.f==='pesado'?5:3,
+  porque:()=>'Ele está pesado no seu peito. Os antebraços fazem uma moldura (pescoço e quadril dele) e o espaço vem do seu quadril, não dos braços.',
+  passos:['Antebraço no pescoço dele, outro no quadril','Ponte curta e fuga de quadril para longe dele','Joelho entra no espaço e você repõe a guarda']},
+ {id:'cross-face',pos:'100kg-baixo',tipo:'Defesa',nome:'Tirar a cabeça do controle',
+  score:s=>holds(s,'nuca')?4:0,
+  porque:()=>'Com o braço por baixo da sua cabeça ele controla para onde você olha e para onde você vira. Recupere a cabeça antes de fugir.',
+  passos:['Vire o rosto para ele','Empurre o cotovelo dele para cima da sua cabeça','Encaixe a moldura no pescoço dele']},
+ {id:'upa-ao-montar',pos:'100kg-baixo',tipo:'Fuga',nome:'Ponte quando ele passar para a montada',tech:'tate-shiho-gatame',fase:'Passagem',
+  score:s=>s.f==='subindo'?5:0,
+  porque:()=>'Para montar ele tira o peso do seu peito e passa o joelho pela sua barriga. É o momento de ponte e de colocar o joelho na frente.',
+  passos:['Joelho de cima bloqueia a passagem','Ponte forte quando o joelho dele cruzar','Role para o lado ou recoloque a guarda'],
+  nota:'A animação abre na fase Passagem, do lado de quem passa.'},
+ {id:'cuidado-kimura',pos:'100kg-baixo',tipo:'Cuidado',nome:'Braço longe do corpo é kimura',tech:'ude-garami',
+  score:()=>3,
+  porque:()=>'No 100 quilos, o braço esticado empurrando o pescoço dele é a porta da kimura. Mantenha os cotovelos colados.',
+  passos:['Cotovelos perto das costelas','Empurre com o antebraço, não com a mão','Se ele pegar o punho, junte as mãos e não estique']},
+ /* costas */
+ {id:'defesa-mata-leao',pos:'costas',tipo:'Defesa',nome:'Defender o mata-leão',tech:'hadaka-jime',
+  score:s=>holds(s,'pescoco')?6+(s.f==='estrangulando'?1:0):0,
+  porque:()=>'O braço dele está no seu pescoço. Antes de qualquer fuga, as duas mãos vão no punho desse braço e o queixo desce.',
+  passos:['Duas mãos no punho do braço do pescoço','Queixo para baixo, ombros para cima','Puxe o braço para baixo e só então comece a fugir'],
+  nota:'A animação mostra o ataque, do lado de quem estrangula.'},
+ {id:'fuga-costas',pos:'costas',tipo:'Fuga',nome:'Fugir das costas',
+  score:s=>s.f==='ganchos'?5:3,
+  porque:()=>'A fuga leva as suas costas ao chão do lado do braço que passa por cima do seu ombro. Com as costas no tatame ele perde o controle das costas.',
+  passos:['Escorregue as costas para o lado do braço de cima','Tire o gancho desse lado com a mão','Vire para dentro, de frente para ele']},
+ {id:'defesa-gola-costas',pos:'costas',tipo:'Defesa',nome:'Defender o estrangulamento na gola',
+  score:s=>anyCollar(s)?6+(s.f==='estrangulando'?1:0):0,
+  porque:()=>'Pela gola ele estrangula mesmo sem passar o braço inteiro. A mão que segura a gola é o alvo.',
+  passos:['Mão do mesmo lado puxa a pegada da gola para baixo','Queixo protege o pescoço','Fuja para o lado oposto à pegada']}];
 
 function avaliar(s){
  return OPCOES.filter(o=>o.pos===s.pos).map(o=>({o,score:o.score(s)}))
