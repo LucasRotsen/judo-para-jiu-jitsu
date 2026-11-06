@@ -90,7 +90,7 @@ function mount(){
    api.arrow(dir[0],dir[1],C.force,.95);api.tag(force==='pull'?'ele puxa você':'ele empurra você',lerp3(dir[0],dir[1],.5),0,2.2,C.force,.95,false);}
   for(const h of ['R','L']){const H=F.uke['arm'+h].H;
    api.ring(H,.055,h===hoverHand||(drag&&drag.hand===h)?C.gold:C.info,.9);
-   if(s[h]!=='livre'&&!drag)api.tag(G[s[h]].name.replace('Sua ','sua '),H,h==='R'?-6:6,2.2,C.info,.95);}
+   if(s[h]!=='livre'&&!drag)api.tag(G[s[h]].name.replace(/^S/,'s'),H,h==='R'?-6:6,2.2,C.info,.95);}
   if(drag){for(const [id,g] of Object.entries(G)){if(id==='livre')continue;const p=gripPoint(F,g.spec(drag.hand),drag.hand);
     api.ring(p,id===drag.near?.07:.045,id===drag.near?C.gold:C.muted,id===drag.near?1:.7);
     if(id===drag.near)api.tag(g.name,p,4,-2.4,C.gold,1);}}}
