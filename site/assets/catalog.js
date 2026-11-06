@@ -15,5 +15,6 @@ window.JUDO_CATALOG = [
  {"id": "juji-gatame", "name": "Juji Gatame", "group": "ne"},
  {"id": "ude-garami", "name": "Ude Garami", "group": "ne"},
  {"id": "passagem-toreando", "name": "Passagem toreando", "group": "ne", "origin": "bjj"},
- {"id": "omoplata", "name": "Omoplata", "group": "ne", "origin": "bjj"}
+ {"id": "omoplata", "name": "Omoplata", "group": "ne", "origin": "bjj"},
+ {"id": "raspagem-de-tesoura", "name": "Raspagem de tesoura", "group": "ne", "origin": "bjj"}
 ];
