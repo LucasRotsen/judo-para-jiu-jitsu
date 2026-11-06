@@ -33,9 +33,9 @@ Judo.register3d({
  {s:4.2,e:6.0,kanji:'縦',ro:'Montada',pt:'Joelhos colados, quadril pesado',
   d:'Tori está sentado no quadril de Uke, virado para a cabeça dele. Os joelhos apertam as costelas dos dois lados e o peso cai sobre o quadril, tirando a mobilidade de Uke.',
   l:['Joelhos colados nas costelas, sem espaço para o cotovelo.','Quadril pesado e coluna ereta.','Mãos livres, longe do alcance para a chave.']},
- {s:6.0,e:8.0,kanji:'橋',ro:'Upa',pt:'Uke ergue o quadril; Tori abre a base',
-  d:'Uke traz os pés para perto do quadril e faz a ponte (upa) para tentar virar Tori. Tori inclina para frente e posta as mãos no tatame além da cabeça de Uke, abrindo a base. Quando o quadril de Uke cai, Tori volta a sentar.',
-  l:['As mãos vão para o tatame, abertas e longe da cabeça de Uke.','Inclinar para frente tira a força da ponte.','Tori sobe junto, sem resistir de frente.']},
+ {s:6.0,e:8.0,kanji:'橋',ro:'Upa',pt:'Uke prende um lado e faz a ponte',
+  d:'Uke traz os pés para perto do quadril, abraça o braço direito de Tori contra o peito e prende o pé direito dele por fora com o pé esquerdo. Com braço e pé do mesmo lado presos, Uke faz a ponte (upa) para virar Tori por cima do ombro esquerdo. Tori tira o braço, inclina para frente e posta as mãos longe, abrindo a base. Quando o quadril de Uke cai, Tori volta a sentar.',
+  l:['Uke prende braço e pé do MESMO lado: é para esse lado que ele vira.','Tori tira o braço preso e posta a mão longe, do lado da ponte.','Inclinar para frente tira a força da ponte.']},
  {s:8.0,e:10.5,kanji:'抑',ro:'Osaekomi',pt:'Montada alta e controle',
   d:'Tori sobe os joelhos até as axilas de Uke (montada alta) e controla a cabeça. Os cotovelos de Uke ficam presos para cima e a ponte perde a força. O árbitro anuncia osaekomi.',
   l:['Joelhos nas axilas: os cotovelos de Uke ficam presos para cima.','Um braço controla a cabeça e o outro faz base.','Daqui saem o armlock e os estrangulamentos.']}],
@@ -47,15 +47,22 @@ Judo.register3d({
  keys:[
  [0,{uke:ukeBase,tori:toriBase}],
  [2.2,{}],
- [3.0,{tori:{x:-.04,y:.52,z:.32,yaw:130,pitch:60,leg:{R:W3(.45,.30,.12),L:W3(-.30,.05,.80)},arm:{R:B('o',.1,.15,-.2)},pole:{legR:[.4,1,0]}}}],
- [3.6,{tori:{x:.03,y:.52,z:.10,yaw:165,pitch:35,leg:{R:W3(.44,.05,-.30),L:W3(.35,.05,.55)},pole:{legR:[1,-.2,.4]},arm:{R:B('o',.08,.45,-.2),L:B('o',.08,.45,.2)}}}],
+ [3.0,{tori:{x:-.04,y:.52,z:.32,yaw:130,pitch:60,leg:{R:W3(.32,.38,.14),L:W3(-.30,.05,.80)},arm:{R:B('o',.1,.15,-.2)},pole:{legR:[1,.15,.6]}}}],
+ [3.3,{tori:{x:0,y:.52,z:.21,yaw:148,pitch:48,leg:{R:W3(.30,.36,-.20)},pole:{legR:[1,.15,.6]}}}],
+ [3.6,{tori:{x:.03,y:.52,z:.10,yaw:165,pitch:35,leg:{R:W3(.42,.05,-.38),L:W3(.35,.05,.55)},pole:{legR:[1,-.2,.4]},arm:{R:B('o',.08,.45,-.2),L:B('o',.08,.45,.2)}}}],
  [4.2,{tori:{x:.05,y:.40,z:0,yaw:180,pitch:8,h:0,leg:{R:W3(.27,.05,-.33),L:W3(.27,.05,.33)},arm:{R:B('s',.22,.02,-.24),L:B('s',.22,.02,.24)},
    pole:{legR:[1,-.5,.5],legL:[1,-.5,-.5]}},uke:{arm:{R:B('o',.14,.12,.12),L:B('o',.14,.12,-.12)}}}],
  [5.4,{}],
  [6.0,{uke:{leg:{R:W3(.55,.06,.20),L:W3(.55,.06,-.20)}}}],
- [6.6,{uke:{y:.32,pitch:-108,arm:{R:B('o',.1,.3,.2),L:B('o',.1,.3,-.2)}},tori:{x:-.05,y:.55,pitch:85,h:-10,leg:{R:W3(.38,.10,-.30),L:W3(.38,.10,.30)},arm:{R:W3(-.78,.05,-.40),L:W3(-.78,.05,.40)}}}],
- [7.2,{}],
- [7.8,{uke:{y:.13,pitch:-90,arm:{R:B('o',.14,.12,.12),L:B('o',.14,.12,-.12)}},tori:{x:.05,y:.40,pitch:8,h:0,leg:{R:W3(.27,.05,-.33),L:W3(.27,.05,.33)},arm:{R:B('s',.22,.02,-.24),L:B('s',.22,.02,.24)}}}],
+ [6.4,{tori:{arm:{R:B('o',.17,.26,-.13)}},
+       uke:{leg:{L:W3(.33,.06,-.44)},arm:{L:B('o',.17,-.05,.15),R:B('o',.11,.17,.12)}}}],
+ [6.8,{}],
+ [7.2,{uke:{y:.30,pitch:-104,roll:-14,leg:{R:W3(.52,.06,.20)},
+       arm:{L:B('s',.2,.3,-.1),R:B('s',.2,.3,.1)}},
+       tori:{x:-.05,y:.55,pitch:80,h:-10,leg:{R:W3(.38,.10,-.36),L:W3(.38,.10,.30)},arm:{R:W3(-.70,.05,-.52),L:W3(-.78,.05,.40)}}}],
+ [7.5,{}],
+ [8.0,{uke:{y:.13,pitch:-90,roll:0,leg:{R:W3(.55,.06,.20),L:W3(.55,.06,-.20)},arm:{R:B('o',.14,.12,.12),L:B('o',.14,.12,-.12)},pole:{armR:[.6,-.3,.6],armL:[-.3,-.6,-1]}},
+       tori:{x:.05,y:.40,pitch:8,h:0,leg:{R:W3(.27,.05,-.33),L:W3(.27,.05,.33)},arm:{R:B('s',.22,.02,-.24),L:B('s',.22,.02,.24)}}}],
  [8.6,{tori:{x:-.22,y:.44,pitch:78,h:-15,leg:{R:W3(.06,.05,-.37),L:W3(.06,.05,.37)},pole:{legR:[.7,.6,.6],legL:[.7,.6,-.6]},arm:{R:B('o',-.03,.66,-.05),L:W3(-.85,.05,.42)}},
    uke:{leg:{R:W3(1.0,.06,.16),L:W3(1.0,.06,-.16)},arm:{R:B('o',.14,.40,.18),L:B('o',.14,.40,-.18)},pole:{armR:[.6,.3,1],armL:[.6,.3,-1]}}}],
  [10.5,{}]],
@@ -72,8 +79,12 @@ Judo.register3d({
   api.tag('quadril pesado',T.hip,-7,-3,C.force,a);
   api.tag('joelhos colados nas costelas',T.legR.E,5,2.5,C.force,a);
   a=win(t,6.05,7.9);
-  api.arrow([U.hip[0],U.hip[1]-.1,-.32],[U.hip[0],U.hip[1]+.35,-.32],C.info,a);api.tag('upa: Uke ergue o quadril',[U.hip[0],U.hip[1]+.35,-.32],6,-3,C.info,a,false);
-  api.tag('mãos abertas na base',T.armR.H,-7,-2,C.force,a);
+  let b=win(t,6.05,7.0);
+  api.tag('Uke prende o braço',U.armL.H,-9,-5,C.info,b);
+  api.tag('e o pé do mesmo lado',U.legL.H,4,2.5,C.info,b);
+  b=win(t,6.9,7.9);
+  api.arrow([U.hip[0],U.hip[1]-.1,-.32],[U.hip[0],U.hip[1]+.35,-.32],C.info,b);api.tag('upa: ponte para o lado preso',[U.hip[0],U.hip[1]+.35,-.32],6,-3,C.info,b,false);
+  api.tag('braço sai e posta longe',T.armR.H,-7,-2,C.force,b);
   a=win(t,8.1,10.6);
   api.tag('joelhos nas axilas',T.legR.E,6,2.5,C.force,a);
   api.tag('controle da cabeça',U.head,-8,-3,C.force,a);}
