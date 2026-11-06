@@ -10,5 +10,6 @@ window.JUDO_CATALOG = [
  {"id": "tate-shiho-gatame", "name": "Tate Shiho Gatame", "group": "ne"},
  {"id": "kami-shiho-gatame", "name": "Kami Shiho Gatame", "group": "ne"},
  {"id": "sankaku-jime", "name": "Sankaku Jime", "group": "ne"},
- {"id": "hadaka-jime", "name": "Hadaka Jime", "group": "ne"}
+ {"id": "hadaka-jime", "name": "Hadaka Jime", "group": "ne"},
+ {"id": "juji-gatame", "name": "Juji Gatame", "group": "ne"}
 ];
