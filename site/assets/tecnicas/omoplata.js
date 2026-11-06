@@ -47,9 +47,9 @@ Judo.register3d({
   l:['O quadril vai à frente; o tronco acompanha devagar.','A mão de Uke fica presa, o cotovelo sobe: é a torção do ombro.','Bateu, soltou. Sem exceção.']}],
  rep:[.7,2.6,4.6,6.6,8.8], cover:8.2,
  views:[
-  {name:'Diagonal',a:25,e:48,center:[.12,.32,-.32],span:3.1},
+  {name:'Diagonal',a:25,e:48,center:[.12,.32,-.32],span:3.1,bias:{'T.L.leg':.6}},
   {name:'Pela cabeça',a:-75,e:22,center:[.25,.35,-.2],span:2.9},
-  {name:'De cima',a:0,e:90,center:[.35,0,-.25],span:2.7}],
+  {name:'De cima',a:0,e:90,center:[.48,0,-.25],span:3.1,bias:{'T.L.leg':.6}}],
  keys:[
  [0,{uke:ukeBase,tori:toriBase}],
  [1.4,{}],
@@ -57,13 +57,14 @@ Judo.register3d({
        tori:{z:.06,roll:165,leg:{R:B('o',.14,.02,-.16),L:B('o',.10,.20,.22)},arm:{L:SL('armR',.95),R:B('o',.12,.48,-.12)},pole:{legL:[.6,0,-1]}}}],
  [3.4,{tori:{z:.14,roll:160,pitch:88,leg:{L:B('o',.16,.52,.34)}},uke:{pitch:55}}],
  [4.4,{tori:{z:.12,roll:150,pitch:86,h:20,leg:{L:B('o',-.16,.36,.10),R:B('o',.14,0,-.16)},pole:{legL:[.3,.2,-1]}},
-       uke:{x:.44,y:.34,pitch:66,h:-10,leg:{R:W3(.66,.07,-.17),L:W3(.66,.07,.17)}}}],
+       uke:{x:.44,y:.39,pitch:66,h:-10,leg:{R:W3(.66,.07,-.17),L:W3(.66,.07,.17)},pole:{legR:[0,-1,.15],legL:[0,-1,-.15]}}}],
  [5.2,{}],
- [6.2,{tori:{x:.08,y:.13,z:-.30,roll:80,pitch:50,h:10,leg:{L:W3(-.40,.10,-.26),R:W3(-.30,.08,-.52)},
-        arm:{L:W3(.36,.30,.08),R:W3(.12,.06,-.66)},pole:{legL:[.2,1,.4],legR:[.2,1,.6],armL:[0,1,0],armR:[0,-1,-.5]}},
+ [5.7,{uke:{x:.48,y:.34,pitch:76,leg:{R:W3(.98,.07,-.17),L:W3(.98,.07,.17)},pole:{legR:[0,-1,.15],legL:[0,-1,-.15]}}}],
+ [6.2,{tori:{x:.12,y:.13,z:-.42,roll:80,pitch:50,h:10,leg:{L:W3(-.36,.12,-.24),R:W3(-.30,.08,-.66)},
+        arm:{L:W3(.36,.30,.08),R:W3(.12,.06,-.66)},pole:{legL:[.2,1,.4],legR:[.4,.3,-1],armL:[0,1,0],armR:[0,.2,-1]}},
        uke:{x:.52,y:.20,pitch:82,h:-20,leg:{R:W3(1.30,.07,-.16),L:W3(1.30,.07,.16)},arm:{R:handOnHip,L:W3(-.20,.06,.32)},pole:{armR:[-.6,0,.8],legR:[-1,0,.1],legL:[-1,0,-.1]}}}],
- [7.2,{tori:{x:.15,y:.12,z:-.45,roll:0,pitch:12,h:5,leg:{L:W3(-.56,.08,-.30),R:W3(-.36,.07,-.64)},
-        arm:{L:W3(.46,.24,.18),R:W3(.12,.06,-.78)},pole:{legL:[0,1,.2],legR:[0,.7,.7],armL:[0,1,.2],armR:[0,-.5,-1]}},
+ [7.2,{tori:{x:.15,y:.12,z:-.45,roll:0,pitch:12,h:5,leg:{L:W3(-.56,.09,-.10),R:W3(-.54,.17,-.20)},
+        arm:{L:W3(.46,.24,.18),R:W3(.12,.06,-.78)},pole:{legL:[0,1,-.3],legR:[0,.6,1],armL:[0,1,.2],armR:[0,-.5,-1]}},
        uke:{x:.56,y:.14,pitch:88,h:-25,leg:{R:W3(1.42,.07,-.15),L:W3(1.42,.07,.15)}}}],
  [7.8,{}],
  [8.8,{tori:{x:.03,pitch:36,h:-5,arm:{L:W3(.40,.22,.16)}},uke:{pole:{armR:[-1,0,.15]}}}],
@@ -88,8 +89,9 @@ Judo.register3d({
   a=win(t,5.4,7.6);
   api.tag('braço por cima das costas: Uke não rola',T.armL.H,8,-3.2,C.force,a);
   api.tag('mão de Uke presa no quadril',U.armR.H,-5,4.2,C.gold,a);
-  a=win(t,7.6,10.4);
+  a=win(t,8.0,10.4);
   api.arrow(T.head,api.add(T.head,[-.24,-.1,0]),C.force,a);
   api.tag('quadril à frente, tronco inclina',api.add(T.head,[-.24,-.1,0]),2,3.4,C.force,a);
-  api.tag('cotovelo sobe: o ombro gira',U.armR.E,8,3.4,C.gold,a);}
+  api.tag('cotovelo sobe: o ombro gira',U.armR.E,8,3.4,C.gold,a);
+  api.tag('pernas fechadas: tornozelos cruzados',T.legR.E,3,-4.2,C.force,win(t,7.2,8.1));}
 });})();
