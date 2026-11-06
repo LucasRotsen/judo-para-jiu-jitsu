@@ -56,3 +56,18 @@ test('base dele só aparece em pé e vai para a URL', async ({ page }) => {
   await page.getByRole('button', { name: 'Montada (você por baixo)' }).click();
   await expect(page.locator('#base')).toBeHidden();
 });
+
+test('em pé, arrastar a sua mão até a gola alta dele muda as suas pegadas', async ({ page }) => {
+  await page.goto('/simulador.html#pos=em-pe&R=gola-esq&L=manga-dir&f=empurrando');
+  await page.waitForTimeout(600);
+  const box = await page.locator('#cv').boundingBox();
+  const [hx, hy] = await page.evaluate(() => window.JudoSimUI.handScreen('mR'));
+  const [gx, gy] = await page.evaluate(() => window.JudoSimUI.gripScreen('gola-alta', 'mR'));
+  await page.mouse.move(box.x + hx, box.y + hy);
+  await page.mouse.down();
+  await page.mouse.move(box.x + gx, box.y + gy, { steps: 8 });
+  await page.mouse.up();
+  await expect.poll(() => page.evaluate(() => window.JudoSimUI.state().mR)).toBe('gola-alta');
+  expect(page.url()).toContain('mR=gola-alta');
+  await expect(page.locator('#selmR')).toHaveValue('gola-alta');
+});

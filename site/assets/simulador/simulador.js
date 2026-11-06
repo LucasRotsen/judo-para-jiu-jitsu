@@ -17,10 +17,13 @@ function project(w,h,view){const a=view.a*D,e=view.e*D;
  return p=>[w/2+(dot(p,R)-cx)*sc,h/2-(dot(p,U)-cy)*sc];}
 
 const bodyPt=(o,f,u,r)=>add(o.hip,add(mul(o.f,f),add(mul(o.u,u),mul(o.r,r))));
-function gripPoint(F,spec,hand){
+/* who = de quem é a mão: 'uke' (ele) ou 'tori' (você); 'o' é sempre o outro. */
+function gripPoint(F,spec,who='uke'){const self=F[who],other=F[who==='uke'?'tori':'uke'];
  if(spec.sleeve){const A=F.tori['arm'+spec.sleeve];return lerp3(A.E,A.H,SLEEVE_K);}
- if(spec[0]==='b')return bodyPt(spec[1]==='o'?F.tori:F.uke,spec[2],spec[3],spec[4]);
+ if(spec.sleeveOf){const A=F.uke['arm'+spec.sleeveOf];return lerp3(A.E,A.H,HIKITE_K);}
+ if(spec[0]==='b')return bodyPt(spec[1]==='o'?other:self,spec[2],spec[3],spec[4]);
  return [spec[1],spec[2],spec[3]];}
+const HANDS=[{k:'R',who:'uke',side:'R'},{k:'L',who:'uke',side:'L'},{k:'mR',who:'tori',side:'R'},{k:'mL',who:'tori',side:'L'}];
 
 /* Monta as poses; mangas dependem de onde o braço do outro está, então resolve em duas passadas. */
 function resolvePose(s){
@@ -38,8 +41,8 @@ function resolvePose(s){
  return {uke:op,tori:me};}
 
 function readHash(){const q=new URLSearchParams(location.hash.slice(1));
- return S.normalizar({pos:q.get('pos'),R:q.get('R'),L:q.get('L'),f:q.get('f'),b:q.get('b')});}
-function writeHash(s){const h=`#pos=${s.pos}&R=${s.R}&L=${s.L}&f=${s.f}${s.b?'&b='+s.b:''}`;
+ return S.normalizar({pos:q.get('pos'),R:q.get('R'),L:q.get('L'),f:q.get('f'),b:q.get('b'),mR:q.get('mR'),mL:q.get('mL')});}
+function writeHash(s){const h=`#pos=${s.pos}&R=${s.R}&L=${s.L}&f=${s.f}${s.b?'&b='+s.b:''}${s.mR?`&mR=${s.mR}&mL=${s.mL}`:''}`;
  if(location.hash!==h)history.replaceState(null,'',h);}
 
 const EXEMPLOS=[
@@ -55,11 +58,11 @@ function mount(){
  root.innerHTML=`
 <nav class="topnav" aria-label="Navegação"><a class="home" href="index.html">← Todas as técnicas</a><span class="pn"><a href="index.html#grid">Catálogo</a></span></nav>
 <header class="thead"><div><div class="eyebrow">Simulador · beta</div><h1>E se ele…?</h1>
- <p class="lede">Monte a situação: arraste as mãos do oponente (gi azul) até um ponto do seu gi e diga o que ele está fazendo. O simulador mostra as suas opções e por que cada uma funciona.</p></div></header>
+ <p class="lede">Monte a situação: arraste as mãos do oponente (gi azul) até um ponto do seu gi, e em pé também as suas, e diga o que ele está fazendo. O simulador mostra as suas opções e por que cada uma funciona.</p></div></header>
 <section class="main sim-main">
  <div class="stage">
   <div class="views-wrap multi"><div class="cv-wrap"><canvas id="cv" role="img" aria-label="Cena do simulador"></canvas><span class="vname" id="vname"></span>
-   <span class="drag-hint sim-hint" aria-hidden="true">arraste as mãos azuis · arraste no vazio para girar</span></div><div class="minis" id="minis"></div></div>
+   <span class="drag-hint sim-hint" aria-hidden="true">arraste as mãos · arraste no vazio para girar</span></div><div class="minis" id="minis"></div></div>
  </div>
  <section class="sim-panel" aria-label="Montar a situação">
   <h2>Posição</h2><div class="chips" id="pos" role="group" aria-label="Posição"></div>
@@ -67,6 +70,9 @@ function mount(){
   <label class="sel">${HAND_NAME.R}<select id="selR"></select></label>
   <label class="sel">${HAND_NAME.L}<select id="selL"></select></label>
   <h2>O que ele está fazendo</h2><div class="chips" id="acao" role="group" aria-label="Ação do oponente"></div>
+  <h2 id="meusH">Suas pegadas</h2>
+  <label class="sel" id="lmR">Sua mão direita<select id="selmR"></select></label>
+  <label class="sel" id="lmL">Sua mão esquerda<select id="selmL"></select></label>
   <h2 id="baseH">Base dele</h2><div class="chips" id="base" role="group" aria-label="Base do oponente"></div>
   <h2>Exemplos</h2><div class="exemplos" id="ex"></div>
  </section>
@@ -77,6 +83,8 @@ function mount(){
  let s=readHash(),pose=resolvePose(s),prevPose=pose,tAnim=1,vi=0,camOverride={};
  let drag=null,hoverHand=null,raf=0;
  const P=()=>S.POSICOES[s.pos];
+ const hands=()=>HANDS.filter(h=>h.who==='uke'||P().meus);
+ const gripsOf=k=>k[0]==='m'?P().meus:P().grips;
  const viewOf=k=>Object.assign({},P().views[k],camOverride[s.pos+':'+k]||{});
  function def(){const d={id:'__sim',first:'tori',labels:{tori:'VOCÊ',uke:'ELE'},views:P().views.map((v,k)=>viewOf(k)),annotateAll:false,
    keys:[[0,{uke:clone(prevPose.uke),tori:clone(prevPose.tori)}],[1,{uke:clone(pose.uke),tori:clone(pose.tori)}]],
@@ -89,10 +97,11 @@ function mount(){
   if(force){const a=bodyPt(F.tori,0,-.42,0),b=bodyPt(F.uke,0,-.42,0);
    const dir=force==='pull'?[lerp3(a,b,.1),lerp3(a,b,1.05)]:[lerp3(b,a,.1),lerp3(b,a,1.05)];
    api.arrow(dir[0],dir[1],C.force,.95);api.tag(force==='pull'?'ele puxa você':'ele empurra você',lerp3(dir[0],dir[1],.5),0,2.2,C.force,.95,false);}
-  for(const h of ['R','L']){const H=F.uke['arm'+h].H;
-   api.ring(H,.055,h===hoverHand||(drag&&drag.hand===h)?C.gold:C.info,.9);
-   if(s[h]!=='livre'&&!drag)api.tag(G[s[h]].name.replace(/^S/,'s'),H,h==='R'?-6:6,2.2,C.info,.95);}
-  if(drag){for(const [id,g] of Object.entries(G)){if(id==='livre')continue;const p=gripPoint(F,g.spec(drag.hand),drag.hand);
+  for(const hd of hands()){const H=F[hd.who]['arm'+hd.side].H,G2=gripsOf(hd.k),mineH=hd.who==='tori',act=hd.k===hoverHand||(drag&&drag.k===hd.k);
+   api.ring(H,.055,act?C.gold:mineH?C['tori-line']:C.info,.9);
+   if(!mineH&&s[hd.k]!=='livre'&&!drag)api.tag(G2[s[hd.k]].name.replace(/^S/,'s'),H,hd.side==='R'?-6:6,mineH?-2.2:2.2,mineH?C['tori-line']:C.info,.95);}
+  if(drag&&drag.k){const hd=HANDS.find(x=>x.k===drag.k);for(const [id,g] of Object.entries(gripsOf(drag.k))){if(id==='livre')continue;
+    const p=gripPoint(F,g.spec(hd.side),hd.who);
     api.ring(p,id===drag.near?.07:.045,id===drag.near?C.gold:C.muted,id===drag.near?1:.7);
     if(id===drag.near)api.tag(g.name,p,4,-2.4,C.gold,1);}}}
  function draw(){const [w,h,dpr]=size(cv);ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -116,13 +125,14 @@ function mount(){
  function controls(){chips($('#pos'),Object.entries(S.POSICOES).map(([k,v])=>[k,v.name]),s.pos,id=>setState({pos:id}));
   chips($('#acao'),Object.entries(P().acoes),s.f,id=>setState({f:id}));
   const hasB=!!P().bases;$('#base').hidden=$('#baseH').hidden=!hasB;if(hasB)chips($('#base'),Object.entries(P().bases),s.b,id=>setState({b:id}));
-  for(const h of ['R','L']){const sel=$('#sel'+h);sel.innerHTML=Object.entries(P().grips).map(([k,g])=>`<option value="${k}"${k===s[h]?' selected':''}>${esc(g.name)}</option>`).join('');
+  const hasM=!!P().meus;for(const id of ['#meusH','#lmR','#lmL'])$(id).hidden=!hasM;
+  for(const h of hands().map(x=>x.k)){const sel=$('#sel'+h);sel.innerHTML=Object.entries(gripsOf(h)).map(([k,g])=>`<option value="${k}"${k===s[h]?' selected':''}>${esc(g.name)}</option>`).join('');
    sel.onchange=()=>setState({[h]:sel.value});}}
  $('#ex').innerHTML=EXEMPLOS.map((e,i)=>`<button class="ex" type="button" data-i="${i}">${esc(e.t)}</button>`).join('');
  $('#ex').onclick=e=>{const b=e.target.closest('.ex');if(!b)return;const ex=EXEMPLOS[+b.dataset.i].s;
   setState(ex);$('#cv').scrollIntoView({behavior:'smooth',block:'nearest'});};
  function options(){const list=S.avaliar(s),G=P().grips;
-  const desc=[`${P().name}.`,...['R','L'].map(h=>`${HAND_NAME[h]}: ${G[s[h]].name.toLowerCase()}.`),`Ele: ${P().acoes[s.f].toLowerCase()}.`,...(s.b?[`Base: ${P().bases[s.b].toLowerCase()}.`]:[])];
+  const desc=[`${P().name}.`,...['R','L'].map(h=>`${HAND_NAME[h]}: ${G[s[h]].name.toLowerCase()}.`),...(s.mR?[`Você: mão direita na ${P().meus[s.mR].name.toLowerCase()}, mão esquerda na ${P().meus[s.mL].name.toLowerCase()}.`.replace(/na solta/g,'solta')]:[]),`Ele: ${P().acoes[s.f].toLowerCase()}.`,...(s.b?[`Base: ${P().bases[s.b].toLowerCase()}.`]:[])];
   $('#resumo').textContent=desc.join(' ');
   $('#ops').innerHTML=list.map((o,i)=>`<li class="op${i<3?' top':''}" data-id="${o.id}">
    <div class="op-head"><span class="op-tipo t-${esc(o.tipo.toLowerCase().replace(/[^a-z]/g,''))}">${esc(o.tipo)}</span>${i===0?'<span class="op-best">melhor encaixe</span>':''}</div>
@@ -134,28 +144,28 @@ function mount(){
  const proj=()=>{const r=cv.getBoundingClientRect();return {r,S:project(r.width,r.height,viewOf(vi))};};
  const pose3=()=>J.pose3(D3,tAnim);
  const handAt=(x,y)=>{const {S:Sx}=proj(),F=pose3();let best=null,bd=28;
-  for(const h of ['R','L']){const p=Sx(F.uke['arm'+h].H),d=Math.hypot(p[0]-x,p[1]-y);if(d<bd){bd=d;best=h;}}return best;};
- const nearest=(x,y,hand)=>{const {S:Sx}=proj(),F=pose3();let best='livre',bd=60;
-  for(const [id,g] of Object.entries(P().grips)){if(id==='livre')continue;const p=Sx(gripPoint(F,g.spec(hand),hand)),d=Math.hypot(p[0]-x,p[1]-y);if(d<bd){bd=d;best=id;}}return best;};
+  for(const hd of hands()){const p=Sx(F[hd.who]['arm'+hd.side].H),d=Math.hypot(p[0]-x,p[1]-y);if(d<bd){bd=d;best=hd.k;}}return best;};
+ const nearest=(x,y,k)=>{const {S:Sx}=proj(),F=pose3(),hd=HANDS.find(h=>h.k===k);let best='livre',bd=60;
+  for(const [id,g] of Object.entries(gripsOf(k))){if(id==='livre')continue;const p=Sx(gripPoint(F,g.spec(hd.side),hd.who)),d=Math.hypot(p[0]-x,p[1]-y);if(d<bd){bd=d;best=id;}}return best;};
  const local=e=>{const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top];};
  cv.addEventListener('pointermove',e=>{if(drag)return;const [x,y]=local(e),h=handAt(x,y);if(h!==hoverHand){hoverHand=h;cv.style.cursor=h?'grab':'move';draw();}});
  cv.addEventListener('pointerdown',e=>{if(e.button)return;const [x,y]=local(e),h=handAt(x,y);cv.setPointerCapture(e.pointerId);
   const hint=root.querySelector('.sim-hint');if(hint)hint.classList.add('gone');
-  if(h){drag={hand:h,near:s[h]};draw();}
+  if(h){drag={k:h,near:s[h]};draw();}
   else{const k=s.pos+':'+vi,v0=viewOf(vi),x0=e.clientX,y0=e.clientY;drag={cam:true};
    const mv=ev=>{camOverride[k]={a:v0.a-(ev.clientX-x0)*.4,e:Math.max(4,Math.min(89,v0.e+(ev.clientY-y0)*.3))};D3=def();draw();};
    const up=()=>{cv.removeEventListener('pointermove',mv);cv.removeEventListener('pointerup',up);cv.removeEventListener('pointercancel',up);drag=null;};
    cv.addEventListener('pointermove',mv);cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);return;}
-  const mv=ev=>{const [x2,y2]=local(ev),n=nearest(x2,y2,drag.hand);if(n!==drag.near){drag.near=n;draw();}};
+  const mv=ev=>{const [x2,y2]=local(ev),n=nearest(x2,y2,drag.k);if(n!==drag.near){drag.near=n;draw();}};
   const up=()=>{cv.removeEventListener('pointermove',mv);cv.removeEventListener('pointerup',up);cv.removeEventListener('pointercancel',up);
-   const d=drag;drag=null;if(d.near!==s[d.hand])setState({[d.hand]:d.near});else draw();};
+   const d=drag;drag=null;if(d.near!==s[d.k])setState({[d.k]:d.near});else draw();};
   cv.addEventListener('pointermove',mv);cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);});
  cv.addEventListener('pointerleave',()=>{if(hoverHand&&!drag){hoverHand=null;draw();}});
  addEventListener('hashchange',()=>{const n=readHash();if(JSON.stringify(n)!==JSON.stringify(s))setState(n);});
  new ResizeObserver(draw).observe($('.cv-wrap'));
  controls();options();writeHash(s);draw();
  window.JudoSimUI={state:()=>Object.assign({},s),set:n=>setState(n,false),
-  handScreen:h=>{const {S:Sx}=proj(),F=pose3();return Sx(F.uke['arm'+h].H);},
-  gripScreen:(id,h)=>{const {S:Sx}=proj(),F=pose3();return Sx(gripPoint(F,P().grips[id].spec(h),h));}};}
+  handScreen:k=>{const {S:Sx}=proj(),F=pose3(),hd=HANDS.find(x=>x.k===k);return Sx(F[hd.who]['arm'+hd.side].H);},
+  gripScreen:(id,k)=>{const {S:Sx}=proj(),F=pose3(),hd=HANDS.find(x=>x.k===k);return Sx(gripPoint(F,gripsOf(k)[id].spec(hd.side),hd.who));}};}
 window.JudoSim.mount=mount;
 })();
