@@ -322,7 +322,12 @@ const scrub=e=>{const r=tl.getBoundingClientRect();t=clamp((e.clientX-r.left)/r.
   if(e.key==='ArrowRight')$('#next').click();if(e.key==='ArrowLeft')$('#prev').click();});
  const drawThumbs=()=>thumbs.forEach((s,i)=>renderTo(s.c,def,REP[i]));
  function frame(now){const dt=Math.min(.05,(now-last)/1000||0);last=now;if(playing){t+=dt*speed;if(t>=END)t=0;render();}requestAnimationFrame(frame);}
- setPlay(playing);render();drawThumbs();
+ /* Link direto para uma fase: #fase=Upa (nome) ou #fase=4 (número), ou #t=6.5 (segundos). */
+const deep=new URLSearchParams(location.hash.slice(1));
+if(deep.has('fase')){const v=deep.get('fase').toLowerCase(),n=parseInt(v,10);
+ const i=n>=1&&n<=PH.length?n-1:PH.findIndex(p=>p.ro.toLowerCase()===v);if(i>=0)t=PH[i].s+.001;}
+else if(deep.has('t'))t=clamp(parseFloat(deep.get('t'))||0,0,END);
+setPlay(playing);render();drawThumbs();
  new ResizeObserver(()=>{render();drawThumbs();}).observe($('.cv-wrap'));
  onTheme(()=>{render();drawThumbs();});
  window.JudoPlayer={seek(x){t=x;setPlay(false);render();}};

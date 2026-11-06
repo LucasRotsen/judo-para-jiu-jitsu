@@ -56,3 +56,16 @@ test('filtro de grupo esconde os cards do outro grupo', async ({ page }) => {
   await page.locator('.chip[data-g="ne"]').click();
   await expect(page.locator('a.tcard:visible')).toHaveCount(CATALOG.filter((c) => c.group === 'ne').length);
 });
+
+test('link direto para uma fase abre a animação nela', async ({ page }) => {
+  await page.goto('/tate-shiho-gatame.html#fase=Upa');
+  await expect(page.locator('#pht')).toContainText('Upa');
+  await page.goto('/sankaku-jime.html#fase=4');
+  await expect(page.locator('#phn')).toHaveText(/Fase 4 de/);
+});
+
+test('simulador linka o upa direto na fase', async ({ page }) => {
+  await page.goto('/simulador.html#pos=montada-baixo&R=gola-esq&L=livre&f=alto');
+  const link = page.locator('#ops [data-id="upa"] a.op-link');
+  await expect(link).toHaveAttribute('href', 'tate-shiho-gatame.html#fase=Upa');
+});

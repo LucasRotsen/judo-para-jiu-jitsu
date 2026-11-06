@@ -127,7 +127,7 @@ function mount(){
    <h3>${esc(o.nome)}</h3><p>${esc(o.porque)}</p>
    <ol class="op-passos">${o.passos.map(p=>`<li>${esc(p)}</li>`).join('')}</ol>
    ${o.nota?`<p class="op-nota">${esc(o.nota)}</p>`:''}
-   ${o.tech&&known.has(o.tech)?`<a class="op-link" href="${o.tech}.html">Ver a animação →</a>`:''}</li>`).join('')||'<li class="op">Nenhuma opção cadastrada para essa combinação ainda.</li>';}
+   ${o.tech&&known.has(o.tech)?`<a class="op-link" href="${o.tech}.html${o.fase?'#fase='+encodeURIComponent(o.fase):''}">Ver a animação →</a>`:''}</li>`).join('')||'<li class="op">Nenhuma opção cadastrada para essa combinação ainda.</li>';}
  /* arraste */
  const proj=()=>{const r=cv.getBoundingClientRect();return {r,S:project(r.width,r.height,viewOf(vi))};};
  const pose3=()=>J.pose3(D3,tAnim);
