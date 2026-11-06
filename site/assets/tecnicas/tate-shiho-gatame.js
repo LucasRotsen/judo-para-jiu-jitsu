@@ -42,7 +42,7 @@ Judo.register3d({
  rep:[1.1,3.0,5.1,6.7,9.3], cover:5.1,
  views:[
   {name:'Diagonal',a:-130,e:32,center:[0,.52,0],span:2.6},
-  {name:'Lateral',a:180,e:10,center:[.1,.5,0],span:2.6},
+  {name:'Lateral',a:180,e:10,center:[.1,.62,0],span:2.9},
   {name:'De frente',a:-90,e:18,center:[0,.5,0],span:2.3}],
  keys:[
  [0,{uke:ukeBase,tori:toriBase}],
