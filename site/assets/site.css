@@ -159,3 +159,28 @@ button{font:inherit;color:inherit}
 .guide dd{margin:0;color:var(--muted)}
 .foot{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* toque */
+#cv{touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none}
+.drag-hint{display:none;position:absolute;right:8px;bottom:8px;font-family:var(--f-mono);font-size:11px;padding:3px 7px;border-radius:3px;
+  background:color-mix(in srgb,var(--surface) 85%,transparent);color:var(--muted);pointer-events:none}
+@media (pointer:coarse){
+  .drag-hint{display:block}
+  .btn{height:44px;min-width:44px}
+  .speed button{height:42px;padding:0 12px}
+  .tog{min-height:44px;display:inline-flex;align-items:center}
+  .timeline{height:46px}
+  .chip{min-height:40px}
+}
+.hint-touch{display:none}
+@media (hover:none){.hint-hover{display:none}.hint-touch{display:inline}}
+.drag-hint{transition:opacity .4s}
+.drag-hint.gone{opacity:0}
+@media (max-width:640px){
+  .page{gap:18px}
+  .thead{gap:10px}
+  .thead .lede{font-size:14px;margin-top:6px}
+  .name div{grid-template-columns:auto auto;align-items:baseline;justify-items:start;column-gap:8px;padding:4px 10px 4px 0}
+  .name b{font-size:22px;grid-row:span 2}
+  .name span{text-align:left;max-width:none}
+}
