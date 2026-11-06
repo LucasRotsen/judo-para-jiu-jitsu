@@ -2,8 +2,15 @@ const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
 
+const CATALOG = require('./catalog');
+
 const SITE = path.join(__dirname, '..', 'site');
-const TECHS = fs.readdirSync(path.join(SITE, 'assets', 'tecnicas')).map((f) => f.replace(/\.js$/, ''));
+const TECHS = CATALOG.map((c) => c.id);
+
+test('catálogo e arquivos de técnica batem', () => {
+  const files = fs.readdirSync(path.join(SITE, 'assets', 'tecnicas')).map((f) => f.replace(/\.js$/, ''));
+  expect(files.sort()).toEqual([...TECHS].sort());
+});
 
 function collectErrors(page) {
   const errors = [];
@@ -47,5 +54,5 @@ for (const id of TECHS) {
 test('filtro de grupo esconde os cards do outro grupo', async ({ page }) => {
   await page.goto('/');
   await page.locator('.chip[data-g="ne"]').click();
-  await expect(page.locator('a.tcard:visible')).toHaveCount(4);
+  await expect(page.locator('a.tcard:visible')).toHaveCount(CATALOG.filter((c) => c.group === 'ne').length);
 });
