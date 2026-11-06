@@ -1,5 +1,5 @@
 /* Gerado por tools/build.py. Não edite site/sw.js à mão. */
-const VERSION = 'jpj-47229ba2065b';
+const VERSION = 'jpj-86b4f3076d77';
 const PRECACHE = [
  "./",
  "assets/engine.js",

@@ -242,7 +242,7 @@ function mountPage(id){
  <section class="main">
   <div class="stage">
    <div class="views-wrap${def.is3d?' multi':''}">
-    <div class="cv-wrap"><canvas id="cv" role="img" aria-label="Animação de ${esc(def.name)}"></canvas>${def.is3d?'<span class="vname" id="vname"></span>':''}</div>
+    <div class="cv-wrap"><canvas id="cv" role="img" aria-label="Animação de ${esc(def.name)}. Toque para pausar, arraste para os lados para avançar ou voltar."></canvas><span class="drag-hint" aria-hidden="true">⟷ arraste para avançar ou voltar</span>${def.is3d?'<span class="vname" id="vname"></span>':''}</div>
     ${def.is3d?'<div class="minis" id="minis"></div>':''}
    </div>
    <div class="controls">
@@ -302,7 +302,16 @@ function mountPage(id){
  $('#next').onclick=()=>jump((phaseAt(t)+1)%PH.length);
  root.querySelectorAll('.speed button').forEach(b=>b.onclick=()=>{speed=+b.dataset.s;root.querySelectorAll('.speed button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
  $('#ann').onchange=e=>{annot=e.target.checked;render();};
- const scrub=e=>{const r=tl.getBoundingClientRect();t=clamp((e.clientX-r.left)/r.width,0,1)*END;render();};
+ /* Toque no palco: arrastar na horizontal avança/volta o tempo; toque simples alterna play/pausa. */
+const hint=$('.drag-hint'),hideHint=()=>hint&&hint.classList.add('gone');setTimeout(hideHint,4000);
+cv.addEventListener('pointerdown',e=>{if(e.button)return;hideHint();const x0=e.clientX,t0=t,w=cv.getBoundingClientRect().width;let dragged=false;
+  const mv=ev=>{const dx=ev.clientX-x0;if(!dragged&&Math.abs(dx)<8)return;
+   if(!dragged){dragged=true;setPlay(false);cv.setPointerCapture(ev.pointerId);}
+   t=clamp(t0+dx/w*END*.8,0,END);render();};
+  const up=()=>{cv.removeEventListener('pointermove',mv);cv.removeEventListener('pointerup',up);cv.removeEventListener('pointercancel',up);
+   if(!dragged)$('#play').click();};
+  cv.addEventListener('pointermove',mv);cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);});
+const scrub=e=>{const r=tl.getBoundingClientRect();t=clamp((e.clientX-r.left)/r.width,0,1)*END;render();};
  tl.addEventListener('pointerdown',e=>{tl.setPointerCapture(e.pointerId);setPlay(false);scrub(e);
   const mv=ev=>scrub(ev),up=()=>{tl.removeEventListener('pointermove',mv);tl.removeEventListener('pointerup',up);};tl.addEventListener('pointermove',mv);tl.addEventListener('pointerup',up);});
  document.addEventListener('keydown',e=>{if(e.target.matches('input,button,a'))return;
@@ -331,6 +340,11 @@ function mountIndex(){
   const loop=now=>{const dt=Math.min(.05,(now-last)/1000||0);last=now;k.t=(k.t+dt)%k.def.end;draw(k);k.raf=requestAnimationFrame(loop);};
   k.a.addEventListener('pointerenter',()=>{if(reduced()||k.raf)return;last=0;k.t=0;k.raf=requestAnimationFrame(loop);});
   k.a.addEventListener('pointerleave',()=>{cancelAnimationFrame(k.raf);k.raf=0;k.t=k.def.cover;draw(k);});});
+ /* Sem hover (celular): anima o card enquanto ele está bem visível na tela. */
+ if(matchMedia('(hover: none)').matches&&!reduced()&&'IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>es.forEach(en=>{const k=cards.find(c=>c.a===en.target);if(!k||!k.def)return;
+   k.a.dispatchEvent(new PointerEvent(en.isIntersecting?'pointerenter':'pointerleave'));}),{threshold:.75});
+  cards.forEach(k=>io.observe(k.a));}
  const all=()=>cards.forEach(draw);all();
  chips.forEach(ch=>ch.addEventListener('click',()=>{chips.forEach(x=>x.setAttribute('aria-pressed',x===ch));const g=ch.dataset.g;
   cards.forEach(k=>k.a.hidden=!(g==='all'||k.a.dataset.group===g));all();}));
