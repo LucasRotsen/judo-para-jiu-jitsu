@@ -72,7 +72,7 @@ Judo.register3d({
  ...taps,
  [9.6,{}],
  [10.4,{tori:{y:.13,pitch:-88},uke:{arm:{R:B('o',.40,.25,-.02),L:W3(-.22,.30,-.30)}}}]],
- names:F=>({tori:[F.tori.head[0],F.tori.head[1]+.32,F.tori.head[2]],uke:[F.uke.legR.E[0]+.1,F.uke.legR.E[1]+.1,F.uke.legR.E[2]+.2]}),
+ names:F=>({tori:[F.tori.head[0],F.tori.head[1]+.32,F.tori.head[2]],uke:[F.uke.legR.H[0]-.12,F.uke.legR.H[1]+.1,F.uke.legR.H[2]+.22]}),
  glow:{s:5.4,e:8.0,limbs:{'T.R.leg':'force','T.L.leg':'force','U.R.arm':'gold'}},
  stamp:{s:8.4,e:10.2,big:'参った',small:'MAITTA'},
  annotate:(api,F)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
