@@ -38,8 +38,8 @@ function resolvePose(s){
  return {uke:op,tori:me};}
 
 function readHash(){const q=new URLSearchParams(location.hash.slice(1));
- return S.normalizar({pos:q.get('pos'),R:q.get('R'),L:q.get('L'),f:q.get('f')});}
-function writeHash(s){const h=`#pos=${s.pos}&R=${s.R}&L=${s.L}&f=${s.f}`;
+ return S.normalizar({pos:q.get('pos'),R:q.get('R'),L:q.get('L'),f:q.get('f'),b:q.get('b')});}
+function writeHash(s){const h=`#pos=${s.pos}&R=${s.R}&L=${s.L}&f=${s.f}${s.b?'&b='+s.b:''}`;
  if(location.hash!==h)history.replaceState(null,'',h);}
 
 const EXEMPLOS=[
@@ -67,6 +67,7 @@ function mount(){
   <label class="sel">${HAND_NAME.R}<select id="selR"></select></label>
   <label class="sel">${HAND_NAME.L}<select id="selL"></select></label>
   <h2>O que ele está fazendo</h2><div class="chips" id="acao" role="group" aria-label="Ação do oponente"></div>
+  <h2 id="baseH">Base dele</h2><div class="chips" id="base" role="group" aria-label="Base do oponente"></div>
   <h2>Exemplos</h2><div class="exemplos" id="ex"></div>
  </section>
 </section>
@@ -114,13 +115,14 @@ function mount(){
   b.textContent=label;b.setAttribute('aria-pressed',id===cur);b.onclick=()=>fn(id);el.appendChild(b);}}
  function controls(){chips($('#pos'),Object.entries(S.POSICOES).map(([k,v])=>[k,v.name]),s.pos,id=>setState({pos:id}));
   chips($('#acao'),Object.entries(P().acoes),s.f,id=>setState({f:id}));
+  const hasB=!!P().bases;$('#base').hidden=$('#baseH').hidden=!hasB;if(hasB)chips($('#base'),Object.entries(P().bases),s.b,id=>setState({b:id}));
   for(const h of ['R','L']){const sel=$('#sel'+h);sel.innerHTML=Object.entries(P().grips).map(([k,g])=>`<option value="${k}"${k===s[h]?' selected':''}>${esc(g.name)}</option>`).join('');
    sel.onchange=()=>setState({[h]:sel.value});}}
  $('#ex').innerHTML=EXEMPLOS.map((e,i)=>`<button class="ex" type="button" data-i="${i}">${esc(e.t)}</button>`).join('');
  $('#ex').onclick=e=>{const b=e.target.closest('.ex');if(!b)return;const ex=EXEMPLOS[+b.dataset.i].s;
   setState(ex);$('#cv').scrollIntoView({behavior:'smooth',block:'nearest'});};
  function options(){const list=S.avaliar(s),G=P().grips;
-  const desc=[`${P().name}.`,...['R','L'].map(h=>`${HAND_NAME[h]}: ${G[s[h]].name.toLowerCase()}.`),`Ele: ${P().acoes[s.f].toLowerCase()}.`];
+  const desc=[`${P().name}.`,...['R','L'].map(h=>`${HAND_NAME[h]}: ${G[s[h]].name.toLowerCase()}.`),`Ele: ${P().acoes[s.f].toLowerCase()}.`,...(s.b?[`Base: ${P().bases[s.b].toLowerCase()}.`]:[])];
   $('#resumo').textContent=desc.join(' ');
   $('#ops').innerHTML=list.map((o,i)=>`<li class="op${i<3?' top':''}" data-id="${o.id}">
    <div class="op-head"><span class="op-tipo t-${esc(o.tipo.toLowerCase().replace(/[^a-z]/g,''))}">${esc(o.tipo)}</span>${i===0?'<span class="op-best">melhor encaixe</span>':''}</div>
