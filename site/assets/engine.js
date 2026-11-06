@@ -198,12 +198,13 @@ function drawLens(ctx,V,F,def){const L=def.lens,a=win(F.t,L.s,L.e);if(a<=0)retur
  if(L.caption)tag(ctx,{S:q=>q,fs:V.fs},L.caption,[lx,ly+R],0,1.7,C.ink,a,false);}
 
 /* ---------- canvas helpers ---------- */
-function size(c){const r=c.getBoundingClientRect(),dpr=window.devicePixelRatio||1;const w=Math.max(1,Math.round(r.width*dpr)),h=Math.max(1,Math.round(r.height*dpr));
+function size(c,maxDpr){const r=c.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,maxDpr||8);const w=Math.max(1,Math.round(r.width*dpr)),h=Math.max(1,Math.round(r.height*dpr));
  if(c.width!==w||c.height!==h){c.width=w;c.height=h;}return [r.width,r.height,dpr];}
 function renderDef(ctx,w,h,def,t,opts,vi){opts=opts||{};
  if(def.is3d)return window.Judo.draw3d(ctx,w,h,def,t,opts,vi||0);
  drawScene(ctx,viewport(w,h,def.view),pose(def,t),def,opts);}
-function renderTo(c,def,t,opts,vi){const [w,h,dpr]=size(c);const ctx=c.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+/* Miniaturas (cards, sequência, ângulos) não precisam de DPR alto: 1,5 corta ~3x dos pixels num celular. */
+function renderTo(c,def,t,opts,vi){const [w,h,dpr]=size(c,1.5);const ctx=c.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
  renderDef(ctx,w,h,def,t,opts,vi);}
 function onTheme(fn){matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{readTheme();fn();});
  new MutationObserver(()=>{readTheme();fn();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
@@ -356,13 +357,18 @@ function mountIndex(){
  const favChip=document.querySelector('.chip[data-g="fav"]');if(favChip)favChip.hidden=!Object.keys(prog.fav).length;
  const draw=k=>{if(k.def)renderTo(k.c,k.def,k.t);};
  cards.forEach(k=>{if(!k.def)return;let last=0;
-  const loop=now=>{const dt=Math.min(.05,(now-last)/1000||0);last=now;k.t=(k.t+dt)%k.def.end;draw(k);k.raf=requestAnimationFrame(loop);};
+  const loop=now=>{const dt=(now-last)/1000;if(!last||dt>=1/30){k.t=(k.t+Math.min(.05,last?dt:0))%k.def.end;last=now;draw(k);}k.raf=requestAnimationFrame(loop);};
   k.a.addEventListener('pointerenter',()=>{if(reduced()||k.raf)return;last=0;k.t=0;k.raf=requestAnimationFrame(loop);});
   k.a.addEventListener('pointerleave',()=>{cancelAnimationFrame(k.raf);k.raf=0;k.t=k.def.cover;draw(k);});});
  /* Sem hover (celular): anima o card enquanto ele está bem visível na tela. */
  if(matchMedia('(hover: none)').matches&&!reduced()&&'IntersectionObserver' in window){
-  const io=new IntersectionObserver(es=>es.forEach(en=>{const k=cards.find(c=>c.a===en.target);if(!k||!k.def)return;
-   k.a.dispatchEvent(new PointerEvent(en.isIntersecting?'pointerenter':'pointerleave'));}),{threshold:.75});
+  /* Só um card anima por vez: o mais visível. Animar todos prendia a CPU em 100% no celular. */
+  const ratio=new Map();let active=null;
+  const pick=()=>{let best=null,br=.6;for(const [k,r] of ratio)if(r>br){br=r;best=k;}
+   if(best===active)return;if(active)active.a.dispatchEvent(new PointerEvent('pointerleave'));active=best;
+   if(active)active.a.dispatchEvent(new PointerEvent('pointerenter'));};
+  const io=new IntersectionObserver(es=>{for(const en of es){const k=cards.find(c=>c.a===en.target);if(k&&k.def)ratio.set(k,en.intersectionRatio);}pick();},
+   {threshold:[0,.25,.5,.6,.75,.9,1]});
   cards.forEach(k=>io.observe(k.a));}
  const all=()=>cards.forEach(draw);all();
  chips.forEach(ch=>ch.addEventListener('click',()=>{chips.forEach(x=>x.setAttribute('aria-pressed',x===ch));const g=ch.dataset.g;
