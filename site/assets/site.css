@@ -26,6 +26,7 @@
   --skin:#D9A781; --hair:#1E1814; --belt:#0B0B0B; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
 a{color:inherit}
 .page{max-width:1200px;margin:0 auto;padding-block:20px 56px;

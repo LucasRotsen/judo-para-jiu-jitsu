@@ -87,7 +87,7 @@ def summary_of(tid: str) -> str:
 def technique_page(tid: str, name: str) -> str:
     title = f"{name} · {SITE_NAME}"
     return (head(title, summary_of(tid), f"{tid}.html", f"og/{tid}.png")
-            + '<div class="page" id="app"></div>\n' + SCRIPTS
+            + '<main class="page" id="app"></main>\n' + SCRIPTS
             + f'<script src="assets/tecnicas/{tid}.js"></script>\n'
             + f"<script>Judo.mountPage('{tid}');</script>\n</body>\n</html>\n")
 
