@@ -24,3 +24,9 @@
 ## 2026-11-06 — Prioridade em regras do simulador
 - Erro: empate de pontuação deixou o "upa" acima de "defender o estrangulamento" com as duas golas presas.
 - Regra: toda situação de perigo imediato (estrangulamento, chave encaixada) tem pontuação estritamente maior que qualquer ataque/fuga; cada situação clássica ganha um caso em `tests/simulador.spec.js`.
+
+## 2026-11-06 — Membros atravessando o outro corpo (relatado pelo usuário)
+- Erro: aprovei 14 técnicas 3D olhando folhas de quadros e checando só "abaixo do chão". Um membro passando por dentro do outro boneco não aparece de forma óbvia numa folha pequena; 13 de 14 técnicas tinham isso (canela da tesoura atravessando o tronco, antebraço no Kata Gatame).
+- Regra: revisão visual não basta para geometria. Toda técnica 3D passa em `node tools/interpenetracao.js <id>` (≤ 0,06) antes do merge; depois de corrigidas todas, isso vira portão da CI.
+- Regra: não corrigir dados ruins com remendo no motor. Empurrar o membro para fora automaticamente escondeu o erro e distorceu a técnica (a tesoura deixou de ser tesoura). Corrigir o keyframe/polo/transição na origem.
+- Regra: transições entre um alvo atrás do corpo do outro e um à frente precisam de keyframe intermediário contornando pelo lado; interpolação em linha reta passa por dentro.
