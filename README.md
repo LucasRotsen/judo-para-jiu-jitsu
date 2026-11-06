@@ -30,6 +30,16 @@ tools/sheet.sh sankaku-jime 1,4,6.5 out/sk.png "views=1"   # folha de quadros p/
 npm test                              # smoke test: todas as páginas carregam sem erro de JS
 ```
 
+## Simulador
+
+`simulador.html`: o aluno escolhe a posição, arrasta as mãos do oponente até pegadas no próprio
+gi e diz o que ele está fazendo; a página lista as opções com o porquê de cada uma.
+
+- `site/assets/simulador/situacoes.js`: posições (poses dos bonecos), pegadas, ações e a base de
+  conhecimento (`OPCOES`, cada uma com `score(estado)`, `porque`, `passos` e `tech` opcional).
+- `site/assets/simulador/simulador.js`: cena, arraste, URL compartilhável e lista de opções.
+- Para acrescentar uma opção, inclua um item em `OPCOES` e um caso em `tests/simulador.spec.js`.
+
 ## Adicionando uma técnica
 
 1. Acrescente `{id, name, group}` em `site/assets/catalog.js` (`group`: `nage` ou `ne`; técnicas próprias do jiu-jitsu levam também `"origin": "bjj"`).

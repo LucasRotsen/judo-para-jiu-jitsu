@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 
-for (const url of ['/', '/ippon-seoi-nage.html', '/sankaku-jime.html']) {
+for (const url of ['/', '/ippon-seoi-nage.html', '/sankaku-jime.html', '/simulador.html']) {
   test(`sem violações de acessibilidade em ${url}`, async ({ page }) => {
     await page.goto(url);
     await page.evaluate(() => window.JudoPlayer && window.JudoPlayer.seek(3));

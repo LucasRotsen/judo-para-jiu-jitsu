@@ -144,8 +144,9 @@ function draw3d(ctx,w,h,def,t,opts,vi){
  if(!opts.annot)return;
  const api=makeApi(ctx,V,F);
  const top=o=>[o.hip[0],Math.max(o.head[1],o.hip[1])+.3,o.hip[2]];const nm=def.names?def.names(F):{};
- J.prim.tag(ctx,V,'TORI',nm.tori||top(F.tori),0,0,C['tori-line'],.95,false);
- J.prim.tag(ctx,V,'UKE',nm.uke||top(F.uke),0,0,C.uke,.95,false);
+ const lb=def.labels||{tori:'TORI',uke:'UKE'};
+ J.prim.tag(ctx,V,lb.tori,nm.tori||top(F.tori),0,0,C['tori-line'],.95,false);
+ J.prim.tag(ctx,V,lb.uke,nm.uke||top(F.uke),0,0,C.uke,.95,false);
  if(def.annotate&&(vi===0||def.annotateAll))def.annotate(api,F,vi);
  if(def.stamp)J.prim.stamp(ctx,V,def.stamp,t);}
 function makeApi(ctx,V,F){const P=J.prim;return {ctx,V,F,t:F.t,C:J.C,D,win:J.win,clamp,add,sub,mul,lerp3,bp,

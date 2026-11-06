@@ -204,3 +204,35 @@ button{font:inherit;color:inherit}
 .progress .bar{display:inline-block;width:90px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
 .progress .bar i{display:block;height:100%;background:var(--force)}
 .tc-grp{white-space:nowrap}
+
+/* simulador */
+.sim-cta{display:grid;gap:4px;padding:16px 18px;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:6px;background:var(--surface);text-decoration:none}
+.sim-cta b{font-family:var(--f-display);font-size:22px;font-weight:800}
+.sim-cta span:last-child{color:var(--muted)}
+.sim-cta:hover{border-color:var(--muted)}
+.sim-main{align-items:start}
+.sim-panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:10px;align-content:start}
+.sim-panel h2{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 0;font-weight:500}
+.sim-panel .chips{display:flex;flex-wrap:wrap;gap:6px}
+.sim-panel .chip{height:auto;min-height:32px;padding:4px 12px;text-align:left}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sel{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.sel select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:8px}
+.exemplos{display:grid;gap:6px}
+.ex{text-align:left;border:1px dashed var(--line);background:transparent;border-radius:4px;padding:8px 10px;cursor:pointer;font-size:13px}
+.ex:hover{border-color:var(--muted)}
+.sim-main #cv{touch-action:none;cursor:move}
+.sim-opcoes h2{font-family:var(--f-display);font-size:28px;margin:0}
+.sim-resumo{color:var(--muted);margin:4px 0 14px}
+#ops{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.op{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;display:grid;gap:6px;align-content:start}
+.op.top{border-color:var(--ink)}
+.op h3{font-family:var(--f-display);font-size:19px;margin:0}
+.op p{margin:0;font-size:14px}
+.op-head{display:flex;gap:6px;align-items:center}
+.op-tipo{font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:1px 6px;border-radius:3px;border:1px solid var(--line)}
+.op-tipo.t-queda{border-color:var(--force)}.op-tipo.t-finalizao{border-color:var(--uke)}.op-tipo.t-defesa,.op-tipo.t-cuidado{border-color:var(--gold)}
+.op-best{font-family:var(--f-mono);font-size:11px;color:var(--force)}
+.op-passos{margin:2px 0 0;padding-left:18px;font-size:13px;color:var(--muted)}
+.op-nota{font-size:12px!important;color:var(--muted)}
+.op-link{font-weight:600;font-size:14px;margin-top:4px}
