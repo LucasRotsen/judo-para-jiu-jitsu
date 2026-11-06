@@ -43,3 +43,9 @@ for (const id of TECHS) {
     expect(errors).toEqual([]);
   });
 }
+
+test('filtro de grupo esconde os cards do outro grupo', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('.chip[data-g="ne"]').click();
+  await expect(page.locator('a.tcard:visible')).toHaveCount(4);
+});

@@ -25,6 +25,7 @@
   --tori:#F1F1EB; --tori-2:#C3C7BC; --tori-line:#0C100D;
   --skin:#D9A781; --hair:#1E1814; --belt:#0B0B0B; color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
 a{color:inherit}
 .page{max-width:1200px;margin:0 auto;padding-block:20px 56px;
@@ -184,3 +185,20 @@ button{font:inherit;color:inherit}
   .name b{font-size:22px;grid-row:span 2}
   .name span{text-align:left;max-width:none}
 }
+
+/* progresso */
+.mine{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 12px;border-radius:17px;border:1px solid var(--line);
+  background:var(--surface);cursor:pointer;font-size:13px;font-weight:500;color:var(--muted)}
+.pill:hover{border-color:var(--muted)}
+#done[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#fav[aria-pressed="true"]{color:var(--gold);border-color:var(--gold)}
+@media (pointer:coarse){.pill{min-height:44px;border-radius:22px}}
+.badges{display:inline-flex;gap:4px;margin:0 auto 0 8px;min-width:0;overflow:hidden;text-transform:none;letter-spacing:0}
+.badge{white-space:nowrap;font-family:var(--f-mono);font-size:11px;padding:1px 6px;border-radius:3px;border:1px solid var(--line);color:var(--muted)}
+.badge.done{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.badge.fav{color:var(--gold);border-color:var(--gold)}
+.filters .progress{margin:0 0 0 auto;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.progress .bar{display:inline-block;width:90px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.progress .bar i{display:block;height:100%;background:var(--force)}
+.tc-grp{white-space:nowrap}
