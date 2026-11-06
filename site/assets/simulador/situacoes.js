@@ -182,7 +182,7 @@ const OPCOES=[
   score:s=>(s.f==='alto'?3:2)+(nGrips(s)===2?2:0),
   porque:s=>nGrips(s)===2?'As duas mãos dele estão ocupadas em você: não sobra mão para apoiar no tatame. Prenda um braço e o pé do mesmo lado e role.':'Prenda o braço e o pé do mesmo lado: ele fica sem base daquele lado e rola com a ponte.',
   passos:['Prenda o braço dele junto ao seu peito','Pé por fora do pé dele, do mesmo lado','Ponte alta para o lado preso e role para a guarda dele'],
-  nota:'Na animação do Tate Shiho Gatame, a fase Upa mostra o lado de quem está por cima.'},
+  fase:'Upa',nota:'A animação do Tate Shiho Gatame abre na fase Upa, vista do lado de quem está por cima.'},
  {id:'fuga-de-quadril',pos:'montada-baixo',tipo:'Fuga',nome:'Fuga de quadril (cotovelo-joelho)',
   score:s=>s.f==='baixo'?5:3,
   porque:s=>s.f==='baixo'?'Peito no peito, ele fica pesado e difícil de rolar. Crie espaço com o quadril e recoloque o joelho por dentro.':'Quando a ponte não basta, o espaço vem do quadril: cotovelo no joelho dele e joelho de volta para a guarda.',
@@ -199,7 +199,7 @@ const OPCOES=[
 function avaliar(s){
  return OPCOES.filter(o=>o.pos===s.pos).map(o=>({o,score:o.score(s)}))
   .filter(x=>x.score>0).sort((a,b)=>b.score-a.score||OPCOES.indexOf(a.o)-OPCOES.indexOf(b.o))
-  .map(({o,score})=>({id:o.id,nome:o.nome,tipo:o.tipo,tech:o.tech||null,score,porque:o.porque(s),passos:o.passos,nota:o.nota||''}));}
+  .map(({o,score})=>({id:o.id,nome:o.nome,tipo:o.tipo,tech:o.tech||null,fase:o.fase||'',score,porque:o.porque(s),passos:o.passos,nota:o.nota||''}));}
 
 function normalizar(s){const P=POSICOES[s.pos]?s.pos:'em-pe',d=POSICOES[P].defaults,G=POSICOES[P].grips,A=POSICOES[P].acoes;
  return {pos:P,R:G[s.R]?s.R:d.R,L:G[s.L]?s.L:d.L,f:A[s.f]?s.f:d.f};}
