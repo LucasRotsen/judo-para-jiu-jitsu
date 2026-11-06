@@ -16,3 +16,11 @@
 ## 2026-11-06 — CI travando no apt
 - Erro: `playwright install --with-deps` trava às vezes no apt do runner; cache dos browsers não resolve porque o apt continua rodando.
 - Regra: rodar Playwright no container oficial `mcr.microsoft.com/playwright:<versão>` com a mesma versão do package.json.
+
+## 2026-11-06 — Arquivos gerados em PRs paralelos
+- Erro: rebase automático de PRs paralelos duplicou uma entrada do `catalog.js` (cada fork já trazia a do outro).
+- Regra: ao resolver conflito em lista de dados, deduplicar por id; o teste "catálogo e arquivos batem" é a rede de segurança. `index.html`/`sw.js` nunca se resolvem à mão: regenerar com `tools/build.py`.
+
+## 2026-11-06 — Prioridade em regras do simulador
+- Erro: empate de pontuação deixou o "upa" acima de "defender o estrangulamento" com as duas golas presas.
+- Regra: toda situação de perigo imediato (estrangulamento, chave encaixada) tem pontuação estritamente maior que qualquer ataque/fuga; cada situação clássica ganha um caso em `tests/simulador.spec.js`.
