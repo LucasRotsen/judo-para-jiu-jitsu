@@ -51,8 +51,8 @@ Judo.register3d({
   l:['O braço de Uke fica preso entre a axila e a mão de Tori.','O peso de Tori fica no peito de Uke.','Pernas abertas: a base impede Uke de rolar Tori por cima.']}],
  rep:[.5,2.2,4.0,5.3,6.9,9.6], cover:5.2,
  views:[
+  {name:'Por trás de Uke',a:-115,e:10,center:[0,1.05,-.1],span:3.9},
   {name:'Diagonal',a:35,e:16,center:[.2,1.0,-.2],span:3.7},
-  {name:'Por trás de Uke',a:-90,e:6,center:[0,1.0,-.1],span:3.4},
   {name:'De cima',a:0,e:90,center:[.4,0,-.3],span:3.0}],
  keys:[
  [0,{uke:uke0,tori:tori0}],
@@ -96,36 +96,33 @@ Judo.register3d({
         pole:{legR:[.4,.7,.3],legL:[-.3,-.3,-.4],armR:[.6,-.2,1],armL:[-.6,-.6,-.6]}},
        uke:{h:-10,arm:{R:B('o',.02,.22,-.30),L:B('s',.05,.25,-.45)}}}],
  [10.2,{}]],
- names:F=>({tori:[F.tori.head[0],Math.max(F.tori.head[1],F.tori.hip[1])+.32,F.tori.head[2]],uke:[F.uke.hip[0]+.25,Math.max(F.uke.head[1],F.uke.hip[1])+.40,F.uke.hip[2]-.25]}),
+ names:F=>({tori:[F.tori.head[0],Math.max(F.tori.head[1],F.tori.hip[1])+.30,F.tori.head[2]-.32],uke:[F.uke.hip[0],Math.max(F.uke.head[1],F.uke.hip[1])+.30,F.uke.hip[2]+.38]}),
  glow:{s:3.4,e:6.0,limbs:{'T.R.leg':'force','U.L.leg':'gold'}},
  stamp:{s:6.35,e:8.0,big:'一本',small:'IPPON'},
  annotateAll:true,
  annotate:(api,F,vi)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
-  if(vi===1){
-   a=win(t,3.4,4.7);
-   api.tag('perna direita entra entre as pernas de Uke',T.legR.E,7,-2,C.force,a);
-   api.tag('pé de apoio entre os pés de Uke',T.legL.H,-8,-1.2,C.gold,a);
-   a=win(t,4.6,5.5);
-   api.tag('coxa levanta a coxa de Uke por dentro',U.legL.E,-1,3.5,C.gold,a);
-   return;}
+  /* Vista principal (Por trás de Uke): é onde a coxa entrando entre as pernas aparece. */
   if(vi!==0)return;
+  a=win(t,3.4,4.7);
+  api.tag('perna entra entre as pernas de Uke',T.legR.E,-2,-4,C.force,a);
+  api.tag('pé de apoio entre os pés de Uke',T.legL.H,-8,-1.2,C.gold,a);
+  a=win(t,4.5,5.2);
+  api.tag('coxa levanta a coxa de Uke por dentro',U.legL.E,8,-3.5,C.gold,a);
   a=win(t,0,1.3);
   api.tag('hikite: manga',T.armL.H,4,-3.5,C.force,a);
   api.tag('tsurite: gola alta',T.armR.H,-7,-3.5,C.force,a);
   a=win(t,1.2,2.9);
   if(a>0){const ch=api.bp(U,.1,.45,0);api.arrow(ch,api.add(ch,[.26,.30,0]),C.force,a);
-   api.tag('puxada: frente e para cima',api.add(ch,[.26,.30,0]),1,-2.6,C.force,a,false);
+   api.tag('puxada: frente e para cima',api.add(ch,[.26,.30,0]),-9,1,C.force,a);
    api.tag('Uke abre a base',U.legL.H,-5,1.5,C.uke,a);}
-  a=win(t,3.4,4.7);
-  api.tag('pé de apoio entre os pés de Uke',T.legL.H,6,1,C.gold,a);
   a=win(t,4.6,5.9);
   if(a>0){api.arc(api.add(T.hip,[0,.1,0]),[1,0,0],[0,1,0],.6,200,340,C.force,a);
-   api.tag('tronco desce, perna sobe: pêndulo',api.add(T.hip,[.3,.9,.3]),6,-1,C.force,a,false);}
+   api.tag('tronco desce, perna sobe: pêndulo',api.add(T.hip,[0,.1,0]),-9,4,C.force,a);}
   a=win(t,6.4,7.6);
   api.tag('manga segura até o fim',T.armL.H,5,-3,C.force,a);
   api.tag('ukemi: queixo no peito',U.head,-6,-2.5,C.uke,a);
   a=win(t,8.5,10.2);
-  api.tag('braço por trás do pescoço',T.armR.E,-6,-3,C.force,a);
-  api.tag('braço de Uke preso na axila',U.armR.E,6,-2.5,C.gold,a);
-  api.tag('base larga',T.legL.H,5,-1.5,C.force,a);}
+  api.tag('braço por trás do pescoço',T.armR.E,-4,2.6,C.force,a);
+  api.tag('braço de Uke preso na axila',U.armR.E,7,-5,C.gold,a);
+  api.tag('base larga',T.legL.H,8,1,C.force,a);}
 });})();
