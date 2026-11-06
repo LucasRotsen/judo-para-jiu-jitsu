@@ -23,6 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Imagens de compartilhamento (Open Graph)
+        run: tools/og.sh "$(which google-chrome)"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
