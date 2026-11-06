@@ -1,0 +1,30 @@
+<!doctype html><html data-theme="light"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site/assets/site.css"></head>
+<body style="margin:0">
+<canvas id="c" width="1200" height="630"></canvas>
+<script src="../site/assets/engine.js"></script><script src="../site/assets/engine3d.js"></script>
+<script>
+const ID=location.hash.slice(1)||'index',TECH=ID==='index'?'ippon-seoi-nage':ID;
+document.write('<script src="../site/assets/tecnicas/'+TECH+'.js"><\/script>');
+</script>
+<script>
+addEventListener('load',async()=>{
+ await Promise.all(['800 64px "Shippori Mincho"','500 18px "IBM Plex Mono"'].map(f=>document.fonts.load(f,'Judô 柔道')));
+ const def=Judo.techs[TECH],cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=1200,H=630,P=460;
+ Judo.readTheme();const css=getComputedStyle(document.documentElement),v=n=>css.getPropertyValue('--'+n).trim();
+ ctx.save();ctx.translate(P,0);Judo.renderDef(ctx,W-P,H,def,def.cover,{annot:false},0);ctx.restore();
+ ctx.fillStyle=v('surface');ctx.fillRect(0,0,P,H);ctx.fillStyle=v('line');ctx.fillRect(P-2,0,2,H);
+ const wrap=(txt,x,y,maxW,lh)=>{let line='';for(const w of txt.split(' ')){const t=line?line+' '+w:w;
+  if(ctx.measureText(t).width>maxW&&line){ctx.fillText(line,x,y);y+=lh;line=w;}else line=t;}ctx.fillText(line,x,y);return y+lh;};
+ const idx=ID==='index';
+ ctx.fillStyle=v('muted');ctx.font='500 18px "IBM Plex Mono"';
+ ctx.fillText(idx?'CATÁLOGO ANIMADO':'JUDÔ PARA JIU-JITSU',48,72);
+ ctx.fillStyle=v('force');ctx.font='800 64px "Shippori Mincho"';ctx.fillText(idx?'柔道':def.kanji,44,170);
+ ctx.fillStyle=v('ink');ctx.font='800 58px "Shippori Mincho"';
+ let y=wrap(idx?'Judô para Jiu-Jitsu':def.name,46,262,P-90,62);
+ ctx.fillStyle=v('muted');ctx.font='500 18px "IBM Plex Mono"';
+ y=wrap(idx?'10 técnicas: quedas, controles e finalizações':(def.bjj?'No jiu-jitsu: '+def.bjj:def.cls),48,y+18,P-90,28);
+ ctx.fillStyle=v('force');ctx.fillRect(48,H-64,64,6);
+ document.title='ready';});
+</script></body></html>

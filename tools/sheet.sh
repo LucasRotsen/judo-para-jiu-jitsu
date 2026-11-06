@@ -7,7 +7,7 @@ W=$(echo "$EXTRA" | sed -n 's/.*w=\([0-9]*\).*/\1/p'); W=${W:-600}
 COLS=$(echo "$EXTRA" | sed -n 's/.*cols=\([0-9]*\).*/\1/p'); COLS=${COLS:-3}
 case "$EXTRA" in *views=1*) N=$((N*3));; esac
 ROWS=$(( (N + COLS - 1) / COLS ))
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --hide-scrollbars \
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --hide-scrollbars --user-data-dir="$(mktemp -d)" \
   --window-size=$((W*COLS)),$((ROWS*W*2/3 + 10)) --virtual-time-budget=3000 \
   --screenshot="$OUT" "file://$DIR/tools/sheet.html#id=$ID&t=$TS&$EXTRA" 2>/dev/null
 echo "$OUT"
