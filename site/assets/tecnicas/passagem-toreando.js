@@ -49,7 +49,7 @@ Judo.register3d({
   l:['Quadril baixo, peso no peito.','Três segundos estáveis: 3 pontos na regra da IBJJF.','Daqui saem montada, joelho na barriga ou kimura.']}],
  rep:[.8,2.7,4.3,5.9,7.8], cover:4.1,
  views:[
-  {name:'De cima',a:0,e:90,center:[.1,0,-.25],span:3.4},
+  {name:'De cima',a:0,e:90,center:[-.12,0,-.18],span:3.0},
   {name:'Pela cabeça',a:-90,e:24,center:[.1,.6,-.2],span:3.3},
   {name:'Lateral',a:0,e:14,center:[.1,.72,-.2],span:3.6}],
  keys:[
@@ -73,18 +73,18 @@ Judo.register3d({
  stamp:{s:6.8,e:9,big:'3 pts',small:'PASSAGEM'},
  annotate:(api,F)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
   a=win(t,0,1.8);
-  api.tag('pés de Uke no quadril',U.legR.H,5,-3,C.uke,a);
-  api.tag('calças nos joelhos, por fora',T.armR.H,4,4,C.force,a);
+  api.tag('pés de Uke no quadril',U.legR.H,6,-6,C.uke,a);
+  api.tag('calças nos joelhos, por fora',T.armR.H,5,6,C.force,a);
   a=win(t,1.7,3.6);
-  api.arrow(api.lerp3(U.legR.E,U.legL.E,.5),api.add(api.lerp3(U.legR.E,U.legL.E,.5),[0,-.15,.5]),C.force,win(t,1.7,3.0));
-  api.tag('pernas para baixo e para o lado',U.legR.E,4,3,C.force,a);
+  api.arrow(api.lerp3(U.legR.E,U.legL.E,.5),api.add(api.lerp3(U.legR.E,U.legL.E,.5),[0,-.12,.8]),C.force,win(t,1.7,3.0));
+  api.tag('pernas para baixo e para o lado',U.legR.E,-10,0,C.force,a);
   a=win(t,3.4,5.2);
-  api.arrow(api.add(T.hip,[.2,0,.3]),api.add(T.hip,[-.1,0,-.25]),C.force,win(t,3.4,4.6));
-  api.tag('Tori corre para o outro lado',T.hip,-5,-3,C.force,a);
-  api.tag('mãos prendem os joelhos no chão',T.armL.H,4,3,C.force,a);
+  api.arrow(api.add(T.hip,[.3,0,.5]),api.add(T.hip,[-.2,0,-.5]),C.force,win(t,3.4,4.6));
+  api.tag('Tori corre para o outro lado',T.hip,-7,-6,C.force,a);
+  api.tag('mãos prendem os joelhos no chão',T.armL.H,-9,1,C.force,a);
   a=win(t,5.1,6.8);
-  api.tag('peito no peito',api.bp(T,.12,.4,0),4,-4,C.force,a);
-  api.tag('joelho colado no quadril',T.legL.E,-4,4,C.force,a);
+  api.tag('peito no peito',api.bp(T,.12,.4,0),8,-6,C.force,a);
+  api.tag('joelho colado no quadril',T.legL.E,-8,5,C.force,a);
   a=win(t,6.8,99);
-  api.tag('quadril baixo: 100 quilos',T.hip,-5,4,C.ink,a);}
+  api.tag('quadril baixo: 100 quilos',T.hip,9,-2,C.ink,a);}
 });})();
