@@ -12,6 +12,8 @@ module.exports = defineConfig({
     command: 'python3 -m http.server -d site 8123 --bind 127.0.0.1',
     url: 'http://127.0.0.1:8123/',
     reuseExistingServer: !process.env.CI,
+    stdout: 'ignore',
+    stderr: 'ignore',
   },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },

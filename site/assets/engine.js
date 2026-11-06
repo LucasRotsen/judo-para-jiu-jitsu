@@ -226,7 +226,7 @@ function mountPage(id){
  const i0=CATALOG.findIndex(c=>c.id===id),prev=CATALOG[(i0+CATALOG.length-1)%CATALOG.length],next=CATALOG[(i0+1)%CATALOG.length];
  const PH=def.phases,END=def.end;
  root.innerHTML=`
- <nav class="topnav"><a class="home" href="index.html">← Todas as técnicas</a>
+ <nav class="topnav" aria-label="Navegação entre técnicas"><a class="home" href="index.html">← Todas as técnicas</a>
   <span class="pn"><a href="${prev.id}.html">‹ ${esc(prev.name)}</a><a href="${next.id}.html">${esc(next.name)} ›</a></span></nav>
  <header class="thead">
   <div><div class="eyebrow">${esc(def.cls)}</div><h1>${esc(def.name)}</h1>
@@ -254,10 +254,10 @@ function mountPage(id){
    </div>
    <div class="timeline" id="tl" aria-label="Linha do tempo"><div class="playhead" id="ph"></div></div>
   </div>
-  <aside class="phase" aria-live="polite">
+  <section class="phase" aria-label="Fase atual" aria-live="polite">
    <div class="ph-step" id="phn"></div><div class="ph-kanji" id="phk" lang="ja"></div>
    <h2 id="pht"></h2><p id="phd"></p><h3>O que observar</h3><ul id="phl"></ul>
-  </aside>
+  </section>
  </section>
  <section class="seq"><h2>Sequência</h2><div class="strip" id="strip" style="--n:${PH.length}"></div></section>
  <section class="cards">
@@ -265,7 +265,7 @@ function mountPage(id){
   <div class="card"><h2>Erros comuns</h2><dl>${def.errors.map(f=>`<div><dt>${esc(f[0])}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl></div>
   <div class="card warn"><h2>Segurança</h2>${(def.safety||DEFAULT_SAFETY).map(s=>`<p>${esc(s)}</p>`).join('')}</div>
  </section>
- <nav class="botnav"><a href="${prev.id}.html"><small>Anterior</small>${esc(prev.name)}</a><a href="index.html"><small>Catálogo</small>Todas as técnicas</a><a href="${next.id}.html"><small>Próxima</small>${esc(next.name)}</a></nav>`;
+ <nav class="botnav" aria-label="Anterior e próxima técnica"><a href="${prev.id}.html"><small>Anterior</small>${esc(prev.name)}</a><a href="index.html"><small>Catálogo</small>Todas as técnicas</a><a href="${next.id}.html"><small>Próxima</small>${esc(next.name)}</a></nav>`;
  const $=s=>root.querySelector(s);
  const cv=$('#cv'),ctx=cv.getContext('2d'),tl=$('#tl'),phEl=$('#ph'),clock=$('#clock');
  const saved=Progress.update(d=>{d.seen[id]=Date.now();});
