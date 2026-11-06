@@ -147,6 +147,7 @@ button{font:inherit;color:inherit}
 .tc-grp{padding:2px 7px;border-radius:3px;border:1px solid var(--line)}
 .tc-grp.ne{border-color:var(--uke);color:var(--ink)}
 .tc-grp.nage{border-color:var(--force);color:var(--ink)}
+.tc-grp.bjj{border-color:var(--gold);color:var(--ink)}
 .tcard h3{margin:2px 0 0;font-family:var(--f-display);font-weight:800;font-size:21px;line-height:1.2}
 .tcard h3 span{font-size:15px;color:var(--muted);font-weight:600;white-space:nowrap}
 .tc-bjj{margin:0;font-weight:600;font-size:14px}
