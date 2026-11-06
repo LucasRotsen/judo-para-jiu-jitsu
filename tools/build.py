@@ -2,7 +2,9 @@
 """Gera site/index.html e site/<id>.html a partir do catálogo e dos arquivos de técnica."""
 from __future__ import annotations
 
+import hashlib
 import html
+import json
 import re
 from pathlib import Path
 
@@ -45,6 +47,9 @@ HEAD = """<!doctype html>
 <meta property="og:image" content="{image}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Judô p/ BJJ">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="{fonts}" rel="stylesheet">
@@ -53,7 +58,11 @@ HEAD = """<!doctype html>
 <body>
 """
 
-SCRIPTS = '<script src="assets/engine.js"></script>\n<script src="assets/engine3d.js"></script>\n'
+SCRIPTS = (
+    '<script src="assets/engine.js"></script>\n<script src="assets/engine3d.js"></script>\n'
+    '<script src="assets/pwa.js" defer></script>\n'
+)
+OFFLINE_SKIP = {"sw.js"}
 
 
 def head(title: str, desc: str, path: str, image: str) -> str:
@@ -86,11 +95,31 @@ def index_page() -> str:
             + "<script>Judo.mountIndex();</script>\n</body>\n</html>\n")
 
 
+def precache_files() -> list[str]:
+    files = sorted(
+        p.relative_to(SITE).as_posix() for p in SITE.rglob("*")
+        if p.is_file() and p.parts[len(SITE.parts)] != "og" and p.name not in OFFLINE_SKIP
+        and not p.name.startswith(".")
+    )
+    return ["./"] + files
+
+
+def service_worker() -> str:
+    files = precache_files()
+    digest = hashlib.sha256()
+    for f in files[1:]:
+        digest.update(f.encode() + (SITE / f).read_bytes())
+    tpl = (ROOT / "tools" / "sw.template.js").read_text(encoding="utf-8")
+    return (tpl.replace("__VERSION__", "jpj-" + digest.hexdigest()[:12])
+            .replace("__FILES__", json.dumps(files, indent=1)))
+
+
 def main() -> None:
     (SITE / "index.html").write_text(index_page(), encoding="utf-8")
     for tid, name in CATALOG:
         (SITE / f"{tid}.html").write_text(technique_page(tid, name), encoding="utf-8")
-    print("ok", len(CATALOG) + 1, "páginas")
+    (SITE / "sw.js").write_text(service_worker(), encoding="utf-8")
+    print("ok", len(CATALOG) + 1, "páginas + sw.js")
 
 
 if __name__ == "__main__":
