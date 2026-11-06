@@ -331,9 +331,9 @@ const scrub=e=>{const r=tl.getBoundingClientRect();t=clamp((e.clientX-r.left)/r.
 /* ---------- index page ---------- */
 function mountIndex(){
  readTheme();const grid=document.getElementById('grid'),chips=document.querySelectorAll('.chip');
- const cards=CATALOG.map((c,i)=>{const def=techs[c.id];const a=document.createElement('a');a.className='tcard';a.href=c.id+'.html';a.dataset.group=c.group;
+ const cards=CATALOG.map((c,i)=>{const def=techs[c.id];const a=document.createElement('a');a.className='tcard';a.href=c.id+'.html';a.dataset.group=c.group;a.dataset.origin=c.origin||'judo';
   a.innerHTML=`<div class="tc-cv"><canvas></canvas></div><div class="tc-body">
-   <div class="tc-meta"><span class="tc-num">${String(i+1).padStart(2,'0')}</span><span class="tc-grp ${c.group}">${c.group==='nage'?'Nage-waza':'Ne-waza'}</span></div>
+   <div class="tc-meta"><span class="tc-num">${String(i+1).padStart(2,'0')}</span><span class="tc-grp ${c.origin==='bjj'?'bjj':c.group}">${c.origin==='bjj'?'Jiu-jitsu':c.group==='nage'?'Nage-waza':'Ne-waza'}</span></div>
    <h3>${esc(c.name)} <span lang="ja">${def?def.kanji:''}</span></h3>
    <p class="tc-bjj">${def?esc(def.bjj):'Em preparação'}</p>
    <p class="tc-why">${def?esc(def.why):''}</p></div>`;
@@ -347,6 +347,7 @@ function mountIndex(){
   k.a.dataset.fav=prog.fav[id]?'1':'';});
  const pr=document.getElementById('progress');
  if(pr)pr.innerHTML=nDone||Object.keys(prog.seen).length?`<b>${nDone} de ${CATALOG.length}</b> técnicas estudadas<span class="bar"><i style="width:${nDone/CATALOG.length*100}%"></i></span>`:'';
+ const bjjChip=document.querySelector('.chip[data-g="bjj"]');if(bjjChip)bjjChip.hidden=!CATALOG.some(c=>c.origin==='bjj');
  const favChip=document.querySelector('.chip[data-g="fav"]');if(favChip)favChip.hidden=!Object.keys(prog.fav).length;
  const draw=k=>{if(k.def)renderTo(k.c,k.def,k.t);};
  cards.forEach(k=>{if(!k.def)return;let last=0;
@@ -360,7 +361,7 @@ function mountIndex(){
   cards.forEach(k=>io.observe(k.a));}
  const all=()=>cards.forEach(draw);all();
  chips.forEach(ch=>ch.addEventListener('click',()=>{chips.forEach(x=>x.setAttribute('aria-pressed',x===ch));const g=ch.dataset.g;
-  cards.forEach(k=>k.a.hidden=!(g==='all'||k.a.dataset.group===g||(g==='fav'&&k.a.dataset.fav)));all();}));
+  cards.forEach(k=>k.a.hidden=!(g==='all'||k.a.dataset.group===g||(g==='fav'&&k.a.dataset.fav)||(g==='bjj'&&k.a.dataset.origin==='bjj')));all();}));
  new ResizeObserver(all).observe(grid);onTheme(all);}
 
 window.Judo={Progress,register,pose,drawScene,viewport,readTheme,renderTo,renderDef,mountPage,mountIndex,techs,CATALOG,W,TP,A,SL,win,tp,lerp2,clamp,D,C,

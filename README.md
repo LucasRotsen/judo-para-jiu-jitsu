@@ -32,7 +32,7 @@ npm test                              # smoke test: todas as páginas carregam s
 
 ## Adicionando uma técnica
 
-1. Acrescente `{id, name, group}` em `site/assets/catalog.js` (`group`: `nage` ou `ne`).
+1. Acrescente `{id, name, group}` em `site/assets/catalog.js` (`group`: `nage` ou `ne`; técnicas próprias do jiu-jitsu levam também `"origin": "bjj"`).
 2. Crie `site/assets/tecnicas/<id>.js`. Use `Judo.register3d` quando a ação acontece em
    profundidade (veja `sankaku-jime.js`) e `Judo.register` para quedas de perfil
    (veja `ippon-seoi-nage.js`).
