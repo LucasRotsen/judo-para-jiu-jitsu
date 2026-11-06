@@ -13,6 +13,15 @@ const GRIPS_STANDING={
  'nuca':{name:'Sua nuca',spec:()=>B('o',-.06,.6,0)},
  'faixa':{name:'Sua faixa',spec:h=>B('o',.15,.02,h==='R'?-.05:.05)},
  'livre':{name:'Solta',spec:h=>SELF_FREE(h)}};
+/* Suas pegadas no gi dele (em pé). 'o' aqui é o tronco dele; sleeveOf segue o antebraço dele. */
+const GRIPS_ME={
+ 'gola-esq':{name:'Gola esquerda dele',spec:()=>B('o',.15,.42,-.08)},
+ 'gola-dir':{name:'Gola direita dele',spec:()=>B('o',.15,.42,.08)},
+ 'gola-alta':{name:'Gola alta, atrás do pescoço dele',spec:()=>B('o',-.05,.6,0)},
+ 'manga-dir':{name:'Manga direita dele',spec:()=>({sleeveOf:'R'})},
+ 'manga-esq':{name:'Manga esquerda dele',spec:()=>({sleeveOf:'L'})},
+ 'faixa-costas':{name:'Faixa dele, por trás',spec:()=>B('o',-.15,.05,0)},
+ 'livre':{name:'Solta',spec:h=>SELF_FREE(h)}};
 const GRIPS_GROUND={
  'gola-esq':GRIPS_STANDING['gola-esq'],'gola-dir':GRIPS_STANDING['gola-dir'],
  'manga-dir':GRIPS_STANDING['manga-dir'],'manga-esq':GRIPS_STANDING['manga-esq'],
@@ -33,7 +42,7 @@ const GRIPS_SIDE={
 
 const POSICOES={
  'em-pe':{name:'Em pé',lede:'Os dois em pé, na pegada.',
-  grips:GRIPS_STANDING,defaults:{R:'gola-esq',L:'manga-dir',f:'parado',b:'paralela'},
+  grips:GRIPS_STANDING,meus:GRIPS_ME,defaults:{R:'gola-esq',L:'manga-dir',f:'parado',b:'paralela',mR:'gola-esq',mL:'manga-dir'},
   bases:{paralela:'Pés paralelos',dir:'Pé direito à frente',esq:'Pé esquerdo à frente'},
   acoes:{parado:'Parado, só segurando',puxando:'Puxando você para ele',empurrando:'Empurrando você',curvado:'Curvado, defendendo'},
   views:[{name:'Diagonal',a:35,e:16,center:[0,1.02,0],span:3.5},{name:'De lado',a:0,e:6,center:[0,1.02,0],span:3.5},
@@ -49,6 +58,7 @@ const POSICOES={
     Object.assign(me,{x:.38,pitch:-6});me.leg={R:W3(.40,.07,-.13),L:W3(.50,.07,.12)};}
    if(s.f==='curvado'){Object.assign(op,{x:-.42,y:.80,pitch:34,h:-30});op.leg={R:W3(-.40,.07,.20),L:W3(-.62,.07,-.20)};
     Object.assign(me,{x:.30,pitch:10});}
+   if(s.mR)me.arm={R:GRIPS_ME[s.mR].spec('R'),L:GRIPS_ME[s.mL].spec('L')};
    if(s.b==='dir'||s.b==='esq'){const k=s.b==='dir'?'R':'L',o=k==='R'?'L':'R';
     op.leg[k]=W3(op.leg[k][1]+.2,.07,op.leg[k][3]);op.leg[o]=W3(op.leg[o][1]-.12,.07,op.leg[o][3]);}
    return {op,me};},
@@ -132,12 +142,14 @@ const POSICOES={
 const holds=(s,g)=>s.R===g||s.L===g;
 const nGrips=s=>['R','L'].filter(h=>s[h]!=='livre').length;
 const anyCollar=s=>holds(s,'gola-esq')||holds(s,'gola-dir');
+const mine=(s,g)=>s.mR===g||s.mL===g;
+const mineCollar=s=>mine(s,'gola-esq')||mine(s,'gola-dir');
 const anySleeve=s=>holds(s,'manga-dir')||holds(s,'manga-esq');
 
 const OPCOES=[
  /* em pé */
  {id:'o-uchi-gari',pos:'em-pe',tipo:'Queda',nome:'O Uchi Gari',tech:'o-uchi-gari',
-  score:s=>({puxando:5,parado:2,curvado:1}[s.f]||0),
+  score:s=>({puxando:5,parado:2,curvado:1}[s.f]||0)+(mineCollar(s)?1:0),
   porque:s=>s.f==='puxando'?'Ele puxa e põe o peso nos calcanhares. Você vai com o puxão, encosta o peito e ceifa a perna dele por dentro: a força dele vira a sua.':'Funciona quando o peso dele vai para trás. Provoque empurrando primeiro e ataque quando ele reagir puxando.',
   passos:['Dê um passo curto para dentro, peito colado','Perna ceifa por dentro, em meia-lua','Empurre na direção do calcanhar dele']},
  {id:'o-soto-gari',pos:'em-pe',tipo:'Queda',nome:'O Soto Gari',tech:'o-soto-gari',
@@ -145,19 +157,19 @@ const OPCOES=[
   porque:s=>s.b==='dir'?'O pé direito dele à frente deixa a perna direita perto e com peso: é a perna que o O Soto Gari (pela direita) ceifa.':'Quem puxa fica com o tronco ereto e o peso atrás. Entre pelo lado de fora, cole o peito e ceife a perna de apoio.',
   passos:['Pé de apoio ao lado do pé dele','Peito no peito, quebre para trás','Ceife a perna de trás para frente']},
  {id:'morote-gari',pos:'em-pe',tipo:'Queda',nome:'Morote Gari (baiana)',tech:'morote-gari',
-  score:s=>({puxando:4,parado:3,empurrando:2}[s.f]||0)+(s.b==='paralela'?1:0),
+  score:s=>({puxando:4,parado:3,empurrando:2}[s.f]||0)+(s.b==='paralela'?1:0)+(s.mR==='livre'&&s.mL==='livre'?1:0),
   porque:s=>s.f==='puxando'?'Ele já está trazendo você. Mude de nível e use a distância que ele mesmo encurtou para entrar nas duas pernas.':'Postura alta e quadril aberto deixam as pernas dele expostas para a baiana.',
   passos:['Abaixe o quadril, não a cabeça','Joelho no chão entre os pés dele','Cabeça no lado de fora, puxe as pernas e empurre']},
  {id:'ippon-seoi-nage',pos:'em-pe',tipo:'Queda',nome:'Ippon Seoi Nage',tech:'ippon-seoi-nage',
-  score:s=>({empurrando:5,parado:2}[s.f]||0),
+  score:s=>({empurrando:5,parado:2}[s.f]||0)+(mineCollar(s)&&(mine(s,'manga-dir')||mine(s,'manga-esq'))?1:0),
   porque:()=>'Se ele empurra, puxe. O peso dele já vem para a frente: gire de costas por baixo dele e carregue nas costas.',
   passos:['Puxe a manga para cima e para frente','Gire entrando com os pés por dentro dos dele','Braço sob a axila dele, joelhos dobrados, projete']},
  {id:'uchi-mata',pos:'em-pe',tipo:'Queda',nome:'Uchi Mata',tech:'uchi-mata',
-  score:s=>({empurrando:4,parado:2,curvado:2}[s.f]||0),
+  score:s=>({empurrando:4,parado:2,curvado:2}[s.f]||0)+(mine(s,'gola-alta')?2:0),
   porque:()=>'O peso dele vem para a frente. Você entra girando e levanta a coxa dele por dentro como um pêndulo.',
   passos:['Puxada para frente e para cima','Pé de apoio entre os pés dele','Coxa sobe por dentro, tronco desce']},
  {id:'o-goshi',pos:'em-pe',tipo:'Queda',nome:'O Goshi',tech:'o-goshi',
-  score:s=>({empurrando:4,parado:2}[s.f]||0)+(holds(s,'nuca')?1:0),
+  score:s=>({empurrando:4,parado:2}[s.f]||0)+(holds(s,'nuca')?1:0)+(mine(s,'faixa-costas')?2:0),
   porque:()=>'Ele vem para cima de você. Abrace a cintura, encaixe o quadril abaixo do dele e gire.',
   passos:['Braço abraça a cintura por trás','Quadril abaixo e além do dele','Estenda as pernas e gire']},
  {id:'tomoe-nage',pos:'em-pe',tipo:'Queda',nome:'Tomoe Nage',tech:'tomoe-nage',
@@ -172,6 +184,10 @@ const OPCOES=[
   score:s=>nGrips(s)?2+(anySleeve(s)?2:0):0,
   porque:s=>anySleeve(s)?'Quem controla a sua manga controla o seu braço de ataque. Antes de tentar qualquer coisa, solte essa pegada.':'Tire a pegada dele antes de atacar; quem tem a melhor pegada escolhe o golpe.',
   passos:['Gire o punho preso para fora, contra o polegar dele','Puxe o braço para trás com o quadril, não só com o braço','Pegue primeiro na pegada que você quer']},
+ {id:'pegar-primeiro',pos:'em-pe',tipo:'Pegada',nome:'Pegar primeiro',
+  score:s=>s.mR==='livre'&&s.mL==='livre'?(nGrips(s)?5:3):(s.mR==='livre'||s.mL==='livre'?2:0),
+  porque:s=>nGrips(s)?'Ele tem pegada e você não: ele escolhe o golpe. Antes de qualquer ataque, garanta a sua.':'Sem pegada ninguém controla ninguém. Quem pega primeiro, e bem, escolhe o que vai acontecer.',
+  passos:['Manga primeiro: controla o braço de ataque dele','Depois a gola, com o cotovelo para baixo','Se ele tirar, pegue de novo antes de recuar']},
  {id:'postura-nuca',pos:'em-pe',tipo:'Defesa',nome:'Recuperar a postura',
   score:s=>(holds(s,'nuca')?4:0)+(s.f==='puxando'&&holds(s,'nuca')?1:0),
   porque:()=>'Com a mão na sua nuca ele abaixa sua cabeça e prepara a queda. Cabeça baixa é postura perdida.',
@@ -280,7 +296,8 @@ function avaliar(s){
 
 function normalizar(s){const P=POSICOES[s.pos]?s.pos:'em-pe',d=POSICOES[P].defaults,G=POSICOES[P].grips,A=POSICOES[P].acoes,Bs=POSICOES[P].bases;
  const n={pos:P,R:G[s.R]?s.R:d.R,L:G[s.L]?s.L:d.L,f:A[s.f]?s.f:d.f};
- if(Bs)n.b=Bs[s.b]?s.b:d.b;return n;}
+ if(Bs)n.b=Bs[s.b]?s.b:d.b;
+ const M=POSICOES[P].meus;if(M){n.mR=M[s.mR]?s.mR:d.mR;n.mL=M[s.mL]?s.mL:d.mL;}return n;}
 
 window.JudoSim={POSICOES,OPCOES,avaliar,normalizar};
 })();
