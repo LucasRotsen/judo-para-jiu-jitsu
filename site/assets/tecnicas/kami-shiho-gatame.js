@@ -1,5 +1,18 @@
-(()=>{const {W,TP,A,lerp2,tp,win}=Judo;
-Judo.register({
+(()=>{const {W3,B,win}=Judo;
+/* Mundo 3D: y para cima. Uke de costas, cabeça para -x, pés para +x; direita de Uke = +z.
+   Tori na cabeça de Uke, de frente para os pés dele (yaw 0); deitado (pitch ~80) o peito olha para baixo e a direita de Tori também fica em +z.
+   Os braços de Tori entram pelas axilas de Uke (por baixo dos braços dele) e seguram a faixa nas laterais. */
+const ukeBase={x:.35,y:.13,z:0,yaw:0,pitch:-90,h:-8,
+ leg:{R:W3(1.16,.08,.2),L:W3(1.16,.08,-.2)},arm:{R:W3(.22,.06,.36),L:W3(.22,.06,-.36)},
+ pole:{legR:[1,0,.1],legL:[1,0,-.1],armR:[0,.4,1],armL:[0,.4,-1]}};
+const toriBase={x:-.62,y:.52,z:0,yaw:0,pitch:6,h:12,
+ leg:{R:W3(-1.04,.06,.27),L:W3(-1.04,.06,-.27)},arm:{R:B('s',.2,.02,.17),L:B('s',.2,.02,-.17)},
+ pole:{legR:[1,-.6,.35],legL:[1,-.6,-.35],armR:[0,-1,.6],armL:[0,-1,-.6]}};
+const belt={R:B('o',.02,.1,.25),L:B('o',.02,.1,-.25)};
+const lying={x:-.55,y:.30,pitch:82,h:35,leg:{R:W3(-1.22,.06,.34),L:W3(-1.22,.06,-.34)},arm:belt,
+ pole:{legR:[.6,-1,.4],legL:[.6,-1,-.4],armR:[1,.3,.6],armL:[1,.3,-.6]}};
+const ukePinned={arm:{R:B('o',-.13,.40,.16),L:B('o',-.13,.40,-.16)},pole:{armR:[.4,-.5,1],armL:[.4,-.5,-1]}};
+Judo.register3d({
  id:'kami-shiho-gatame', name:'Kami Shiho Gatame', kanji:'上四方固',
  cls:'Ne-waza · Osaekomi-waza', group:'ne',
  bjj:'Norte-sul',
@@ -34,43 +47,44 @@ Judo.register({
   d:'A ponte perde força e Uke volta ao chão achatado. Tori segue no controle, pronto para trocar para 100 quilos ou buscar a finalização se Uke girar.',
   l:['Tori acompanha a ponte em vez de resistir parado.','Cada saída de Uke tem uma transição de Tori: 100 quilos, montada ou kimura.','Respiração calma: o controle é longo.']}],
  rep:[.8,3.0,4.4,6.0,8.8], cover:4.4,
+ views:[
+  {name:'Diagonal',a:35,e:60,center:[-.15,.3,0],span:3.3},
+  {name:'Lateral',a:0,e:8,center:[-.05,.45,0],span:3.0},
+  {name:'De cima',a:0,e:90,center:[-.1,0,0],span:2.9}],
  keys:[
- [0,{uke:{x:1.12,y:.15,T:66,r:-246,f:1,h:-5,gf:1,leg:{R:W(1.62,.08),L:W(1.70,.08)},arm:{R:A(-114,-114),L:A(-108,-118)}},
-     tori:{x:0,y:.52,T:85,f:1,h:0,gf:0,leg:{R:W(-.43,.13),L:W(-.36,.13)},arm:{R:TP('s',.22,.02),L:TP('s',.22,.06)}}}],
+ [0,{uke:ukeBase,tori:toriBase}],
  [1.5,{}],
- [2.3,{tori:{x:.12,y:.55,T:40,h:-5,leg:{R:W(-.38,.14),L:W(-.31,.14)},arm:{R:TP('o',0,.45),L:TP('o',0,.40)}},
-       uke:{arm:{R:TP('o',.10,.45),L:TP('o',.10,.40)}}}],
- [3.2,{tori:{x:.25,y:.52,T:-6,h:-15,leg:{R:W(-.31,.15),L:W(-.24,.15)},arm:{R:TP('o',0,.10),L:TP('o',0,.12)}},
-       uke:{arm:{R:TP('o',.12,.35),L:TP('o',.12,.30)}}}],
- [3.6,{tori:{y:.50}}],
+ [2.4,{tori:{x:-.6,y:.44,pitch:50,h:20,arm:{R:B('o',.04,.44,.32),L:B('o',.04,.44,-.32)},pole:{armR:[.4,-.3,1],armL:[.4,-.3,-1]}},
+       uke:{arm:{R:W3(.18,.12,.4),L:W3(.18,.12,-.4)}}}],
+ [3.2,{tori:lying,uke:ukePinned}],
+ [3.6,{tori:{y:.29}}],
  [5.2,{}],
- [5.8,{uke:{x:1.10,y:.40,r:-221,h:-20,leg:{R:W(1.50,.08),L:W(1.58,.08)}},tori:{x:.30,y:.60,T:-14}}],
- [6.4,{uke:{y:.30,r:-232},tori:{x:.22,y:.46,T:-2,leg:{R:W(-.62,.13),L:W(-.55,.13)}}}],
- [7.0,{uke:{x:1.12,y:.15,r:-246,h:-5,leg:{R:W(1.62,.08),L:W(1.70,.08)}},tori:{y:.47,T:-5}}],
- [7.6,{tori:{y:.48}}],
+ [5.8,{uke:{x:.30,y:.30,pitch:-106,h:-20,leg:{R:W3(.78,.07,.22),L:W3(.78,.07,-.22)}},tori:{x:-.50,y:.40,pitch:72}}],
+ [6.4,{uke:{y:.24,pitch:-100},tori:{x:-.62,y:.27,pitch:86,leg:{R:W3(-1.4,.06,.48),L:W3(-1.4,.06,-.48)},pole:{legR:[.3,-1,.2],legL:[.3,-1,-.2]}}}],
+ [7.0,{uke:{x:.35,y:.13,pitch:-90,h:-8,leg:{R:W3(1.0,.08,.22),L:W3(1.0,.08,-.22)}},tori:{x:-.55,y:.29,pitch:82}}],
+ [7.6,{}],
  [10,{}]],
- order:()=>['T.far.leg','T.far.arm','U.far.leg','U.far.arm','U.body','T.body','T.near.arm','U.near.leg','U.near.arm','T.near.leg'],
- names:F=>({uke:[F.uke.legR.E[0],F.uke.legR.E[1]+.22],tori:[F.tori.x,Math.max(F.tori.head[1],F.tori.hip[1])+.3]}),
- glow:{s:1.8,e:3.9,limbs:{'T.R.arm':'force'}},
+ names:F=>({uke:[F.uke.legR.H[0]-.1,.42,F.uke.legR.H[2]+.1],tori:[F.tori.hip[0]-.4,F.tori.hip[1]+.25,F.tori.hip[2]+.35]}),
+ glow:{s:1.8,e:4.0,limbs:{'T.R.arm':'force','T.L.arm':'force'}},
  stamp:{s:3.7,e:10,big:'抑込',small:'OSAEKOMI'},
  annotate:(api,F)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
   a=win(t,0,1.7);
-  api.tag('joelhos abertos, base larga',T.legR.E,-2,-5,C.force,a);
-  api.tag('Uke de costas no tatame',tp(U,0,.3),2,-4,C.uke,a);
-  a=win(t,1.6,3.6);
-  api.arrow(T.sh,lerp2(T.sh,tp(U,0,.12),.85),C.force,win(t,1.6,2.6));
-  api.tag('braços por baixo dos braços de Uke',T.armR.E,8,-5,C.force,a);
-  api.tag('mãos na faixa',T.armR.H,5,2.6,C.force,win(t,2.8,3.8));
+  api.tag('joelhos abertos, base larga',T.legR.E,-4,4,C.force,a);
+  api.tag('Uke de costas no tatame',api.bp(U,.1,.25,-.15),4,4,C.uke,a);
+  a=win(t,1.6,3.7);
+  api.arrow(T.sh,api.lerp3(T.sh,U.sh,.7),C.force,win(t,1.6,2.6));
+  api.tag('braços entram pelas axilas de Uke',T.armR.E,6,-4,C.force,a);
+  api.tag('mãos na faixa',T.armR.H,5,3,C.force,win(t,2.8,3.9));
   a=win(t,3.7,5.3);
-  api.tag('peito contra peito',tp(T,.15,.35),-2,-9,C.force,a);
-  api.tag('cabeça de lado',T.head,7,-6.5,C.force,a);
-  api.tag('quadril baixo',T.hip,-7,-1.5,C.force,a);
+  api.tag('peito contra peito',api.bp(T,.12,.38,0),3,-7,C.force,a);
+  api.tag('braços de Uke presos por fora',U.armL.E,4,5,C.uke,a);
+  api.tag('quadril baixo',T.hip,-7,4,C.force,a);
   a=win(t,5.3,6.9);
-  api.arrow([U.x,.45],[U.x,.85],C.uke,win(t,5.3,6.2));
-  api.tag('upa: Uke faz a ponte',[U.x,.85],0,-1.6,C.uke,a,false);
-  api.arrow(T.legR.E,[T.legR.E[0]-.32,T.legR.E[1]],C.force,win(t,6.0,7.0));
-  api.tag('pernas para trás (sprawl)',[T.legR.E[0]-.32,T.legR.E[1]],-1,-2.6,C.force,win(t,6.0,7.2),false);
+  api.arrow(api.add(U.hip,[0,.25,0]),api.add(U.hip,[0,.6,0]),C.uke,win(t,5.3,6.2));
+  api.tag('upa: Uke faz a ponte',api.add(U.hip,[0,.6,0]),0,-1.6,C.uke,a,false);
+  api.arrow(T.legR.H,api.add(T.legR.H,[-.3,0,.12]),C.force,win(t,6.0,7.0));
+  api.tag('pernas para trás (sprawl)',T.legR.E,2,4,C.force,win(t,6.0,7.2));
   a=win(t,7.3,99);
-  api.tag('peso de volta no peito',tp(T,.15,.35),-2,-9,C.force,a);
-  api.tag('pronto para 100 quilos ou kimura',[.6,1.4],0,0,C.ink,a,false);}
+  api.tag('peso de volta no peito',api.bp(T,.12,.38,0),3,-7,C.force,a);
+  api.tag('pronto para 100 quilos ou kimura',api.add(U.hip,[.3,.7,0]),0,0,C.ink,a,false);}
 });})();
