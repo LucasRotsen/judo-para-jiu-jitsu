@@ -118,7 +118,9 @@ function drawPrim(ctx,V,p,F,C){
   ctx.strokeStyle=fill;ctx.lineWidth=p.r*2*V.sc;ctx.stroke();return;}
  if(p.k==='sph'){const c=V.S(p.c);ctx.beginPath();ctx.arc(c[0],c[1],p.r*V.sc,0,7);ctx.fillStyle=fill;ctx.fill();ctx.lineWidth=V.lw;ctx.strokeStyle=P.line;ctx.stroke();return;}
  const H=V.S(p.c),r=.115*V.sc;ctx.save();ctx.beginPath();ctx.arc(H[0],H[1],r,0,7);ctx.fillStyle=C.skin;ctx.fill();ctx.clip();
- const hc=V.S(add(p.c,add(mul(p.f,-.05),mul(p.u,.04))));ctx.beginPath();ctx.arc(hc[0],hc[1],r,0,7);ctx.fillStyle=C.hair;ctx.fill();ctx.restore();
+ /* Rosto voltado para a câmera: o cabelo sobe para o topo, senão cobre o rosto inteiro. */
+ const fa=Math.max(0,dot(p.f,V.cam.c));
+ const hc=V.S(add(p.c,add(mul(p.f,-.05*(1-fa)),mul(p.u,.04+.06*fa))));ctx.beginPath();ctx.arc(hc[0],hc[1],r,0,7);ctx.fillStyle=C.hair;ctx.fill();ctx.restore();
  ctx.beginPath();ctx.arc(H[0],H[1],r,0,7);ctx.lineWidth=V.lw;ctx.strokeStyle=P.line;ctx.stroke();}
 function floor(ctx,V,C){const {w,h}=V;ctx.fillStyle=C.wall;ctx.fillRect(0,0,w,h);
  const q=[[-4,0,-3],[4,0,-3],[4,0,3],[-4,0,3]].map(V.S);ctx.beginPath();q.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();
