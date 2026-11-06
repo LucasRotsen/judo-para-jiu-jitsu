@@ -1,0 +1,13 @@
+{
+  "name": "judo-para-jiu-jitsu",
+  "private": true,
+  "description": "Catálogo animado de técnicas de judô para quem treina jiu-jitsu",
+  "scripts": {
+    "serve": "python3 -m http.server -d site 8000",
+    "build": "python3 tools/build.py",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.48.2"
+  }
+}
