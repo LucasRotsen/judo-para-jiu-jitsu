@@ -3,14 +3,14 @@
    Tori começa deitado de costas, cabeça para -x (yaw 180, pitch 90, roll 180 = de costas, direita = +z).
    A chave é no braço DIREITO de Uke: a perna ESQUERDA de Tori passa por cima do ombro direito de Uke.
    Ao girar, o roll de Tori vai de 180 a 0 (deitado → de lado → sentado de frente para -x, ao lado do ombro de Uke). */
-const ukeBase={x:.42,y:.40,z:0,yaw:180,pitch:35,roll:0,h:-20,
+const ukeBase={x:.34,y:.40,z:0,yaw:180,pitch:35,roll:0,h:-20,
  leg:{R:W3(.57,.07,-.17),L:W3(.57,.07,.17)},arm:{R:B('o',.12,.05,-.12),L:B('o',.12,.05,.12)},
  pole:{armR:[-.3,-.7,.6],armL:[-.3,-.7,-.6]}};
 const toriBase={x:0,y:.15,z:0,yaw:180,pitch:90,roll:180,h:30,
- leg:{R:B('o',-.17,.15,.07),L:B('o',-.15,.2,-.07)},arm:{R:SL('armL',.9),L:SL('armR',.9)},
- pole:{legR:[.5,0,1],legL:[.5,0,-1],armR:[-.6,.3,.6],armL:[-.6,.3,-.6]}};
+ leg:{R:B('o',-.26,.02,.02),L:B('o',-.26,.07,-.02)},arm:{R:SL('armL',.9),L:SL('armR',.9)},
+ pole:{legR:[.3,0,1],legL:[.3,0,-1],armR:[-.6,.3,.6],armL:[-.6,.3,-.6]}};
 /* Mão direita de Uke presa no quadril de Tori (referencial de Tori sentado). */
-const handOnHip=B('o',-.06,.14,-.16);
+const handOnHip=B('o',-.02,.04,-.30);
 const tapAt=W3(-.22,.06,.34),tapUp=W3(-.22,.17,.34);
 Judo.register3d({
  id:'omoplata', name:'Omoplata', kanji:'肩固', group:'ne', cls:'Jiu-jitsu · Chave de ombro',
@@ -53,21 +53,23 @@ Judo.register3d({
  keys:[
  [0,{uke:ukeBase,tori:toriBase}],
  [1.4,{}],
+ [1.9,{tori:{leg:{R:B('o',.02,.05,-.42)}}}],
  [2.4,{uke:{x:.40,y:.38,pitch:50,h:-5,arm:{R:W3(.06,.06,-.30)}},
-       tori:{z:.06,roll:165,leg:{R:B('o',.14,.02,-.16),L:B('o',.10,.20,.22)},arm:{L:SL('armR',.95),R:B('o',.12,.48,-.12)},pole:{legL:[.6,0,-1]}}}],
- [3.4,{tori:{z:.14,roll:160,pitch:88,leg:{L:B('o',.16,.52,.34)}},uke:{pitch:55}}],
- [4.4,{tori:{z:.12,roll:150,pitch:86,h:20,leg:{L:B('o',-.16,.36,.10),R:B('o',.14,0,-.16)},pole:{legL:[.3,.2,-1]}},
+       tori:{z:.06,roll:165,leg:{R:B('o',.24,.0,-.20),L:B('o',.02,.12,.42)},arm:{L:SL('armR',.95),R:B('o',.12,.48,-.12)},pole:{legL:[1,.3,-.6]}}}],
+ [3.4,{tori:{z:.14,roll:160,pitch:88,leg:{L:B('o',.18,.72,.34)},pole:{legL:[1,.3,-.3]}},uke:{pitch:55}}],
+ [3.9,{tori:{leg:{L:B('o',-.02,.74,.26)}}}],
+ [4.4,{tori:{z:.12,roll:150,pitch:86,h:20,leg:{L:B('o',-.24,.40,.14),R:B('o',.24,0,-.20)},pole:{legL:[.3,.2,-1]}},
        uke:{x:.44,y:.39,pitch:66,h:-10,leg:{R:W3(.66,.07,-.17),L:W3(.66,.07,.17)},pole:{legR:[0,-1,.15],legL:[0,-1,-.15]}}}],
  [5.2,{}],
- [5.7,{uke:{x:.48,y:.34,pitch:76,leg:{R:W3(.98,.07,-.17),L:W3(.98,.07,.17)},pole:{legR:[0,-1,.15],legL:[0,-1,-.15]}}}],
+ [5.7,{tori:{arm:{L:B('o',.05,.52,.44)}},uke:{x:.48,y:.34,pitch:76,leg:{R:W3(.98,.07,-.17),L:W3(.98,.07,.17)},pole:{legR:[0,-1,.15],legL:[0,-1,-.15]}}}],
  [6.2,{tori:{x:.12,y:.13,z:-.42,roll:80,pitch:50,h:10,leg:{L:W3(-.36,.12,-.24),R:W3(-.30,.08,-.66)},
         arm:{L:W3(.36,.30,.08),R:W3(.12,.06,-.66)},pole:{legL:[.2,1,.4],legR:[.4,.3,-1],armL:[0,1,0],armR:[0,.2,-1]}},
-       uke:{x:.52,y:.20,pitch:82,h:-20,leg:{R:W3(1.30,.07,-.16),L:W3(1.30,.07,.16)},arm:{R:handOnHip,L:W3(-.20,.06,.32)},pole:{armR:[-.6,0,.8],legR:[-1,0,.1],legL:[-1,0,-.1]}}}],
+       uke:{x:.52,y:.20,pitch:82,h:-20,leg:{R:W3(1.30,.07,-.16),L:W3(1.30,.07,.16)},arm:{R:handOnHip,L:W3(-.20,.06,.32)},pole:{armR:[-1,0,-.3],legR:[-1,0,.1],legL:[-1,0,-.1]}}}],
  [7.2,{tori:{x:.15,y:.12,z:-.45,roll:0,pitch:12,h:5,leg:{L:W3(-.56,.09,-.10),R:W3(-.54,.17,-.20)},
         arm:{L:W3(.46,.24,.18),R:W3(.12,.06,-.78)},pole:{legL:[0,1,-.3],legR:[0,.6,1],armL:[0,1,.2],armR:[0,-.5,-1]}},
        uke:{x:.56,y:.14,pitch:88,h:-25,leg:{R:W3(1.42,.07,-.15),L:W3(1.42,.07,.15)}}}],
  [7.8,{}],
- [8.8,{tori:{x:.03,pitch:36,h:-5,arm:{L:W3(.40,.22,.16)}},uke:{pole:{armR:[-1,0,.15]}}}],
+ [8.8,{tori:{x:.03,pitch:36,h:-5,arm:{L:W3(.40,.22,.16)}},uke:{pole:{armR:[-1,0,-.2]}}}],
  [9.0,{uke:{arm:{L:tapAt}}}],
  [9.25,{uke:{arm:{L:tapUp}}}],
  [9.5,{uke:{arm:{L:tapAt}}}],
