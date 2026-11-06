@@ -52,9 +52,9 @@ Judo.register3d({
   l:['A batida pode ser no corpo, no tatame ou com a voz.','Soltar imediatamente é parte da técnica.','Quem recebe bate cedo: o ombro não avisa.']}],
  rep:[.7,2.4,4.2,5.9,7.8,9.4], cover:7.8,
  views:[
-  {name:'Lado do braço',a:172,e:18,center:[-.36,.30,-.25],span:1.55,bias:{'U.L.arm':.12}},
-  {name:'Pela cabeça',a:-95,e:24,center:[-.30,.22,-.15],span:1.7,bias:{'U.L.arm':.12}},
-  {name:'Diagonal alta',a:200,e:55,center:[-.30,.15,-.10],span:2.1,bias:{'U.L.arm':.3,'T.L.arm':.25,'T.R.arm':.25}}],
+  {name:'Lado do braço',a:172,e:18,center:[.02,.30,.08],span:2.6,bias:{'U.L.arm':.12}},
+  {name:'Pela cabeça',a:-95,e:24,center:[0,.25,.08],span:2.6,bias:{'U.L.arm':.12}},
+  {name:'Diagonal alta',a:200,e:55,center:[.02,.12,.08],span:2.7,bias:{'U.L.arm':.3,'T.L.arm':.25,'T.R.arm':.25}}],
  keys:[
  [0,{uke:ukeBase,tori:toriBase}],
  [1.4,{}],
@@ -75,18 +75,18 @@ Judo.register3d({
  stamp:{s:9.0,e:10.8,big:'参った',small:'MAITTA'},
  annotate:(api,F)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
   a=win(t,0,1.6);
-  api.tag('Uke empurra com o braço de longe',U.armL.H,-6,-3,C.info,a);
+  api.tag('Uke empurra com o braço de longe',U.armL.H,-3,6,C.info,a);
   a=win(t,1.6,3.2);
   api.tag('mão esquerda no punho',T.armL.H,-7,3,C.gold,a);
-  api.tag('cotovelo de Uke a 90°',U.armL.E,6,3,C.info,a);
+  api.tag('cotovelo de Uke a 90°',U.armL.E,-4,6,C.info,a);
   a=win(t,3.2,5.0);
   api.tag('braço por baixo, mão no próprio punho',T.armR.H,-9,3.5,C.force,a);
   a=win(t,5.0,6.9);
-  api.tag('pinta o chão até o quadril',U.armL.H,6,3,C.force,a);
+  api.tag('pinta o chão até o quadril',U.armL.H,-3,5,C.force,a);
   api.ring(U.armL.E,.06,C.info,a);
   a=win(t,6.9,8.9);
   api.arrow(api.add(U.armL.E,[0,-.02,0]),api.add(U.armL.E,[0,.22,0]),C.force,a);
-  api.tag('cotovelo sobe, mão fica no quadril',U.armL.E,6,-3,C.force,a);
+  api.tag('cotovelo sobe, mão fica no quadril',U.armL.E,-9,-4,C.force,a);
   a=win(t,9.0,10.8);
-  api.tag('Uke bate: solte na hora',U.armR.H,6,-2,C.uke,a);}
+  api.tag('Uke bate: solte na hora',U.armR.H,-10,-5,C.uke,a);}
 });})();
