@@ -47,7 +47,7 @@ Judo.register3d({
  views:[
   {name:'Diagonal',a:25,e:28,center:[0,.82,0],span:3.5},
   {name:'Pés, de cima',a:10,e:58,center:[.05,.2,.05],span:2.4},
-  {name:'Lateral',a:0,e:8,center:[0,.85,0],span:3.5}],
+  {name:'Lateral',a:0,e:8,center:[0,.98,0],span:3.9}],
  keys:[
  [0,{uke:uke0,tori:tori0}],
  [1,{}],
@@ -73,7 +73,16 @@ Judo.register3d({
  names:F=>F.t>4.4?{uke:[F.uke.head[0]-.15,F.uke.head[1]+.38,F.uke.head[2]]}:{},
  glow:{s:2.5,e:4.4,limbs:{'T.L.leg':'force','U.R.leg':'gold'}},
  stamp:{s:4.85,e:6.4,big:'一本',small:'IPPON'},
- annotate:(api,F)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
+ annotateAll:true,
+ annotate:(api,F,vi)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
+  /* Vista dos pés: só o contato da sola e a direção da varrida. Lateral: sem anotações. */
+  if(vi===1){a=win(t,2.95,4.5);
+   if(a>0){api.ring(T.legL.toe,.08,C.force,a);
+    api.tag('sola por fora do tornozelo',T.legL.toe,7,4,C.force,win(t,2.95,3.7));
+    api.arrow([.12,.12,.36],[.32,.2,-.22],C.force,win(t,3.6,4.5));
+    api.tag('planta do pé varre o chão',T.legL.toe,-9,4,C.force,win(t,3.6,4.5));}
+   return;}
+  if(vi!==0)return;
   a=win(t,0,1.3);
   api.tag('Hikite: manga',T.armL.H,4,-4,C.force,a);
   api.tag('Tsurite: gola',T.armR.H,-6,-4,C.force,a);
@@ -84,7 +93,8 @@ Judo.register3d({
   a=win(t,2.95,3.7);
   if(a>0){api.ring(U.legR.H,.13,C.gold,a);
    api.tag('o pé toca, mas ainda sem peso',U.legR.H,-9,3.2,C.gold,a);
-   api.tag('sola contra o tornozelo, por fora',T.legL.toe,5,-5.5,C.force,a);}
+   api.ring(T.legL.toe,.07,C.force,a);
+   api.tag('sola contra o tornozelo, por fora',T.legL.toe,10,-1.5,C.force,a);}
   a=win(t,3.6,4.5);
   if(a>0){api.arrow([.12,.12,.36],[.32,.2,-.22],C.force,a);
    api.tag('varre para frente e para dentro',[.32,.2,-.22],4,3,C.force,a,false);
