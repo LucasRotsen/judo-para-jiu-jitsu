@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "python3 -m http.server -d site 8000",
     "build": "python3 tools/build.py",
+    "pretest": "python3 tools/build.py",
     "test": "playwright test"
   },
   "devDependencies": {

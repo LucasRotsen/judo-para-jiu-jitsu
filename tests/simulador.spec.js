@@ -48,3 +48,11 @@ test('estado vem da URL e os selects funcionam sem mouse', async ({ page }) => {
   await page.getByRole('button', { name: 'Em pé' }).click();
   await expect.poll(() => page.evaluate(() => window.JudoSimUI.state().pos)).toBe('em-pe');
 });
+
+test('base dele só aparece em pé e vai para a URL', async ({ page }) => {
+  await page.goto('/simulador.html#pos=em-pe&R=gola-esq&L=manga-dir&f=parado');
+  await page.getByRole('button', { name: 'Pé direito à frente' }).click();
+  await expect.poll(() => page.url()).toContain('b=dir');
+  await page.getByRole('button', { name: 'Montada (você por baixo)' }).click();
+  await expect(page.locator('#base')).toBeHidden();
+});
