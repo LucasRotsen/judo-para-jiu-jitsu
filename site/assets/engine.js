@@ -220,6 +220,12 @@ function onTheme(fn){matchMedia('(prefers-color-scheme: dark)').addEventListener
  new MutationObserver(()=>{readTheme();fn();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
  if(document.fonts)document.fonts.ready.then(()=>{readTheme();fn();});}
 const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Progresso do aluno, só no aparelho (ADR 0001). Falha silenciosa em modo privado. */
+const Progress={KEY:'jpj:v1',
+ read(){try{return Object.assign({seen:{},done:{},fav:{},speed:1},JSON.parse(localStorage.getItem(this.KEY)||'{}'));}catch(e){return {seen:{},done:{},fav:{},speed:1};}},
+ write(d){try{localStorage.setItem(this.KEY,JSON.stringify(d));}catch(e){}},
+ update(fn){const d=this.read();fn(d);this.write(d);return d;},
+ toggle(set,id){return this.update(d=>{if(d[set][id])delete d[set][id];else d[set][id]=Date.now();})[set][id]!==undefined;}};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const GROUP={nage:'Nage-waza · projeção',ne:'Ne-waza · solo'};
 const DEFAULT_SAFETY=['Pratique apenas com um professor qualificado, em tatame, e com um parceiro que conhece a técnica.',
@@ -236,6 +242,9 @@ function mountPage(id){
  <header class="thead">
   <div><div class="eyebrow">${esc(def.cls)}</div><h1>${esc(def.name)}</h1>
    <p class="bjj"><span>No jiu-jitsu</span>${esc(def.bjj)}</p>
+   <div class="mine" role="group" aria-label="Meu progresso">
+    <button class="pill" id="done" aria-pressed="false"><span aria-hidden="true">✓</span> <span class="lbl">Marcar como estudada</span></button>
+    <button class="pill" id="fav" aria-pressed="false"><span aria-hidden="true">★</span> <span class="lbl">Favoritar</span></button></div>
    <p class="lede">${esc(def.summary)}</p></div>
   <div class="name" aria-label="Leitura do nome">${def.reading.map(p=>`<div><b lang="ja">${p.k}</b><i>${esc(p.r)}</i><span>${esc(p.m)}</span></div>`).join('')}</div>
  </header>
@@ -270,7 +279,12 @@ function mountPage(id){
  <nav class="botnav"><a href="${prev.id}.html"><small>Anterior</small>${esc(prev.name)}</a><a href="index.html"><small>Catálogo</small>Todas as técnicas</a><a href="${next.id}.html"><small>Próxima</small>${esc(next.name)}</a></nav>`;
  const $=s=>root.querySelector(s);
  const cv=$('#cv'),ctx=cv.getContext('2d'),tl=$('#tl'),phEl=$('#ph'),clock=$('#clock');
- let t=0,playing=!reduced(),speed=1,annot=true,last=0,cur=-1;
+ const saved=Progress.update(d=>{d.seen[id]=Date.now();});
+let t=0,playing=!reduced(),speed=[.25,.5,1].includes(saved.speed)?saved.speed:1,annot=true,last=0,cur=-1;
+root.querySelectorAll('.speed button').forEach(x=>x.setAttribute('aria-pressed',+x.dataset.s===speed));
+const pills={done:['Marcar como estudada','Estudada'],fav:['Favoritar','Favorita']};
+const paint=(k,on)=>{const b=$('#'+k);b.setAttribute('aria-pressed',on);b.querySelector('.lbl').textContent=pills[k][on?1:0];};
+for(const k of Object.keys(pills)){paint(k,!!saved[k][id]);$('#'+k).onclick=()=>paint(k,Progress.toggle(k,id));}
  const phaseAt=tt=>{for(let i=PH.length-1;i>=0;i--)if(tt>=PH[i].s)return i;return 0;};
  PH.forEach((p,i)=>{const b=document.createElement('button');b.className='seg';b.style.flexGrow=p.e-p.s;b.innerHTML=`<b>${esc(p.ro)}</b><small>${esc(p.pt)}</small>`;
   b.addEventListener('click',e=>{e.stopPropagation();jump(i);});b.addEventListener('pointerdown',e=>e.stopPropagation());tl.insertBefore(b,phEl);});
@@ -300,7 +314,7 @@ function mountPage(id){
  $('#play').onclick=()=>{if(!playing&&t>=END-.01)t=0;setPlay(!playing);render();};
  $('#prev').onclick=()=>{const i=phaseAt(t);jump(t-PH[i].s>.6||i===0?i:i-1);};
  $('#next').onclick=()=>jump((phaseAt(t)+1)%PH.length);
- root.querySelectorAll('.speed button').forEach(b=>b.onclick=()=>{speed=+b.dataset.s;root.querySelectorAll('.speed button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+ root.querySelectorAll('.speed button').forEach(b=>b.onclick=()=>{speed=+b.dataset.s;Progress.update(d=>{d.speed=speed;});root.querySelectorAll('.speed button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
  $('#ann').onchange=e=>{annot=e.target.checked;render();};
  /* Toque no palco: arrastar na horizontal avança/volta o tempo; toque simples alterna play/pausa. */
 const hint=$('.drag-hint'),hideHint=()=>hint&&hint.classList.add('gone');setTimeout(hideHint,4000);
@@ -335,6 +349,16 @@ function mountIndex(){
    <p class="tc-bjj">${def?esc(def.bjj):'Em preparação'}</p>
    <p class="tc-why">${def?esc(def.why):''}</p></div>`;
   grid.appendChild(a);return {a,c:a.querySelector('canvas'),def,t:def?def.cover:0,raf:0};});
+ const prog=Progress.read(),nDone=CATALOG.filter(c=>prog.done[c.id]).length;
+ cards.forEach(k=>{const id=k.a.getAttribute('href').replace('.html','');const tags=[];
+  if(prog.done[id])tags.push('<span class="badge done" title="Estudada" aria-label="Estudada">✓</span>');
+  else if(prog.seen[id])tags.push('<span class="badge seen" title="Já vista" aria-label="Já vista">•</span>');
+  if(prog.fav[id])tags.push('<span class="badge fav" title="Favorita" aria-label="Favorita">★</span>');
+  if(tags.length)k.a.querySelector('.tc-num').insertAdjacentHTML('afterend',`<span class="badges">${tags.join('')}</span>`);
+  k.a.dataset.fav=prog.fav[id]?'1':'';});
+ const pr=document.getElementById('progress');
+ if(pr)pr.innerHTML=nDone||Object.keys(prog.seen).length?`<b>${nDone} de ${CATALOG.length}</b> técnicas estudadas<span class="bar"><i style="width:${nDone/CATALOG.length*100}%"></i></span>`:'';
+ const favChip=document.querySelector('.chip[data-g="fav"]');if(favChip)favChip.hidden=!Object.keys(prog.fav).length;
  const draw=k=>{if(k.def)renderTo(k.c,k.def,k.t);};
  cards.forEach(k=>{if(!k.def)return;let last=0;
   const loop=now=>{const dt=Math.min(.05,(now-last)/1000||0);last=now;k.t=(k.t+dt)%k.def.end;draw(k);k.raf=requestAnimationFrame(loop);};
@@ -347,9 +371,9 @@ function mountIndex(){
   cards.forEach(k=>io.observe(k.a));}
  const all=()=>cards.forEach(draw);all();
  chips.forEach(ch=>ch.addEventListener('click',()=>{chips.forEach(x=>x.setAttribute('aria-pressed',x===ch));const g=ch.dataset.g;
-  cards.forEach(k=>k.a.hidden=!(g==='all'||k.a.dataset.group===g));all();}));
+  cards.forEach(k=>k.a.hidden=!(g==='all'||k.a.dataset.group===g||(g==='fav'&&k.a.dataset.fav)));all();}));
  new ResizeObserver(all).observe(grid);onTheme(all);}
 
-window.Judo={register,pose,drawScene,viewport,readTheme,renderTo,renderDef,mountPage,mountIndex,techs,CATALOG,W,TP,A,SL,win,tp,lerp2,clamp,D,C,
+window.Judo={Progress,register,pose,drawScene,viewport,readTheme,renderTo,renderDef,mountPage,mountIndex,techs,CATALOG,W,TP,A,SL,win,tp,lerp2,clamp,D,C,
  prim:{tag,arrow,dashed,ring,stamp,dot:(ctx,V,p,r,f,l)=>dot(ctx,V,p,r,f,l)}};
 })();
