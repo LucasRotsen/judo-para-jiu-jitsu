@@ -2,7 +2,9 @@ const { test, expect } = require('@playwright/test');
 
 const clock = (page) => page.locator('#clock').innerText().then((s) => parseFloat(s.replace(',', '.')));
 
+/* Palco em canvas (fallback sem WebGL): arrastar avança o tempo, toque alterna play/pausa. */
 test('arrastar no palco avança o tempo e pausa', async ({ page }) => {
+  await page.addInitScript(() => { window.JUDO_NO_GL = true; });
   await page.goto('/ippon-seoi-nage.html');
   await page.evaluate(() => window.JudoPlayer.seek(2));
   const box = await page.locator('#cv').boundingBox();
@@ -17,6 +19,7 @@ test('arrastar no palco avança o tempo e pausa', async ({ page }) => {
 });
 
 test('toque simples no palco alterna play/pausa', async ({ page }) => {
+  await page.addInitScript(() => { window.JUDO_NO_GL = true; });
   await page.goto('/tomoe-nage.html');
   await page.evaluate(() => window.JudoPlayer.seek(1));
   await page.locator('#cv').click();
