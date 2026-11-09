@@ -1,5 +1,20 @@
-(()=>{const {W,TP,A,SL,lerp2,tp,win}=Judo;
-Judo.register({
+(()=>{const {W3,B,SL,win}=Judo;
+/* Mundo 3D: y para cima. Uke começa em x<0 olhando para +x (direita de Uke = +z).
+   Tori começa em x>0 olhando para -x (yaw 180) e gira para a esquerda até ficar de costas (yaw 360:
+   olha para +x, direita = +z, do mesmo lado da direita de Uke). O braço direito de Tori entra sob a
+   axila direita de Uke; Uke passa por cima do ombro direito de Tori e cai de costas à frente dele,
+   com a cabeça junto aos pés de Tori. Tori desce para o norte-sul (kami-shiho-gatame). */
+const DX=.43; // deslocamento do norte-sul em relação ao kami-shiho-gatame.js
+const uke0={x:-.32,y:.93,z:0,yaw:0,pitch:4,h:0,
+ leg:{R:W3(-.26,.07,.13),L:W3(-.40,.07,-.12)},
+ arm:{R:B('o',.13,.40,.08),L:B('o',.20,.26,.27)},
+ pole:{armR:[-.4,-.8,.5],armL:[-.4,-.8,-.5]}};
+const tori0={x:.32,y:.93,z:0,yaw:180,pitch:4,h:0,
+ leg:{R:W3(.28,.07,-.13),L:W3(.40,.07,.12)},
+ arm:{R:B('o',.14,.42,-.08),L:SL('armR',.7)},
+ pole:{armR:[-.4,-.8,.5],armL:[-.4,-.8,-.6]}};
+const belt={R:B('o',.02,.1,.25),L:B('o',.02,.1,-.25)};
+Judo.register3d({
  id:'ippon-seoi-nage', name:'Ippon Seoi Nage', kanji:'一本背負投',
  cls:'Nage-waza · Te-waza', group:'nage',
  bjj:'Seoi nage de um braço',
@@ -35,64 +50,86 @@ Judo.register({
  {s:9,e:12.5,kanji:'上四方',ro:'Norte-sul',pt:'Jiu-jitsu: controle no chão',
   d:'Sem dar tempo para Uke se recuperar, Tori desce junto e estabiliza por cima, peito contra peito, na posição norte-sul (no judô, kami-shiho-gatame). É a saída natural do seoi nage: Uke cai com a cabeça junto aos pés de Tori.',
   l:['Tori solta a manga só quando o peito já pressiona o de Uke.','Joelhos no tatame e quadril baixo: o peso vai todo para o peito de Uke.','As mãos agarram a faixa ou o gi pelas laterais e fecham os espaços.']}],
- rep:[.6,2.8,4.9,6.55,8.4,11.5], cover:6.55,
+ rep:[.6,2.8,4.8,6.4,8.2,11.5], cover:6.4,
+ views:[
+  {name:'Lado direito',a:8,e:10,center:[.25,1.0,0],span:3.8},
+  {name:'Frente e direita de Tori',a:50,e:14,center:[.1,.85,0],span:3.9},
+  {name:'De cima',a:0,e:90,center:[.3,0,0],span:3.2}],
+ xray:{s:3.9,e:5.6,key:'U.R.arm'},
  keys:[
- [0,{uke:{x:-.30,y:.93,T:90,f:1,leg:{R:W(-.20,.07),L:W(-.40,.07)},arm:{R:TP('o',.13,.40),L:TP('o',.12,.24)}},
-     tori:{x:.30,y:.93,T:90,f:-1,leg:{R:W(.20,.07),L:W(.42,.07)},arm:{R:TP('o',.12,.38),L:SL('armR',.65)}}}],
+ [0,{uke:uke0,tori:tori0}],
  [1.2,{}],
- [1.8,{tori:{x:.26,leg:{R:W(.10,.14)}},uke:{x:-.27,T:82}}],
- [2.4,{tori:{x:.22,y:.92,T:96,leg:{R:W(0,.07)}},uke:{x:-.20,T:66,h:15,leg:{R:W(-.20,.11),L:W(-.40,.11)}}}],
+ /* kuzushi: passo do pé direito, puxada da manga para frente e para cima */
+ [1.9,{tori:{x:.20,leg:{R:W3(.02,.12,-.08)}},uke:{pitch:8}}],
+ [2.6,{tori:{x:.14,yaw:200,pitch:2,leg:{R:W3(-.02,.07,.10)}},
+       uke:{y:.97,pitch:10,h:4,arm:{R:B('o',.24,.62,.12)},pole:{armR:[.4,-.6,.6]}}}],
  [3.2,{}],
- [3.7,{tori:{x:.12,y:.86,T:88,leg:{R:W(-.04,.07),L:W(.30,.12)},arm:{R:TP('o',.14,.44)}},uke:{T:64}}],
- [4.1,{tori:{x:.04,y:.76,T:76,f:0,h:10,leg:{R:W(-.05,.07),L:W(.10,.18)},arm:{R:TP('o',.10,.28)}}}],
- [4.6,{tori:{x:-.03,y:.68,T:62,f:1,h:15,bR:1,leg:{R:W(-.07,.07),L:W(.09,.07)},arm:{R:TP('s',.02,.66),L:SL('armR',.7)}},
-       uke:{x:-.24,y:.96,T:66,bR:1,leg:{R:W(-.17,.12),L:W(-.36,.12)},arm:{R:TP('o',.16,.46),L:TP('o',-.12,.25)}}}],
+ /* tsukuri: giro sobre o pé direito; o braço direito busca a axila de Uke */
+ [3.45,{tori:{arm:{R:B('o',.26,.42,.12)}}}],
+ [3.7,{tori:{x:.14,y:.88,yaw:265,pitch:10,leg:{L:W3(.14,.14,.26)},
+        arm:{R:B('o',.16,.36,.26)},pole:{armR:[0,1,.3]}},
+       uke:{arm:{R:B('o',.0,.66,.24),L:W3(-.05,1.05,-.32)}}}],
+ [4.5,{tori:{x:-.05,y:.74,z:.04,yaw:358,pitch:22,h:12,leg:{R:W3(-.02,.07,.16),L:W3(-.08,.07,-.12)},
+        arm:{R:B('s',.17,.62,.12),L:SL('armR',.78)},pole:{armR:[-.2,.8,.8],armL:[.3,-.6,-.6]}},
+       uke:{x:-.33,y:.95,pitch:24,h:12,arm:{R:B('o',.17,.50,.17),L:B('o',-.16,.30,-.22)},
+        pole:{armR:[.3,.9,.2],armL:[.2,-.5,-.6]}}}],
  [5.5,{}],
- [6.1,{tori:{x:-.02,y:.80,T:42,h:25},uke:{x:-.10,y:1.21,r:-40,h:10,gf:0,leg:{R:A(-100,-110),L:A(-90,-100)}}}],
- [6.6,{tori:{x:0,y:.86,T:28,h:20},uke:{x:.72,y:1.42,r:-160,h:-15,leg:{R:A(-95,-100),L:A(-85,-95)},arm:{L:A(-60,-60),R:TP('o',.18,.46)}}}],
- [7.0,{tori:{y:.84,T:36,h:15,bR:-1,arm:{R:TP('s',.25,.20)}},uke:{x:1.0,y:.85,r:-225,h:-25,bR:-1,leg:{R:A(-95,-100),L:A(-88,-95)},arm:{L:A(-100,-110),R:TP('o',.25,.30)}}}],
- [7.4,{tori:{y:.80,T:48,h:10},uke:{x:1.12,y:.15,r:-246,h:-20,leg:{R:A(-89,-139),L:A(-84,-130)},arm:{L:A(-119,-119),R:W(.47,.72)}}}],
- [8.4,{tori:{y:.81,T:51,h:5}}],
- [9,{}],
- [9.6,{tori:{x:.10,y:.64,T:16,h:0,leg:{R:W(-.12,.12),L:W(.05,.07)},arm:{R:TP('o',0,.32)}},uke:{h:-10,leg:{R:A(-75,-150),L:A(-72,-145)}}}],
- [10.2,{tori:{x:.25,y:.52,T:-6,h:-15,gf:0,leg:{R:W(-.31,.15),L:W(-.24,.15)},arm:{R:TP('o',0,.30),L:TP('o',0,.22)}},
-        uke:{h:-5,leg:{R:A(-69,-159),L:A(-66,-152)},arm:{R:TP('o',.12,.35)}}}],
+ /* kake: pernas estendem, tronco inclina e gira; Uke passa por cima do ombro direito */
+ [6.0,{tori:{y:.82,yaw:362,pitch:52,h:22},
+       uke:{x:-.10,y:1.46,z:.08,yaw:4,pitch:78,h:10,gf:0,leg:{R:B('s',-.08,-.86,.12),L:B('s',-.10,-.84,-.12)},
+        arm:{R:B('o',.26,.40,.08)}}}],
+ [6.5,{tori:{y:.86,yaw:372,pitch:50,h:22,arm:{R:B('s',.26,.18,.32)}},
+       uke:{x:.42,y:1.72,z:.04,yaw:8,pitch:150,roll:-10,h:-10,leg:{R:B('s',-.05,-.86,.14),L:B('s',-.06,-.84,-.10)},
+        arm:{R:B('o',.38,.22,.05),L:B('s',.1,.25,-.45)}}}],
+ [7.0,{tori:{y:.84,yaw:370,pitch:42,h:15,arm:{R:B('s',.32,.22,.22)}},
+       uke:{x:.74,y:.80,z:.02,yaw:4,pitch:225,roll:-5,h:-20,leg:{R:B('s',.1,-.85,.12),L:B('s',.06,-.84,-.12)},
+        arm:{R:B('o',.40,.15,.10),L:B('s',.05,0,-.50)}}}],
+ [7.4,{tori:{y:.82,yaw:360,pitch:32,h:10},
+       uke:{x:.35+DX,y:.14,z:0,yaw:0,pitch:270,roll:0,h:-20,gf:1,leg:{R:W3(1.55,.07,.20),L:W3(1.55,.07,-.20)},
+        arm:{R:B('o',.40,.18,.12),L:B('s',0,.15,-.48)}}}],
+ [8.4,{tori:{y:.86,pitch:20,h:5},uke:{h:-25}}],
+ [9.0,{}],
+ /* norte-sul: Tori recua, ajoelha junto à cabeça de Uke e deita peito contra peito */
+ [9.8,{tori:{x:-.26,y:.62,yaw:360,pitch:40,h:15,leg:{R:W3(-.60,.07,.24),L:W3(-.52,.07,-.24)},
+        arm:{R:B('o',.05,.45,.30),L:B('o',.05,.45,-.30)},pole:{armR:[.4,-.3,1],armL:[.4,-.3,-1],legR:[1,-.6,.35],legL:[1,-.6,-.35]}},
+       uke:{h:-8,leg:{R:W3(1.16+DX,.08,.2),L:W3(1.16+DX,.08,-.2)},arm:{R:W3(.22+DX,.06,.36),L:W3(.22+DX,.06,-.36)},
+        pole:{legR:[1,0,.1],legL:[1,0,-.1],armR:[0,.4,1],armL:[0,.4,-1]}}}],
+ [10.6,{tori:{x:-.66+DX,y:.34,pitch:85,h:35,leg:{R:W3(-1.36+DX,.06,.34),L:W3(-1.36+DX,.06,-.34)},arm:belt,
+         pole:{legR:[.6,-1,.4],legL:[.6,-1,-.4],armR:[1,.3,.6],armL:[1,.3,-.6]}},
+        uke:{arm:{R:B('o',-.13,.40,.16),L:B('o',-.13,.40,-.16)},pole:{armR:[.4,-.5,1],armL:[.4,-.5,-1]}}}],
  [12.5,{}]],
- order:F=>{const b=F.t>9.3?['U.body','T.body']:['T.body','U.body'];
-  return ['T.far.leg','T.far.arm','U.far.leg','U.far.arm',...b,'U.near.leg','T.near.arm.upper','U.near.arm','T.near.leg','T.near.arm.lower'];},
- names:F=>F.t>9.6?{uke:[F.uke.legR.E[0],F.uke.legR.E[1]+.2]}:{},
- glow:{s:3.4,e:5.7,limbs:{'T.R.arm':'force','U.R.arm':'gold'}},
- lens:{s:3.5,e:5.7,zoom:1.9,ghost:'U.R.arm',caption:'raio-X: braço de Uke transparente',
-  center:F=>lerp2(F.uke.sh,F.tori.sh,.5),
-  labels:(api,F,a)=>{api.tag('Tori: cotovelo sob a axila',F.tori.armR.E,-5,-4.6,api.C.force,a);
-   api.tag('Uke: braço preso na dobra',lerp2(F.uke.armR.root,F.uke.armR.E,.6),-9,2.4,api.C.gold,a);}},
- trail:{s:5.5,e:7.6,hide:9.2,fig:'uke',joints:['hip','head']},
+ names:F=>({tori:[F.tori.head[0],Math.max(F.tori.head[1],F.tori.hip[1])+.32,F.tori.head[2]],
+  uke:[F.uke.hip[0]+.2,Math.max(F.uke.head[1],F.uke.hip[1])+.40,F.uke.hip[2]-.2]}),
+ glow:{s:3.5,e:5.7,limbs:{'T.R.arm':'force','U.R.arm':'gold'}},
  stamp:{s:7.45,e:9.2,big:'一本',small:'IPPON'},
  annotate:(api,F)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
   a=win(t,0,1.6);
-  api.tag('Hikite: puxa',T.armL.H,3.2,-4.2,C.force,a);
-  api.tag('Tsurite: levanta',T.armR.H,-6.5,-3.4,C.force,a);
-  a=win(t,1.3,3.4);
-  if(a>0){const c=tp(U,0,.16),toeX=Math.max(U.legR.toe[0],U.legL.toe[0]),heelX=Math.min(U.legR.heel[0],U.legL.heel[0]);
-   api.band(heelX,toeX,C.gold,a);api.dashed(c,[c[0],0],C.gold,a,2);api.dot(c,.03,C.gold,a);
-   api.tag('centro de gravidade',c,-8.5,-1.2,C.gold,a);api.tag('base de apoio',[heelX,0],-6,1.4,C.gold,a);
-   const ch=tp(U,.2,.40),b=win(t,1.5,3.4);api.arrow(ch,[ch[0]+.32,ch[1]+.14],C.force,b);
-   api.tag('puxada: frente e para cima',[ch[0]+.32,ch[1]+.14],1,-2.6,C.force,b,false);}
-  a=win(t,3.4,4.7);
-  if(a>0){const fr=T.legR.H;api.arc([fr[0]+.02,.02],.24,200,-20,C.force,a);api.tag('giro sobre o pé direito',[fr[0]+.02,.26],-3,-2,C.force,a,false);}
+  api.tag('hikite: puxa a manga',T.armL.H,4,-3.5,C.force,a);
+  api.tag('tsurite: gola',T.armR.H,-7,-3.5,C.force,a);
+  a=win(t,1.3,3.3);
+  if(a>0){const ch=api.bp(U,.1,.45,0);api.arrow(ch,api.add(ch,[.32,.18,0]),C.force,a);
+   api.tag('puxada: frente e para cima',api.add(ch,[.32,.18,0]),1,-2.6,C.force,a,false);
+   api.tag('pé direito à frente do pé de Uke',T.legR.H,6,.5,C.gold,a);}
+  a=win(t,3.5,5.6);
+  api.tag('cotovelo de Tori sob a axila de Uke',T.armR.E,7,-1.8,C.force,a);
+  api.tag('braço de Uke preso sobre o ombro',api.lerp3(U.armR.root,U.armR.E,.5),-2,-4.6,C.gold,a);
   a=win(t,4.4,5.6);
-  if(a>0){const hb=tp(U,0,.09);api.dashed([-.55,hb[1]],[.6,hb[1]],C.uke,a,1.8);api.dashed([-.55,T.y],[.6,T.y],C.force,a,1.8);
-   api.tag('faixa de Uke',[.6,hb[1]],4.6,0,C.uke,a,false);api.tag('quadril de Tori, mais baixo',[.6,T.y],8.6,0,C.force,a,false);}
+  if(a>0){const ub=api.bp(U,0,.1,0),th=T.hip;
+   api.dashed([ub[0]-.2,ub[1],ub[2]-.35],[ub[0]+.75,ub[1],ub[2]-.35],C.uke,a,1.8);
+   api.dashed([th[0]-.45,th[1],th[2]-.35],[th[0]+.5,th[1],th[2]-.35],C.force,a,1.8);
+   api.tag('faixa de Uke',[ub[0]+.75,ub[1],ub[2]-.35],4.4,1.0,C.uke,a,false);
+   api.tag('quadril de Tori, mais baixo',[th[0]+.5,th[1],th[2]-.35],4.6,1.6,C.force,a,false);}
   a=win(t,5.5,6.4);
-  api.arrow([T.x+.42,.18],[T.x+.42,.62],C.force,a);api.tag('pernas estendem',[T.x+.42,.4],5.4,0,C.force,a,false);
+  api.arrow([T.hip[0]+.35,.2,T.hip[2]-.3],[T.hip[0]+.35,.62,T.hip[2]-.3],C.force,a);
+  api.tag('pernas estendem',[T.hip[0]+.35,.4,T.hip[2]-.3],5.4,0,C.force,a,false);
   a=win(t,5.8,7.1);
-  api.arc(T.sh,.5,150,30,C.force,a);
-  api.tag('rotação sobre o ombro',[T.sh[0]+.5*Math.cos(150*api.D),T.sh[1]+.5*Math.sin(150*api.D)],-6,-.5,C.force,a,false);
-  a=win(t,5.6,7.2);api.tag('hikite puxa até o quadril',T.armL.H,-10,1.6,C.force,a);
+  if(a>0){api.arc(api.add(T.shR,[0,.1,0]),[1,0,0],[0,1,0],.5,160,20,C.force,a);
+   api.tag('rotação sobre o ombro direito',api.add(T.shR,[-.1,.72,0]),0,0,C.force,a,false);}
   a=win(t,7.5,9.2);
-  api.tag('manga segura até o fim',T.armL.H,6.5,-2.2,C.force,a);api.tag('ukemi: queixo no peito',U.head,-2,3.4,C.uke,a);
-  a=win(t,10.1,99);
-  api.tag('peito contra peito',tp(T,.15,.35),5,-6,C.force,a);
-  api.tag('joelhos no tatame, quadril baixo',T.legR.E,-7,-6,C.force,a);
-  api.tag('NORTE-SUL · KAMI-SHIHO-GATAME',[.45,1.5],0,0,C.ink,a,false);}
+  api.tag('manga segura até o fim',T.armL.H,6,-2.6,C.force,a);
+  api.tag('ukemi: queixo no peito',U.head,-3,3.4,C.uke,a);
+  a=win(t,10.2,99);
+  api.tag('peito contra peito',api.bp(T,.15,.35,0),8,-1.5,C.force,a);
+  api.tag('joelhos no tatame, quadril baixo',T.legR.E,2,-5,C.force,a);
+  api.tag('norte-sul · kami-shiho-gatame',api.add(U.hip,[0,1.0,0]),0,0,C.ink,a,false);}
 });})();
