@@ -14,7 +14,8 @@ const toriBase={x:.05,y:.40,z:0,yaw:180,pitch:8,h:0,gf:0,
 const across=W3(-.62,.24,-.20);
 /* Fechamento das mãos (palma com palma), logo atrás do pescoço, do lado esquerdo de Uke. */
 const clasp=W3(-.42,.11,-.25);
-const tapAt=B('o',-.05,.30,.0),tapUp=B('o',-.05,.30,.12);
+/* Batidas no tatame, ao lado esquerdo de Uke (o braço livre não cruza o corpo de Tori). */
+const tapAt=W3(-.02,.06,-.50),tapUp=W3(-.02,.24,-.50);
 Judo.register3d({
  id:'kata-gatame', name:'Kata Gatame', kanji:'肩固', group:'ne', cls:'Ne-waza · Shime-waza',
  bjj:'Triângulo de braço (arm triangle)',
@@ -64,14 +65,14 @@ Judo.register3d({
  [4.8,{}],
  [5.7,{tori:{x:.04,y:.30,z:.22,yaw:145,pitch:80,h:35,leg:{R:W3(.45,.05,.05),L:W3(.52,.05,.78)},pole:{legR:[-.2,1,.6],legL:[-.2,1,-.5]}}}],
  [6.6,{tori:{x:-.04,y:.26,z:.40,yaw:130,pitch:75,h:45,leg:{R:W3(.50,.05,.62),L:W3(.05,.05,1.05)},pole:{legR:[.2,1,.4],legL:[.2,1,-.4],armL:[1,-1,0]}}}],
- [7.4,{tori:{y:.24,h:50}}],
- [8.2,{tori:{y:.23}}],
+ [7.4,{tori:{y:.25,h:50}}],
+ [8.2,{tori:{y:.25}}],
  [8.6,{uke:{arm:{L:tapAt}}}],
  [8.85,{uke:{arm:{L:tapUp}}}],
  [9.1,{uke:{arm:{L:tapAt}}}],
  [9.35,{uke:{arm:{L:tapUp}}}],
  [9.6,{uke:{arm:{L:tapAt}}}],
- [10.6,{tori:{y:.34,h:30,arm:{L:W3(-.30,.06,-.05)}},uke:{arm:{L:W3(-.10,.12,-.50),R:W3(-.45,.10,.40)},pole:{armR:[.2,-.6,.8]}}}]],
+ [10.6,{tori:{y:.34,h:30,arm:{L:W3(-.30,.06,-.34)}},uke:{arm:{L:W3(-.10,.12,-.50)}}}]],
  names:F=>({tori:[F.tori.hip[0],F.tori.hip[1]+.45,F.tori.hip[2]],uke:[F.uke.legR.H[0]-.15,F.uke.legR.H[1]+.12,F.uke.legR.H[2]+.2]}),
  glow:{s:3.2,e:8.6,limbs:{'U.R.arm':'gold','T.L.arm':'force'}},
  stamp:{s:8.6,e:10.4,big:'参った',small:'MAITTA'},
@@ -91,5 +92,5 @@ Judo.register3d({
   api.tag('braço de Tori fecha o outro',T.armL.E,-6,5,C.force,a);
   api.tag('quadril baixo, cotovelos juntos',T.hip,9,3,C.force,a);
   a=win(t,8.7,10.4);
-  api.tag('Uke bate: solte na hora',U.armL.H,-6,-5,C.uke,a);}
+  api.tag('Uke bate: solte na hora',U.armL.H,5,-4,C.uke,a);}
 });})();
