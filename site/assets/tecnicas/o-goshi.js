@@ -81,10 +81,10 @@ Judo.register3d({
  [6.3,{tori:{y:.84,yaw:392,pitch:40,h:15,arm:{R:B('s',.32,.22,.22)}},
        uke:{x:.52,y:.72,z:-.68,yaw:25,pitch:220,roll:-15,h:-20,leg:{R:B('s',.1,-.85,.12),L:B('s',.06,-.84,-.12)},
         arm:{R:B('o',.32,.15,-.30),L:B('s',.05,.0,-.50)}}}],
- [6.6,{tori:{y:.82,yaw:395,pitch:32,h:10},
+ [6.6,{tori:{y:.80,yaw:395,pitch:50,h:10,arm:{L:B('s',.42,.02,-.15)}},
        uke:{x:.80,y:.14,z:-.62,yaw:25,pitch:268,roll:0,h:-25,gf:1,leg:{R:W3(1.50,.07,-.82),L:W3(1.45,.07,-1.05)},
-        arm:{R:B('o',.32,.18,-.28),L:B('s',0,.15,-.48)}}}],
- [7.6,{tori:{y:.86,pitch:20,h:5},uke:{h:-30}}],
+        arm:{R:SL('armL',1),L:B('s',0,.15,-.48)}}}],
+ [7.6,{tori:{y:.82,pitch:46,h:5},uke:{h:-30}}],
  [7.9,{}],
  /* kesa-gatame: Tori senta ao lado de Uke, de frente para a cabeça dele */
  [8.8,{tori:{x:.45,y:.42,z:.08,yaw:530,pitch:30,roll:15,h:10,

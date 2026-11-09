@@ -61,20 +61,20 @@ Judo.register3d({
  /* tsukuri: senta junto aos pés de Uke, pé direito na barriga */
  [3.2,{tori:{x:-.10,y:.30,pitch:-42,h:22,leg:{R:belt,L:W3(-.48,.07,.10)},
         pole:{legR:[1,.3,-.3],legL:[1,.4,.4]}},
-       uke:{x:-.30,y:.90,pitch:35,h:12,leg:{R:W3(-.30,.11,.25),L:W3(-.42,.11,-.25)}}}],
+       uke:{x:-.30,y:.87,pitch:40,h:12,leg:{R:W3(-.30,.11,.25),L:W3(-.42,.11,-.25)}}}],
  [3.9,{}],
  /* kake: rola de costas, a perna estende e os braços puxam por cima da cabeça */
  [4.4,{tori:{x:-.14,y:.14,pitch:-90,h:10,leg:{L:W3(-.55,.07,.16)}},
-       uke:{x:-.06,y:1.12,pitch:80,h:0,gf:0,leg:{R:B('s',-.08,-.86,.12),L:B('s',-.10,-.84,-.12)},
+       uke:{x:-.14,y:.72,pitch:80,h:0,gf:0,leg:{R:B('s',-.08,-.86,.12),L:B('s',-.10,-.84,-.12)},
         arm:{R:B('s',.30,.40,.18),L:B('s',.30,.40,-.18)}}}],
  [4.85,{tori:{arm:{R:B('o',.14,.42,.08),L:B('o',.14,.42,-.08)}},
-        uke:{x:.32,y:1.22,pitch:150,h:30,leg:{R:B('s',.12,-.66,.13),L:B('s',.10,-.64,-.11)}}}],
+        uke:{x:.30,y:1.08,pitch:150,h:30,leg:{R:B('s',.12,-.66,.13),L:B('s',.10,-.64,-.11)}}}],
  [5.25,{tori:{leg:{R:W3(.05,.62,-.10)}},
-        uke:{x:1.05,y:.95,pitch:215,h:35,leg:{R:B('s',.14,-.62,.14),L:B('s',.12,-.60,-.12)},arm:{R:B('s',.24,.30,-.06),L:B('s',.24,.34,.06)}}}],
+        uke:{x:.98,y:.86,pitch:215,h:35,leg:{R:B('s',.14,-.62,.14),L:B('s',.12,-.60,-.12)},arm:{R:B('s',.24,.30,-.06),L:B('s',.24,.34,.06)}}}],
  /* queda: Uke de costas além da cabeça de Tori, ukemi */
  [5.6,{tori:{leg:{R:W3(-.55,.07,-.16)},pole:{legR:[1,.4,-.4]}},
-       uke:{x:1.45,y:.13,pitch:270,h:25,gf:1,leg:{R:W3(1.95,.07,.20),L:W3(1.95,.07,-.20)},
-        arm:{R:W3(1.25,.07,.48),L:W3(1.25,.07,-.48)},pole:{legR:[1,.5,.3],legL:[1,.5,-.3],armR:[0,0,1],armL:[0,0,-1]}}}],
+       uke:{x:1.30,y:.13,pitch:270,h:25,gf:1,leg:{R:W3(1.80,.07,.20),L:W3(1.80,.07,-.20)},
+        arm:{R:W3(1.10,.07,.48),L:W3(1.10,.07,-.48)},pole:{legR:[1,.5,.3],legL:[1,.5,-.3],armR:[0,0,1],armL:[0,0,-1]}}}],
  [6.6,{uke:{h:-5}}],
  [9,{}]],
  glow:{s:2.6,e:5.0,limbs:{'T.R.leg':'force'}},
@@ -91,8 +91,8 @@ Judo.register3d({
   api.tag('senta perto, embaixo de Uke',T.hip,2,4,C.force,a);
   a=win(t,4.0,5.4);
   api.arc([.62,.15,0],[1,0,0],[0,1,0],1.0,150,18,C.info,a);
-  api.tag('a perna estende e lança',T.legR.E,-6,4.5,C.force,a);
-  api.tag('braços puxam por cima da cabeça',T.armR.H,8,-4,C.force,win(t,4.3,5.5));
+  api.tag('a perna estende e lança',T.legR.E,-1,4.5,C.force,a);
+  api.tag('braços puxam por cima da cabeça',T.armR.H,9,2.5,C.force,win(t,4.3,5.5));
   a=win(t,5.7,99);
   api.tag('Uke cai de costas, além da cabeça de Tori',U.hip,0,-7,C.uke,a);
   api.tag('ukemi: braço bate no tatame',U.armR.H,3,3,C.uke,a);}
