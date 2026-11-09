@@ -69,3 +69,20 @@ test('simulador linka o upa direto na fase', async ({ page }) => {
   const link = page.locator('#ops [data-id="upa"] a.op-link');
   await expect(link).toHaveAttribute('href', 'tate-shiho-gatame.html#fase=Upa');
 });
+
+test('busca acha técnica pelo nome no jiu-jitsu, sem acento', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('#q').fill('triangulo');
+  await expect(page.locator('a.tcard:visible h3', { hasText: 'Sankaku Jime' })).toBeVisible();
+  await expect(page.locator('a.tcard:visible h3', { hasText: 'Kata Gatame' })).toBeVisible();
+  await expect(page.locator('a.tcard:visible h3', { hasText: 'Ippon Seoi Nage' })).toHaveCount(0);
+  await page.locator('#q').fill('mata-leao');
+  await expect(page.locator('a.tcard:visible')).toHaveCount(1);
+  await expect(page.locator('a.tcard:visible h3')).toContainText('Hadaka Jime');
+  await page.locator('#q').fill('xyz123');
+  await expect(page.locator('#qempty')).toBeVisible();
+  await page.locator('#q').fill('');
+  await page.locator('.chip[data-g="ne"]').click();
+  await page.locator('#q').fill('gatame');
+  await expect(page.locator('a.tcard:visible')).toHaveCount(4);
+});

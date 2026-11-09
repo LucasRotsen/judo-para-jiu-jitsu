@@ -13,11 +13,11 @@ const toriBase={x:0,y:.15,z:0,yaw:180,pitch:90,roll:180,h:30,
 const handOnHip=B('o',-.02,.04,-.30);
 const tapAt=W3(-.22,.06,.34),tapUp=W3(-.22,.17,.34);
 Judo.register3d({
- id:'omoplata', name:'Omoplata', kanji:'肩固', group:'ne', cls:'Jiu-jitsu · Chave de ombro',
+ id:'omoplata', name:'Omoplata', kanji:'', group:'ne', cls:'Jiu-jitsu · Chave de ombro',
  bjj:'Omoplata',
  why:'Chave de ombro com as pernas que nasce da guarda. Quando Uke defende o triângulo, a omoplata está a um giro de distância.',
  summary:'Chave de ombro com as pernas, a partir da guarda. Tori passa a perna por cima do ombro de Uke, gira para o lado, senta e leva o tronco à frente: o braço preso torce o ombro de Uke.',
- reading:[{k:'Omoplata',r:'omoplata',m:'escápula, em português'},{k:'肩',r:'kata',m:'ombro'},{k:'固',r:'gatame',m:'controle'}],
+ reading:[{k:'Omoplata',r:'omoplata',m:'escápula, em português'}],
  facts:[['Origem','Jiu-jitsu. No judô a mesma torção de ombro aparece como variação de ude-garami com as pernas (ashi-sankaku-garami).'],
   ['Qual perna passa','A do lado do braço atacado. Aqui o braço direito de Uke fica preso, então a perna esquerda de Tori passa por cima do ombro direito dele.'],
   ['Onde fica a mão de Uke','Presa na lateral do quadril de Tori, com o cotovelo dobrado. Se o braço esticar, a chave some.'],
