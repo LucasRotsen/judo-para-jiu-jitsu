@@ -22,3 +22,5 @@ jobs:
       - run: npm test
       - name: Nenhum membro atravessa o outro corpo (técnicas 3D)
         run: node tools/interpenetracao.js
+      - name: Pegadas chegam no alvo (técnicas 3D)
+        run: node tools/pegadas.js
