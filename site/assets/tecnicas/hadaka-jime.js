@@ -5,10 +5,10 @@
 const ukeBase={x:.45,y:.13,z:0,yaw:0,pitch:-20,h:10,
  leg:{R:W3(1.08,.05,.26),L:W3(1.08,.05,-.26)},arm:{R:SL('armR',.86),L:SL('armR',.66)},
  pole:{legR:[.3,1,.25],legL:[.3,1,-.25],armR:[.3,-.8,.6],armL:[.3,-.8,-.6]}};
-const toriBase={x:.15,y:.13,z:.06,yaw:0,pitch:-6,roll:0,h:5,
+const toriBase={x:.15,y:.13,z:.06,yaw:0,pitch:-9,roll:0,h:5,
  leg:{R:W3(.74,.17,.06),L:W3(.74,.17,-.06)},
- arm:{R:B('o',.17,.36,-.08),L:B('o',.17,.27,-.02)},
- pole:{legR:[0,1,1.3],legL:[0,1,-1.3],armR:[.1,.6,.8],armL:[.2,-.8,-.5]}};
+ arm:{R:B('o',.16,.47,-.03),L:B('o',.22,.28,-.08)},
+ pole:{legR:[0,.8,1.8],legL:[0,.8,-1.8],armR:[0,1.4,.4],armL:[.5,-.2,-1.5]}};
 const tapAt=W3(.42,.37,.34),tapUp=W3(.45,.50,.37);
 const taps=[8.0,8.2,8.4,8.6,8.8,9.0].map((t,i)=>[t,{uke:{arm:{R:i%2?tapUp:tapAt}}}]);
 Judo.register3d({
@@ -53,14 +53,15 @@ Judo.register3d({
  [0,{uke:ukeBase,tori:toriBase}],
  [2.2,{}],
  [3.0,{tori:{arm:{R:B('o',.18,.52,-.04)},pole:{armR:[.6,.5,.4]}},uke:{h:14}}],
- [3.7,{tori:{z:.09,yaw:34,roll:0,h:22,arm:{R:B('o',-.04,.63,-.19)},pole:{armR:[1,.35,-.3]}},uke:{h:4}}],
+ [3.7,{tori:{z:.09,yaw:34,roll:0,h:22,arm:{R:B('o',-.04,.63,-.19),L:B('o',.10,.36,-.26)},pole:{armR:[1,.35,-.3]}},uke:{h:4}}],
  [4.4,{}],
  [5.2,{tori:{arm:{R:B('o',-.05,.64,-.17),L:B('o',-.05,.77,-.04)},pole:{armL:[1.6,.2,-.5]}},uke:{arm:{R:SL('armR',.9),L:SL('armR',.98)},pole:{armR:[.3,-1,.2],armL:[.5,-1,0]}}}],
  [6.0,{}],
- [7.0,{tori:{pitch:-9,arm:{R:B('o',-.03,.62,-.16)}},uke:{pitch:-22,h:6}}],
+ [7.0,{tori:{pitch:-12,arm:{R:B('o',-.03,.62,-.16)}},uke:{pitch:-22,h:6}}],
  [7.9,{}],
  ...taps,
- [9.5,{tori:{pitch:-4,roll:0,h:5,arm:{R:B('o',.15,.30,.12),L:B('o',.10,.20,-.15)},pole:{armR:[.1,.4,.9],armL:[.2,-.8,-.5]}},
+ [9.25,{tori:{arm:{R:B('o',.28,.56,.06)}}}],
+ [9.5,{tori:{pitch:-9,roll:0,h:5,arm:{R:B('o',.10,.30,.32),L:B('o',.06,.24,-.34)},pole:{armR:[.1,.4,.9],armL:[.4,-.3,-1.4]}},
        uke:{pitch:-14,h:0,arm:{R:B('s',.25,.20,.18),L:B('s',.25,.20,-.18)}}}],
  [10.5,{}]],
  names:F=>({tori:[F.tori.head[0]-.05,F.tori.head[1]+.2,F.tori.head[2]+.05],uke:[F.uke.legL.E[0],F.uke.legL.E[1]+.14,F.uke.legL.E[2]]}),
