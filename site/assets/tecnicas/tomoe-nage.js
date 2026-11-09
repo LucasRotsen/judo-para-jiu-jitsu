@@ -1,5 +1,18 @@
-(()=>{const {W,TP,A,lerp2,tp,win}=Judo;
-Judo.register({
+(()=>{const {W3,B,win}=Judo;
+/* Mundo 3D: y para cima. Uke começa em x<0 olhando para +x (direita de Uke = +z).
+   Tori começa em x>0 olhando para -x (yaw 180, direita = -z). Tori senta junto aos pés de Uke e
+   deita de costas com a cabeça para +x; Uke gira para a frente (pitch crescente) por cima de Tori
+   e cai de costas além da cabeça dele, em x>1. */
+const uke0={x:-.32,y:.93,z:0,yaw:0,pitch:4,h:0,
+ leg:{R:W3(-.26,.07,.13),L:W3(-.40,.07,-.12)},
+ arm:{R:B('o',.13,.40,.08),L:B('o',.13,.40,-.08)},
+ pole:{armR:[-.4,-.8,.5],armL:[-.4,-.8,-.5]}};
+const tori0={x:.32,y:.93,z:0,yaw:180,pitch:4,h:0,
+ leg:{R:W3(.28,.07,-.13),L:W3(.40,.07,.12)},
+ arm:{R:B('o',.14,.42,.08),L:B('o',.14,.42,-.08)},
+ pole:{armR:[-.4,-.8,.5],armL:[-.4,-.8,-.5]}};
+const belt=B('o',.21,.10,0);
+Judo.register3d({
  id:'tomoe-nage', name:'Tomoe Nage', kanji:'巴投',
  cls:'Nage-waza · Ma-sutemi-waza', group:'nage',
  bjj:'Projeção de sacrifício a partir da guarda',
@@ -33,42 +46,54 @@ Judo.register({
  {s:5.6,e:9,kanji:'残心',ro:'Zanshin',pt:'Queda e controle',
   d:'Uke cai de costas além da cabeça de Tori, fazendo ukemi. Tori mantém as mãos na gola e pode rolar por cima para a montada, uma transição comum no jiu-jitsu.',
   l:['Uke bate os braços no tatame e mantém o queixo no peito.','Tori não solta a gola: ela controla a queda.','Rolar para trás sobre o ombro leva Tori direto à montada.']}],
- rep:[.6,2.3,3.6,4.85,7.5], cover:4.85,
- view:{x0:-1.2,y0:-.16,w:3.5,h:2.58},
+ rep:[.6,2.2,3.5,4.85,7.5], cover:4.85,
+ views:[
+  {name:'Diagonal',a:22,e:14,center:[.55,.95,0],span:4.6},
+  {name:'Lateral',a:0,e:4,center:[.55,.95,0],span:4.6},
+  {name:'Diagonal alta',a:-40,e:38,center:[.55,.6,0],span:4.2}],
  keys:[
- [0,{tori:{x:1.0,y:.93,T:90,f:1,leg:{R:W(1.10,.07),L:W(.90,.07)},arm:{R:TP('o',.12,.40),L:TP('o',.12,.34)}},
-     uke:{x:1.6,y:.93,T:90,f:-1,leg:{L:W(1.50,.07),R:W(1.70,.07)},arm:{L:TP('o',.12,.38),R:TP('o',.10,.30)}}}],
+ [0,{uke:uke0,tori:tori0}],
  [1.2,{}],
- [2.0,{tori:{x:1.15,y:.86,T:96,leg:{L:W(1.30,.07)}},uke:{x:1.50,T:70,h:10,leg:{L:W(1.50,.11),R:W(1.70,.11)}}}],
+ /* kuzushi: puxa para frente e passo curto entre os pés de Uke */
+ [2.0,{tori:{x:.14,y:.88,pitch:6,leg:{L:W3(-.06,.07,.08)}},
+       uke:{x:-.30,pitch:16,h:8,leg:{R:W3(-.30,.11,.25),L:W3(-.42,.11,-.25)}}}],
  [2.5,{}],
- [3.2,{tori:{x:1.23,y:.28,T:120,h:-10,leg:{R:TP('o',.12,.08),L:W(1.45,.07)}},
-       uke:{x:1.43,y:.95,T:60,leg:{L:W(1.52,.11),R:W(1.72,.11)}}}],
+ /* tsukuri: senta junto aos pés de Uke, pé direito na barriga */
+ [3.2,{tori:{x:-.10,y:.30,pitch:-42,h:22,leg:{R:belt,L:W3(-.48,.07,.10)},
+        pole:{legR:[1,.3,-.3],legL:[1,.4,.4]}},
+       uke:{x:-.30,y:.90,pitch:35,h:12,leg:{R:W3(-.30,.11,.25),L:W3(-.42,.11,-.25)}}}],
  [3.9,{}],
- [4.4,{tori:{x:1.25,y:.18,T:178,h:10,leg:{L:W(1.58,.09)}},
-       uke:{x:1.20,y:1.15,r:-60,gf:0,h:0,leg:{L:A(-100,-100),R:A(-95,-105)}}}],
- [4.85,{tori:{leg:{R:A(110,105)}},uke:{x:.45,y:1.25,r:-150,h:-20,leg:{L:A(-95,-95),R:A(-90,-100)},arm:{L:A(90,95),R:A(85,100)}}}],
- [5.25,{tori:{leg:{R:A(70,20)},arm:{R:A(178,178),L:A(176,176)}},uke:{x:-.22,y:.75,r:-205,leg:{L:A(-95,-100),R:A(-90,-105)}}}],
- [5.6,{tori:{leg:{R:A(40,-40),L:A(50,-30)}},uke:{x:-.42,y:.15,r:-240,h:-20,leg:{L:A(-75,-165),R:A(-70,-158)},arm:{L:A(-120,-120),R:A(-115,-125)}}}],
- [6.6,{uke:{h:-10}}],
+ /* kake: rola de costas, a perna estende e os braços puxam por cima da cabeça */
+ [4.4,{tori:{x:-.14,y:.14,pitch:-90,h:10,leg:{L:W3(-.55,.07,.16)}},
+       uke:{x:-.06,y:1.12,pitch:80,h:0,gf:0,leg:{R:B('s',-.08,-.86,.12),L:B('s',-.10,-.84,-.12)},
+        arm:{R:B('s',.30,.40,.18),L:B('s',.30,.40,-.18)}}}],
+ [4.85,{tori:{arm:{R:B('o',.14,.42,.08),L:B('o',.14,.42,-.08)}},
+        uke:{x:.32,y:1.22,pitch:150,h:-10,leg:{R:B('s',-.05,-.86,.13),L:B('s',-.06,-.84,-.11)}}}],
+ [5.25,{tori:{leg:{R:W3(.05,.62,-.10)}},
+        uke:{x:1.05,y:.95,pitch:215,h:-20,leg:{R:B('s',-.04,-.86,.14),L:B('s',-.05,-.84,-.12)}}}],
+ /* queda: Uke de costas além da cabeça de Tori, ukemi */
+ [5.6,{tori:{leg:{R:W3(-.55,.07,-.16)},pole:{legR:[1,.4,-.4]}},
+       uke:{x:1.45,y:.13,pitch:270,h:-15,gf:1,leg:{R:W3(1.95,.07,.20),L:W3(1.95,.07,-.20)},
+        arm:{R:W3(1.25,.07,.48),L:W3(1.25,.07,-.48)},pole:{legR:[1,.5,.3],legL:[1,.5,-.3],armR:[0,0,1],armL:[0,0,-1]}}}],
+ [6.6,{uke:{h:-5}}],
  [9,{}]],
- names:F=>F.t>5.4?{tori:[F.tori.x-.2,.62],uke:[F.uke.x-.1,.68]}:{},
  glow:{s:2.6,e:5.0,limbs:{'T.R.leg':'force'}},
- trail:{s:3.9,e:5.7,hide:9,fig:'uke',joints:['hip','head']},
  stamp:{s:5.65,e:9,big:'一本',small:'IPPON'},
  annotate:(api,F)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
   a=win(t,0,1.4);
   api.tag('pegada alta, nas golas',T.armR.H,-4,-4.5,C.force,a);
   a=win(t,1.2,2.7);
-  {const ch=tp(U,.2,.42);api.arrow(ch,[ch[0]-.3,ch[1]-.08],C.force,a);
-   api.tag('puxa Uke para frente',[ch[0]-.3,ch[1]-.08],-4,-2.4,C.force,a,false);}
+  {const ch=api.bp(U,.15,.42,0);api.arrow(ch,api.add(ch,[.32,-.08,0]),C.force,a);
+   api.tag('puxa Uke para frente',api.add(ch,[.32,-.08,0]),4,-2.4,C.force,a,false);}
   api.tag('passo curto, entre os pés',T.legL.H,-5,2.2,C.force,win(t,1.6,2.7));
-  a=win(t,2.6,4.0);
-  api.tag('pé na faixa de Uke',T.legR.H,7,0,C.force,a);
-  api.tag('senta perto, embaixo de Uke',T.hip,-8,-2,C.force,a);
-  a=win(t,4.0,5.3);
-  api.tag('a perna estende e lança',T.legR.E,9,-1,C.force,a);
-  api.tag('braços puxam por cima da cabeça',T.armR.H,-10,1,C.force,win(t,4.3,5.5));
+  a=win(t,2.6,4.1);
+  api.tag('pé na barriga, na faixa',T.legR.H,6,-1.5,C.force,a);
+  api.tag('senta perto, embaixo de Uke',T.hip,2,4,C.force,a);
+  a=win(t,4.0,5.4);
+  api.arc([.62,.15,0],[1,0,0],[0,1,0],1.0,150,18,C.info,a);
+  api.tag('a perna estende e lança',T.legR.E,4,3.5,C.force,a);
+  api.tag('braços puxam por cima da cabeça',T.armR.H,8,-1.5,C.force,win(t,4.3,5.5));
   a=win(t,5.7,99);
-  api.tag('Uke cai de costas, além da cabeça de Tori',[.2,1.2],0,0,C.ink,a,false);
-  api.tag('ukemi: braço bate no tatame',U.armL.H,-2,3,C.uke,a);}
+  api.tag('Uke cai de costas, além da cabeça de Tori',U.hip,0,-7,C.uke,a);
+  api.tag('ukemi: braço bate no tatame',U.armR.H,3,3,C.uke,a);}
 });})();
