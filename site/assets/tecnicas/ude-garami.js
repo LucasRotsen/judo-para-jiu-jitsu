@@ -12,7 +12,7 @@ const toriBase={x:-.10,y:.36,z:.30,yaw:135,pitch:85,roll:0,h:25,
  pole:{legR:[1,0,0],legL:[1,0,0],armR:[.6,.6,.1],armL:[.3,.3,-.6]}};
 /* Braço esquerdo de Uke: mão perto da orelha (cotovelo a 90°) → “pinta o chão” até o quadril → cotovelo sobe. */
 const byEar=W3(-.78,.06,-.36),paintMid=W3(-.46,.08,-.66),byHip=W3(-.25,.07,-.47),liftHand=W3(-.24,.22,-.50);
-const tapAt=W3(-.30,.52,.10),tapUp=W3(-.30,.66,.10);
+const tapAt=W3(-.34,.07,.46),tapUp=W3(-.34,.24,.46);
 const taps=[8.9,9.1,9.3,9.5,9.7].map((t,i)=>[t,{uke:{arm:{R:i%2?tapUp:tapAt}}}]);
 Judo.register3d({
  id:'ude-garami', name:'Ude Garami', kanji:'腕緘', group:'ne', cls:'Ne-waza · Kansetsu-waza',
@@ -48,7 +48,7 @@ Judo.register3d({
   d:'Com a mão de Uke junto ao quadril, Tori levanta o cotovelo dele em direção ao teto. O ombro gira para dentro e a chave entra. Devagar.',
   l:['A mão fica baixa, perto do quadril; o cotovelo sobe.','O ombro de Uke gira para dentro.','Devagar: a chave de ombro machuca sem aviso.']},
  {s:8.6,e:11,kanji:'参',ro:'Maitta',pt:'Uke bate, Tori solta',
-  d:'Uke bate nas costas de Tori (maitta, “desisto”). No judô isso vale ippon. Tori solta na hora e devolve o braço ao tatame.',
+  d:'Uke bate no tatame (maitta, “desisto”). No judô isso vale ippon. Tori solta na hora e devolve o braço ao tatame.',
   l:['A batida pode ser no corpo, no tatame ou com a voz.','Soltar imediatamente é parte da técnica.','Quem recebe bate cedo: o ombro não avisa.']}],
  rep:[.7,2.4,4.2,5.9,7.8,9.4], cover:7.8,
  views:[
@@ -88,5 +88,5 @@ Judo.register3d({
   api.arrow(api.add(U.armL.E,[0,-.02,0]),api.add(U.armL.E,[0,.22,0]),C.force,a);
   api.tag('cotovelo sobe, mão fica no quadril',U.armL.E,-9,-4,C.force,a);
   a=win(t,9.0,10.8);
-  api.tag('Uke bate: solte na hora',U.armR.H,-10,-5,C.uke,a);}
+  api.tag('Uke bate: solte na hora',U.armR.H,-4,5,C.uke,a);}
 });})();
