@@ -5,11 +5,11 @@
    terminando em 100 quilos: peito no peito, de frente para +z (yaw -90). */
 const ukeBase={x:0,y:.14,z:0,yaw:0,pitch:-90,h:-10,
  leg:{R:B('o',.13,-.02,-.13),L:B('o',.13,-.02,.13)},
- arm:{R:SL('armL',.85),L:SL('armR',.85)},
+ arm:{R:B('s',.25,.40,.16),L:B('s',.25,.40,-.16)},
  pole:{legR:[.2,1,.5],legL:[.2,1,-.5],armR:[.3,-.6,.6],armL:[.3,-.6,-.6]}};
-const toriBase={x:.58,y:.84,z:0,yaw:180,pitch:22,h:-15,
+const toriBase={x:.58,y:.80,z:0,yaw:180,pitch:34,h:-15,
  leg:{R:W3(.86,.04,-.24),L:W3(.86,.04,.24)},
- arm:{R:SL('legL',.12),L:SL('legR',.12)},
+ arm:{R:SL('legL',.30),L:SL('legR',.30)},
  pole:{legR:[1,-.3,.2],legL:[1,-.3,-.2],armR:[.4,-.8,.4],armL:[.4,-.8,-.4]}};
 /* pernas de Uke empurradas juntas para o lado direito dele, joelhos no chão */
 const legsAside={leg:{R:W3(.5,.08,.46),L:W3(.6,.08,.32)},pole:{legR:[.3,.1,1],legL:[.3,.1,1]}};
@@ -55,14 +55,14 @@ Judo.register3d({
  keys:[
  [0,{uke:ukeBase,tori:toriBase}],
  [1.6,{}],
- [2.2,{tori:{x:.74,y:.78,pitch:30}}],
- [3.2,{tori:{x:.66,y:.66,z:-.08,pitch:50,yaw:172,arm:{R:SL('legL',.08),L:SL('legR',.08)}},
+ [2.2,{tori:{x:.74,y:.76,pitch:40}}],
+ [3.2,{tori:{x:.66,y:.48,z:.08,pitch:74,yaw:172,arm:{R:SL('legL',.2),L:SL('legR',.2)}},
        uke:{roll:-18,leg:legsAside.leg,arm:{R:W3(-.35,.06,.42),L:W3(-.2,.06,-.42)},pole:{...legsAside.pole,armR:[0,-1,.6],armL:[0,-1,-.6]}}}],
- [4.1,{tori:{x:.5,y:.6,z:-.42,yaw:-125,pitch:62,leg:{R:W3(.58,.04,-.86),L:W3(.98,.04,-.5)}}}],
- [5.0,{tori:{x:.08,y:.46,z:-.6,yaw:-95,pitch:72,leg:{R:W3(-.02,.05,-1.02),L:W3(.42,.05,-.95)},
+ [4.1,{tori:{x:.44,y:.46,z:-.30,yaw:235,pitch:76,leg:{R:W3(.58,.04,-.86),L:W3(.98,.04,-.5)}}}],
+ [5.0,{tori:{x:.08,y:.46,z:-.6,yaw:265,pitch:72,leg:{R:W3(-.02,.05,-1.02),L:W3(.42,.05,-.95)},
        arm:{R:W3(.32,.1,.45),L:W3(.5,.1,.4)}}}],
  [5.45,{tori:{arm:{R:W3(-.18,.46,.32)},pole:{armR:[.3,.8,.6]}}}],
- [5.9,{tori:{x:-.22,y:.34,z:-.56,yaw:-90,pitch:80,h:10,
+ [5.9,{tori:{x:-.22,y:.34,z:-.56,yaw:270,pitch:80,h:10,
        leg:{R:W3(-.42,.05,-1.02),L:W3(.0,.05,-1.02)},
        arm:{R:W3(-.62,.1,.2),L:W3(.2,.12,.3)},pole:{legR:[1,-.6,0],legL:[1,-.6,0],armR:[.3,-.4,.8],armL:[.3,-.4,-.8]}},
        uke:{roll:-8}}],
