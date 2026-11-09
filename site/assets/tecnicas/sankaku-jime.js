@@ -84,5 +84,5 @@ Judo.register3d({
   a=win(t,7.5,10.2);
   api.arrow(api.add(U.head,[0,.32,0]),api.add(U.head,[0,.1,0]),C.force,a);
   api.tag('puxa a cabeça e fecha os joelhos',api.add(U.head,[0,.32,0]),0,-1.6,C.force,a,false);
-  api.tag('ombro de Uke fecha o outro lado',U.shR,-8,3,C.info,a);}
+  api.tag('ombro de Uke fecha o outro lado',U.shR,-2,3.5,C.info,a);}
 });})();
