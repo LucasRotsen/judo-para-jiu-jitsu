@@ -52,8 +52,8 @@ Judo.register3d({
   l:['Tori solta a manga só quando o peito já pressiona o de Uke.','Joelhos no tatame e quadril baixo: o peso vai todo para o peito de Uke.','As mãos agarram a faixa ou o gi pelas laterais e fecham os espaços.']}],
  rep:[.6,2.8,4.8,6.4,8.2,11.5], cover:6.4,
  views:[
-  {name:'Lado direito',a:8,e:10,center:[.25,1.0,0],span:3.8},
-  {name:'Frente e direita de Tori',a:50,e:14,center:[.1,.85,0],span:3.9},
+  {name:'Lado direito',a:8,e:10,center:[.15,.98,0],span:3.2},
+  {name:'Frente e direita de Tori',a:50,e:14,center:[.3,1.05,0],span:4.4},
   {name:'De cima',a:0,e:90,center:[.3,0,0],span:3.2}],
  xray:{s:3.9,e:5.6,key:'U.R.arm'},
  keys:[
@@ -79,8 +79,9 @@ Judo.register3d({
        uke:{x:-.10,y:1.46,z:.08,yaw:4,pitch:78,h:10,gf:0,leg:{R:B('s',-.08,-.86,.12),L:B('s',-.10,-.84,-.12)},
         arm:{R:B('o',.26,.40,.08)}}}],
  [6.5,{tori:{y:.86,yaw:372,pitch:50,h:22,arm:{R:B('s',.26,.18,.32)}},
-       uke:{x:.42,y:1.72,z:.04,yaw:8,pitch:150,roll:-10,h:-10,leg:{R:B('s',-.05,-.86,.14),L:B('s',-.06,-.84,-.10)},
+       uke:{x:.38,y:1.44,z:.04,yaw:8,pitch:122,roll:-10,h:-10,leg:{R:B('s',.12,-.74,.14),L:B('s',.10,-.72,-.10)},
         arm:{R:B('o',.38,.22,.05),L:B('s',.1,.25,-.45)}}}],
+ [6.75,{uke:{x:.60,y:1.16,z:.03,yaw:6,pitch:175,roll:-8,h:-15,leg:{R:B('s',.18,-.66,.13),L:B('s',.16,-.64,-.11)}}}],
  [7.0,{tori:{y:.84,yaw:370,pitch:42,h:15,arm:{R:B('s',.32,.22,.22)}},
        uke:{x:.74,y:.80,z:.02,yaw:4,pitch:225,roll:-5,h:-20,leg:{R:B('s',.1,-.85,.12),L:B('s',.06,-.84,-.12)},
         arm:{R:B('o',.40,.15,.10),L:B('s',.05,0,-.50)}}}],
@@ -98,8 +99,8 @@ Judo.register3d({
          pole:{legR:[.6,-1,.4],legL:[.6,-1,-.4],armR:[1,.3,.6],armL:[1,.3,-.6]}},
         uke:{arm:{R:B('o',-.13,.40,.16),L:B('o',-.13,.40,-.16)},pole:{armR:[.4,-.5,1],armL:[.4,-.5,-1]}}}],
  [12.5,{}]],
- names:F=>({tori:[F.tori.head[0],Math.max(F.tori.head[1],F.tori.hip[1])+.32,F.tori.head[2]],
-  uke:[F.uke.hip[0]+.2,Math.max(F.uke.head[1],F.uke.hip[1])+.40,F.uke.hip[2]-.2]}),
+ names:F=>({tori:[F.tori.head[0]+.12,Math.max(F.tori.head[1],F.tori.hip[1])+.22,F.tori.head[2]],
+  uke:[F.uke.hip[0]-.15,Math.max(F.uke.head[1],F.uke.hip[1])+.22,F.uke.hip[2]-.2]}),
  glow:{s:3.5,e:5.7,limbs:{'T.R.arm':'force','U.R.arm':'gold'}},
  stamp:{s:7.45,e:9.2,big:'一本',small:'IPPON'},
  annotate:(api,F)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
@@ -111,14 +112,14 @@ Judo.register3d({
    api.tag('puxada: frente e para cima',api.add(ch,[.32,.18,0]),1,-2.6,C.force,a,false);
    api.tag('pé direito à frente do pé de Uke',T.legR.H,6,.5,C.gold,a);}
   a=win(t,3.5,5.6);
-  api.tag('cotovelo de Tori sob a axila de Uke',T.armR.E,7,-1.8,C.force,a);
-  api.tag('braço de Uke preso sobre o ombro',api.lerp3(U.armR.root,U.armR.E,.5),-2,-4.6,C.gold,a);
+  api.tag('cotovelo de Tori sob a axila de Uke',T.armR.E,7,.4,C.force,a);
+  api.tag('braço de Uke preso',api.lerp3(U.armR.root,U.armR.E,.5),-5.5,-2.4,C.gold,a);
   a=win(t,4.4,5.6);
-  if(a>0){const ub=api.bp(U,0,.1,0),th=T.hip;
-   api.dashed([ub[0]-.2,ub[1],ub[2]-.35],[ub[0]+.75,ub[1],ub[2]-.35],C.uke,a,1.8);
-   api.dashed([th[0]-.45,th[1],th[2]-.35],[th[0]+.5,th[1],th[2]-.35],C.force,a,1.8);
-   api.tag('faixa de Uke',[ub[0]+.75,ub[1],ub[2]-.35],4.4,1.0,C.uke,a,false);
-   api.tag('quadril de Tori, mais baixo',[th[0]+.5,th[1],th[2]-.35],4.6,1.6,C.force,a,false);}
+  if(a>0){const ub=api.bp(U,0,.1,0),tb=api.bp(T,0,.1,0);
+   api.dashed([ub[0],ub[1],ub[2]],[ub[0]+.8,ub[1],ub[2]],C.uke,a,1.8);
+   api.dashed([tb[0],tb[1],tb[2]],[tb[0]+.55,tb[1],tb[2]],C.force,a,1.8);
+   api.tag('faixa de Uke',ub,-7,0,C.uke,a,false);
+   api.tag('faixa de Tori: mais baixa',[tb[0]+.55,tb[1],tb[2]],2,1.6,C.force,a,false);}
   a=win(t,5.5,6.4);
   api.arrow([T.hip[0]+.35,.2,T.hip[2]-.3],[T.hip[0]+.35,.62,T.hip[2]-.3],C.force,a);
   api.tag('pernas estendem',[T.hip[0]+.35,.4,T.hip[2]-.3],5.4,0,C.force,a,false);
@@ -129,7 +130,7 @@ Judo.register3d({
   api.tag('manga segura até o fim',T.armL.H,6,-2.6,C.force,a);
   api.tag('ukemi: queixo no peito',U.head,-3,3.4,C.uke,a);
   a=win(t,10.2,99);
-  api.tag('peito contra peito',api.bp(T,.15,.35,0),8,-1.5,C.force,a);
-  api.tag('joelhos no tatame, quadril baixo',T.legR.E,2,-5,C.force,a);
+  api.tag('peito contra peito',api.bp(T,.15,.35,0),6,2.4,C.force,a);
+  api.tag('joelhos no tatame, quadril baixo',T.legR.E,2,-3.4,C.force,a);
   api.tag('norte-sul · kami-shiho-gatame',api.add(U.hip,[0,1.0,0]),0,0,C.ink,a,false);}
 });})();
