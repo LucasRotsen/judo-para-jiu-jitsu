@@ -10,6 +10,8 @@ module.exports = defineConfig({
     baseURL: `http://127.0.0.1:${PORT}`,
     // Localmente usa o Chrome instalado; o Chromium do Playwright nem sempre abre no macOS novo.
     channel: process.env.CI ? undefined : 'chrome',
+    // WebGL por software para testar o palco 3D também em máquinas/CI sem GPU.
+    launchOptions: { args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] },
   },
   webServer: {
     command: `python3 -m http.server -d site ${PORT} --bind 127.0.0.1`,
