@@ -4,9 +4,9 @@
    A canela direita de Tori atravessa a barriga (joelho no ombro esquerdo de Uke, pé no quadril direito);
    a perna esquerda fica no chão contra o joelho direito. Uke cai para a direita dele (-z), Tori sobe montado. */
 const sleeve=SL('armR',.85), collar=B('o',.13,.42,.06);
-const ukeBase={x:.48,y:.40,z:0,yaw:180,pitch:35,roll:0,h:-20,
+const ukeBase={x:.40,y:.40,z:0,yaw:180,pitch:45,roll:0,h:-20,
  leg:{R:W3(.68,.07,-.17),L:W3(.68,.07,.17)},arm:{R:B('o',.12,.05,-.12),L:B('o',.12,.05,.12)}};
-const toriBase={x:0,y:.15,z:0,yaw:0,pitch:-90,roll:0,h:30,
+const toriBase={x:0,y:.15,z:0,yaw:0,pitch:-72,roll:0,h:30,
  leg:{R:B('o',-.2,-.04,-.03),L:B('o',-.2,-.02,.03)},arm:{R:collar,L:sleeve},
  pole:{legR:[-.25,.75,1],legL:[0,.25,-1],armR:[-.6,.3,.6],armL:[.8,.2,-.4]}};
 Judo.register3d({
@@ -50,12 +50,13 @@ Judo.register3d({
  keys:[
  [0,{uke:ukeBase,tori:toriBase}],
  [1.4,{}],
- [2.0,{tori:{leg:{R:B('o',.04,.10,-.45),L:B('o',.04,.0,.45)},pole:{legR:[0,.6,.9],legL:[.2,.1,-1]}}}],
- [2.6,{tori:{z:.14,roll:-35,h:25,leg:{R:B('o',.24,.12,.14),L:W3(.58,.06,-.42)},
-        pole:{legR:[.5,.25,.5],legL:[.38,0,-.98]}},
-       uke:{pitch:48,x:.46,h:-5}}],
- [3.4,{tori:{z:.16,roll:-38,leg:{R:B('o',.24,.12,.14),L:W3(.60,.06,-.40)},pole:{legR:[.75,.25,.25]}},
-       uke:{pitch:58,x:.44,y:.42,h:5,arm:{R:B('o',.10,.10,-.14)}}}],
+ [2.0,{tori:{leg:{R:B('o',.02,-.02,-.42),L:B('o',.04,.0,.45)},pole:{legR:[-.75,.5,-.25],legL:[.2,.1,-1]}}}],
+ [2.3,{tori:{leg:{R:B('o',.26,.04,-.10)},pole:{legR:[.75,-1,.75]}}}],
+ [2.6,{tori:{x:-.08,z:.24,roll:-35,h:25,leg:{R:B('o',.20,.08,.26),L:W3(.58,.06,-.42)},
+        pole:{legR:[.25,-1,.25],legL:[.38,0,-.98]}},
+       uke:{pitch:48,x:.42,h:-5}}],
+ [3.4,{tori:{x:-.08,z:.24,roll:-38,leg:{R:B('o',.20,.08,.26),L:W3(.60,.06,-.40)},pole:{legR:[.25,-1,.25]}},
+       uke:{pitch:58,x:.41,y:.42,h:5,arm:{R:B('o',.10,.10,-.14)}}}],
  [4.5,{}],
  [5.0,{tori:{roll:-55,leg:{R:B('o',.18,.25,.32),L:W3(.62,.06,-.16)},pole:{legL:[.8,-.3,0]}},
        uke:{x:.44,y:.50,z:-.12,roll:40,pitch:62,leg:{R:W3(.66,.14,-.06),L:W3(.60,.30,.14)}}}],
