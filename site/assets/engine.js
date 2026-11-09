@@ -371,8 +371,15 @@ function mountIndex(){
    {threshold:[0,.25,.5,.6,.75,.9,1]});
   cards.forEach(k=>io.observe(k.a));}
  const all=()=>cards.forEach(draw);all();
- chips.forEach(ch=>ch.addEventListener('click',()=>{chips.forEach(x=>x.setAttribute('aria-pressed',x===ch));const g=ch.dataset.g;
-  cards.forEach(k=>k.a.hidden=!(g==='all'||k.a.dataset.group===g||(g==='fav'&&k.a.dataset.fav)||(g==='bjj'&&k.a.dataset.origin==='bjj')));all();}));
+ /* Filtro por grupo + busca por texto (sem acento, sem caixa) em nome, kanji, nome no jiu-jitsu e classe. */
+ const fold=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+ cards.forEach(k=>{const d=k.def||{};k.text=fold([d.name,d.kanji,d.bjj,d.cls,d.why,(d.reading||[]).map(r=>r.k+' '+r.r+' '+r.m).join(' ')].join(' '));});
+ let group='all',query='';
+ const apply=()=>{let n=0;cards.forEach(k=>{const g=group,okG=g==='all'||k.a.dataset.group===g||(g==='fav'&&k.a.dataset.fav)||(g==='bjj'&&k.a.dataset.origin==='bjj');
+   const okQ=!query||query.split(/\s+/).every(w=>k.text.includes(w));k.a.hidden=!(okG&&okQ);if(!k.a.hidden)n++;});
+  const e=document.getElementById('qempty');if(e)e.hidden=n>0;all();};
+ chips.forEach(ch=>ch.addEventListener('click',()=>{chips.forEach(x=>x.setAttribute('aria-pressed',x===ch));group=ch.dataset.g;apply();}));
+ const q=document.getElementById('q');if(q)q.addEventListener('input',()=>{query=fold(q.value).trim();apply();});
  new ResizeObserver(all).observe(grid);onTheme(all);}
 
 window.Judo={Progress,register,pose,drawScene,viewport,readTheme,renderTo,renderDef,mountPage,mountIndex,techs,CATALOG,W,TP,A,SL,win,tp,lerp2,clamp,D,C,
