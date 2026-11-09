@@ -3,7 +3,7 @@
    Uke ajoelhado na guarda (yaw 180: direita de Uke = -z). Tori segura a gola e a manga DIREITAS de Uke.
    A canela direita de Tori atravessa a barriga (joelho no ombro esquerdo de Uke, pé no quadril direito);
    a perna esquerda fica no chão contra o joelho direito. Uke cai para a direita dele (-z), Tori sobe montado. */
-const sleeve=SL('armR',.85), collar=B('o',.13,.42,.06);
+const sleeve=SL('armR',.85), collar=B('o',.21,.42,.06);
 const ukeBase={x:.40,y:.40,z:0,yaw:180,pitch:45,roll:0,h:-20,
  leg:{R:W3(.68,.07,-.17),L:W3(.68,.07,.17)},arm:{R:B('o',.12,.05,-.12),L:B('o',.12,.05,.12)}};
 const toriBase={x:0,y:.15,z:0,yaw:0,pitch:-72,roll:0,h:30,
@@ -54,12 +54,12 @@ Judo.register3d({
  [2.3,{tori:{leg:{R:B('o',.26,.04,-.10)},pole:{legR:[.75,-1,.75]}}}],
  [2.6,{tori:{x:-.08,z:.24,roll:-35,h:25,leg:{R:B('o',.20,.08,.26),L:W3(.58,.06,-.42)},
         pole:{legR:[.25,-1,.25],legL:[.38,0,-.98]}},
-       uke:{pitch:48,x:.42,h:-5}}],
+       uke:{pitch:48,x:.40,h:-5}}],
  [3.4,{tori:{x:-.08,z:.24,roll:-38,leg:{R:B('o',.20,.08,.26),L:W3(.60,.06,-.40)},pole:{legR:[.25,-1,.25]}},
        uke:{pitch:58,x:.41,y:.42,h:5,arm:{R:B('o',.10,.10,-.14)}}}],
  [4.5,{}],
  [5.0,{tori:{roll:-55,leg:{R:B('o',.18,.25,.32),L:W3(.62,.06,-.16)},pole:{legL:[.8,-.3,0]}},
-       uke:{x:.44,y:.50,z:-.12,roll:40,pitch:62,leg:{R:W3(.66,.14,-.06),L:W3(.60,.30,.14)}}}],
+       uke:{x:.41,y:.50,z:-.12,roll:40,pitch:62,arm:{R:B('o',.16,.20,-.12)},leg:{R:W3(.66,.14,-.06),L:W3(.60,.30,.14)}}}],
  [5.6,{tori:{x:.12,y:.22,z:.02,roll:-95,pitch:-115,leg:{R:B('o',.22,.2,.2),L:B('o',0,-.3,.35)},pole:{legR:[.5,.25,-.5],legL:[-1,-1,0]}},
        uke:{x:.42,y:.32,z:-.36,roll:120,pitch:80,h:0,leg:{R:W3(.95,.12,-.30),L:W3(.85,.35,-.25)}}}],
  [5.9,{tori:{x:.30,y:.42,z:-.22,roll:-125,pitch:-140,pole:{legR:[-1,.25,-1],legL:[-1,-1,.5]}}}],
@@ -67,7 +67,7 @@ Judo.register3d({
         pole:{legR:[.5,.25,-.5],legL:[0,-.5,.25]}},
        uke:{x:.46,y:.13,z:-.46,roll:180,pitch:90,h:10,leg:{R:W3(1.15,.07,-.34),L:W3(1.18,.07,-.58)}}}],
  [6.6,{tori:{pole:{legR:[.5,.25,-.5],legL:[.75,.75,.25]}}}],
- [7.0,{tori:{x:.48,y:.38,z:-.46,roll:-180,pitch:-178,h:15,leg:{R:B('o',-.1,-.25,.3),L:B('o',-.1,-.25,-.3)},pole:{legR:[1,.25,-.25],legL:[1,.25,.25]}},
+ [7.0,{tori:{arm:{R:B('o',.14,.17,.04)},x:.48,y:.35,z:-.46,roll:-180,pitch:-178,h:15,leg:{R:B('o',-.1,-.25,.3),L:B('o',-.1,-.25,-.3)},pole:{legR:[1,.25,-.25],legL:[1,.25,.25]}},
        uke:{arm:{L:B('o',.05,-.02,.2)}}}],
  [8.6,{}]],
  names:F=>({tori:[F.tori.head[0],Math.max(F.tori.head[1],F.tori.hip[1])+.2,F.tori.head[2]],
