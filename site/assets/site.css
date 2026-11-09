@@ -243,3 +243,15 @@ button{font:inherit;color:inherit}
 .search input:focus-visible{outline:2px solid var(--info);outline-offset:1px}
 .search-empty{margin:0;color:var(--muted)}
 @media (pointer:coarse){.search input{min-height:44px}}
+/* palco WebGL */
+.cv-wrap.gl-host{touch-action:none;cursor:grab;overflow:hidden}
+.cv-wrap.gl-host:active{cursor:grabbing}
+.cv-wrap .gl-canvas,.cv-wrap .gl-overlay{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cv-wrap .gl-overlay{pointer-events:none}
+.minis.angles{display:flex;flex-direction:column;gap:6px;padding:12px;background:var(--surface);align-content:start}
+.minis.angles .chip{text-align:left}
+.angles-h{margin:0 0 2px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+@media (max-width:640px){.minis.angles{flex-direction:row;flex-wrap:wrap;padding:8px 0;background:transparent}.angles-h{width:100%}}
+.cv-wrap.gl-host .vname,.cv-wrap.gl-host .drag-hint{z-index:2}
+.views-wrap.multi:has(.minis.angles){grid-template-columns:1fr minmax(0,170px)}
+@media (max-width:640px){.views-wrap.multi:has(.minis.angles){grid-template-columns:minmax(0,1fr)}}
