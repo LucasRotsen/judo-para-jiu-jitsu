@@ -210,6 +210,7 @@ function onTheme(fn){matchMedia('(prefers-color-scheme: dark)').addEventListener
  new MutationObserver(()=>{readTheme();fn();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
  if(document.fonts)document.fonts.ready.then(()=>{readTheme();fn();});}
 const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+const webglOK=()=>{try{const c=document.createElement('canvas');return !!(window.WebGLRenderingContext&&(c.getContext('webgl2')||c.getContext('webgl')));}catch(e){return false;}};
 /* Progresso do aluno, só no aparelho (ADR 0001). Falha silenciosa em modo privado. */
 const Progress={KEY:'jpj:v1',
  read(){try{return Object.assign({seen:{},done:{},fav:{},speed:1},JSON.parse(localStorage.getItem(this.KEY)||'{}'));}catch(e){return {seen:{},done:{},fav:{},speed:1};}},
@@ -287,7 +288,9 @@ for(const k of Object.keys(pills)){paint(k,!!saved[k][id]);$('#'+k).onclick=()=>
  const minis=def.is3d?def.views.slice(1).map((v,i)=>{const b=document.createElement('button');b.className='mini';b.type='button';
   b.innerHTML=`<canvas></canvas><span></span>`;b.onclick=()=>{const k=+b.dataset.v;b.dataset.v=mv;mv=k;render();};
   b.dataset.v=i+1;$('#minis').appendChild(b);return b;}):[];
- function render(){const [w,h,dpr]=size(cv);ctx.setTransform(dpr,0,0,dpr,0,0);renderDef(ctx,w,h,def,t,{annot},mv);
+ let gl=null;
+ function render(){if(gl){gl.setTime(t);ui();return;}
+  const [w,h,dpr]=size(cv);ctx.setTransform(dpr,0,0,dpr,0,0);renderDef(ctx,w,h,def,t,{annot},mv);
   if(def.is3d){$('#vname').textContent=def.views[mv].name;
    for(const b of minis){const k=+b.dataset.v;b.querySelector('span').textContent=def.views[k].name;b.setAttribute('aria-label','Ver ângulo '+def.views[k].name);
     renderTo(b.querySelector('canvas'),def,t,{},k);}}
@@ -305,10 +308,10 @@ for(const k of Object.keys(pills)){paint(k,!!saved[k][id]);$('#'+k).onclick=()=>
  $('#prev').onclick=()=>{const i=phaseAt(t);jump(t-PH[i].s>.6||i===0?i:i-1);};
  $('#next').onclick=()=>jump((phaseAt(t)+1)%PH.length);
  root.querySelectorAll('.speed button').forEach(b=>b.onclick=()=>{speed=+b.dataset.s;Progress.update(d=>{d.speed=speed;});root.querySelectorAll('.speed button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
- $('#ann').onchange=e=>{annot=e.target.checked;render();};
+ $('#ann').onchange=e=>{annot=e.target.checked;if(gl)gl.setAnnot(annot);render();};
  /* Toque no palco: arrastar na horizontal avança/volta o tempo; toque simples alterna play/pausa. */
 const hint=$('.drag-hint'),hideHint=()=>hint&&hint.classList.add('gone');setTimeout(hideHint,4000);
-cv.addEventListener('pointerdown',e=>{if(e.button)return;hideHint();const x0=e.clientX,t0=t,w=cv.getBoundingClientRect().width;let dragged=false;
+cv.addEventListener('pointerdown',e=>{if(e.button||gl)return;hideHint();const x0=e.clientX,t0=t,w=cv.getBoundingClientRect().width;let dragged=false;
   const mv=ev=>{const dx=ev.clientX-x0;if(!dragged&&Math.abs(dx)<8)return;
    if(!dragged){dragged=true;setPlay(false);cv.setPointerCapture(ev.pointerId);}
    t=clamp(t0+dx/w*END*.8,0,END);render();};
@@ -331,7 +334,20 @@ else if(deep.has('t'))t=clamp(parseFloat(deep.get('t'))||0,0,END);
 setPlay(playing);render();drawThumbs();
  new ResizeObserver(()=>{render();drawThumbs();}).observe($('.cv-wrap'));
  onTheme(()=>{render();drawThumbs();});
- window.JudoPlayer={seek(x){t=x;setPlay(false);render();}};
+ window.JudoPlayer={seek(x){t=x;setPlay(false);render();},get gl(){return gl;}};
+ /* Técnicas 3D: palco em WebGL (profundidade real, luz, sombra e câmera livre). Sem WebGL, fica o canvas. */
+ if(def.is3d&&!window.JUDO_NO_GL&&webglOK())import(new URL('assets/engine-gl.js',document.baseURI).href).then(m=>m.mountGL($('.cv-wrap'),def,{})).then(g=>{
+  const wrap=$('.cv-wrap');wrap.classList.add('gl-host');
+  gl=g;gl.setAnnot(annot);cv.hidden=true;
+  if(hint){hint.textContent='arraste para girar · pinça ou roda para aproximar';hint.classList.remove('gone');setTimeout(hideHint,5000);}
+  wrap.addEventListener('pointerdown',hideHint);
+  const box=$('#minis');box.innerHTML='';box.classList.add('angles');
+  const lab=document.createElement('p');lab.className='angles-h';lab.textContent='Ângulos';box.appendChild(lab);
+  def.views.forEach((v,i)=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=v.name;
+   b.setAttribute('aria-pressed',i===0);b.onclick=()=>{gl.setView(i);$('#vname').textContent=v.name;
+    box.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b));};box.appendChild(b);});
+  gl.controls.addEventListener('start',()=>{$('#vname').textContent='Livre';box.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));});
+  render();}).catch(()=>{gl=null;});
  requestAnimationFrame(frame);}
 
 /* ---------- index page ---------- */

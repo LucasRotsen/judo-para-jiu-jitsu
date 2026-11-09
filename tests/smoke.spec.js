@@ -19,9 +19,12 @@ function collectErrors(page) {
   return errors;
 }
 
+/* Conta cores distintas do que está desenhado (canvas 2D ou WebGL com preserveDrawingBuffer). */
 async function canvasHasInk(locator) {
   return locator.evaluate((c) => {
-    const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+    const k = document.createElement('canvas'); k.width = c.width; k.height = c.height;
+    const x = k.getContext('2d'); x.drawImage(c, 0, 0);
+    const d = x.getImageData(0, 0, k.width, k.height).data;
     const seen = new Set();
     for (let i = 0; i < d.length; i += 4 * 97) seen.add(`${d[i]},${d[i + 1]},${d[i + 2]}`);
     return seen.size;
@@ -42,7 +45,8 @@ for (const id of TECHS) {
     const errors = collectErrors(page);
     await page.goto(`/${id}.html`);
     await expect(page.locator('h1')).toBeVisible();
-    const stage = page.locator('canvas').first();
+    await page.waitForTimeout(300);
+    const stage = page.locator('.cv-wrap canvas:visible').first();
     for (const t of [0.5, 3, 6]) {
       await page.evaluate((x) => window.JudoPlayer.seek(x), t);
       expect(await canvasHasInk(stage)).toBeGreaterThan(8);
