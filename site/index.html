@@ -54,6 +54,11 @@
     <button class="chip" data-g="fav" aria-pressed="false" hidden>★ Favoritas</button>
     <p class="progress" id="progress" aria-live="polite"></p>
   </div>
+  <div class="search">
+    <label for="q" class="sr-only">Buscar técnica</label>
+    <input id="q" type="search" placeholder="Buscar: triângulo, mata-leão, kimura, 背負…" autocomplete="off">
+    <p class="search-empty" id="qempty" hidden>Nenhuma técnica encontrada.</p>
+  </div>
 
   <h2 class="sr-only">Técnicas</h2>
   <section class="grid" id="grid" aria-label="Técnicas"></section>
