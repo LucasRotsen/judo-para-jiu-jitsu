@@ -30,3 +30,8 @@
 - Regra: revisão visual não basta para geometria. Toda técnica 3D passa em `node tools/interpenetracao.js <id>` (≤ 0,06) antes do merge; depois de corrigidas todas, isso vira portão da CI.
 - Regra: não corrigir dados ruins com remendo no motor. Empurrar o membro para fora automaticamente escondeu o erro e distorceu a técnica (a tesoura deixou de ser tesoura). Corrigir o keyframe/polo/transição na origem.
 - Regra: transições entre um alvo atrás do corpo do outro e um à frente precisam de keyframe intermediário contornando pelo lado; interpolação em linha reta passa por dentro.
+
+## 2026-11-09 — Vendi melhoria visual que o usuário achou pior
+- Erro: afirmei "bem mais humano" para o palco WebGL olhando miniaturas que eu mesmo gerei; o usuário achou pior que antes e ilegível.
+- Regra: mudança visual grande só entra depois de o usuário ver um lado a lado (antes/depois, mesmo quadro). Não declarar "melhor" em nome dele.
+- Regra: antes de iterar em detalhes, perguntar se a abordagem consegue chegar no alvo. Bonecos de cápsula animados à mão não chegam em "dois humanos treinando"; o caminho é modelo humano com esqueleto e/ou captura de movimento.

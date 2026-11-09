@@ -80,7 +80,7 @@ Judo.register3d({
   a=win(t,0,1.6);
   api.tag('Uke empurra com os braços esticados',U.armR.E,-4,-5,C.info,a);
   a=win(t,1.5,3.4);
-  api.tag('empurra o cotovelo por cima do rosto',U.armR.E,-6,-5,C.force,a);
+  api.tag('empurra o cotovelo por cima do rosto',U.armR.E,-1,-5,C.force,a);
   a=win(t,3.3,5.0);
   api.tag('cabeça cola no braço de Uke',T.head,3,-7,C.force,a);
   api.tag('braço por trás do pescoço',T.armL.E,6,4,C.force,a);
@@ -90,7 +90,7 @@ Judo.register3d({
   api.tag('ombro de Uke fecha um lado',U.armR.E,-2,-9,C.gold,a);
   api.ring(U.neck,.09,C.info,a);
   api.tag('braço de Tori fecha o outro',T.armL.E,-6,5,C.force,a);
-  api.tag('quadril baixo, cotovelos juntos',T.hip,9,3,C.force,a);
+  api.tag('quadril baixo, cotovelos juntos',T.hip,3,4,C.force,a);
   a=win(t,8.7,10.4);
   api.tag('Uke bate: solte na hora',U.armL.H,5,-4,C.uke,a);}
 });})();

@@ -89,7 +89,7 @@ Judo.register3d({
   a=win(t,3.6,5.4);
   api.tag('perna passa por cima do ombro',T.legL.E,-6,-3.4,C.force,a);
   a=win(t,5.4,7.6);
-  api.tag('braço por cima das costas: Uke não rola',T.armL.H,8,-3.2,C.force,a);
+  api.tag('braço por cima das costas: Uke não rola',T.armL.H,3,-3.6,C.force,a);
   api.tag('mão de Uke presa no quadril',U.armR.H,-5,4.2,C.gold,a);
   a=win(t,8.0,10.4);
   api.arrow(T.head,api.add(T.head,[-.24,-.1,0]),C.force,a);
