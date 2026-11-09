@@ -91,8 +91,8 @@ Judo.register3d({
   api.tag('senta perto, embaixo de Uke',T.hip,2,4,C.force,a);
   a=win(t,4.0,5.4);
   api.arc([.62,.15,0],[1,0,0],[0,1,0],1.0,150,18,C.info,a);
-  api.tag('a perna estende e lança',T.legR.E,4,3.5,C.force,a);
-  api.tag('braços puxam por cima da cabeça',T.armR.H,8,-1.5,C.force,win(t,4.3,5.5));
+  api.tag('a perna estende e lança',T.legR.E,-6,4.5,C.force,a);
+  api.tag('braços puxam por cima da cabeça',T.armR.H,8,-4,C.force,win(t,4.3,5.5));
   a=win(t,5.7,99);
   api.tag('Uke cai de costas, além da cabeça de Tori',U.hip,0,-7,C.uke,a);
   api.tag('ukemi: braço bate no tatame',U.armR.H,3,3,C.uke,a);}
