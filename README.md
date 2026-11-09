@@ -50,8 +50,10 @@ gi e diz o que ele está fazendo; a página lista as opções com o porquê de c
    `python3 tools/build.py` para gerar a página e atualizar o índice.
 4. Confira que nenhum membro atravessa o outro corpo: `node tools/interpenetracao.js <id>`
    (lista cada instante em que um membro entra mais de 6 cm no tronco ou na cabeça do outro).
-5. Revise quadro a quadro: `tools/sheet.sh <id> 1,3,5 out/x.png "views=1"`.
-6. `npm test`.
+5. Confira que as pegadas chegam: `node tools/pegadas.js <id>` (mão ou pé a mais de 8 cm do alvo
+   de pegada no corpo do outro falha). Para medir posições: `node tools/sonda.js <id> <tempos>`.
+6. Revise quadro a quadro: `tools/sheet.sh <id> 1,3,5 out/x.png "views=1"`.
+7. `npm test`.
 
 ## Arquitetura e decisões
 
