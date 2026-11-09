@@ -4,6 +4,8 @@
    As anotações (rótulos, setas, carimbo) continuam no canvas 2D, por cima, projetadas da cena. */
 import * as THREE from './vendor/three/three.module.min.js';
 import { OrbitControls } from './vendor/three/OrbitControls.js';
+import { GLTFLoader } from './vendor/three/loaders/GLTFLoader.js';
+import { clone as cloneSkinned } from './vendor/three/utils/SkeletonUtils.js';
 
 const J = window.Judo;
 const D = Math.PI / 180;
@@ -137,6 +139,52 @@ class Body extends Figure {
   }
 }
 
+/* Corpo humano com esqueleto padrão Mixamo, conduzido pelas articulações de pose3:
+   cada osso é girado para apontar da articulação atual à próxima (mesmos alvos do IK). */
+const HIP_HEIGHT = 0.88;
+class Skinned {
+  constructor(scene, gltf, color, accent) {
+    this.root = cloneSkinned(gltf.scene); this.glow = [];
+    this.root.traverse((o) => { if (!o.isMesh) return; o.castShadow = o.receiveShadow = true; o.frustumCulled = false;
+      o.material = new THREE.MeshStandardMaterial({ color: /Joint/i.test(o.material.name || '') ? accent : color, roughness: 0.62 }); });
+    scene.add(this.root);
+    this.bones = {}; this.root.traverse((o) => { if (o.isBone) this.bones[o.name.replace(/^mixamorig:?/, '')] = o; });
+    this.rest = {}; for (const [k, b] of Object.entries(this.bones)) this.rest[k] = b.quaternion.clone();
+    this.root.updateMatrixWorld(true);
+    const hip = this.bones.Hips.getWorldPosition(new THREE.Vector3()), foot = this.bones.LeftFoot.getWorldPosition(new THREE.Vector3());
+    this.root.scale.setScalar(HIP_HEIGHT / Math.max(0.1, hip.y - foot.y));
+  }
+  aim(name, child, dir) {
+    const b = this.bones[name], c = this.bones[child]; if (!b || !c || dir.lengthSq() < 1e-8) return;
+    b.quaternion.copy(this.rest[name]); b.updateWorldMatrix(true, false);
+    const baseQ = b.getWorldQuaternion(new THREE.Quaternion());
+    const axis = c.position.clone().normalize().applyQuaternion(baseQ);
+    const worldQ = new THREE.Quaternion().setFromUnitVectors(axis, dir.clone().normalize()).multiply(baseQ);
+    b.quaternion.copy(b.parent.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(worldQ));
+    b.updateWorldMatrix(false, true);
+  }
+  update(o) {
+    for (const [k, q] of Object.entries(this.rest)) this.bones[k].quaternion.copy(q);
+    this.root.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(V3(o.r).negate(), V3(o.u), V3(o.f)));
+    this.root.position.set(0, 0, 0); this.root.updateMatrixWorld(true);
+    this.root.position.copy(V3(o.hip).sub(this.bones.Hips.getWorldPosition(new THREE.Vector3()))); this.root.updateMatrixWorld(true);
+    this.aim('Neck', 'Head', V3(o.head).sub(V3(o.neck)));
+    for (const [s, S] of [['R', 'Right'], ['L', 'Left']]) {
+      const A = o['arm' + s], L = o['leg' + s];
+      this.aim(S + 'Arm', S + 'ForeArm', V3(A.E).sub(V3(A.root)));
+      this.aim(S + 'ForeArm', S + 'Hand', V3(A.H).sub(V3(A.E)));
+      this.aim(S + 'UpLeg', S + 'Leg', V3(L.E).sub(V3(L.root)));
+      this.aim(S + 'Leg', S + 'Foot', V3(L.H).sub(V3(L.E)));
+      this.aim(S + 'Foot', S + 'ToeBase', V3(L.toe).sub(V3(L.heel)));
+    }
+  }
+}
+let modelPromise = null;
+function loadModel() {
+  if (!modelPromise) modelPromise = new GLTFLoader().loadAsync(new URL('./modelos/corpo.glb', import.meta.url).href).catch(() => null);
+  return modelPromise;
+}
+
 function floor(scene, colors) {
   const g = new THREE.PlaneGeometry(40, 40);
   const c = document.createElement('canvas'); c.width = c.height = 512; const x = c.getContext('2d');
@@ -167,7 +215,8 @@ function viewToCamera(view, aspect, fov) {
   return { pos: target.clone().add(dir.multiplyScalar(dist)), target };
 }
 
-export function mountGL(host, def, { onFrame } = {}) {
+export async function mountGL(host, def, { onFrame } = {}) {
+  const model = await loadModel();
   J.readTheme();
   const colors = themeColors();
   const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
@@ -186,7 +235,9 @@ export function mountGL(host, def, { onFrame } = {}) {
   sun.shadow.radius = 4; scene.add(sun);
   floor(scene, colors);
   const ramp = toonRamp();
-  const bodies = { tori: new Body(scene, colors.tori, ramp), uke: new Body(scene, colors.uke, ramp) };
+  const bodies = model
+    ? { tori: new Skinned(scene, model, colors.tori.gi, colors.tori.line), uke: new Skinned(scene, model, colors.uke.gi, colors.uke.line) }
+    : { tori: new Body(scene, colors.tori, ramp), uke: new Body(scene, colors.uke, ramp) };
 
   const fov = 32;
   const camera = new THREE.PerspectiveCamera(fov, 1.5, 0.05, 50);
@@ -233,7 +284,7 @@ export function mountGL(host, def, { onFrame } = {}) {
     const F = J.pose3(def, t);
     bodies.tori.update(F.tori); bodies.uke.update(F.uke);
     const g = def.glow, ga = annot && g ? J.win(t, g.s, g.e) : 0;
-    for (const [who, B] of [['T', bodies.tori], ['U', bodies.uke]]) for (const s of ['R', 'L']) for (const kind of ['leg', 'arm']) {
+    if (!model) for (const [who, B] of [['T', bodies.tori], ['U', bodies.uke]]) for (const s of ['R', 'L']) for (const kind of ['leg', 'arm']) {
       const key = `${who}.${s}.${kind}`, glow = g && g.limbs ? g.limbs[key] : null;
       const parts = Object.values(B.limbs[kind + s]).filter((p) => p.a);
       B.setGlow(parts, glow ? J.C[glow] : 0, glow ? ga : 0);
@@ -256,6 +307,6 @@ export function mountGL(host, def, { onFrame } = {}) {
   resize(); setView(0, false); draw();
   return {
     setTime(x) { t = x; draw(); }, setAnnot(v) { annot = v; draw(); }, setView, draw,
-    camera, controls, renderer, get time() { return t; },
+    camera, controls, renderer, humano: !!model, get time() { return t; },
   };
 }

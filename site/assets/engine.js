@@ -336,9 +336,9 @@ setPlay(playing);render();drawThumbs();
  onTheme(()=>{render();drawThumbs();});
  window.JudoPlayer={seek(x){t=x;setPlay(false);render();},get gl(){return gl;}};
  /* Técnicas 3D: palco em WebGL (profundidade real, luz, sombra e câmera livre). Sem WebGL, fica o canvas. */
- if(def.is3d&&!window.JUDO_NO_GL&&webglOK())import(new URL('assets/engine-gl.js',document.baseURI).href).then(m=>{
+ if(def.is3d&&!window.JUDO_NO_GL&&webglOK())import(new URL('assets/engine-gl.js',document.baseURI).href).then(m=>m.mountGL($('.cv-wrap'),def,{})).then(g=>{
   const wrap=$('.cv-wrap');wrap.classList.add('gl-host');
-  gl=m.mountGL(wrap,def,{});gl.setAnnot(annot);cv.hidden=true;
+  gl=g;gl.setAnnot(annot);cv.hidden=true;
   if(hint){hint.textContent='arraste para girar · pinça ou roda para aproximar';hint.classList.remove('gone');setTimeout(hideHint,5000);}
   wrap.addEventListener('pointerdown',hideHint);
   const box=$('#minis');box.innerHTML='';box.classList.add('angles');

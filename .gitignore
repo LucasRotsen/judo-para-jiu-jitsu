@@ -6,3 +6,4 @@ playwright-report/
 __pycache__/
 site/og/
 site/sw.js
+site/assets/modelos/*.glb
