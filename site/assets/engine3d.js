@@ -71,6 +71,15 @@ function pose3(def,t){
    const gh=[o.f[0],0,o.f[2]];const k=o.gf*clamp((.17-L.H[1])/.08,0,1);
    if(k>0&&len(gh)>.2)toe=norm(lerp3(toe,norm(gh),k));
    L.heel=sub(L.H,mul(toe,.035));L.toe=add(L.H,mul(toe,.14));}}
+ /* 2ª passada: quem foi resolvido primeiro não enxergava os membros do outro (SL caía no ombro).
+    Agora que os dois existem, refaz os membros que miram um membro do outro. */
+ {const w=def.first==='tori'?'tori':'uke',o=F[w],other=F[w==='uke'?'tori':'uke'];
+  for(const [g,side] of [['leg','R'],['leg','L'],['arm','R'],['arm','L']]){
+   if(!idx.some(j=>K[j][w][g][side][0]==='s'))continue;
+   const leg=g==='leg',L=o[g+side],T=hermV(idx.map(j=>spec(K[j][w][g][side],o,other)),u);
+   const [E,H]=ik3(L.root,T,leg?LEN.th:LEN.ua,leg?LEN.sh:LEN.fa,bv(o,o.pole[g+side]));
+   const d=L.toe?sub(L.toe,L.H):null;L.E=E;L.H=H;   /* pé mantém a direção, só acompanha o tornozelo */
+   if(d){L.heel=sub(H,mul(norm(d),.035));L.toe=add(H,d);}}}
  return F;}
 
 /* ---------- camera ---------- */
