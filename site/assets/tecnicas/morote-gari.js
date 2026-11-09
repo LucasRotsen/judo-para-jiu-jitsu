@@ -1,4 +1,4 @@
-(()=>{const {W3,B,win}=Judo;
+(()=>{const {W3,B,win,SL}=Judo;
 /* Mundo 3D: y para cima. Uke começa em -x olhando para +x (direita de Uke = +z).
    Tori começa em +x olhando para -x (direita de Tori = -z). Na entrada, o joelho direito de Tori
    desce entre os pés de Uke e a cabeça de Tori fica por fora, do lado direito de Uke (+z). */
@@ -10,7 +10,8 @@ const tori0={x:.42,y:.86,z:0,yaw:180,pitch:8,h:-4,
  leg:{R:W3(.36,.07,-.16),L:W3(.48,.07,.16)},
  arm:{R:B('s',.30,.38,.18),L:B('s',.30,.30,-.18)},
  pole:{armR:[-.4,-.8,.5],armL:[-.4,-.8,-.5]}};
-const behindKnees={R:B('o',-.10,-.40,-.12),L:B('o',-.10,-.40,.12)};
+/* mãos atrás dos joelhos: presas às pernas de Uke (acompanham quando elas sobem) */
+const behindKnees={R:SL('legL',.06),L:SL('legR',.06)};
 Judo.register3d({
  id:'morote-gari', name:'Morote Gari', kanji:'双手刈',
  cls:'Nage-waza · Te-waza', group:'nage',
@@ -67,7 +68,7 @@ Judo.register3d({
  [4.0,{tori:{x:-.28,y:.58,z:.12,pitch:30,h:-15,leg:{R:W3(-.10,.07,.0),L:W3(.15,.07,.28)}},
        uke:{x:-.88,y:.55,pitch:-68,h:25,leg:{R:B('o',.34,.36,-.16),L:B('o',.34,.36,.16)}}}],
  [4.4,{tori:{x:-.42,y:.47,z:0,pitch:40,h:-10,gf:0,leg:{R:W3(-.04,.08,-.15),L:W3(-.04,.08,.15)},pole:{legR:[1,-.3,.1],legL:[1,-.3,-.1]},
-        arm:{R:B('o',.05,.04,-.20),L:B('o',.05,.04,.20)}},
+        arm:{R:B('o',.12,.04,-.20),L:B('o',.12,.04,.20)}},
        uke:{x:-.92,y:.13,pitch:-90,h:20,leg:{R:W3(-.50,.07,.30),L:W3(-.50,.07,-.30)},arm:{R:B('s',.10,.22,.42),L:B('s',.10,.22,-.42)},pole:{legR:[.3,1,.3],legL:[.3,1,-.3],armR:[1,.2,.3],armL:[1,.2,-.3]}}}],
  [5.2,{tori:{y:.45,pitch:46},uke:{h:12}}],
  [7.5,{}]],
