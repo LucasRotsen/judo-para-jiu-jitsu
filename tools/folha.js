@@ -5,7 +5,7 @@ const path = require('path');
 (async () => {
   const [id, ts, out, extra = ''] = process.argv.slice(2);
   const q = new URLSearchParams(extra), W = +(q.get('w') || 600), cols = +(q.get('cols') || 3);
-  const n = ts.split(',').length * (q.get('views') ? 3 : 1), rows = Math.ceil(n / cols);
+  const n = (/^auto/.test(ts) ? +ts.slice(5) || 6 : ts.split(',').length) * (q.get('views') ? 3 : 1), rows = Math.ceil(n / cols);
   const b = await chromium.launch({ channel: process.env.CI ? undefined : 'chrome', args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
   const p = await b.newPage({ viewport: { width: W * cols, height: Math.round(rows * W / 1.5) }, deviceScaleFactor: 1 });
   p.on('console', (m) => console.log('[console]', m.text())); p.on('pageerror', (e) => console.log('[erro]', e.message));

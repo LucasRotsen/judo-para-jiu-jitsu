@@ -39,16 +39,22 @@ const ORC = path.join(__dirname, 'orcamento.json');
 const args = process.argv.slice(2), portao = args.includes('--portao'), gravar = args.includes('--gravar'), verbose = args.includes('-v'), cru = args.includes('--cru'), only = args.filter((a) => a[0] !== '-');
 const pose = (def, t) => (cru ? J.pose3(def, t) : J.solve(def, t));
 const LIM = { cruza: Number(process.env.CRUZA || .035), proprio: .05, salto: 6, erro: .12 };
-let total = { cruza: 0, proprio: 0, salto: 0, dobra: 0, erro: 0 };
+let total = { cruza: 0, proprio: 0, salto: 0, dobra: 0, erro: 0, treme: 0 };
 const medido = {};
 for (const c of J.CATALOG) {
   const def = J.techs[c.id]; if (!def || !def.is3d || (only.length && !only.includes(c.id))) continue;
-  const ev = { cruza: new Map(), proprio: new Map(), salto: new Map(), dobra: new Map(), erro: new Map() };
+  const ev = { cruza: new Map(), proprio: new Map(), salto: new Map(), dobra: new Map(), erro: new Map(), treme: new Map() };
   const note = (k, key, t, v) => { const m = ev[k], e = m.get(key) || { n: 0, worst: 0, t0: t, t1: t, tw: t }; e.n++; e.t1 = t; if (v > e.worst) { e.worst = v; e.tw = t; } m.set(key, e); };
   let prev = null; const dt = .02;
   for (let t = 0; t <= def.end + 1e-9; t += dt) {
     const F = pose(def, t), RAW = cru ? F : J.pose3(def, t), T = caps(F.tori), U = caps(F.uke);
-    for (const a of T) for (const b of U) { const pen = a[3] + b[3] - segDist(a[1], a[2], b[1], b[2]); if (pen > LIM.cruza) note('cruza', `${a[0]} de Tori × ${b[0]} de Uke`, t, pen); }
+    /* mão que está pegando (alvo no corpo/membro do outro) envolve o que pega: a ponta do antebraço pode entrar 5 cm a mais */
+    const pega = (w, c) => { if (!/^arm/.test(c[4]) || !/^ante/.test(c[0])) return false; const tp = J._3d.tipoAlvo(F, w, 'arm', c[4][3]); return tp === 's' || tp === 'bo'; };
+    const pg = (w, c) => (/^(arm|leg)/.test(c[4]) ? J._3d.pegando(F, w, c[4].slice(0, 3), c[4][3]) : null);
+    for (const a of T) for (const b of U) { if (pg('tori', a) === b[4] || pg('uke', b) === a[4]) continue; let pen = a[3] + b[3] - segDist(a[1], a[2], b[1], b[2]);
+      if (pen > LIM.cruza && pega('tori', a)) { J.fisica.seg(a[1], a[2], b[1], b[2]); if (J.fisica.Q.s > .7) pen -= .05; }
+      if (pen > LIM.cruza && pega('uke', b)) { J.fisica.seg(b[1], b[2], a[1], a[2]); if (J.fisica.Q.s > .7) pen -= .05; }
+      if (pen > LIM.cruza) note('cruza', `${a[0]} de Tori × ${b[0]} de Uke`, t, pen); }
     for (const [nm, X] of [['Tori', T], ['Uke', U]]) for (let i = 0; i < X.length; i++) for (let j = i + 1; j < X.length; j++) {
       const a = X[i], b = X[j]; if (a[4] === b[4]) continue;
       const limbA = /leg|arm/.test(a[4]), limbB = /leg|arm/.test(b[4]);
@@ -73,6 +79,16 @@ for (const c of J.CATALOG) {
     }
     prev = F;
   }
+  /* TREME: ponta ou dobra que vai e volta (aceleração alta com velocidade baixa), a 30 quadros/s */
+  { const h = 1 / 30, hist = [];
+    for (let t = 0; t <= def.end + 1e-9; t += h) { const F = pose(def, t), row = {};
+      for (const [nm, o] of [['Tori', F.tori], ['Uke', F.uke]]) { row[nm + ' cabeça'] = o.head; row[nm + ' quadril'] = o.hip;
+        for (const s of ['R', 'L']) { row[`${nm} mão ${s}`] = o['arm' + s].H; row[`${nm} cotovelo ${s}`] = o['arm' + s].E; row[`${nm} pé ${s}`] = o['leg' + s].H; row[`${nm} joelho ${s}`] = o['leg' + s].E; } }
+      hist.push(row);
+      if (hist.length >= 3) { const [a, b, c] = hist.slice(-3);
+        for (const k in c) { const acc = len(add(sub(c[k], mul(b[k], 2)), a[k])), vel = Math.max(len(sub(c[k], b[k])), len(sub(b[k], a[k])));
+          if (acc > .004 && acc > vel * .8) note('treme', k, t, acc); } } }
+    for (const e of ev.treme.values()) e.n *= h / dt; }
   const n = (k) => [...ev[k].values()].reduce((x, e) => x + e.n * dt, 0); for (const k in total) total[k] += n(k);
   medido[c.id] = Object.fromEntries(Object.keys(ev).map((k) => [k, +n(k).toFixed(2)]));
   console.log(`${c.id.padEnd(22)}` + Object.keys(ev).map((k) => ` ${k} ${n(k).toFixed(1).padStart(5)}s`).join(' '));
@@ -85,7 +101,7 @@ console.log('TOTAL (segundos somados)', Object.entries(total).map(([k, v]) => `$
 if (gravar) { fs.writeFileSync(ORC, JSON.stringify(medido, null, 1) + '\n'); console.log('orçamento gravado em', ORC); }
 if (portao) {
   const orc = JSON.parse(fs.readFileSync(ORC, 'utf8')); let ruim = 0;
-  for (const [id, m] of Object.entries(medido)) for (const k of ['cruza', 'proprio', 'salto', 'erro']) {
+  for (const [id, m] of Object.entries(medido)) for (const k of ['cruza', 'proprio', 'salto', 'erro', 'treme']) {
     const lim = ((orc[id] || {})[k] || 0) * 1.15 + .25;
     if (m[k] > lim) { ruim++; console.error(`PIOROU ${id}: ${k} ${m[k]}s (orçamento ${(orc[id] || {})[k] || 0}s)`); } }
   if (ruim) process.exit(1); console.log('movimento dentro do orçamento');

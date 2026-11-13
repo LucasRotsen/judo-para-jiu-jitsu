@@ -111,13 +111,16 @@ function membro(o,g,side,T,prev,todos,dt,fixo){
   if(best>livre(psi)+1e-7){
    const N=24;for(let i=0;i<N;i++){const q=-Math.PI+i*2*Math.PI/N,c=custo(q);if(c<best){best=c;psi=q;}}
    let st=Math.PI/N;for(let k=0;k<4;k++){st*=.5;for(const q of [psi-st,psi+st]){const c=custo(q);if(c<best){best=c;psi=q;}}}}
-  if(pE&&K.rho>.05){let dq=psi-pc;while(dq>Math.PI)dq-=2*Math.PI;while(dq<-Math.PI)dq+=2*Math.PI;const w=14*dt;psi=pc+clamp(dq,-w,w);}
   const E=Eem(K,psi);return [E,pen(E,H)];};
+ /* um só freio por quadro: a dobra gira no máximo 11 rad/s em relação a onde estava no quadro anterior */
+ const ref=prev?(prev.ref||prev.E):null;
+ const freia=(H,E)=>{if(!ref)return E;const K=circ(H);if(K.rho<.004)return E;const a=psiDe(K,ref);let dq=psiDe(K,E)-a;
+  while(dq>Math.PI)dq-=2*Math.PI;while(dq<-Math.PI)dq+=2*Math.PI;const w=11*dt;return Math.abs(dq)<=w?E:Eem(K,a+clamp(dq,-w,w));};
  let H,E,pE=prev?prev.E:null,res;
  if(fixo){/* pé de apoio: não sai do chão; só desliza de lado se pisar em cima do pé do outro */
   H=piso(alcance(T));const K0=circ(H);let m,h2;[h2,m]=empurra(Eem(K0,pE?psiDe(K0,pE):0),H);if(m>0)H=piso(alcance([h2[0],H[1],h2[2]]));
-  [E,res]=gira(H,pE);return {root,E,H};}
- if(prev){H=prev.H;const dist=len(sub(T,H)),n=clamp(Math.ceil(dist/.03),1,12);
+  [E,res]=gira(H,pE);return {root,E:freia(H,E),H};}
+ if(prev){H=prev.H;const dist=len(sub(T,H)),n=clamp(Math.ceil(dist/.03),1,20);
   for(let i=0;i<n;i++){H=piso(alcance(lerp3(H,T,1/(n-i))));
    const K=circ(H),e=Eem(K,psiDe(K,pE));let m;[H,m]=empurra(e,H);if(m>0)H=piso(alcance(H));}}
  else{H=piso(alcance(T));for(let i=0;i<4;i++){const K=circ(H);let m;[H,m]=empurra(Eem(K,0),H);if(m<=0)break;H=piso(alcance(H));}}
@@ -133,14 +136,22 @@ function membro(o,g,side,T,prev,todos,dt,fixo){
      const K=circ(h),e=K.rho<.02?Eem(K,0):Eem(K,psiDe(K,E)),r=pen(e,h),c=cst(h,e,r);
      if(c<best-1e-9){best=c;H=h;E=e;res=r;mexeu=true;}}}}
   [E,res]=gira(H,E);}
- return {root,E,H};}
+ /* amortecedor: o desvio em relação ao alvo muda aos poucos (corta o vai-e-volta de quadro a quadro) */
+ const d=sub(H,T);
+ if(prev&&prev.d){const dm=lerp3(prev.d,d,.35),h=piso(alcance(add(T,dm)));
+  if(len(sub(h,H))>1e-4){H=h;[E,res]=gira(H,E);}}
+ return {root,E:freia(H,E),H,d:sub(H,T)};}
 const DIRS=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
 
 /* Obstáculos para um membro: tudo do outro boneco + o próprio tronco, cabeça e outros membros. */
 function obstaculos(F,w,g,side){
  const o=F[w],other=F[w==='uke'?'tori':'uke'],me=g+side,leg=g==='leg',out=[];
  const put=(c,tol,extra)=>{const h=Math.hypot(c.b[0]-c.a[0],c.b[1]-c.a[1],c.b[2]-c.a[2])*.5+(leg?.44:.29);out.push(Object.assign({a:c.a,b:c.b,r:c.r,tol,h},extra));};
- for(const c of capsulas(other))put(c,TOL);
+ /* quem pega não colide com o que pega (a mão envolve o braço), nem o pegado com a mão que o pega:
+    sem isso os dois se empurram um quadro sim, um não, e o boneco treme */
+ const meu=X.pegando(F,w,g,side),ow=w==='uke'?'tori':'uke',dele={};
+ for(const [g2,s2] of LIMBS)if(X.pegando(F,ow,g2,s2)===me)dele[g2+s2]=true;
+ for(const c of capsulas(other)){if(c.g===meu||(dele[c.g]&&c.s>=1))continue;put(c,TOL);}
  for(const c of capsulas(o)){if(c.g===me)continue;
   if(c.g==='tronco'){put(c,TOL_PROPRIO,{raiz:true});continue;}       /* raiz: a 1ª parte do membro nasce ali */
   if(c.g==='cabeca'){put(c,TOL_PROPRIO);continue;}
@@ -183,25 +194,38 @@ function quadro(def,t,prev,dt){
  const F=J.pose3(def,t),ordem=def.first==='tori'?['tori','uke']:['uke','tori'];
  const novo={},loc0=(o,v)=>[dot(v,o.f),dot(v,o.u),dot(v,o.r)];
  const raiz=separa(F);
+ /* ajuste lento da raiz: quando a coxa ou o braço de um nasce dentro do tronco do outro, o giro não resolve;
+    os troncos se afastam aos poucos (até 1 cm por quadro) e voltam quando o aperto passa */
+ const extra={tori:prev?mul(prev.tori.extra,.94):[0,0,0],uke:prev?mul(prev.uke.extra,.94):[0,0,0]};
+ for(const w of ordem)desloca(F[w],extra[w]);
  for(const w of ordem)cabeca(F[w],F[w==='uke'?'tori':'uke'],prev?prev[w].cab:null,dt);
  for(let volta=0;volta<2;volta++)for(const w of ordem){const o=F[w],other=F[w==='uke'?'tori':'uke'];novo[w]=novo[w]||{};
   for(const [g,side] of LIMBS){const k=g+side,tipo=X.tipoAlvo(F,w,g,side);
    let T=X.alvo(F,w,g,side);
    const leg=g==='leg',fixo=leg&&tipo==='w'&&T[1]<.1&&o.hip[1]>.5;     /* pé de apoio em pé não cede */
    let p=null;
-   if(volta===1)p=novo[w][k];
+   if(volta===1){p=novo[w][k];if(prev){const q=prev[w][k];p={H:p.H,E:p.E,ref:bp(o,q.Es[0],q.Es[1],q.Es[2]),d:q.d};}}
    else if(prev){const q=prev[w][k];
     /* de onde a ponta vem: fica com o referencial (mundo, próprio corpo, corpo do outro) que a deixa mais perto do alvo */
     const cands=[q.H,bp(o,q.Hs[0],q.Hs[1],q.Hs[2]),bp(other,q.Ho[0],q.Ho[1],q.Ho[2])];
     let H=cands[0],bd=1e9;for(const c of cands){const d=len(sub(c,T));if(d<bd){bd=d;H=c;}}
-    p={H,E:bp(o,q.Es[0],q.Es[1],q.Es[2])};}
+    p={H,E:bp(o,q.Es[0],q.Es[1],q.Es[2]),d:q.d};}
    const L=membro(o,g,side,T,p,obstaculos(F,w,g,side),dt,fixo);
    novo[w][k]=L;const old=o[k];o[k]={root:L.root,E:L.E,H:L.H};if(old.heel){o[k].heel=old.heel;o[k].toe=old.toe;}}
-  X.pes(o);}
+  X.pes(o);
+  if(volta===0&&w===ordem[1]){
+   const cor={tori:[0,0,0],uke:[0,0,0]};
+   for(const a of ordem){const b=a==='uke'?'tori':'uke',tb=troncoDe(F[b]);
+    for(const [g,side] of LIMBS){const L=F[a][g+side],r=g==='leg'?R.coxa:R.braco;
+     for(const c of tb){const e=r+c[2]-TOL-.01-seg(L.root,L.E,c[0],c[1]);
+      if(e>0){const m=Math.min(e,.02)*.5,n=[Q.nx,Q.ny,Q.nz];cor[a]=add(cor[a],mul(n,m));cor[b]=add(cor[b],mul(n,-m));}}}}
+   for(const a of ordem){let c=cor[a];const l=len(c);if(l<1e-5)continue;if(l>.01)c=mul(c,.01/l);
+    if(F[a].hip[1]+c[1]<.11)c=[c[0],Math.max(0,.11-F[a].hip[1]),c[2]];
+    let ex=add(extra[a],c);const le=len(ex);if(le>.12)ex=mul(ex,.12/le);c=sub(ex,extra[a]);extra[a]=ex;desloca(F[a],c);}}}
  const loc=(o,p)=>{const d=sub(p,o.hip);return [dot(d,o.f),dot(d,o.u),dot(d,o.r)];};
  const st={};for(const w of ordem){st[w]={};const o=F[w],other=F[w==='uke'?'tori':'uke'];
-  st[w].raiz=raiz[w];st[w].cab=loc0(o,o.hu);
-  for(const [g,side] of LIMBS){const k=g+side,L=novo[w][k];st[w][k]={E:L.E,H:L.H,Hs:loc(o,L.H),Ho:loc(other,L.H),Es:loc(o,L.E)};}}
+  st[w].raiz=add(raiz[w],extra[w]);st[w].extra=extra[w];st[w].cab=loc0(o,o.hu);
+  for(const [g,side] of LIMBS){const k=g+side,L=novo[w][k];st[w][k]={E:L.E,H:L.H,d:L.d,Hs:loc(o,L.H),Ho:loc(other,L.H),Es:loc(o,L.E)};}}
  return {F,st};}
 
 /* Resolve a técnica inteira em sequência (simula a 60 quadros/s, guarda a 30).

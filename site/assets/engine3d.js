@@ -68,6 +68,8 @@ const rootOf=(o,g,side)=>g==='leg'?bp(o,0,0,side==='R'?.1:-.1):(side==='R'?o.shR
 function alvo(F,w,g,side){const c=F._c,o=F[w],other=F[w==='uke'?'tori':'uke'];
  return hermV(c.idx.map(j=>spec(c.K[j][w][g][side],o,other)),c.u);}
 /* Tipo do alvo no trecho atual: 'w' mundo, 'bs' próprio corpo, 'bo' corpo do outro, 's' membro do outro. */
+/* Membro do outro que este membro está pegando (alvo SL nos dois keyframes vizinhos), ou null. */
+function pegando(F,w,g,side){const c=F._c,a=c.K[c.idx[1]][w][g][side],b=c.K[c.idx[2]][w][g][side];return a[0]==='s'&&b[0]==='s'&&a[1]===b[1]?a[1]:null;}
 function tipoAlvo(F,w,g,side){const c=F._c,s=c.K[c.idx[c.u<.5?1:2]][w][g][side];return s[0]==='b'?'b'+s[1]:s[0];}
 function pes(o){
  for(const side of ['R','L']){const L=o['leg'+side],s=norm(sub(L.H,L.E));
@@ -179,5 +181,5 @@ function makeApi(ctx,V,F){const P=J.prim;return {ctx,V,F,t:F.t,C:J.C,D,win:J.win
  arc:(c,ax,ay,r,a0,a1,col,al)=>{if(!(al>0))return;const pts=[];for(let i=0;i<=24;i++){const a=(a0+(a1-a0)*i/24)*D;pts.push(add(c,add(mul(ax,r*Math.cos(a)),mul(ay,r*Math.sin(a)))));}
   for(let i=0;i<pts.length-2;i++)P.dashed(ctx,V,pts[i],pts[i+1],col,al,Math.max(2,V.fs*.2));P.arrow(ctx,V,pts[pts.length-3],pts[pts.length-1],col,al);}};}
 
-Object.assign(J,{register3d,pose3,draw3d,W3,B,_3d:{torsos,alvo,tipoAlvo,pes,rootOf,ik3,bp,bv,LEN,LIMBS,makeView,makeApi,floor,shadow,frame}});
+Object.assign(J,{register3d,pose3,draw3d,W3,B,_3d:{torsos,alvo,tipoAlvo,pegando,pes,rootOf,ik3,bp,bv,LEN,LIMBS,makeView,makeApi,floor,shadow,frame}});
 })();
