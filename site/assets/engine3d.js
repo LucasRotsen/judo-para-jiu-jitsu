@@ -49,35 +49,45 @@ function spec(s,o,other){
  if(s[0]==='b')return bp(s[1]==='s'?o:other,s[2],s[3],s[4]);
  const R=other[s[1]];return R?lerp3(R.E,R.H,s[2]):other.sh;}
 
-function pose3(def,t){
+/* Tronco, ombros e cabeça dos dois bonecos no instante t (sem membros). F._c guarda o trecho de keyframes. */
+function torsos(def,t){
  const K=def.K;t=clamp(t,0,def.end);let i=0;while(i<K.length-2&&t>=K[i+1].t)i++;
  const span=K[i+1].t-K[i].t,u=span>0?clamp((t-K[i].t)/span,0,1):1;
  const idx=[Math.max(i-1,0),i,i+1,Math.min(i+2,K.length-1)];const F={t};
+ Object.defineProperty(F,'_c',{value:{K,idx,u,def},enumerable:false});
  for(const w of ['uke','tori']){const o={};for(const p of SC)o[p]=herm(idx.map(j=>K[j][w][p]),u);
   o.pole={};for(const p of POLES)o.pole[p]=hermV(idx.map(j=>K[j][w].pole[p]),u);
   Object.assign(o,frame(o));o.hip=[o.x,o.y,o.z];
   o.sh=bp(o,0,.48,0);o.shR=bp(o,0,.48,.19);o.shL=bp(o,0,.48,-.19);o.neck=bp(o,0,.57,0);
   const hd=norm(add(mul(o.u,Math.cos(o.h*D)),mul(o.f,Math.sin(o.h*D))));
   o.hu=hd;o.hf=norm(sub(mul(o.f,Math.cos(o.h*D)),mul(o.u,Math.sin(o.h*D))));o.head=add(o.neck,mul(hd,.13));F[w]=o;}
- for(const w of (def.first==='tori'?['tori','uke']:['uke','tori'])){
-  const o=F[w],other=F[w==='uke'?'tori':'uke'];
-  for(const [g,side] of [['leg','R'],['leg','L'],['arm','R'],['arm','L']]){
-   const leg=g==='leg',root=leg?bp(o,0,0,side==='R'?.1:-.1):(side==='R'?o.shR:o.shL);
-   const l1=leg?LEN.th:LEN.ua,l2=leg?LEN.sh:LEN.fa;
-   const T=hermV(idx.map(j=>spec(K[j][w][g][side],o,other)),u);
-   const [E,H]=ik3(root,T,l1,l2,bv(o,o.pole[g+side]));o[g+side]={root,E,H};}
-  for(const side of ['R','L']){const L=o['leg'+side],s=norm(sub(L.H,L.E));
-   let toe=sub(o.f,mul(s,dot(o.f,s)));toe=len(toe)<1e-3?o.f:norm(toe);
-   const gh=[o.f[0],0,o.f[2]];const k=o.gf*clamp((.17-L.H[1])/.08,0,1);
-   if(k>0&&len(gh)>.2)toe=norm(lerp3(toe,norm(gh),k));
-   L.heel=sub(L.H,mul(toe,.035));L.toe=add(L.H,mul(toe,.14));}}
- /* 2ª passada: quem foi resolvido primeiro não enxergava os membros do outro (SL caía no ombro).
-    Agora que os dois existem, refaz os membros que miram um membro do outro. */
- {const w=def.first==='tori'?'tori':'uke',o=F[w],other=F[w==='uke'?'tori':'uke'];
-  for(const [g,side] of [['leg','R'],['leg','L'],['arm','R'],['arm','L']]){
-   if(!idx.some(j=>K[j][w][g][side][0]==='s'))continue;
-   const leg=g==='leg',L=o[g+side],T=hermV(idx.map(j=>spec(K[j][w][g][side],o,other)),u);
-   const [E,H]=ik3(L.root,T,leg?LEN.th:LEN.ua,leg?LEN.sh:LEN.fa,bv(o,o.pole[g+side]));
+ return F;}
+const LIMBS=[['leg','R'],['leg','L'],['arm','R'],['arm','L']];
+const rootOf=(o,g,side)=>g==='leg'?bp(o,0,0,side==='R'?.1:-.1):(side==='R'?o.shR:o.shL);
+/* Alvo pedido pelos keyframes para a ponta de um membro, com o estado atual do outro boneco. */
+function alvo(F,w,g,side){const c=F._c,o=F[w],other=F[w==='uke'?'tori':'uke'];
+ return hermV(c.idx.map(j=>spec(c.K[j][w][g][side],o,other)),c.u);}
+/* Tipo do alvo no trecho atual: 'w' mundo, 'bs' próprio corpo, 'bo' corpo do outro, 's' membro do outro. */
+function tipoAlvo(F,w,g,side){const c=F._c,s=c.K[c.idx[c.u<.5?1:2]][w][g][side];return s[0]==='b'?'b'+s[1]:s[0];}
+function pes(o){
+ for(const side of ['R','L']){const L=o['leg'+side],s=norm(sub(L.H,L.E));
+  let toe=sub(o.f,mul(s,dot(o.f,s)));toe=len(toe)<1e-3?o.f:norm(toe);
+  const gh=[o.f[0],0,o.f[2]];const k=o.gf*clamp((.17-L.H[1])/.08,0,1);
+  if(k>0&&len(gh)>.2)toe=norm(lerp3(toe,norm(gh),k));
+  L.heel=sub(L.H,mul(toe,.035));L.toe=add(L.H,mul(toe,.14));}}
+/* Pose "crua": IK analítico direto nos alvos dos keyframes, sem colisão. É a intenção; Judo.solve dá a pose física. */
+function pose3(def,t){
+ const F=torsos(def,t),first=def.first==='tori'?'tori':'uke';
+ for(const w of (first==='tori'?['tori','uke']:['uke','tori'])){const o=F[w];
+  for(const [g,side] of LIMBS){const leg=g==='leg',root=rootOf(o,g,side);
+   const [E,H]=ik3(root,alvo(F,w,g,side),leg?LEN.th:LEN.ua,leg?LEN.sh:LEN.fa,bv(o,o.pole[g+side]));o[g+side]={root,E,H};}
+  pes(o);}
+ /* 2ª passada: quem foi resolvido primeiro não enxergava os membros do outro (SL caía no ombro). */
+ {const w=first,o=F[w],c=F._c;
+  for(const [g,side] of LIMBS){
+   if(!c.idx.some(j=>c.K[j][w][g][side][0]==='s'))continue;
+   const leg=g==='leg',L=o[g+side];
+   const [E,H]=ik3(L.root,alvo(F,w,g,side),leg?LEN.th:LEN.ua,leg?LEN.sh:LEN.fa,bv(o,o.pole[g+side]));
    const d=L.toe?sub(L.toe,L.H):null;L.E=E;L.H=H;   /* pé mantém a direção, só acompanha o tornozelo */
    if(d){L.heel=sub(H,mul(norm(d),.035));L.toe=add(H,d);}}}
  return F;}
@@ -165,5 +175,5 @@ function makeApi(ctx,V,F){const P=J.prim;return {ctx,V,F,t:F.t,C:J.C,D,win:J.win
  arc:(c,ax,ay,r,a0,a1,col,al)=>{if(!(al>0))return;const pts=[];for(let i=0;i<=24;i++){const a=(a0+(a1-a0)*i/24)*D;pts.push(add(c,add(mul(ax,r*Math.cos(a)),mul(ay,r*Math.sin(a)))));}
   for(let i=0;i<pts.length-2;i++)P.dashed(ctx,V,pts[i],pts[i+1],col,al,Math.max(2,V.fs*.2));P.arrow(ctx,V,pts[pts.length-3],pts[pts.length-1],col,al);}};}
 
-Object.assign(J,{register3d,pose3,draw3d,W3,B});
+Object.assign(J,{register3d,pose3,draw3d,W3,B,_3d:{torsos,alvo,tipoAlvo,pes,rootOf,ik3,bp,bv,LEN,LIMBS,makeView,makeApi,floor,shadow}});
 })();
