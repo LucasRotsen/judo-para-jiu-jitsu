@@ -93,11 +93,14 @@ function membro(o,g,side,T,prev,todos,dt,fixo){
   return {n,c,rho,e1,e2:cross(n,e1)};};
  const Eem=(K,q)=>{const cs=Math.cos(q)*K.rho,sn=Math.sin(q)*K.rho;return [K.c[0]+cs*K.e1[0]+sn*K.e2[0],K.c[1]+cs*K.e1[1]+sn*K.e2[1],K.c[2]+cs*K.e1[2]+sn*K.e2[2]];};
  const psiDe=(K,E)=>{const v=sub(E,K.c);return Math.atan2(dot(v,K.e2),dot(v,K.e1));};
- const pen=(E,H)=>{const fl=rmin-E[1];return penal(root,E,r1,obs,true)+penal(E,H,r2,obs,false)+(fl>0?fl*fl:0);};
+ /* pé: do tornozelo para a frente do corpo (como em pes()), para não pisar dentro do outro */
+ const gh=leg?[o.f[0],0,o.f[2]]:null,pd=leg?(len(gh)>.2?mul(norm(gh),.12):mul(o.f,.12)):null;
+ const pen=(E,H)=>{const fl=rmin-E[1];return penal(root,E,r1,obs,true)+penal(E,H,r2,obs,false)+(fl>0?fl*fl:0)+(leg?.5*penal(H,add(H,pd),R.pe,obs,false):0);};
  /* empurra H para fora do que a parte de baixo do membro atravessa (contatos perto da ponta; perto da dobra é com o giro) */
  const empurra=(E,H)=>{let m=0;
   for(let i=0;i<obs.length;i++){const ob=obs[i],lim=r2+ob.r-ob.tol,d=seg(E,H,ob.a,ob.b);
-   if(d<lim&&Q.s>.35){const e=(lim-d)/Q.s;H=[H[0]+Q.nx*e,H[1]+Q.ny*e,H[2]+Q.nz*e];if(lim-d>m)m=lim-d;}}
+   if(d<lim&&Q.s>.35){const e=(lim-d)/Q.s;H=[H[0]+Q.nx*e,H[1]+Q.ny*e,H[2]+Q.nz*e];if(lim-d>m)m=lim-d;}
+   if(leg){const l2=R.pe+ob.r-ob.tol,d2=seg(H,add(H,pd),ob.a,ob.b);if(d2<l2){const e=l2-d2;H=[H[0]+Q.nx*e,H[1]+Q.ny*e,H[2]+Q.nz*e];if(e>m)m=e;}}}
   return [H,m];};
  /* melhor giro para um H: preferência (polo), continuidade, colisão e anatomia */
  const gira=(H,pE)=>{const K=circ(H);if(K.rho<.02)return [Eem(K,0),0];
@@ -111,17 +114,20 @@ function membro(o,g,side,T,prev,todos,dt,fixo){
   if(pE&&K.rho>.05){let dq=psi-pc;while(dq>Math.PI)dq-=2*Math.PI;while(dq<-Math.PI)dq+=2*Math.PI;const w=14*dt;psi=pc+clamp(dq,-w,w);}
   const E=Eem(K,psi);return [E,pen(E,H)];};
  let H,E,pE=prev?prev.E:null,res;
- if(fixo){H=piso(alcance(T));[E,res]=gira(H,pE);return {root,E,H};}
+ if(fixo){/* pé de apoio: não sai do chão; só desliza de lado se pisar em cima do pé do outro */
+  H=piso(alcance(T));const K0=circ(H);let m,h2;[h2,m]=empurra(Eem(K0,pE?psiDe(K0,pE):0),H);if(m>0)H=piso(alcance([h2[0],H[1],h2[2]]));
+  [E,res]=gira(H,pE);return {root,E,H};}
  if(prev){H=prev.H;const dist=len(sub(T,H)),n=clamp(Math.ceil(dist/.03),1,12);
   for(let i=0;i<n;i++){H=piso(alcance(lerp3(H,T,1/(n-i))));
    const K=circ(H),e=Eem(K,psiDe(K,pE));let m;[H,m]=empurra(e,H);if(m>0)H=piso(alcance(H));}}
  else{H=piso(alcance(T));for(let i=0;i<4;i++){const K=circ(H);let m;[H,m]=empurra(Eem(K,0),H);if(m<=0)break;H=piso(alcance(H));}}
  [E,res]=gira(H,pE);
  /* ainda atravessa: procura, perto dali, a ponta que menos atravessa sem fugir muito do alvo */
- if(res>1e-6){
+ const longe=()=>(H[0]-T[0])**2+(H[1]-T[1])**2+(H[2]-T[2])**2>.04*.04;
+ if(res>1e-6||longe()){
   const cst=(h,e,r)=>W_PEN*r+W_ALVO*((h[0]-T[0])**2+(h[1]-T[1])**2+(h[2]-T[2])**2);
   let best=cst(H,E,res);
-  for(let st=.05;st>.008&&res>1e-6;st*=.5){let mexeu=true,guard=0;
+  for(let st=.05;st>.008&&(res>1e-6||longe());st*=.5){let mexeu=true,guard=0;
    while(mexeu&&guard++<6){mexeu=false;
     for(const d of DIRS){const h=piso(alcance([H[0]+d[0]*st,H[1]+d[1]*st,H[2]+d[2]*st]));
      const K=circ(h),e=K.rho<.02?Eem(K,0):Eem(K,psiDe(K,E)),r=pen(e,h),c=cst(h,e,r);

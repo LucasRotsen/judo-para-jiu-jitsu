@@ -26,19 +26,34 @@ Cada técnica é um arquivo de dados em `site/assets/tecnicas/<id>.js`.
 ```sh
 python3 -m http.server -d site 8000   # abre http://localhost:8000
 python3 tools/build.py                # regenera as páginas <id>.html a partir do catálogo
-tools/sheet.sh sankaku-jime 1,4,6.5 out/sk.png "views=1"   # folha de quadros p/ revisão visual
+node tools/folha.js sankaku-jime 1,4,6.5 out/sk.png "views=1"   # folha de quadros p/ revisão visual
+npm run build                         # resolve as poses físicas e regenera as páginas
 npm test                              # smoke test: todas as páginas carregam sem erro de JS
 ```
 
 ## Simulador
 
-`simulador.html`: o aluno escolhe a posição, arrasta as mãos do oponente até pegadas no próprio
-gi e diz o que ele está fazendo; a página lista as opções com o porquê de cada uma.
+`simulador.html`: o aluno escolhe a posição e arrasta mãos, pés, quadril e tronco dos dois
+bonecos até a situação que quer (uma mão solta perto de um ponto do gi pega ali). A página lista
+as opções com o porquê de cada uma e, em "Simular daqui", roda a técnica no palco a partir da
+pose montada.
 
 - `site/assets/simulador/situacoes.js`: posições (poses dos bonecos), pegadas, ações e a base de
   conhecimento (`OPCOES`, cada uma com `score(estado)`, `porque`, `passos` e `tech` opcional).
 - `site/assets/simulador/simulador.js`: cena, arraste, URL compartilhável e lista de opções.
 - Para acrescentar uma opção, inclua um item em `OPCOES` e um caso em `tests/simulador.spec.js`.
+
+## Bonecos e movimento
+
+- `site/assets/engine3d.js`: keyframes e IK. É a *intenção*: onde fica o tronco e para onde vai
+  cada mão e pé.
+- `site/assets/fisica.js`: transforma a intenção numa pose que dois corpos conseguem fazer
+  (nada atravessa nada, joelho e cotovelo dobram para o lado certo e não trocam de lado de um
+  quadro para o outro). `Judo.solve(def,t)` é o que o site desenha.
+- `site/assets/assado/`: a pose física de cada técnica, resolvida de antemão por
+  `tools/assar.js` (no navegador custaria 1 a 3 s por técnica). Gerado; não edite à mão.
+- `site/assets/corpo-gl.js`: o corpo humano de judogi (malha gerada no próprio arquivo, sem
+  modelo externo) desenhado em WebGL com profundidade real. Sem WebGL2 cai nas cápsulas.
 
 ## Adicionando uma técnica
 
@@ -48,11 +63,15 @@ gi e diz o que ele está fazendo; a página lista as opções com o porquê de c
    (veja `ippon-seoi-nage.js`).
 3. Inclua o script no índice: `tools/templates/index.body.html` não precisa mudar; rode
    `python3 tools/build.py` para gerar a página e atualizar o índice.
-4. Confira que nenhum membro atravessa o outro corpo: `node tools/interpenetracao.js <id>`
-   (lista cada instante em que um membro entra mais de 6 cm no tronco ou na cabeça do outro).
-5. Confira que as pegadas chegam: `node tools/pegadas.js <id>` (mão ou pé a mais de 8 cm do alvo
-   de pegada no corpo do outro falha). Para medir posições: `node tools/sonda.js <id> <tempos>`.
-6. Revise quadro a quadro: `tools/sheet.sh <id> 1,3,5 out/x.png "views=1"`.
+4. Rode `npm run build`: resolve a pose física da técnica (`tools/assar.js` grava
+   `site/assets/assado/<id>.js`) e gera a página.
+5. Meça o movimento: `node tools/diagnostico.js <id>` lista, com instante e duração, cada parte de
+   um boneco dentro do outro (`cruza`) ou de si mesmo (`proprio`), joelho/cotovelo que salta
+   (`salto`) e mão ou pé que não chega no alvo (`erro`). `--cru` mede os keyframes sem a física.
+   Quando estiver bom, `node tools/diagnostico.js --gravar` atualiza o orçamento da CI.
+   Para medir posições: `node tools/sonda.js <id> <tempos>`.
+6. Revise quadro a quadro: `node tools/folha.js <id> 1,3,5 out/x.png "views=1"`
+   (`capsulas=1&cru=1` mostra o desenho e a pose antigos, para comparar).
 7. `npm test`.
 
 ## Arquitetura e decisões

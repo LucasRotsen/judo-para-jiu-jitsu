@@ -27,7 +27,7 @@
 
 ## 2026-11-06 — Membros atravessando o outro corpo (relatado pelo usuário)
 - Erro: aprovei 14 técnicas 3D olhando folhas de quadros e checando só "abaixo do chão". Um membro passando por dentro do outro boneco não aparece de forma óbvia numa folha pequena; 13 de 14 técnicas tinham isso (canela da tesoura atravessando o tronco, antebraço no Kata Gatame).
-- Regra: revisão visual não basta para geometria. Toda técnica 3D passa em `node tools/interpenetracao.js <id>` (≤ 0,06) antes do merge; depois de corrigidas todas, isso vira portão da CI.
+- Regra: revisão visual não basta para geometria. Toda técnica 3D passa no medidor de penetração (hoje `node tools/diagnostico.js <id>`) antes do merge; depois de corrigidas todas, isso vira portão da CI.
 - Regra: não corrigir dados ruins com remendo no motor. Empurrar o membro para fora automaticamente escondeu o erro e distorceu a técnica (a tesoura deixou de ser tesoura). Corrigir o keyframe/polo/transição na origem.
 - Regra: transições entre um alvo atrás do corpo do outro e um à frente precisam de keyframe intermediário contornando pelo lado; interpolação em linha reta passa por dentro.
 
@@ -35,3 +35,10 @@
 - Erro: afirmei "bem mais humano" para o palco WebGL olhando miniaturas que eu mesmo gerei; o usuário achou pior que antes e ilegível.
 - Regra: mudança visual grande só entra depois de o usuário ver um lado a lado (antes/depois, mesmo quadro). Não declarar "melhor" em nome dele.
 - Regra: antes de iterar em detalhes, perguntar se a abordagem consegue chegar no alvo. Bonecos de cápsula animados à mão não chegam em "dois humanos treinando"; o caminho é modelo humano com esqueleto e/ou captura de movimento.
+
+## 2026-11-13 — "Pernas atravessando corpos e trocando de lado" (relatado pelo usuário, de novo)
+- Erro: o portão de 06/11 media só membro contra tronco/cabeça do outro. Perna contra perna, braço contra braço e o próprio corpo nunca foram medidos; 13 PRs "sem membros atravessando" passaram com coxa sobreposta a coxa por segundos. Medindo tudo: 654 s somados de penetração.
+- Regra: um portão só vale pelo que mede. Antes de declarar uma classe de defeito resolvida, listar o que o medidor NÃO cobre e dizer isso ao usuário.
+- Regra: quando o mesmo defeito volta depois de corrigido caso a caso, parar de corrigir caso a caso. Aqui a causa era de modelo (keyframe interpolado em linha reta + IK sem colisão + ordenação por profundidade), e a correção foi no modelo (`fisica.js` + WebGL com profundidade).
+- Regra (refina a de 06/11): "não remendar no motor" vale para remendo que quebra o contato. Um solucionador que mantém o membro encostado na superfície, com continuidade, é o modelo certo; ainda assim, cada técnica é conferida em folha de quadros.
+- Regra: artefato gerado que depende de dois lados (`site/assets/assado/` depende das técnicas e de `fisica.js`) precisa de checagem de frescor (`tools/assar.js --check`). Mudei o formato e rodei a página com arquivos velhos: os bonecos flutuaram.

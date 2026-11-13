@@ -154,7 +154,8 @@ function draw3d(ctx,w,h,def,t,opts,vi){
  const C=J.C,view=def.views[vi]||def.views[0],V=makeView(w,h,view),F=opts.F||(J.solve||pose3)(def,t);
  const g=def.glow,ga=opts.glow!==undefined?opts.glow:(opts.annot&&g?J.win(t,g.s,g.e):0);
  floor(ctx,V,C);
- const xk=opts.xray||(def.xray&&J.win(t,def.xray.s,def.xray.e)>0?def.xray.key:null);
+ /* membro "fantasma" só no palco com anotações; em miniatura o pontilhado vira ruído */
+ const xk=opts.xray||(opts.annot&&def.xray&&J.win(t,def.xray.s,def.xray.e)>0?def.xray.key:null);
  /* corpo humano em WebGL; sem WebGL2 (ou com ?capsulas), as cápsulas de antes */
  if(!(J.gl&&!J.semGL&&J.gl.desenhar(ctx,V,F,C,{glow:{limbs:g&&g.limbs,ga},xray:xk}))){
   shadow(ctx,V,F.tori);shadow(ctx,V,F.uke);

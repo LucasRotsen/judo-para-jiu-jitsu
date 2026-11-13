@@ -19,8 +19,8 @@ jobs:
       - run: npm ci
       - name: Páginas geradas estão em dia com tools/build.py
         run: python3 tools/build.py && git diff --exit-code -- site
+      - name: Poses físicas assadas estão em dia com as técnicas e com fisica.js
+        run: node tools/assar.js --check
       - run: npm test
-      - name: Nenhum membro atravessa o outro corpo (técnicas 3D)
-        run: node tools/interpenetracao.js
-      - name: Pegadas chegam no alvo (técnicas 3D)
-        run: node tools/pegadas.js
+      - name: Movimento físico (nada atravessa, nada salta) dentro do orçamento
+        run: node tools/diagnostico.js --portao

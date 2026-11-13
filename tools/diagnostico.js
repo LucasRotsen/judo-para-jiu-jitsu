@@ -35,10 +35,12 @@ function segDist(p1, q1, p2, q2) {
 const J = carregar();
 const NOME = { leg: ['coxa', 'canela', 'pé'], arm: ['braço', 'antebraço'] };
 const caps = (o) => J.fisica.capsulas(o).map((c) => [c.g === 'tronco' ? 'tronco' : c.g === 'cabeca' ? 'cabeça' : NOME[c.g.slice(0, 3)][c.s] + ' ' + c.g[3], c.a, c.b, c.r, c.g === 'cabeca' ? 'cabeça' : c.g]);
-const args = process.argv.slice(2), verbose = args.includes('-v'), cru = args.includes('--cru'), only = args.filter((a) => a[0] !== '-');
+const ORC = path.join(__dirname, 'orcamento.json');
+const args = process.argv.slice(2), portao = args.includes('--portao'), gravar = args.includes('--gravar'), verbose = args.includes('-v'), cru = args.includes('--cru'), only = args.filter((a) => a[0] !== '-');
 const pose = (def, t) => (cru ? J.pose3(def, t) : J.solve(def, t));
 const LIM = { cruza: Number(process.env.CRUZA || .035), proprio: .05, salto: 6, erro: .12 };
 let total = { cruza: 0, proprio: 0, salto: 0, dobra: 0, erro: 0 };
+const medido = {};
 for (const c of J.CATALOG) {
   const def = J.techs[c.id]; if (!def || !def.is3d || (only.length && !only.includes(c.id))) continue;
   const ev = { cruza: new Map(), proprio: new Map(), salto: new Map(), dobra: new Map(), erro: new Map() };
@@ -61,7 +63,7 @@ for (const c of J.CATALOG) {
         const an = J.fisica.anatomia(o, g === 'leg', s, X.root, X.E, X.H, l1, l2);
         if (an > .25) note('dobra', `${nm}: ${g === 'leg' ? 'joelho' : 'cotovelo'} ${s} dobra para o lado errado`, t, an);
         /* erro: quanto a ponta ficou longe do que o keyframe pediu (só faz sentido na pose resolvida) */
-        if (!cru) { const raw = RAW[nm === 'Tori' ? 'tori' : 'uke'][g + s].H, e = len(sub(raw, X.H)); if (e > LIM.erro) note('erro', `${nm}: ${g === 'leg' ? 'pé' : 'mão'} ${s} longe do alvo`, t, e); } }
+        if (!cru) { const alvo = J._3d.alvo(F, nm === 'Tori' ? 'tori' : 'uke', g, s), al = len(sub(alvo, X.root)), mx = (l1 + l2) * .999, ref = al > mx ? add(X.root, mul(sub(alvo, X.root), mx / al)) : alvo, e = len(sub(ref, X.H)); if (e > LIM.erro) note('erro', `${nm}: ${g === 'leg' ? 'pé' : 'mão'} ${s} longe do alvo`, t, e); } }
       if (prev) { const po = prev[nm === 'Tori' ? 'tori' : 'uke'];
         for (const [g, X, PX] of [['joelho', L, po['leg' + s]], ['cotovelo', A, po['arm' + s]]]) {
           /* velocidade da articulação do meio descontada a das pontas, no referencial do tronco */
@@ -72,8 +74,19 @@ for (const c of J.CATALOG) {
     prev = F;
   }
   const n = (k) => [...ev[k].values()].reduce((x, e) => x + e.n * dt, 0); for (const k in total) total[k] += n(k);
+  medido[c.id] = Object.fromEntries(Object.keys(ev).map((k) => [k, +n(k).toFixed(2)]));
   console.log(`${c.id.padEnd(22)}` + Object.keys(ev).map((k) => ` ${k} ${n(k).toFixed(1).padStart(5)}s`).join(' '));
   if (verbose || only.length) for (const k of Object.keys(ev)) for (const [key, e] of [...ev[k]].sort((a, b) => b[1].worst - a[1].worst))
     console.log(`   ${k.padEnd(8)} ${key.padEnd(46)} ${e.t0.toFixed(2)}–${e.t1.toFixed(2)}s  pior ${e.worst.toFixed(3)} @${e.tw.toFixed(2)}  (${(e.n * dt).toFixed(2)}s)`);
 }
 console.log('TOTAL (segundos somados)', Object.entries(total).map(([k, v]) => `${k} ${v.toFixed(1)}`).join('  '));
+/* Portão de regressão: cada técnica tem um orçamento (segundos somados por categoria) em tools/orcamento.json.
+   --gravar regrava o orçamento com o estado atual; --portao falha se alguma técnica piorou além da folga. */
+if (gravar) { fs.writeFileSync(ORC, JSON.stringify(medido, null, 1) + '\n'); console.log('orçamento gravado em', ORC); }
+if (portao) {
+  const orc = JSON.parse(fs.readFileSync(ORC, 'utf8')); let ruim = 0;
+  for (const [id, m] of Object.entries(medido)) for (const k of ['cruza', 'proprio', 'salto', 'erro']) {
+    const lim = ((orc[id] || {})[k] || 0) * 1.15 + .25;
+    if (m[k] > lim) { ruim++; console.error(`PIOROU ${id}: ${k} ${m[k]}s (orçamento ${(orc[id] || {})[k] || 0}s)`); } }
+  if (ruim) process.exit(1); console.log('movimento dentro do orçamento');
+}
