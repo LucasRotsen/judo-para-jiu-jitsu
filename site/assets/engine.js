@@ -210,6 +210,13 @@ function onTheme(fn){matchMedia('(prefers-color-scheme: dark)').addEventListener
  new MutationObserver(()=>{readTheme();fn();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
  if(document.fonts)document.fonts.ready.then(()=>{readTheme();fn();});}
 const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Baixa assets/assado/<id>.js (pose física resolvida de antemão) se ainda não veio com a página. */
+const pending={};
+function loadBaked(def,cb){const J=window.Judo;
+ if(!def.is3d||!J.fisica||def._assado){cb();return;}
+ if(pending[def.id]){pending[def.id].push(cb);return;}pending[def.id]=[cb];
+ const s=document.createElement('script');s.src='assets/assado/'+def.id+'.js';
+ s.onload=s.onerror=()=>{const l=pending[def.id];delete pending[def.id];l.forEach(f=>f());};document.head.appendChild(s);}
 /* Progresso do aluno, só no aparelho (ADR 0001). Falha silenciosa em modo privado. */
 const Progress={KEY:'jpj:v1',
  read(){try{return Object.assign({seen:{},done:{},fav:{},speed:1},JSON.parse(localStorage.getItem(this.KEY)||'{}'));}catch(e){return {seen:{},done:{},fav:{},speed:1};}},
@@ -358,8 +365,10 @@ function mountIndex(){
  const draw=k=>{if(k.def)renderTo(k.c,k.def,k.t);};
  cards.forEach(k=>{if(!k.def)return;let last=0;
   const loop=now=>{const dt=(now-last)/1000;if(!last||dt>=1/30){k.t=(k.t+Math.min(.05,last?dt:0))%k.def.end;last=now;draw(k);}k.raf=requestAnimationFrame(loop);};
-  k.a.addEventListener('pointerenter',()=>{if(reduced()||k.raf)return;last=0;k.t=0;k.raf=requestAnimationFrame(loop);});
-  k.a.addEventListener('pointerleave',()=>{cancelAnimationFrame(k.raf);k.raf=0;k.t=k.def.cover;draw(k);});});
+  /* a pose resolvida da técnica inteira só é baixada quando o card vai animar */
+  k.a.addEventListener('pointerenter',()=>{if(reduced()||k.raf||k.over)return;k.over=true;
+   loadBaked(k.def,()=>{if(!k.over||k.raf)return;last=0;k.t=0;k.raf=requestAnimationFrame(loop);});});
+  k.a.addEventListener('pointerleave',()=>{k.over=false;cancelAnimationFrame(k.raf);k.raf=0;k.t=k.def.cover;draw(k);});});
  /* Sem hover (celular): anima o card enquanto ele está bem visível na tela. */
  if(matchMedia('(hover: none)').matches&&!reduced()&&'IntersectionObserver' in window){
   /* Só um card anima por vez: o mais visível. Animar todos prendia a CPU em 100% no celular. */
@@ -382,6 +391,6 @@ function mountIndex(){
  const q=document.getElementById('q');if(q)q.addEventListener('input',()=>{query=fold(q.value).trim();apply();});
  new ResizeObserver(all).observe(grid);onTheme(all);}
 
-window.Judo={Progress,register,pose,drawScene,viewport,readTheme,renderTo,renderDef,mountPage,mountIndex,techs,CATALOG,W,TP,A,SL,win,tp,lerp2,clamp,D,C,
+window.Judo={Progress,loadBaked,register,pose,drawScene,viewport,readTheme,renderTo,renderDef,mountPage,mountIndex,techs,CATALOG,W,TP,A,SL,win,tp,lerp2,clamp,D,C,
  prim:{tag,arrow,dashed,ring,stamp,dot:(ctx,V,p,r,f,l)=>dot(ctx,V,p,r,f,l)}};
 })();

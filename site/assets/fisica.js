@@ -166,24 +166,41 @@ function quadro(def,t,prev,dt){
   for(const [g,side] of LIMBS){const k=g+side,L=novo[w][k];st[w][k]={E:L.E,H:L.H,Hs:loc(o,L.H),Ho:loc(other,L.H),Es:loc(o,L.E)};}}
  return {F,st};}
 
-/* Resolve a técnica inteira em sequência e guarda. */
+/* Resolve a técnica inteira em sequência (simula a 60 quadros/s, guarda a 30).
+   Guarda por quadro, para cada boneco e membro: dobra no referencial do tronco (3) + ponta no mundo (3). */
+const ORDEM=['tori','uke'],POR_QUADRO=ORDEM.length*LIMBS.length*6,FPS_G=30;
+function grava(st,D,off){for(const w of ORDEM)for(const [g,side] of LIMBS){const L=st[w][g+side];
+  D[off++]=L.Es[0];D[off++]=L.Es[1];D[off++]=L.Es[2];D[off++]=L.H[0];D[off++]=L.H[1];D[off++]=L.H[2];}}
 function assar(def){
- const n=Math.max(1,Math.ceil(def.end*FPS)),B=new Array(n+1);let prev=null;
- for(let i=0;i<=n;i++){const t=Math.min(def.end,i/FPS);const q=quadro(def,t,prev,1/FPS);B[i]=prev=q.st;}
- return B;}
-function solve(def,t){
- if(def.cru)return J.pose3(def,t);
- const B=def._assado||(def._assado=assar(def));
- t=clamp(t,0,def.end);const x=t*FPS,i=Math.min(B.length-2,Math.floor(x)),k=B.length>1?clamp(x-i,0,1):0;
- const F=J.pose3(def,t),a=B[Math.max(0,i)],b=B[Math.min(B.length-1,i+1)];
- for(const w of ['tori','uke']){const o=F[w];
-  for(const [g,side] of LIMBS){const key=g+side,leg=g==='leg',root=rootOf(o,g,side),l1=leg?LEN.th:LEN.ua,l2=leg?LEN.sh:LEN.fa;
+ const n=Math.max(1,Math.ceil(def.end*FPS_G)),D=new Float32Array((n+1)*POR_QUADRO),sub2=FPS/FPS_G;let prev=null;
+ for(let i=0;i<=n*sub2;i++){const t=Math.min(def.end,i/FPS);prev=quadro(def,t,prev,1/FPS).st;if(i%sub2===0)grava(prev,D,i/sub2*POR_QUADRO);}
+ return {fps:FPS_G,n:n+1,D};}
+/* Técnicas resolvidas de antemão (tools/assar.js gera site/assets/assado/<id>.js): int16 em passos de 0,5 mm, base64. */
+const assados={},capas={};
+function assado(id,fps,b64){const bin=atob(b64),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+ const q=new Int16Array(u.buffer),D=new Float32Array(q.length);for(let i=0;i<q.length;i++)D[i]=q[i]/2000;
+ assados[id]={fps,n:D.length/POR_QUADRO,D};const def=J.techs[id];if(def)def._assado=assados[id];}
+/* Só o quadro da capa de cada técnica (índice): {id:[t, ...48 valores em passos de 0,5 mm]} */
+function capa(obj){for(const id in obj)capas[id]={t:obj[id][0],D:Float32Array.from(obj[id].slice(1),v=>v/2000)};}
+function aplica(F,D,a,b,k){
+ for(let wi=0;wi<ORDEM.length;wi++){const o=F[ORDEM[wi]];
+  for(let li=0;li<LIMBS.length;li++){const [g,side]=LIMBS[li],key=g+side,leg=g==='leg',root=rootOf(o,g,side),l1=leg?LEN.th:LEN.ua,l2=leg?LEN.sh:LEN.fa;
+   const p=a+(wi*LIMBS.length+li)*6,q=b+(wi*LIMBS.length+li)*6,L=i=>D[p+i]+(D[q+i]-D[p+i])*k;
    /* joelho/cotovelo interpolado no referencial do tronco (acompanha giros rápidos); ponta no mundo */
-   const es=lerp3(a[w][key].Es,b[w][key].Es,k),E0=bp(o,es[0],es[1],es[2]),H0=lerp3(a[w][key].H,b[w][key].H,k);
+   const E0=bp(o,L(0),L(1),L(2)),H0=[L(3),L(4),L(5)];
    const E=add(root,mul(norm(sub(E0,root)),l1)),H=add(E,mul(norm(sub(H0,E)),l2));
    o[key]={root,E,H};}
   X.pes(o);}
  return F;}
+function solve(def,t){
+ if(def.cru)return J.pose3(def,t);
+ t=clamp(t,0,def.end);
+ let B=def._assado||(def._assado=assados[def.id]);
+ if(!B){const c=capas[def.id];if(c&&Math.abs(t-c.t)<1e-3)return aplica(J.pose3(def,t),c.D,0,0,0);B=def._assado=assar(def);}
+ const x=t*B.fps,i=clamp(Math.floor(x),0,B.n-1),j=Math.min(B.n-1,i+1);
+ return aplica(J.pose3(def,t),B.D,i*POR_QUADRO,j*POR_QUADRO,clamp(x-i,0,1));}
+/* true quando solve(def,t) não precisa calcular a técnica inteira na hora */
+const pronto=(def,t)=>!!(def._assado||assados[def.id]||(capas[def.id]&&Math.abs(t-capas[def.id].t)<1e-3));
 
-J.solve=solve;J.fisica={capsulas,R,seg,Q,quadro,assar,anatomia,TOL};
+J.solve=solve;J.assado=assado;J.capa=capa;J.fisica={capsulas,R,seg,Q,quadro,assar,anatomia,TOL,pronto,grava,POR_QUADRO,ORDEM};
 })();

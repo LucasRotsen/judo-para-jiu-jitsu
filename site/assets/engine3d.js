@@ -151,15 +151,18 @@ function shadow(ctx,V,o){const k=clamp(1-o.hip[1]/1.6,.3,1);ctx.save();ctx.globa
  ctx.fill();ctx.restore();}
 
 function draw3d(ctx,w,h,def,t,opts,vi){
- const C=J.C,view=def.views[vi]||def.views[0],V=makeView(w,h,view),F=pose3(def,t);
+ const C=J.C,view=def.views[vi]||def.views[0],V=makeView(w,h,view),F=(J.solve||pose3)(def,t);
  const g=def.glow,ga=opts.glow!==undefined?opts.glow:(opts.annot&&g?J.win(t,g.s,g.e):0);
- floor(ctx,V,C);shadow(ctx,V,F.tori);shadow(ctx,V,F.uke);
+ floor(ctx,V,C);
  const xk=opts.xray||(def.xray&&J.win(t,def.xray.s,def.xray.e)>0?def.xray.key:null);
- const all=buildPrims(F,def,ga),ghost=all.filter(p=>xk&&p.key===xk&&p.kind!=='glow');
- const list=all.filter(p=>!ghost.includes(p)).map(p=>[primDepth(p,V),p]).sort((a,b)=>a[0]-b[0]);
- for(const [,p] of list)drawPrim(ctx,V,p,F,C);
- if(ghost.length){const xa=opts.xray?1:J.win(t,def.xray.s,def.xray.e);ctx.save();ctx.globalAlpha*=1-.62*xa;
-  for(const p of ghost.map(p=>[primDepth(p,V),p]).sort((a,b)=>a[0]-b[0]))drawPrim(ctx,V,p[1],F,C);ctx.restore();}
+ /* corpo humano em WebGL; sem WebGL2 (ou com ?capsulas), as cápsulas de antes */
+ if(!(J.gl&&!J.semGL&&J.gl.desenhar(ctx,V,F,C,{glow:{limbs:g&&g.limbs,ga},xray:xk}))){
+  shadow(ctx,V,F.tori);shadow(ctx,V,F.uke);
+  const all=buildPrims(F,def,ga),ghost=all.filter(p=>xk&&p.key===xk&&p.kind!=='glow');
+  const list=all.filter(p=>!ghost.includes(p)).map(p=>[primDepth(p,V),p]).sort((a,b)=>a[0]-b[0]);
+  for(const [,p] of list)drawPrim(ctx,V,p,F,C);
+  if(ghost.length){const xa=opts.xray?1:J.win(t,def.xray.s,def.xray.e);ctx.save();ctx.globalAlpha*=1-.62*xa;
+   for(const p of ghost.map(p=>[primDepth(p,V),p]).sort((a,b)=>a[0]-b[0]))drawPrim(ctx,V,p[1],F,C);ctx.restore();}}
  if(!opts.annot)return;
  const api=makeApi(ctx,V,F);
  const top=o=>[o.hip[0],Math.max(o.head[1],o.hip[1])+.3,o.hip[2]];const nm=def.names?def.names(F):{};

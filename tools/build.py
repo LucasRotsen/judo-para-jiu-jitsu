@@ -64,6 +64,7 @@ HEAD = """<!doctype html>
 SCRIPTS = (
     '<script src="assets/catalog.js"></script>\n'
     '<script src="assets/engine.js"></script>\n<script src="assets/engine3d.js"></script>\n'
+    '<script src="assets/fisica.js"></script>\n<script src="assets/corpo-gl.js"></script>\n'
     '<script src="assets/pwa.js" defer></script>\n'
 )
 OFFLINE_SKIP = {"sw.js"}
@@ -89,6 +90,7 @@ def technique_page(tid: str, name: str) -> str:
     return (head(title, summary_of(tid), f"{tid}.html", f"og/{tid}.png")
             + '<main class="page" id="app"></main>\n' + SCRIPTS
             + f'<script src="assets/tecnicas/{tid}.js"></script>\n'
+            + f'<script src="assets/assado/{tid}.js"></script>\n'
             + f"<script>Judo.mountPage('{tid}');</script>\n</body>\n</html>\n")
 
 
@@ -97,6 +99,7 @@ def index_page() -> str:
     body = body.replace("{{N}}", str(len(CATALOG)))
     techs = "".join(f'<script src="assets/tecnicas/{tid}.js"></script>\n' for tid, _ in CATALOG)
     return (head(SITE_NAME, SITE_DESC, "", "og/index.png") + body + "\n" + SCRIPTS + techs
+            + '<script src="assets/assado/capas.js"></script>\n'
             + "<script>Judo.mountIndex();</script>\n</body>\n</html>\n")
 
 
