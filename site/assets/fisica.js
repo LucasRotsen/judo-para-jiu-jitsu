@@ -115,11 +115,12 @@ function membro(o,g,side,T,prev,todos,dt,fixo){
  /* um só freio por quadro: a dobra gira no máximo 11 rad/s em relação a onde estava no quadro anterior */
  const ref=prev?(prev.ref||prev.E):null;
  const freia=(H,E)=>{if(!ref)return E;const K=circ(H);if(K.rho<.004)return E;const a=psiDe(K,ref);let dq=psiDe(K,E)-a;
-  while(dq>Math.PI)dq-=2*Math.PI;while(dq<-Math.PI)dq+=2*Math.PI;const w=11*dt;return Math.abs(dq)<=w?E:Eem(K,a+clamp(dq,-w,w));};
+  while(dq>Math.PI)dq-=2*Math.PI;while(dq<-Math.PI)dq+=2*Math.PI;const w=11*dt;
+  /* amortece (só 40% do giro pedido por quadro) e limita a velocidade: sem vai-e-volta entre dois mínimos */
+  return Eem(K,a+clamp(dq*.4,-w,w));};
  let H,E,pE=prev?prev.E:null,res;
- if(fixo){/* pé de apoio: não sai do chão; só desliza de lado se pisar em cima do pé do outro */
-  H=piso(alcance(T));const K0=circ(H);let m,h2;[h2,m]=empurra(Eem(K0,pE?psiDe(K0,pE):0),H);if(m>0)H=piso(alcance([h2[0],H[1],h2[2]]));
-  [E,res]=gira(H,pE);return {root,E:freia(H,E),H};}
+ if(fixo){/* pé de apoio: fica onde o keyframe pôs; quem desvia é o outro */
+  H=piso(alcance(T));[E,res]=gira(H,pE);return {root,E:freia(H,E),H,d:[0,0,0]};}
  if(prev){H=prev.H;const dist=len(sub(T,H)),n=clamp(Math.ceil(dist/.03),1,20);
   for(let i=0;i<n;i++){H=piso(alcance(lerp3(H,T,1/(n-i))));
    const K=circ(H),e=Eem(K,psiDe(K,pE));let m;[H,m]=empurra(e,H);if(m>0)H=piso(alcance(H));}}
@@ -237,7 +238,10 @@ function grava(st,D,off){for(const w of ORDEM){for(const [g,side] of LIMBS){cons
 function assar(def){
  const n=Math.max(1,Math.ceil(def.end*FPS_G)),D=new Float32Array((n+1)*POR_QUADRO),sub2=FPS/FPS_G;let prev=null;
  for(let i=0;i<=n*sub2;i++){const t=Math.min(def.end,i/FPS);prev=quadro(def,t,prev,1/FPS).st;if(i%sub2===0)grava(prev,D,i/sub2*POR_QUADRO);}
- return {fps:FPS_G,n:n+1,D};}
+ /* passa-baixa no tempo (1-4-6-4-1): tira o que sobrou de tremor sem mexer no movimento */
+ const N=n+1,S=new Float32Array(D.length),w=[1,4,6,4,1];
+ for(let c=0;c<POR_QUADRO;c++)for(let i=0;i<N;i++){let a=0;for(let k=-2;k<=2;k++)a+=w[k+2]*D[clamp(i+k,0,N-1)*POR_QUADRO+c];S[i*POR_QUADRO+c]=a/16;}
+ return {fps:FPS_G,n:N,D:S};}
 /* Técnicas resolvidas de antemão (tools/assar.js gera site/assets/assado/<id>.js): int16 em passos de 0,5 mm, base64. */
 const assados={},capas={};
 function assado(id,fps,b64){const bin=atob(b64),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);

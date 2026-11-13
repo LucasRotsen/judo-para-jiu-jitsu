@@ -11,6 +11,8 @@ const toriBase={x:.05,y:.40,z:0,yaw:180,pitch:8,h:0,gf:0,
  leg:{R:W3(.27,.05,-.33),L:W3(.27,.05,.33)},arm:{R:B('o',.14,.26,-.13),L:B('o',.14,.30,.15)},
  pole:{legR:[1,-.5,.5],legL:[1,-.5,-.5],armR:[-.3,-.8,-.4],armL:[-.3,-.8,.4]}};
 /* Braço direito de Uke atravessado no rosto: cotovelo sobre o queixo, mão além da orelha esquerda. */
+/* mãos fechadas do outro lado do pescoço de Uke, junto ao ombro esquerdo dele */
+const fecho=W3(-.47,.09,-.24);
 const across=W3(-.62,.24,-.20);
 /* Fechamento das mãos (palma com palma), logo atrás do pescoço, do lado esquerdo de Uke. */
 const clasp=W3(-.42,.11,-.25);
@@ -63,10 +65,14 @@ Judo.register3d({
         arm:{L:clasp,R:clasp},pole:{legR:[-.2,1,.5],legL:[-.2,1,-.5],armL:[1,.5,-1],armR:[-1,0,1]}},
        uke:{arm:{L:W3(-.10,.12,-.50)}}}],
  [4.8,{}],
- [5.7,{tori:{x:.04,y:.30,z:.22,yaw:145,pitch:80,h:35,leg:{R:W3(.45,.05,.05),L:W3(.52,.05,.78)},pole:{legR:[-.2,1,.6],legL:[-.2,1,-.5]}}}],
- [6.6,{tori:{x:-.04,y:.26,z:.40,yaw:130,pitch:75,h:45,leg:{R:W3(.50,.05,.62),L:W3(.05,.05,1.05)},pole:{legR:[.2,1,.4],legL:[.2,1,-.4],armL:[1,-1,0]}}}],
- [7.4,{tori:{y:.25,h:50}}],
- [8.2,{tori:{y:.25}}],
+ /* desmonta para o lado direito de Uke (+z) e deita ao longo dele, peito no ombro direito de Uke:
+    braço DIREITO (o de perto) por baixo do pescoço até o outro lado, cabeça no tatame ao lado da cabeça de Uke
+    apertando o braço preso, joelho direito junto ao quadril de Uke e perna esquerda estendida para trás (base) */
+ [5.7,{tori:{x:.04,y:.30,z:.30,yaw:150,pitch:80,h:30,leg:{R:W3(.50,.05,.20),L:W3(.58,.05,.85)},
+        arm:{R:fecho,L:fecho},pole:{legR:[1,.6,0],legL:[.6,1,-.3],armR:[.2,-1,.3],armL:[.4,.6,-.6]}}}],
+ [6.6,{tori:{x:0,y:.27,z:.50,yaw:154,pitch:79,h:38,leg:{R:W3(.50,.05,.44),L:W3(.64,.05,1.08)}}}],
+ [7.4,{tori:{y:.26,h:42}}],
+ [8.2,{}],
  [8.6,{uke:{arm:{L:tapAt}}}],
  [8.85,{uke:{arm:{L:tapUp}}}],
  [9.1,{uke:{arm:{L:tapAt}}}],
