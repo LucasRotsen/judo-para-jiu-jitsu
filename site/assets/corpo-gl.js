@@ -102,8 +102,8 @@ function construir(){
   for(let i=0;i<pts.length-1;i++)for(let k=0;k<2;k++){const a=ini+i*3+k,b=a+1,c=a+3,d=c+1;
    const n=cross([P[b*3]-P[a*3],P[b*3+1]-P[a*3+1],P[b*3+2]-P[a*3+2]],[P[c*3]-P[a*3],P[c*3+1]-P[a*3+1],P[c*3+2]-P[a*3+2]]);
    n[2]>0?I.push(a,b,c,b,d,c):I.push(a,c,b,b,c,d);}}
- const caminho=(sx,dz)=>{const pts=[];for(let i=0;i<=10;i++){const k=i/10,y=lerp(.552,.115,k);pts.push([sx*lerp(.062,-.075,Math.pow(k,1.15)),y]);}fita(pts,.021,COR.gola,dz);};
- caminho(1,.004);caminho(-1,.009);
+ const caminho=(sx,dz,ate)=>{const pts=[];for(let i=0;i<=10;i++){const k=i/10*ate,y=lerp(.552,.115,k);pts.push([sx*lerp(.062,-.075,Math.pow(k,1.15)),y]);}fita(pts,.021,COR.gola,dz);};
+ caminho(1,.004,.5);caminho(-1,.009,1);   /* a de baixo some atrás da de cima no cruzamento */
  /* --- faixa com nó e pontas --- */
  {const s=secao(.09),an=[[.064,.99],[.07,1.06],[.11,1.06],[.116,.99]].map(([y,k])=>({c:[0,y,s[3]],rx:s[1]*k,rz:s[2]*k,n:s[4],b:pesoTronco(y)}));
   tubo(an,{N:24,col:COR.faixa,tampa:'ambas'});
@@ -122,7 +122,7 @@ function construir(){
   tubo(an,{N:20,ax:[1,0,0],az:[0,Math.sin(inc),Math.cos(inc)],col:COR.cabelo,tampa:'ambas'});
   bola([0,cy-.024,.104],[.012,.02,.02],[CB,CB,0],COR.pele,{M:4,N:8});                     /* nariz */
   for(const sx of [1,-1]){bola([.088*sx,cy-.014,-.004],[.012,.027,.018],[CB,CB,0],COR.pele,{M:4,N:8});   /* orelha */
-   bola([.035*sx,cy+.004,.092],[.011,.011,.008],[CB,CB,0],COR.olho,{M:4,N:8});}}              /* olho */
+   bola([.033*sx,cy+.006,.0935],[.0075,.009,.006],[CB,CB,0],COR.olho,{M:4,N:8});}}              /* olho */
  /* --- pernas, pés, braços e mãos --- */
  for(const s of ['R','L']){const x=SX[s],hx=.1*x,CX=OSSO['coxa'+s],CN=OSSO['canela'+s],PEo=OSSO['pe'+s];
   const calca=[[.05,.086,.096,[PV,CX,.35]],[0,.09,.1,[PV,CX,.75]],[-.08,.088,.096,[CX,CX,0]],[-.2,.08,.086,[CX,CX,0]],[-.32,.071,.076,[CX,CX,0]],

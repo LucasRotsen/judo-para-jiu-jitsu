@@ -71,3 +71,48 @@ test('em pé, arrastar a sua mão até a gola alta dele muda as suas pegadas', a
   expect(page.url()).toContain('mR=gola-alta');
   await expect(page.locator('#selmR')).toHaveValue('gola-alta');
 });
+
+test('arrastar o quadril dele move o boneco e libera o botão de desfazer', async ({ page }) => {
+  await page.goto('/simulador.html#pos=em-pe&R=gola-esq&L=manga-dir&f=parado');
+  await page.waitForTimeout(600);
+  const box = await page.locator('#cv').boundingBox();
+  const [x0, y0] = await page.evaluate(() => window.JudoSimUI.alcaScreen('uke.quadril'));
+  await page.mouse.move(box.x + x0, box.y + y0);
+  await page.mouse.down();
+  await page.mouse.move(box.x + x0 - 60, box.y + y0 + 30, { steps: 6 });
+  await page.mouse.up();
+  const livre = await page.evaluate(() => window.JudoSimUI.livre());
+  expect(livre.uke.x).toBeDefined();
+  const [x1] = await page.evaluate(() => window.JudoSimUI.alcaScreen('uke.quadril'));
+  expect(x1).toBeLessThan(x0 - 30);
+  await expect(page.locator('#reset')).toBeVisible();
+  await page.locator('#reset').click();
+  expect(await page.evaluate(() => window.JudoSimUI.livre())).toEqual({});
+});
+
+test('soltar a mão longe de qualquer pegada deixa a mão onde foi solta', async ({ page }) => {
+  await page.goto('/simulador.html#pos=em-pe&R=gola-esq&L=manga-dir&f=parado');
+  await page.waitForTimeout(600);
+  const box = await page.locator('#cv').boundingBox();
+  const [x0, y0] = await page.evaluate(() => window.JudoSimUI.handScreen('R'));
+  await page.mouse.move(box.x + x0, box.y + y0);
+  await page.mouse.down();
+  await page.mouse.move(box.x + x0 - 90, box.y + y0 - 120, { steps: 8 });
+  await page.mouse.up();
+  await expect.poll(() => page.evaluate(() => window.JudoSimUI.state().R)).toBe('livre');
+  const livre = await page.evaluate(() => window.JudoSimUI.livre());
+  expect(livre.uke.armR).toHaveLength(3);
+});
+
+test('simular daqui roda a técnica no palco a partir da posição montada', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto('/simulador.html#pos=em-pe&R=gola-esq&L=manga-dir&f=puxando');
+  await page.locator('.op-sim').first().click();
+  await expect(page.locator('#simbar')).toBeVisible();
+  await expect.poll(() => page.evaluate(() => (window.JudoSimUI.simulando() || {}).fase), { timeout: 8000 }).toBe('tecnica');
+  await page.locator('#simvoltar').click();
+  await expect(page.locator('#simbar')).toBeHidden();
+  expect(await page.evaluate(() => window.JudoSimUI.simulando())).toBeNull();
+  expect(errors).toEqual([]);
+});

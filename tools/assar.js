@@ -28,7 +28,9 @@ function main() {
     /* capa: resolve no instante exato da capa (interpola o que acabou de assar) */
     def._assado = B; const F = J.solve(def, def.cover || 0), D = new Float32Array(J.fisica.POR_QUADRO);
     const loc = (o, p) => { const d = [p[0] - o.hip[0], p[1] - o.hip[1], p[2] - o.hip[2]]; return [0, 1, 2].map((i) => d[0] * [o.f, o.u, o.r][i][0] + d[1] * [o.f, o.u, o.r][i][1] + d[2] * [o.f, o.u, o.r][i][2]); };
-    const st = {}; for (const w of J.fisica.ORDEM) { st[w] = {}; for (const k of ['legR', 'legL', 'armR', 'armL']) st[w][k] = { Es: loc(F[w], F[w][k].E), H: F[w][k].H }; }
+    const R0 = J.pose3(def, def.cover || 0), dotv = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    const st = {}; for (const w of J.fisica.ORDEM) { const o = F[w]; st[w] = { raiz: [0, 1, 2].map((i) => o.hip[i] - R0[w].hip[i]), cab: [dotv(o.hu, o.f), dotv(o.hu, o.u), dotv(o.hu, o.r)] };
+      for (const k of ['legR', 'legL', 'armR', 'armL']) st[w][k] = { Es: loc(o, o[k].E), H: o[k].H }; }
     J.fisica.grava(st, D, 0); capas[c.id] = [def.cover || 0, ...Array.from(D, q16)];
     if (check) {
       const old = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';

@@ -143,10 +143,41 @@ function obstaculos(F,w,g,side){
   else put(c,TOL_PROPRIO);}
  return out;}
 
+/* Move o boneco inteiro (tronco, ombros, cabeça) por d. */
+function desloca(o,d){for(const k of ['hip','sh','shR','shL','neck','head'])o[k]=add(o[k],d);o.x=o.hip[0];o.y=o.hip[1];o.z=o.hip[2];}
+const troncoDe=o=>[[bp(o,0,.12,.07),bp(o,0,.42,.07),R.tronco],[bp(o,0,.12,-.07),bp(o,0,.42,-.07),R.tronco],[bp(o,0,.03,.07),bp(o,0,.03,-.07),R.pelve]];
+/* Tronco contra tronco: afasta os dois (quem está deitado no chão não afunda; o outro cede). Devolve os deslocamentos. */
+function separa(F){const dt=[0,0,0],du=[0,0,0],T=F.tori,U=F.uke;
+ for(let it=0;it<4;it++){let pior=0,n=null;
+  for(const a of troncoDe(T))for(const b of troncoDe(U)){const e=a[2]+b[2]-TOL-seg(a[0],a[1],b[0],b[1]);if(e>pior){pior=e;n=[Q.nx,Q.ny,Q.nz];}}
+  if(!n||pior<1e-4)break;
+  /* peso: quem está mais baixo (apoiado no tatame) mexe menos */
+  let wt=.5;if(T.hip[1]<.25&&U.hip[1]>=.25)wt=.1;else if(U.hip[1]<.25&&T.hip[1]>=.25)wt=.9;
+  let a=mul(n,pior*wt),b=mul(n,-pior*(1-wt));
+  if(T.hip[1]+a[1]<.11)a[1]=Math.max(0,.11-T.hip[1]);if(U.hip[1]+b[1]<.11)b[1]=Math.max(0,.11-U.hip[1]);
+  desloca(T,a);desloca(U,b);for(let i=0;i<3;i++){dt[i]+=a[i];du[i]+=b[i];}}
+ return {tori:dt,uke:du};}
+/* Cabeça: inclina o pescoço para a cabeça não entrar no corpo do outro. prev = direção anterior (no tronco) ou null. */
+const CONE=(()=>{const c=[[0,0]];for(const th of [.2,.4,.6,.85,1.1])for(let k=0;k<8;k++)c.push([th,k*Math.PI/4+th]);return c;})();
+function cabeca(o,other,prevLocal,dt){
+ /* só tronco e cabeça do outro: dos braços e pernas dele quem desvia são eles (senão a cabeça fugiria do estrangulamento) */
+ const obs=capsulas(other).filter(c=>c.g==='tronco'||c.g==='cabeca').map(c=>({a:c.a,b:c.b,r:c.r,tol:TOL,h:Math.hypot(c.b[0]-c.a[0],c.b[1]-c.a[1],c.b[2]-c.a[2])*.5}));
+ const hu0=o.hu,hf0=o.hf,r=o.r,pen=d=>{const h=add(o.neck,mul(d,.13));return penal(h,h,R.cabeca,obs,false)+(h[1]<R.cabeca*.8?(R.cabeca*.8-h[1])**2:0);};
+ let best=hu0,bc=pen(hu0);
+ if(bc>1e-7){bc=1e9;const pw=prevLocal?bv(o,prevLocal):null;
+  for(const [th,az] of CONE){const lat=add(mul(hf0,Math.cos(az)),mul(r,Math.sin(az))),d=norm(add(mul(hu0,Math.cos(th)),mul(lat,Math.sin(th))));
+   const c=W_PEN*pen(d)+.25*th*th+(pw?.2*(1-dot(d,pw)):0);if(c<bc){bc=c;best=d;}}}
+ if(prevLocal){const pw=norm(bv(o,prevLocal)),cs=clamp(dot(pw,best),-1,1),ang=Math.acos(cs),mx=5*dt;
+  if(ang>mx){best=norm(lerp3(pw,best,mx/ang));}}
+ poeCabeca(o,best);}
+function poeCabeca(o,d){const hf=sub(o.hf,mul(d,dot(o.hf,d)));o.hu=d;o.hf=len(hf)>1e-4?norm(hf):o.f;o.head=add(o.neck,mul(d,.13));}
+
 /* Um quadro: parte da pose crua (intenção) e resolve cada membro. prev = quadro resolvido anterior. */
 function quadro(def,t,prev,dt){
  const F=J.pose3(def,t),ordem=def.first==='tori'?['tori','uke']:['uke','tori'];
- const novo={};
+ const novo={},loc0=(o,v)=>[dot(v,o.f),dot(v,o.u),dot(v,o.r)];
+ const raiz=separa(F);
+ for(const w of ordem)cabeca(F[w],F[w==='uke'?'tori':'uke'],prev?prev[w].cab:null,dt);
  for(let volta=0;volta<2;volta++)for(const w of ordem){const o=F[w],other=F[w==='uke'?'tori':'uke'];novo[w]=novo[w]||{};
   for(const [g,side] of LIMBS){const k=g+side,tipo=X.tipoAlvo(F,w,g,side);
    let T=X.alvo(F,w,g,side);
@@ -163,14 +194,16 @@ function quadro(def,t,prev,dt){
   X.pes(o);}
  const loc=(o,p)=>{const d=sub(p,o.hip);return [dot(d,o.f),dot(d,o.u),dot(d,o.r)];};
  const st={};for(const w of ordem){st[w]={};const o=F[w],other=F[w==='uke'?'tori':'uke'];
+  st[w].raiz=raiz[w];st[w].cab=loc0(o,o.hu);
   for(const [g,side] of LIMBS){const k=g+side,L=novo[w][k];st[w][k]={E:L.E,H:L.H,Hs:loc(o,L.H),Ho:loc(other,L.H),Es:loc(o,L.E)};}}
  return {F,st};}
 
 /* Resolve a técnica inteira em sequência (simula a 60 quadros/s, guarda a 30).
    Guarda por quadro, para cada boneco e membro: dobra no referencial do tronco (3) + ponta no mundo (3). */
-const ORDEM=['tori','uke'],POR_QUADRO=ORDEM.length*LIMBS.length*6,FPS_G=30;
-function grava(st,D,off){for(const w of ORDEM)for(const [g,side] of LIMBS){const L=st[w][g+side];
-  D[off++]=L.Es[0];D[off++]=L.Es[1];D[off++]=L.Es[2];D[off++]=L.H[0];D[off++]=L.H[1];D[off++]=L.H[2];}}
+const ORDEM=['tori','uke'],POR_BONECO=LIMBS.length*6+6,POR_QUADRO=ORDEM.length*POR_BONECO,FPS_G=30;
+function grava(st,D,off){for(const w of ORDEM){for(const [g,side] of LIMBS){const L=st[w][g+side];
+   D[off++]=L.Es[0];D[off++]=L.Es[1];D[off++]=L.Es[2];D[off++]=L.H[0];D[off++]=L.H[1];D[off++]=L.H[2];}
+  const r=st[w].raiz,c=st[w].cab;D[off++]=r[0];D[off++]=r[1];D[off++]=r[2];D[off++]=c[0];D[off++]=c[1];D[off++]=c[2];}}
 function assar(def){
  const n=Math.max(1,Math.ceil(def.end*FPS_G)),D=new Float32Array((n+1)*POR_QUADRO),sub2=FPS/FPS_G;let prev=null;
  for(let i=0;i<=n*sub2;i++){const t=Math.min(def.end,i/FPS);prev=quadro(def,t,prev,1/FPS).st;if(i%sub2===0)grava(prev,D,i/sub2*POR_QUADRO);}
@@ -184,8 +217,10 @@ function assado(id,fps,b64){const bin=atob(b64),u=new Uint8Array(bin.length);for
 function capa(obj){for(const id in obj)capas[id]={t:obj[id][0],D:Float32Array.from(obj[id].slice(1),v=>v/2000)};}
 function aplica(F,D,a,b,k){
  for(let wi=0;wi<ORDEM.length;wi++){const o=F[ORDEM[wi]];
+  {const p=a+wi*POR_BONECO+LIMBS.length*6,q=b+wi*POR_BONECO+LIMBS.length*6,L=i=>D[p+i]+(D[q+i]-D[p+i])*k;
+   desloca(o,[L(0),L(1),L(2)]);const c=[L(3),L(4),L(5)];if(len(c)>.5)poeCabeca(o,norm(bv(o,c)));}
   for(let li=0;li<LIMBS.length;li++){const [g,side]=LIMBS[li],key=g+side,leg=g==='leg',root=rootOf(o,g,side),l1=leg?LEN.th:LEN.ua,l2=leg?LEN.sh:LEN.fa;
-   const p=a+(wi*LIMBS.length+li)*6,q=b+(wi*LIMBS.length+li)*6,L=i=>D[p+i]+(D[q+i]-D[p+i])*k;
+   const p=a+wi*POR_BONECO+li*6,q=b+wi*POR_BONECO+li*6,L=i=>D[p+i]+(D[q+i]-D[p+i])*k;
    /* joelho/cotovelo interpolado no referencial do tronco (acompanha giros rápidos); ponta no mundo */
    const E0=bp(o,L(0),L(1),L(2)),H0=[L(3),L(4),L(5)];
    const E=add(root,mul(norm(sub(E0,root)),l1)),H=add(E,mul(norm(sub(H0,E)),l2));
@@ -202,5 +237,7 @@ function solve(def,t){
 /* true quando solve(def,t) não precisa calcular a técnica inteira na hora */
 const pronto=(def,t)=>!!(def._assado||assados[def.id]||(capas[def.id]&&Math.abs(t-capas[def.id].t)<1e-3));
 
-J.solve=solve;J.assado=assado;J.capa=capa;J.fisica={capsulas,R,seg,Q,quadro,assar,anatomia,TOL,pronto,grava,POR_QUADRO,ORDEM};
+/* Pose física ao vivo (simulador): cada passo parte do quadro anterior. zera() quando a cena muda de uma vez. */
+function aoVivo(){let prev=null;return {passo(def,t,dt){const q=quadro(def,clamp(t,0,def.end),prev,clamp(dt||1/60,1/240,1/20));prev=q.st;return q.F;},zera(){prev=null;}};}
+J.solve=solve;J.assado=assado;J.capa=capa;J.fisica={aoVivo,capsulas,R,seg,Q,quadro,assar,anatomia,TOL,pronto,grava,POR_QUADRO,ORDEM};
 })();

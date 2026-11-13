@@ -151,7 +151,7 @@ function shadow(ctx,V,o){const k=clamp(1-o.hip[1]/1.6,.3,1);ctx.save();ctx.globa
  ctx.fill();ctx.restore();}
 
 function draw3d(ctx,w,h,def,t,opts,vi){
- const C=J.C,view=def.views[vi]||def.views[0],V=makeView(w,h,view),F=(J.solve||pose3)(def,t);
+ const C=J.C,view=def.views[vi]||def.views[0],V=makeView(w,h,view),F=opts.F||(J.solve||pose3)(def,t);
  const g=def.glow,ga=opts.glow!==undefined?opts.glow:(opts.annot&&g?J.win(t,g.s,g.e):0);
  floor(ctx,V,C);
  const xk=opts.xray||(def.xray&&J.win(t,def.xray.s,def.xray.e)>0?def.xray.key:null);
@@ -178,5 +178,5 @@ function makeApi(ctx,V,F){const P=J.prim;return {ctx,V,F,t:F.t,C:J.C,D,win:J.win
  arc:(c,ax,ay,r,a0,a1,col,al)=>{if(!(al>0))return;const pts=[];for(let i=0;i<=24;i++){const a=(a0+(a1-a0)*i/24)*D;pts.push(add(c,add(mul(ax,r*Math.cos(a)),mul(ay,r*Math.sin(a)))));}
   for(let i=0;i<pts.length-2;i++)P.dashed(ctx,V,pts[i],pts[i+1],col,al,Math.max(2,V.fs*.2));P.arrow(ctx,V,pts[pts.length-3],pts[pts.length-1],col,al);}};}
 
-Object.assign(J,{register3d,pose3,draw3d,W3,B,_3d:{torsos,alvo,tipoAlvo,pes,rootOf,ik3,bp,bv,LEN,LIMBS,makeView,makeApi,floor,shadow}});
+Object.assign(J,{register3d,pose3,draw3d,W3,B,_3d:{torsos,alvo,tipoAlvo,pes,rootOf,ik3,bp,bv,LEN,LIMBS,makeView,makeApi,floor,shadow,frame}});
 })();
