@@ -77,13 +77,17 @@ Judo.register3d({
  [5.6,{}],
  /* joelho na barriga: Tori contorna pelo lado direito de Uke (o lado da manga) */
  [5.9,{tori:{x:.30,y:.76,z:-.30,yaw:205,pitch:40,leg:{R:W3(.20,.07,-.70)}}}],
- [6.1,{tori:{x:.12,y:.70,z:-.55,yaw:228,pitch:45,h:-10,leg:{L:W3(.49,.07,-.62)}},
-       uke:{arm:{R:W3(.03,.55,-.23)}}}],
- [6.25,{tori:{x:-.04,y:.64,z:-.66,yaw:238,leg:{R:W3(-.12,.42,-.60)},pole:{legR:[1,-.3,-.7]},arm:{R:B('o',.10,.52,-.04)}}}],
- [6.33,{tori:{x:-.08,y:.60,z:-.70,leg:{R:W3(-.42,.36,-.14)}}}],
- [6.4,{tori:{x:-.10,y:.56,z:-.72,pitch:70,yaw:242,h:-20,leg:{R:W3(-.51,.10,-.05)},pole:{legR:[1,-.3,-.7]},arm:{R:B('o',.10,.48,-.06)}},
-       uke:{arm:{R:W3(-.11,.50,-.39)}}}],
+ [6.1,{tori:{x:.16,y:.70,z:-.48,yaw:240,pitch:45,h:-10,leg:{L:W3(.60,.07,-.70)}},
+       uke:{arm:{R:W3(.10,.55,-.25)}}}],
+ [6.25,{tori:{x:.06,y:.64,z:-.54,yaw:262,leg:{R:W3(-.05,.40,-.55)},pole:{legR:[.5,.7,1]},arm:{R:B('o',.10,.52,-.04)}}}],
+ /* joelho na barriga, conferido com foto de referência: tronco erguido, canela atravessada na barriga com o joelho
+    no lado de lá e o pé colado no quadril de Uke, a outra perna aberta longe, de base */
+ [6.5,{tori:{x:.02,y:.58,z:-.55,yaw:270,pitch:52,h:-15,leg:{R:W3(.03,.18,-.59),L:W3(.72,.07,-.78)},
+        pole:{legR:[.5,.7,1],legL:[-.9,.4,-.3]},arm:{R:B('o',.10,.48,-.06)}},
+       uke:{arm:{R:W3(.22,.55,-.25)}}}],
  [8.5,{}]],
+ /* o joelho de Tori pesa na barriga de Uke de propósito */
+ aperto:{s:6.2,e:8.5,limbs:['T.R.leg'],tol:.09},
  names:F=>F.t>4.4?{uke:[F.uke.head[0]-.15,F.uke.head[1]+.38,F.uke.head[2]]}:{},
  glow:{s:2.5,e:4.4,limbs:{'T.L.leg':'force','U.R.leg':'gold'}},
  stamp:{s:4.85,e:6.4,big:'一本',small:'IPPON'},
