@@ -64,6 +64,8 @@ Judo.register3d({
  [9.5,{tori:{pitch:-9,roll:0,h:5,arm:{R:B('o',.10,.30,.32),L:B('o',.06,.24,-.34)},pole:{armR:[.1,.4,.9],armL:[.4,-.3,-1.4]}},
        uke:{pitch:-14,h:0,arm:{R:B('s',.25,.20,.18),L:B('s',.25,.20,-.18)}}}],
  [10.5,{}]],
+ /* os braços de Tori apertam o pescoço e os ganchos entram por dentro das coxas de Uke, de propósito */
+ aperto:[{s:0,e:10.5,limbs:['T.R.arm','T.L.arm'],tol:.12,tudo:true},{s:2.6,e:9.3,limbs:['T.R.arm'],tol:.12,tudo:true,fiel:true},{s:0,e:10.5,limbs:['T.R.leg','T.L.leg'],tol:.10,tudo:true}],
  names:F=>({tori:[F.tori.head[0]-.05,F.tori.head[1]+.2,F.tori.head[2]+.05],uke:[F.uke.legL.E[0],F.uke.legL.E[1]+.14,F.uke.legL.E[2]]}),
  glow:{s:2.2,e:6.2,limbs:{'T.R.arm':'force','T.L.arm':'gold'}},
  stamp:{s:8.0,e:10.5,big:'参った',small:'MAITTA'},

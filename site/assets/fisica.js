@@ -145,9 +145,14 @@ function membro(o,g,side,T,prev,todos,dt,fixo){
 const DIRS=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
 
 /* Obstáculos para um membro: tudo do outro boneco + o próprio tronco, cabeça e outros membros. */
-/* def.aperto={s,e,limbs:['T.R.leg',...],tol}: tolerância extra (m) desses membros contra tronco e cabeça do outro, entre s e e. */
-function aperto(def,t,w,me){const a=def&&def.aperto;if(!a||t<a.s||t>a.e)return 0;
- const k=(w==='tori'?'T':'U')+'.'+me[3]+'.'+me.slice(0,3);return a.limbs.includes(k)?(a.tol||.09):0;}
+/* def.aperto={s,e,limbs:['T.R.leg',...],tol,tudo} (ou lista disso): tolerância extra (m) desses membros, entre s e e,
+   contra tronco e cabeça do outro (ou contra o corpo todo do outro, com tudo:true: ganchos, pernas entrelaçadas). */
+function aperto(def,t,w,me,cg){const A=def&&def.aperto;if(!A)return 0;let m=0;
+ const k=(w==='tori'?'T':'U')+'.'+me[3]+'.'+me.slice(0,3),tc=cg==='tronco'||cg==='cabeca'||cg==='cabeça';
+ for(const a of Array.isArray(A)?A:[A])if(t>=a.s&&t<=a.e&&a.limbs.includes(k)&&(a.tudo||tc))m=Math.max(m,a.tol||.09);
+ return m;}
+function fiel(def,t,w,me){const A=def&&def.aperto;if(!A)return false;const k=(w==='tori'?'T':'U')+'.'+me[3]+'.'+me.slice(0,3);
+ for(const a of Array.isArray(A)?A:[A])if(a.fiel&&t>=a.s&&t<=a.e&&a.limbs.includes(k))return true;return false;}
 function obstaculos(F,w,g,side){
  const o=F[w],other=F[w==='uke'?'tori':'uke'],me=g+side,leg=g==='leg',out=[];
  const put=(c,tol,extra)=>{const h=Math.hypot(c.b[0]-c.a[0],c.b[1]-c.a[1],c.b[2]-c.a[2])*.5+(leg?.44:.29);out.push(Object.assign({a:c.a,b:c.b,r:c.r,tol,h},extra));};
@@ -156,8 +161,7 @@ function obstaculos(F,w,g,side){
  const meu=X.pegando(F,w,g,side),ow=w==='uke'?'tori':'uke',dele={};
  for(const [g2,s2] of LIMBS)if(X.pegando(F,ow,g2,s2)===me)dele[g2+s2]=true;
  /* aperto: membro que estrangula ou prende de propósito (triângulo, mata-leão) pode afundar no tronco/cabeça do outro */
- const ap=aperto(F._c&&F._c.def,F.t,w,me);
- for(const c of capsulas(other)){if(c.g===meu||(dele[c.g]&&c.s>=1))continue;put(c,ap&&(c.g==='tronco'||c.g==='cabeca')?ap:TOL);}
+  for(const c of capsulas(other)){if(c.g===meu||(dele[c.g]&&c.s>=1))continue;put(c,aperto(F._c&&F._c.def,F.t,w,me,c.g)||TOL);}
  for(const c of capsulas(o)){if(c.g===me)continue;
   if(c.g==='tronco'){put(c,TOL_PROPRIO,{raiz:true});continue;}       /* raiz: a 1ª parte do membro nasce ali */
   if(c.g==='cabeca'){put(c,TOL_PROPRIO);continue;}
@@ -216,7 +220,10 @@ function quadro(def,t,prev,dt){
     const cands=[q.H,bp(o,q.Hs[0],q.Hs[1],q.Hs[2]),bp(other,q.Ho[0],q.Ho[1],q.Ho[2])];
     let H=cands[0],bd=1e9;for(const c of cands){const d=len(sub(c,T));if(d<bd){bd=d;H=c;}}
     p={H,E:bp(o,q.Es[0],q.Es[1],q.Es[2]),d:q.d};}
-   const L=membro(o,g,side,T,p,obstaculos(F,w,g,side),dt,fixo);
+   /* membro declarado fiel (def.aperto com fiel:true): vale a pose do keyframe, sem correção de colisão.
+      É para estrangulamentos, em que a rota do braço pela frente do pescoço é a técnica. */
+   let L;if(fiel(F._c&&F._c.def,F.t,w,k)){const rt=X.rootOf(o,g,side),ik=X.ik3(rt,T,leg?X.LEN.th:X.LEN.ua,leg?X.LEN.sh:X.LEN.fa,X.bv(o,o.pole[k]));L={root:rt,E:ik[0],H:ik[1],d:[0,0,0]};}
+   else L=membro(o,g,side,T,p,obstaculos(F,w,g,side),dt,fixo);
    novo[w][k]=L;const old=o[k];o[k]={root:L.root,E:L.E,H:L.H};if(old.heel){o[k].heel=old.heel;o[k].toe=old.toe;}}
   X.pes(o);
   if(volta===0&&w===ordem[1]){
