@@ -102,11 +102,11 @@ Judo.register3d({
  /* kesa-gatame: Tori senta ao lado direito de Uke, de frente para a cabeça dele */
  [8.8,{tori:{x:-.05,y:.42,z:-.43,yaw:415,pitch:30,roll:15,h:10,
         leg:{R:W3(-.10,.07,-.79),L:W3(-.48,.10,-.03)},arm:{R:B('o',.05,.66,.10),L:SL('armR',.35)},
-        pole:{legR:[-.8,.4,.29],legL:[.36,-.4,-.05],armR:[-.99,-.4,-.24]}},
+        pole:{legR:[.6,.4,.6],legL:[-.2,-.4,-.3],armR:[.2,-.4,1]}},
        uke:{h:-15,arm:{R:B('o',.20,.36,-.22)}}}],
  [9.5,{tori:{x:.02,y:.20,z:-.10,yaw:450,pitch:15,roll:35,h:-5,
         leg:{R:W3(-.03,.07,-.79),L:W3(-.36,.07,.30)},arm:{R:B('o',-.08,.66,-.16),L:SL('armR',.3)},
-        pole:{legR:[-.44,.7,.24],legL:[.49,-.3,-.10],armR:[-1.16,-.2,.12],armL:[.8,-.6,-.29]}},
+        pole:{legR:[.4,.7,.3],legL:[-.3,-.3,-.4],armR:[.6,-.2,1],armL:[-.6,-.6,-.6]}},
        uke:{h:-10,arm:{R:B('o',.20,.30,-.24),L:W3(.98,.05,.05)}}}],
  [10.5,{}]],
  names:F=>({tori:[F.tori.head[0],F.tori.head[1]+.30,F.tori.head[2]],uke:[F.uke.hip[0]+.25,Math.max(F.uke.head[1],F.uke.hip[1])+.40,F.uke.hip[2]-.25]}),

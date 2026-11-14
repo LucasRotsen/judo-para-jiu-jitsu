@@ -24,12 +24,12 @@
   "treme": 0.33
  },
  "o-goshi": {
-  "cruza": 3.08,
-  "proprio": 0.24,
+  "cruza": 2.94,
+  "proprio": 0.26,
   "salto": 0,
-  "dobra": 3.52,
+  "dobra": 3.5,
   "erro": 1.08,
-  "treme": 3.57
+  "treme": 3.77
  },
  "uchi-mata": {
   "cruza": 1.58,
@@ -77,15 +77,15 @@
   "salto": 0,
   "dobra": 0,
   "erro": 0,
-  "treme": 0.67
+  "treme": 0.9
  },
  "sankaku-jime": {
-  "cruza": 0.3,
-  "proprio": 10.12,
+  "cruza": 0.24,
+  "proprio": 0.7,
   "salto": 0,
-  "dobra": 4.78,
+  "dobra": 5.4,
   "erro": 0,
-  "treme": 1.63
+  "treme": 1.6
  },
  "hadaka-jime": {
   "cruza": 0.62,
@@ -104,36 +104,36 @@
   "treme": 0.9
  },
  "ude-garami": {
-  "cruza": 0.74,
-  "proprio": 0.58,
-  "salto": 0,
-  "dobra": 3.02,
-  "erro": 0,
-  "treme": 2.23
- },
- "passagem-toreando": {
-  "cruza": 0.64,
+  "cruza": 0.54,
   "proprio": 0,
   "salto": 0,
-  "dobra": 0.12,
+  "dobra": 2.94,
   "erro": 0,
-  "treme": 2.27
+  "treme": 1.97
+ },
+ "passagem-toreando": {
+  "cruza": 0,
+  "proprio": 0,
+  "salto": 0,
+  "dobra": 2.02,
+  "erro": 0,
+  "treme": 1.43
  },
  "omoplata": {
-  "cruza": 2.44,
-  "proprio": 3.04,
+  "cruza": 0.92,
+  "proprio": 2.28,
   "salto": 0,
-  "dobra": 7.94,
-  "erro": 0.04,
-  "treme": 4.27
+  "dobra": 4.06,
+  "erro": 0,
+  "treme": 3.87
  },
  "raspagem-de-tesoura": {
-  "cruza": 2.1,
-  "proprio": 2.16,
+  "cruza": 0.82,
+  "proprio": 0.3,
   "salto": 0,
-  "dobra": 2.6,
+  "dobra": 2.2,
   "erro": 0,
-  "treme": 3.63
+  "treme": 3.4
  },
  "kata-gatame": {
   "cruza": 0.08,

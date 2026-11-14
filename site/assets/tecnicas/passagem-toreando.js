@@ -12,7 +12,7 @@ const toriBase={x:.58,y:.80,z:0,yaw:180,pitch:34,h:-15,
  arm:{R:SL('legL',.30),L:SL('legR',.30)},
  pole:{legR:[1,-.3,.2],legL:[1,-.3,-.2],armR:[.4,-.8,.4],armL:[.4,-.8,-.4]}};
 /* pernas de Uke empurradas juntas para o lado direito dele, joelhos no chão */
-const legsAside={leg:{R:W3(.5,.08,.46),L:W3(.6,.08,.32)},pole:{legR:[.3,.1,1],legL:[.3,.1,1]}};
+const legsAside={leg:{R:W3(.42,.08,.36),L:W3(.52,.08,.22)},pole:{legR:[.2,.3,1],legL:[.2,.3,1]}};
 Judo.register3d({
  id:'passagem-toreando', name:'Passagem toreando', kanji:'闘牛',
  cls:'Jiu-jitsu · Passagem de guarda', group:'ne',
@@ -55,16 +55,23 @@ Judo.register3d({
  keys:[
  [0,{uke:ukeBase,tori:toriBase}],
  [1.6,{}],
- [2.2,{tori:{x:.74,y:.76,pitch:40}}],
- [3.2,{tori:{x:.66,y:.48,z:.08,pitch:74,yaw:172,arm:{R:SL('legL',.2),L:SL('legR',.2)}},
-       uke:{roll:-18,leg:legsAside.leg,arm:{R:W3(-.35,.06,.42),L:W3(-.2,.06,-.42)},pole:{...legsAside.pole,armR:[0,-1,.6],armL:[0,-1,-.6]}}}],
- [4.1,{tori:{x:.44,y:.46,z:-.30,yaw:235,pitch:76,leg:{R:W3(.58,.04,-.86),L:W3(.98,.04,-.5)}}}],
- [5.0,{tori:{x:.08,y:.46,z:-.6,yaw:265,pitch:72,leg:{R:W3(-.02,.05,-1.02),L:W3(.42,.05,-.95)},
-       arm:{R:W3(.32,.1,.45),L:W3(.5,.1,.4)}}}],
- [5.45,{tori:{arm:{R:W3(-.18,.46,.32)},pole:{armR:[.3,.8,.6]}}}],
+ /* meio passo para trás: os pés de Uke saem do quadril, joelhos ainda dobrados no ar */
+ [2.2,{tori:{x:.76,y:.78,pitch:42,leg:{R:W3(1.02,.04,-.26),L:W3(1.02,.04,.26)}},
+       uke:{leg:{R:W3(.5,.5,.14),L:W3(.5,.5,-.14)}}}],
+ /* a capa: joelhos empurrados para baixo e para o lado direito de Uke */
+ [2.8,{tori:{x:.7,y:.72,z:.06,pitch:54,yaw:176},
+       uke:{roll:-10,leg:{R:W3(.5,.26,.34),L:W3(.56,.3,.2)},pole:{legR:[.2,.5,1],legL:[.2,.5,1]}}}],
+ [3.3,{tori:{x:.64,y:.68,z:.04,pitch:62,yaw:186,arm:{R:SL('legL',.12),L:SL('legR',.12)}},
+       uke:{roll:-22,leg:legsAside.leg,arm:{R:W3(-.35,.06,.42),L:W3(-.2,.06,-.42)},pole:{...legsAside.pole,armR:[0,-1,.6],armL:[0,-1,-.6]}}}],
+ /* passo lateral em afundo: perna da frente junto do quadril de Uke, a de trás esticada */
+ [4.1,{tori:{x:.42,y:.6,z:-.4,yaw:222,pitch:58,
+       leg:{R:W3(.12,.04,-.55),L:W3(.86,.04,-.88)},pole:{legR:[.6,.3,-1],legL:[1,-.3,-.3]}}}],
+ [5.0,{tori:{x:.1,y:.5,z:-.62,yaw:258,pitch:66,leg:{R:W3(-.16,.04,-.7),L:W3(.5,.04,-1.24)},
+       arm:{R:W3(.3,.12,.4),L:W3(.46,.12,.34)}}}],
+ [5.45,{tori:{arm:{R:W3(-.18,.46,.32),L:W3(.34,.34,.14)},pole:{armR:[.3,.8,.6],armL:[.4,.6,-.6]}},uke:{arm:{L:W3(-.44,.07,-.27)}}}],
  [5.9,{tori:{x:-.22,y:.34,z:-.56,yaw:270,pitch:80,h:10,
        leg:{R:W3(-.42,.05,-1.02),L:W3(.0,.05,-1.02)},
-       arm:{R:W3(-.62,.1,.2),L:W3(.2,.12,.3)},pole:{legR:[1,-.6,0],legL:[1,-.6,0],armR:[.3,-.4,.8],armL:[.3,-.4,-.8]}},
+       arm:{R:W3(-.62,.1,.2),L:W3(.24,.2,.06)},pole:{legR:[1,-.6,0],legL:[1,-.6,0],armR:[.3,-.4,.8],armL:[.3,-.4,-.8]}},
        uke:{roll:-8}}],
  [6.6,{}],
  [7.2,{tori:{y:.31,leg:{R:W3(-.5,.05,-1.04),L:W3(.08,.05,-1.04)}}}],
