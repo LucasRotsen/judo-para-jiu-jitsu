@@ -54,6 +54,10 @@ for (const c of J.CATALOG) {
     for (const a of T) for (const b of U) { if (pg('tori', a) === b[4] || pg('uke', b) === a[4]) continue; let pen = a[3] + b[3] - segDist(a[1], a[2], b[1], b[2]);
       if (pen > LIM.cruza && pega('tori', a)) { J.fisica.seg(a[1], a[2], b[1], b[2]); if (J.fisica.Q.s > .7) pen -= .05; }
       if (pen > LIM.cruza && pega('uke', b)) { J.fisica.seg(b[1], b[2], a[1], a[2]); if (J.fisica.Q.s > .7) pen -= .05; }
+      /* aperto declarado pela técnica (def.aperto): a perna que estrangula afunda de propósito no tronco/cabeça do outro */
+      const tc = (c) => c[4] === 'tronco' || c[4] === 'cabeça';
+      if (pen > LIM.cruza && tc(b)) pen -= J.fisica.aperto(def, t, 'tori', a[4]);
+      if (pen > LIM.cruza && tc(a)) pen -= J.fisica.aperto(def, t, 'uke', b[4]);
       if (pen > LIM.cruza) note('cruza', `${a[0]} de Tori × ${b[0]} de Uke`, t, pen); }
     for (const [nm, X] of [['Tori', T], ['Uke', U]]) for (let i = 0; i < X.length; i++) for (let j = i + 1; j < X.length; j++) {
       const a = X[i], b = X[j]; if (a[4] === b[4]) continue;

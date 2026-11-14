@@ -80,12 +80,12 @@
   "treme": 0.9
  },
  "sankaku-jime": {
-  "cruza": 0.24,
-  "proprio": 0.7,
+  "cruza": 0.46,
+  "proprio": 0.74,
   "salto": 0,
-  "dobra": 5.4,
-  "erro": 0,
-  "treme": 1.6
+  "dobra": 0.98,
+  "erro": 0.04,
+  "treme": 2.73
  },
  "hadaka-jime": {
   "cruza": 0.62,

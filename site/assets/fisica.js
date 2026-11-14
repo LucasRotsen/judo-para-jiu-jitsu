@@ -145,6 +145,9 @@ function membro(o,g,side,T,prev,todos,dt,fixo){
 const DIRS=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
 
 /* Obstáculos para um membro: tudo do outro boneco + o próprio tronco, cabeça e outros membros. */
+/* def.aperto={s,e,limbs:['T.R.leg',...],tol}: tolerância extra (m) desses membros contra tronco e cabeça do outro, entre s e e. */
+function aperto(def,t,w,me){const a=def&&def.aperto;if(!a||t<a.s||t>a.e)return 0;
+ const k=(w==='tori'?'T':'U')+'.'+me[3]+'.'+me.slice(0,3);return a.limbs.includes(k)?(a.tol||.09):0;}
 function obstaculos(F,w,g,side){
  const o=F[w],other=F[w==='uke'?'tori':'uke'],me=g+side,leg=g==='leg',out=[];
  const put=(c,tol,extra)=>{const h=Math.hypot(c.b[0]-c.a[0],c.b[1]-c.a[1],c.b[2]-c.a[2])*.5+(leg?.44:.29);out.push(Object.assign({a:c.a,b:c.b,r:c.r,tol,h},extra));};
@@ -152,7 +155,9 @@ function obstaculos(F,w,g,side){
     sem isso os dois se empurram um quadro sim, um não, e o boneco treme */
  const meu=X.pegando(F,w,g,side),ow=w==='uke'?'tori':'uke',dele={};
  for(const [g2,s2] of LIMBS)if(X.pegando(F,ow,g2,s2)===me)dele[g2+s2]=true;
- for(const c of capsulas(other)){if(c.g===meu||(dele[c.g]&&c.s>=1))continue;put(c,TOL);}
+ /* aperto: membro que estrangula ou prende de propósito (triângulo, mata-leão) pode afundar no tronco/cabeça do outro */
+ const ap=aperto(F._c&&F._c.def,F.t,w,me);
+ for(const c of capsulas(other)){if(c.g===meu||(dele[c.g]&&c.s>=1))continue;put(c,ap&&(c.g==='tronco'||c.g==='cabeca')?ap:TOL);}
  for(const c of capsulas(o)){if(c.g===me)continue;
   if(c.g==='tronco'){put(c,TOL_PROPRIO,{raiz:true});continue;}       /* raiz: a 1ª parte do membro nasce ali */
   if(c.g==='cabeca'){put(c,TOL_PROPRIO);continue;}
@@ -273,5 +278,5 @@ const pronto=(def,t)=>!!(def._assado||assados[def.id]||(capas[def.id]&&Math.abs(
 
 /* Pose física ao vivo (simulador): cada passo parte do quadro anterior. zera() quando a cena muda de uma vez. */
 function aoVivo(){let prev=null;return {passo(def,t,dt){const q=quadro(def,clamp(t,0,def.end),prev,clamp(dt||1/60,1/240,1/20));prev=q.st;return q.F;},zera(){prev=null;}};}
-J.solve=solve;J.assado=assado;J.capa=capa;J.fisica={aoVivo,capsulas,R,seg,Q,quadro,assar,anatomia,TOL,pronto,grava,POR_QUADRO,ORDEM};
+J.solve=solve;J.assado=assado;J.capa=capa;J.fisica={aperto,aoVivo,capsulas,R,seg,Q,quadro,assar,anatomia,TOL,pronto,grava,POR_QUADRO,ORDEM};
 })();

@@ -43,7 +43,7 @@ Judo.register3d({
   l:['Puxar a cabeça e apertar os joelhos ao mesmo tempo.','O estrangulamento é sanguíneo: as carótidas são fechadas dos dois lados.','Bateu, soltou. Sem exceção.']}],
  rep:[.6,2.6,4.8,6.6,9.0], cover:6.6,
  views:[
-  {name:'Diagonal',a:-55,e:32,center:[.1,.35,0],span:2.5},
+  {name:'Diagonal',a:-118,e:48,center:[.05,.3,0],span:2.3},
   {name:'Lateral',a:0,e:8,center:[.2,.5,0],span:2.9},
   {name:'De cima',a:-90,e:90,center:[-.05,0,.05],span:2.7}],
  keys:[
@@ -55,9 +55,13 @@ Judo.register3d({
  [4.2,{tori:{y:.20,pitch:-98,leg:{R:B('o',-.04,.62,-.22),L:B('o',.05,.05,.22)},arm:{R:B('o',.16,.54,-.17)},pole:{legR:[.6,0,1],legL:[.3,0,-1]}},
        uke:{x:.44,pitch:62,leg:{R:W3(.59,.07,-.17),L:W3(.59,.07,.17)},arm:{L:W3(.02,.10,.40)}}}],
  [5.0,{tori:{leg:{R:B('o',-.10,.56,.28),L:B('o',0,.22,.30)},pole:{legL:[.4,0,-1]}},uke:{x:.52,y:.40,pitch:70,h:15,leg:{R:W3(.62,.07,-.17),L:W3(.62,.07,.17)}}}],
- [6.0,{tori:{y:.20,z:-.02,yaw:18,pitch:-95,h:40,leg:{R:B('o',-.10,.56,.28),L:B('o',-.18,.17,.12)},arm:{R:B('o',-.03,.65,0)},pole:{legL:[.2,.19,-.2],armL:[.8,.1,-.6]}},
-       uke:{x:.52,y:.40,pitch:75,h:20,leg:{R:W3(.63,.07,-.17),L:W3(.63,.07,.17)},arm:{R:B('o',.24,.10,.28),L:W3(.08,.10,.40)},pole:{armR:[-.3,-.5,1]}}}],
- [7.0,{tori:{leg:{R:B('o',-.11,.54,.30),L:B('o',-.22,.13,.11)}},uke:{pitch:78,y:.38}}],
+ /* Triângulo fechado, conferido com a ilustração de referência: a postura de Uke está quebrada (peito sobre o
+    quadril de Tori, cabeça no esterno dele), a canela direita de Tori deita na nuca, o tornozelo direito entra
+    na dobra do joelho esquerdo e o pé esquerdo desce sobre as costas de Uke. */
+ [6.0,{tori:{y:.24,z:-.02,yaw:18,pitch:-95,h:40,leg:{R:W3(-.13,.55,-.22),L:W3(.24,.64,-.10)},arm:{R:B('o',-.05,.68,-.07),L:B('o',-.05,.66,.07)},
+        pole:{legR:[.3,1,.6],legL:[.3,1,-.4],armR:[.3,-.3,1],armL:[.3,-.3,-1]}},
+       uke:{x:.42,y:.42,pitch:96,h:20,leg:{R:W3(.63,.07,-.17),L:W3(.63,.07,.17)},arm:{R:W3(-.02,.16,.24),L:W3(.10,.08,.42)},pole:{armR:[-.3,-.5,1]}}}],
+ [7.0,{tori:{y:.26,leg:{R:W3(-.12,.54,-.20),L:W3(.23,.61,-.09)}},uke:{pitch:98}}],
  [7.6,{}],
  [8.0,{uke:{arm:{L:tapAt}}}],
  [8.25,{uke:{arm:{L:tapUp}}}],
@@ -66,6 +70,8 @@ Judo.register3d({
  [9.0,{uke:{arm:{L:tapAt}}}],
  [9.6,{}],
  [10.6,{tori:{leg:{R:B('o',-.02,.62,.40),L:B('o',-.05,.15,.30)},arm:{R:B('o',.05,.40,-.15)}},uke:{pitch:55,h:-10,arm:{L:W3(.08,.10,.40)}}}]],
+ /* as pernas de Tori apertam pescoço e ombro de Uke de propósito */
+ aperto:{s:5.2,e:10.6,limbs:['T.R.leg','T.L.leg'],tol:.10},
  names:F=>({tori:Judo.lerp2?[F.tori.head[0],F.tori.head[1]+.32,F.tori.head[2]]:null,uke:[F.uke.hip[0]+.1,F.uke.hip[1]+.45,F.uke.hip[2]]}),
  glow:{s:4.0,e:7.6,limbs:{'T.R.leg':'force','T.L.leg':'gold'}},
  stamp:{s:8.3,e:10.2,big:'参った',small:'MAITTA'},

@@ -49,3 +49,10 @@
 - Fato medido: detector de pose 2D (YOLO-pose) acompanha os dois enquanto estão em pé e separados, e se perde assim que os corpos se sobrepõem na projeção. Captura automática não serve para a parte que importa; rotoscopia manual serve.
 - Regra: cambalhota com torção em ângulos de Euler: fazer a torção com o corpo invertido (pitch passando por 180, yaw fazendo a torção, roll mantendo a inclinação). Torcer com roll cruzando 90 achata o corpo no meio do voo.
 - Regra: numa projeção de quadril Uke roda em volta do quadril, pela frente de Tori. Se ele passa acima dos ombros de Tori, está errado.
+
+## 2026-11-14 — Sankaku Jime: "olha o seu, olha o certo. Por quê?"
+- Erro 1: o corretor de colisões tratava a perna que estrangula como "perna atravessando o corpo" e a empurrava para longe do pescoço. Os keyframes pediam o triângulo; o corretor o desfazia. O medidor premiava isso (menos penetração = melhor).
+- Erro 2: o subagente otimizou o número (auto-penetração 10 s -> 0,7 s) e eu aceitei o relatório sem olhar a pose final contra uma imagem da técnica.
+- Regra: técnica em que um membro aperta o corpo do outro de propósito (triângulo, mata-leão, kata-gatame) declara `aperto:{s,e,limbs,tol}`; corretor e medidor respeitam. Antes de mexer em keyframe, renderizar com `cru=1`: se a pose crua está certa e a resolvida não, o defeito é do corretor.
+- Regra: relatório de subagente não substitui olhar. Toda técnica entregue tem que ter o quadro da posição final comparado por mim com uma referência, não só os números.
+- Regra: a vista principal da página tem que ser a que mostra a técnica (no triângulo, por trás da cabeça de Tori), não uma diagonal genérica.
