@@ -4,7 +4,7 @@ const PRECACHE = __FILES__;
 const FONT_CACHE = 'fonts-v1';
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(PRECACHE.map((u) => new Request(u, { cache: 'reload' })))  /* 'reload': versão nova nunca reaproveita arquivo velho do cache HTTP */).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (e) => {
