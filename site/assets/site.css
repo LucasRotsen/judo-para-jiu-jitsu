@@ -248,3 +248,8 @@ button{font:inherit;color:inherit}
 .simprog{flex:1 1 100%;order:9;height:3px;background:var(--line);border-radius:2px;overflow:hidden}.simprog i{display:block;height:100%;width:0;background:var(--force)}
 .simlivre{display:flex;justify-content:flex-end;padding:8px 12px}.simlivre:has([hidden]){display:none}
 .op-acoes{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:6px}.op-acoes .op-link{margin-top:0}
+
+/* câmera livre no palco */
+.orbita{position:absolute;right:8px;top:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:3px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.orbita:hover{border-color:var(--ink)}
+.orbita.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}

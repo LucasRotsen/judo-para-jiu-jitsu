@@ -248,7 +248,7 @@ function mountPage(id){
  <section class="main">
   <div class="stage">
    <div class="views-wrap${def.is3d?' multi':''}">
-    <div class="cv-wrap"><canvas id="cv" role="img" aria-label="Animação de ${esc(def.name)}. Toque para pausar, arraste para os lados para avançar ou voltar."></canvas><span class="drag-hint" aria-hidden="true">⟷ arraste para avançar ou voltar</span>${def.is3d?'<span class="vname" id="vname"></span>':''}</div>
+    <div class="cv-wrap"><canvas id="cv" role="img" aria-label="Animação de ${esc(def.name)}. Toque para pausar, arraste para os lados para avançar ou voltar."></canvas><span class="drag-hint" aria-hidden="true">⟷ arraste para avançar ou voltar</span>${def.is3d?'<span class="vname" id="vname"></span><button class="orbita" id="orbita" type="button" aria-pressed="false" title="Girar a câmera: com isto ligado, arraste o palco para ver de qualquer ângulo">↻ Girar</button>':''}</div>
     ${def.is3d?'<div class="minis" id="minis"></div>':''}
    </div>
    <div class="controls">
@@ -290,12 +290,12 @@ for(const k of Object.keys(pills)){paint(k,!!saved[k][id]);$('#'+k).onclick=()=>
  const thumbs=PH.map((p,i)=>{const el=document.createElement('button');el.className='thumb';
   el.innerHTML=`<canvas></canvas><div><b>${i+1}. ${esc(p.ro)}</b><small>${esc(p.pt)}</small></div>`;
   el.onclick=()=>{jump(i);cv.scrollIntoView({behavior:'smooth',block:'nearest'});};$('#strip').appendChild(el);return {el,c:el.querySelector('canvas')};});
- let mv=0;
+ let mv=0,orb=null,girar=false;   /* orb: câmera livre {a,e,center,span} quando o usuário gira o palco */
  const minis=def.is3d?def.views.slice(1).map((v,i)=>{const b=document.createElement('button');b.className='mini';b.type='button';
-  b.innerHTML=`<canvas></canvas><span></span>`;b.onclick=()=>{const k=+b.dataset.v;b.dataset.v=mv;mv=k;render();};
+  b.innerHTML=`<canvas></canvas><span></span>`;b.onclick=()=>{const k=+b.dataset.v;b.dataset.v=mv;mv=k;orb=null;render();};
   b.dataset.v=i+1;$('#minis').appendChild(b);return b;}):[];
- function render(){const [w,h,dpr]=size(cv);ctx.setTransform(dpr,0,0,dpr,0,0);renderDef(ctx,w,h,def,t,{annot},mv);
-  if(def.is3d){$('#vname').textContent=def.views[mv].name;
+ function render(){const [w,h,dpr]=size(cv);ctx.setTransform(dpr,0,0,dpr,0,0);renderDef(ctx,w,h,def,t,orb?{annot,view:orb}:{annot},mv);
+  if(def.is3d){$('#vname').textContent=orb?'Câmera livre':def.views[mv].name;
    for(const b of minis){const k=+b.dataset.v;b.querySelector('span').textContent=def.views[k].name;b.setAttribute('aria-label','Ver ângulo '+def.views[k].name);
     renderTo(b.querySelector('canvas'),def,t,{},k);}}
   ui();}
@@ -315,13 +315,20 @@ for(const k of Object.keys(pills)){paint(k,!!saved[k][id]);$('#'+k).onclick=()=>
  $('#ann').onchange=e=>{annot=e.target.checked;render();};
  /* Toque no palco: arrastar na horizontal avança/volta o tempo; toque simples alterna play/pausa. */
 const hint=$('.drag-hint'),hideHint=()=>hint&&hint.classList.add('gone');setTimeout(hideHint,4000);
-cv.addEventListener('pointerdown',e=>{if(e.button)return;hideHint();const x0=e.clientX,t0=t,w=cv.getBoundingClientRect().width;let dragged=false;
-  const mv=ev=>{const dx=ev.clientX-x0;if(!dragged&&Math.abs(dx)<8)return;
+const ob=$('#orbita');if(ob)ob.onclick=()=>{girar=!girar;ob.setAttribute('aria-pressed',girar);ob.classList.toggle('on',girar);cv.style.cursor=girar?'move':'';cv.style.touchAction=girar?'none':'';if(!girar){orb=null;render();}};
+cv.addEventListener('pointerdown',e=>{if(e.button)return;hideHint();
+  if(girar){const v0=orb||def.views[mv],a0=v0.a,e0=v0.e,X=e.clientX,Y=e.clientY;let mexeu=false;cv.setPointerCapture(e.pointerId);
+   const mvo=ev=>{const dx=ev.clientX-X,dy=ev.clientY-Y;if(!mexeu&&Math.hypot(dx,dy)<6)return;mexeu=true;
+    orb={name:'Câmera livre',a:a0-dx*.45,e:clamp(e0+dy*.35,3,89),center:v0.center,span:v0.span,bias:v0.bias};if(!playing)render();};
+   const upo=()=>{cv.removeEventListener('pointermove',mvo);cv.removeEventListener('pointerup',upo);cv.removeEventListener('pointercancel',upo);if(!mexeu)$('#play').click();};
+   cv.addEventListener('pointermove',mvo);cv.addEventListener('pointerup',upo);cv.addEventListener('pointercancel',upo);return;}
+  const x0=e.clientX,t0=t,w=cv.getBoundingClientRect().width;let dragged=false;
+  const mvs=ev=>{const dx=ev.clientX-x0;if(!dragged&&Math.abs(dx)<8)return;
    if(!dragged){dragged=true;setPlay(false);cv.setPointerCapture(ev.pointerId);}
    t=clamp(t0+dx/w*END*.8,0,END);render();};
-  const up=()=>{cv.removeEventListener('pointermove',mv);cv.removeEventListener('pointerup',up);cv.removeEventListener('pointercancel',up);
+  const up=()=>{cv.removeEventListener('pointermove',mvs);cv.removeEventListener('pointerup',up);cv.removeEventListener('pointercancel',up);
    if(!dragged)$('#play').click();};
-  cv.addEventListener('pointermove',mv);cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);});
+  cv.addEventListener('pointermove',mvs);cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);});
 const scrub=e=>{const r=tl.getBoundingClientRect();t=clamp((e.clientX-r.left)/r.width,0,1)*END;render();};
  tl.addEventListener('pointerdown',e=>{tl.setPointerCapture(e.pointerId);setPlay(false);scrub(e);
   const mv=ev=>scrub(ev),up=()=>{tl.removeEventListener('pointermove',mv);tl.removeEventListener('pointerup',up);};tl.addEventListener('pointermove',mv);tl.addEventListener('pointerup',up);});

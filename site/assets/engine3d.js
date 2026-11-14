@@ -153,7 +153,7 @@ function shadow(ctx,V,o){const k=clamp(1-o.hip[1]/1.6,.3,1);ctx.save();ctx.globa
  ctx.fill();ctx.restore();}
 
 function draw3d(ctx,w,h,def,t,opts,vi){
- const C=J.C,view=def.views[vi]||def.views[0],V=makeView(w,h,view),F=opts.F||(J.solve||pose3)(def,t);
+ const C=J.C,view=opts.view||def.views[vi]||def.views[0],V=makeView(w,h,view),F=opts.F||(J.solve||pose3)(def,t);
  const g=def.glow,ga=opts.glow!==undefined?opts.glow:(opts.annot&&g?J.win(t,g.s,g.e):0);
  floor(ctx,V,C);
  /* membro "fantasma" só no palco com anotações; em miniatura o pontilhado vira ruído */

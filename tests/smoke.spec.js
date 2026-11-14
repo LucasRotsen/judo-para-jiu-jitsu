@@ -116,3 +116,16 @@ test('busca acha técnica pelo nome no jiu-jitsu, sem acento', async ({ page }) 
   await page.locator('#q').fill('gatame');
   await expect(page.locator('a.tcard:visible')).toHaveCount(4);
 });
+
+test('câmera livre: com Girar ligado, arrastar o palco muda o ângulo sem pausar', async ({ page }) => {
+  await page.goto('/o-goshi.html');
+  const cv = page.locator('#cv'); await expect(cv).toBeVisible();
+  await expect(page.locator('#vname')).not.toHaveText('Câmera livre');
+  await page.locator('#orbita').click();
+  const b = await cv.boundingBox();
+  await page.mouse.move(b.x + b.width * .5, b.y + b.height * .5); await page.mouse.down();
+  await page.mouse.move(b.x + b.width * .8, b.y + b.height * .3, { steps: 8 }); await page.mouse.up();
+  await expect(page.locator('#vname')).toHaveText('Câmera livre');
+  await page.locator('#orbita').click();
+  await expect(page.locator('#vname')).not.toHaveText('Câmera livre');
+});
