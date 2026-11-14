@@ -1,27 +1,27 @@
 {
  "ippon-seoi-nage": {
-  "cruza": 2.02,
-  "proprio": 0.08,
+  "cruza": 0.2,
+  "proprio": 0.38,
   "salto": 0,
-  "dobra": 1.2,
+  "dobra": 3.46,
   "erro": 0,
-  "treme": 2
+  "treme": 2.03
  },
  "o-soto-gari": {
-  "cruza": 0.6,
-  "proprio": 1.32,
-  "salto": 0,
-  "dobra": 2.76,
-  "erro": 0,
-  "treme": 3.5
- },
- "o-uchi-gari": {
-  "cruza": 0.14,
+  "cruza": 0.02,
   "proprio": 0,
   "salto": 0,
-  "dobra": 1.96,
+  "dobra": 0,
   "erro": 0,
-  "treme": 0.7
+  "treme": 0.5
+ },
+ "o-uchi-gari": {
+  "cruza": 0,
+  "proprio": 0,
+  "salto": 0,
+  "dobra": 0,
+  "erro": 0,
+  "treme": 0.33
  },
  "o-goshi": {
   "cruza": 3.08,
@@ -32,44 +32,44 @@
   "treme": 3.57
  },
  "uchi-mata": {
-  "cruza": 2.5,
-  "proprio": 1.04,
+  "cruza": 1.58,
+  "proprio": 0.76,
   "salto": 0,
-  "dobra": 7.24,
+  "dobra": 8.06,
   "erro": 0,
-  "treme": 4.7
+  "treme": 4.13
  },
  "de-ashi-barai": {
-  "cruza": 0.3,
-  "proprio": 0.94,
-  "salto": 0,
-  "dobra": 0.32,
-  "erro": 0,
-  "treme": 1.43
- },
- "tomoe-nage": {
-  "cruza": 2.76,
-  "proprio": 1.5,
-  "salto": 0,
-  "dobra": 4.92,
-  "erro": 0,
-  "treme": 4.5
- },
- "morote-gari": {
-  "cruza": 0.54,
+  "cruza": 0.06,
   "proprio": 0,
   "salto": 0,
-  "dobra": 0.3,
+  "dobra": 0,
   "erro": 0,
-  "treme": 1.1
+  "treme": 1.93
+ },
+ "tomoe-nage": {
+  "cruza": 1.42,
+  "proprio": 0.5,
+  "salto": 0,
+  "dobra": 1.4,
+  "erro": 0,
+  "treme": 1.77
+ },
+ "morote-gari": {
+  "cruza": 0.2,
+  "proprio": 0.2,
+  "salto": 0,
+  "dobra": 0.58,
+  "erro": 0,
+  "treme": 2.27
  },
  "tate-shiho-gatame": {
-  "cruza": 0.6,
-  "proprio": 16.72,
+  "cruza": 0.34,
+  "proprio": 0.16,
   "salto": 0,
-  "dobra": 1.5,
+  "dobra": 1.34,
   "erro": 0,
-  "treme": 2.97
+  "treme": 2.7
  },
  "kami-shiho-gatame": {
   "cruza": 0,
@@ -96,12 +96,12 @@
   "treme": 2.07
  },
  "juji-gatame": {
-  "cruza": 0.22,
-  "proprio": 0.86,
+  "cruza": 0.1,
+  "proprio": 0.34,
   "salto": 0,
-  "dobra": 1.7,
-  "erro": 0.2,
-  "treme": 2.67
+  "dobra": 0.96,
+  "erro": 0,
+  "treme": 0.9
  },
  "ude-garami": {
   "cruza": 0.74,
@@ -136,11 +136,11 @@
   "treme": 3.63
  },
  "kata-gatame": {
-  "cruza": 5.5,
-  "proprio": 2.28,
+  "cruza": 0.08,
+  "proprio": 0,
   "salto": 0,
-  "dobra": 5.5,
+  "dobra": 0.04,
   "erro": 0,
-  "treme": 1.67
+  "treme": 1.53
  }
 }

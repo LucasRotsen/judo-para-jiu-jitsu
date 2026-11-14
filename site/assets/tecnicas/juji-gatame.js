@@ -11,7 +11,7 @@ const toriBase={x:.05,y:.40,z:0,yaw:180,pitch:8,h:0,gf:0,
  pole:{legR:[1,-.5,.5],legL:[1,-.5,-.5],armR:[-.2,-.7,.6],armL:[-.2,-.7,-.6]}};
 /* braço direito de Uke preso: as duas mãos de Tori seguram o punho dele */
 const grip={arm:{R:SL('armR',.86),L:SL('armR',.74)}};
-const tapAt=W3(-.14,.30,.10),tapUp=W3(-.14,.44,.04);
+const tapAt=W3(-.16,.04,-.52),tapUp=W3(-.16,.20,-.50);
 const taps=[8.2,8.4,8.6,8.8,9.0,9.2].map((t,i)=>[t,{uke:{arm:{L:i%2?tapUp:tapAt}}}]);
 Judo.register3d({
  id:'juji-gatame', name:'Juji Gatame', kanji:'腕挫十字固',
@@ -58,20 +58,24 @@ Judo.register3d({
  [2.6,{tori:{pitch:22,arm:{R:B('o',.14,.40,-.12),L:B('s',.24,.30,-.02)},pole:{armL:[.3,-.5,-.9]}},
        uke:{arm:{R:B('o',.15,.32,-.03)}}}],
  [3.6,{}],
- [4.3,{tori:{x:-.18,y:.50,z:.14,yaw:130,pitch:28,leg:{R:W3(-.04,.05,-.34),L:W3(-.42,.05,.52)},
-       arm:grip.arm,pole:{legR:[.2,1,.3],legL:[1,-.3,-.4],armR:[-.3,-.6,.6],armL:[-.3,-.6,-.6]}},
+ [4.3,{tori:{x:-.18,y:.50,z:.14,yaw:130,pitch:28,leg:{R:W3(-.04,.05,-.34),L:W3(-.78,.05,.28)},
+       arm:grip.arm,pole:{legR:[.2,1,.3],legL:[-.6,.3,-.6],armR:[.3,-1,.3],armL:[.3,-1,.3]}},
        uke:{arm:{R:B('o',.18,.30,0)},pole:{armR:[.6,-.3,-.2]}}}],
- [4.9,{tori:{x:-.30,y:.44,z:.28,yaw:100,pitch:30,leg:{L:W3(-.66,.44,-.12)},pole:{legL:[.2,1,-.3]}}}],
- [5.6,{tori:{x:-.33,y:.15,z:.30,yaw:90,pitch:-12,leg:{R:W3(-.10,.10,-.33),L:W3(-.68,.07,-.32)},
-       pole:{legR:[1,.2,.2],legL:[1,.2,-.2]}},
-       uke:{arm:{R:B('o',.20,.30,0)}}}],
- [6.6,{tori:{y:.13,pitch:-88,h:15,pole:{legR:[1,0,.2],legL:[1,0,-.2]}},
-       uke:{arm:{R:B('o',.36,.30,-.02),L:W3(-.22,.30,-.30)}}}],
+ [4.9,{tori:{x:-.30,y:.44,z:.28,yaw:100,pitch:30,leg:{L:W3(-.70,.30,-.18)},pole:{legL:[-.3,1,-.3]}}}],
+ [5.6,{tori:{x:-.33,y:.15,z:.34,yaw:90,pitch:-12,leg:{R:W3(-.04,.08,-.30),L:W3(-.62,.08,-.28)},
+       pole:{legR:[.15,1,.1],legL:[-.15,1,.1]}},
+       uke:{roll:-8,arm:{R:B('o',.22,.34,0),L:W3(-.20,.12,-.44)},pole:{armR:[0,-1,-.3],armL:[.3,-.2,-1]}}}],
+ /* Kodokan: Tori deitado de costas, nádega colada no ombro de Uke, joelhos para cima e calcanhares no tatame
+    do outro lado (perna direita sobre o peito, esquerda sobre o pescoço). O braço de Uke passa por cima do
+    quadril de Tori, entre as coxas, e fica esticado ao longo da barriga, punho preso no peito de Tori. */
+ [6.6,{tori:{y:.13,z:.36,pitch:-88,h:22,leg:{R:W3(-.04,.06,-.28),L:W3(-.62,.07,-.26)},
+       pole:{legR:[-.35,1,.1],legL:[.35,1,.1]}},
+       uke:{roll:-14,arm:{R:B('o',.32,.32,0),L:W3(-.14,.04,-.50)},pole:{armR:[0,-1,-.4],armL:[0,-.3,-1]}}}],
  [7.6,{}],
- [8.2,{tori:{y:.22,pitch:-80},uke:{arm:{R:B('o',.30,.33,-.02)}}}],
+ [8.2,{tori:{y:.21,pitch:-84},uke:{arm:{R:B('o',.28,.30,0)}}}],
  ...taps,
  [9.6,{}],
- [10.4,{tori:{y:.13,pitch:-88},uke:{arm:{R:B('o',.40,.25,-.02),L:W3(-.22,.30,-.30)}}}]],
+ [10.4,{tori:{y:.13,pitch:-88},uke:{arm:{R:B('o',.32,.32,0),L:W3(-.14,.04,-.50)}}}]],
  names:F=>({tori:[F.tori.head[0],F.tori.head[1]+.32,F.tori.head[2]],uke:[F.uke.legR.H[0]-.12,F.uke.legR.H[1]+.1,F.uke.legR.H[2]+.22]}),
  glow:{s:5.4,e:8.0,limbs:{'T.R.leg':'force','T.L.leg':'force','U.R.arm':'gold'}},
  stamp:{s:8.4,e:10.2,big:'参った',small:'MAITTA'},

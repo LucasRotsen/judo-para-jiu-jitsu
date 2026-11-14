@@ -2,20 +2,21 @@
 /* Mundo 3D: y para cima. Uke deitado de costas, cabeça para -x, quadril em x=.15; direita de Uke = +z.
    Tori começa montado, virado para a cabeça de Uke (yaw 180: direita de Tori = -z).
    O braço preso é o DIREITO de Uke: Tori o empurra por cima do rosto até o lado esquerdo (-z),
-   encosta a cabeça nele (lado -z), passa o braço esquerdo por trás do pescoço e fecha as mãos.
-   Depois desmonta para o lado direito de Uke (+z), o lado oposto ao da cabeça, e aperta. */
+   encosta a cabeça nele do lado direito do rosto de Uke (+z) e envolve o pescoço com os dois braços.
+   Depois desmonta para o lado direito de Uke (+z), o mesmo da cabeça, e aperta (vídeo da Kodokan, zQR3IOXxO_Q). */
 const ukeBase={x:.15,y:.13,z:0,yaw:0,pitch:-90,h:8,gf:0,
  leg:{R:W3(1.0,.06,.16),L:W3(1.0,.06,-.16)},arm:{R:B('o',.16,.36,-.11),L:B('o',.16,.36,.11)},
  pole:{armR:[.2,-.6,.8],armL:[.2,-.6,-.8]}};
 const toriBase={x:.05,y:.40,z:0,yaw:180,pitch:8,h:0,gf:0,
  leg:{R:W3(.27,.05,-.33),L:W3(.27,.05,.33)},arm:{R:B('o',.14,.26,-.13),L:B('o',.14,.30,.15)},
- pole:{legR:[1,-.5,.5],legL:[1,-.5,-.5],armR:[-.3,-.8,-.4],armL:[-.3,-.8,.4]}};
-/* Braço direito de Uke atravessado no rosto: cotovelo sobre o queixo, mão além da orelha esquerda. */
-/* mãos fechadas do outro lado do pescoço de Uke, junto ao ombro esquerdo dele */
-const fecho=W3(-.47,.09,-.24);
+ pole:{legR:[1,-.5,.5],legL:[1,-.5,-.5],armR:[-.3,-.8,.3],armL:[-.3,-.8,-.3]}};
+/* Braço direito de Uke atravessado no rosto, empurrado por Tori (mão além da orelha esquerda). */
 const across=W3(-.62,.24,-.20);
-/* Fechamento das mãos (palma com palma), logo atrás do pescoço, do lado esquerdo de Uke. */
-const clasp=W3(-.42,.11,-.25);
+/* As mãos se encontram atrás do pescoço de Uke: a direita entra pelo lado esquerdo dele,
+   a esquerda pelo lado direito, por fora do braço preso. */
+const nucaR=W3(-.46,.05,-.10),nucaL=W3(-.49,.05,.17);
+/* Braço direito de Uke esticado por cima do rosto: braço junto à orelha direita, mão além da cabeça à esquerda. */
+const pin=W3(-.70,.26,-.16);
 /* Batidas no tatame, ao lado esquerdo de Uke (o braço livre não cruza o corpo de Tori). */
 const tapAt=W3(-.02,.06,-.50),tapUp=W3(-.02,.24,-.50);
 Judo.register3d({
@@ -26,7 +27,7 @@ Judo.register3d({
  reading:[{k:'肩',r:'kata',m:'ombro'},{k:'固',r:'gatame',m:'imobilização'}],
  facts:[['Grupo','Katame-waza › Osaekomi-waza no Kodokan; no jiu-jitsu é usado como estrangulamento'],
   ['A ideia','O ombro do próprio Uke vira uma das paredes do estrangulamento. A outra é o braço de Tori atrás do pescoço.'],
-  ['Para que lado descer','Para o lado oposto ao da cabeça de Tori. Aqui a cabeça fica do lado esquerdo de Uke, e Tori desce para o lado direito dele.'],
+  ['Para que lado descer','Para o lado do braço preso. Aqui o braço direito de Uke fica preso, e Tori desce para o lado direito dele com a cabeça colada nesse braço.'],
   ['No jiu-jitsu','Triângulo de braço, ou arm triangle. Sai da montada, dos 100 quilos e da meia-guarda por cima.']],
  errors:[['Ficar montado para apertar','Montado, o ângulo não fecha. Desça para o lado e baixe o quadril.'],
   ['Cabeça longe do braço','Se a cabeça não cola no braço de Uke, ele recolhe o braço e o espaço volta.'],
@@ -43,11 +44,11 @@ Judo.register3d({
   d:'Tori segura o cotovelo direito de Uke e empurra o braço dele por cima do rosto, até o outro lado da cabeça. O ombro direito de Uke fica colado no próprio pescoço.',
   l:['Empurre pelo cotovelo, não pelo punho.','O braço de Uke atravessa o rosto dele.','O ombro de Uke já fecha um lado do pescoço.']},
  {s:3.2,e:4.8,kanji:'固め',ro:'Encaixe',pt:'Cabeça no braço, mãos fechadas',
-  d:'Tori desce o peito, encosta a cabeça no braço de Uke, do lado esquerdo do rosto dele, e passa o braço esquerdo por trás do pescoço. As mãos se fecham palma com palma.',
+  d:'Tori desce o peito, encosta a cabeça no braço de Uke, do lado direito do rosto dele, e envolve o pescoço com os dois braços. As mãos se fecham palma com palma atrás do pescoço.',
   l:['A cabeça de Tori prende o braço contra o rosto de Uke.','O braço passa por trás do pescoço, rente ao tatame.','Pegada palma com palma, ou mão no próprio bíceps.']},
  {s:4.8,e:6.6,kanji:'横',ro:'Desmontar',pt:'Descer para o lado',
-  d:'Sem abrir a pegada, Tori tira a perna de cima e desce para o lado direito de Uke, o lado oposto ao da cabeça. Fica de lado, com o peito sobre o peito de Uke e as pernas abertas.',
-  l:['Desça para o lado oposto ao da cabeça.','O peito continua pesado durante a troca.','Pernas abertas e quadril baixo dão a base.']},
+  d:'Sem abrir a pegada, Tori passa a perna direita por cima das pernas de Uke e desce para o lado direito dele, o lado do braço preso. Fica com o peito sobre o peito de Uke, o joelho direito dobrado junto ao corpo dele e a perna esquerda esticada para trás.',
+  l:['Desça para o lado do braço preso, sem tirar a cabeça dele.','O peito continua pesado durante a troca.','Pernas abertas e quadril baixo dão a base.']},
  {s:6.6,e:10.6,kanji:'絞め',ro:'Shime',pt:'Juntar os cotovelos',
   d:'Tori baixa o quadril, empurra com o ombro e junta os cotovelos. O ombro de Uke aperta um lado do pescoço e o braço de Tori aperta o outro. Uke bate e Tori solta na hora.',
   l:['Juntar os cotovelos, não puxar com os bíceps.','O peso desce pelo ombro, na direção do tatame.','Bateu, soltou. Sem exceção.']}],
@@ -61,26 +62,29 @@ Judo.register3d({
  [1.4,{}],
  [2.4,{tori:{pitch:22,arm:{L:B('o',.18,.42,.02)}},uke:{arm:{R:W3(-.52,.36,-.05)}}}],
  [3.2,{tori:{pitch:30,arm:{L:across},pole:{armL:[-.3,-.8,.2]}},uke:{arm:{R:across,L:B('o',.10,.30,.18)},pole:{armR:[1,0,0]}}}],
- [4.2,{tori:{x:.12,y:.34,z:.02,yaw:162,pitch:84,h:25,leg:{R:W3(.48,.05,-.30),L:W3(.60,.05,.32)},
-        arm:{L:clasp,R:clasp},pole:{legR:[-.2,1,.5],legL:[-.2,1,-.5],armL:[1,.5,-1],armR:[-1,0,1]}},
-       uke:{arm:{L:W3(-.10,.12,-.50)}}}],
+ /* a mão esquerda volta por cima da testa de Uke para o lado direito dele */
+ [3.7,{tori:{x:.08,y:.37,z:.03,yaw:185,pitch:58,h:15,arm:{L:W3(-.56,.36,.12)}}}],
+ [4.2,{tori:{x:.10,y:.34,z:.06,yaw:190,pitch:82,h:30,leg:{R:W3(.48,.05,-.30),L:W3(.60,.05,.32)},
+        arm:{L:nucaL,R:nucaR},pole:{legR:[1,-.2,.3],legL:[1,-.2,-.3],armR:[-.2,-.3,1],armL:[-.2,-.3,-1]}},
+       uke:{arm:{R:pin,L:W3(-.10,.12,-.50)},pole:{armR:[1,.3,-.3]}}}],
  [4.8,{}],
- /* desmonta para o lado direito de Uke (+z) e deita ao longo dele, peito no ombro direito de Uke:
-    braço DIREITO (o de perto) por baixo do pescoço até o outro lado, cabeça no tatame ao lado da cabeça de Uke
-    apertando o braço preso, joelho direito junto ao quadril de Uke e perna esquerda estendida para trás (base) */
- [5.7,{tori:{x:.04,y:.30,z:.30,yaw:150,pitch:80,h:30,leg:{R:W3(.50,.05,.20),L:W3(.58,.05,.85)},
-        arm:{R:fecho,L:fecho},pole:{legR:[1,.6,0],legL:[.6,1,-.3],armR:[.2,-1,.3],armL:[.4,.6,-.6]}}}],
- [6.6,{tori:{x:0,y:.27,z:.50,yaw:154,pitch:79,h:38,leg:{R:W3(.50,.05,.44),L:W3(.64,.05,1.08)}}}],
- [7.4,{tori:{y:.26,h:42}}],
+ /* desmonta para o lado direito de Uke (+z): a perna direita estica para trás e passa por cima das pernas de Uke,
+    sem abrir a pegada nem tirar a cabeça do braço preso */
+ [5.3,{tori:{x:.10,y:.42,z:.14,yaw:178,leg:{R:W3(.94,.38,-.04)},pole:{legR:[1,0,0]}}}],
+ [5.6,{tori:{x:.09,y:.43,z:.26,leg:{R:W3(.90,.42,.46)},pole:{legR:[0,.2,-1]}}}],
+ [5.75,{tori:{x:.08,y:.39,z:.30,leg:{R:W3(.56,.22,.62),L:W3(.68,.05,.94)},pole:{legR:[.4,0,-1]}}}],
+ [5.9,{tori:{x:.06,y:.33,z:.34,yaw:162,pitch:78,leg:{R:W3(.44,.05,.56),L:W3(.67,.05,1.0)},pole:{legR:[1,.8,-.4],legL:[.6,1,-.3]}}}],
+ [6.6,{tori:{x:.03,y:.31,z:.42,yaw:158,pitch:77,h:34,leg:{R:W3(.42,.05,.60),L:W3(.66,.05,1.06)}}}],
+ [7.4,{tori:{y:.29,h:40}}],
  [8.2,{}],
  [8.6,{uke:{arm:{L:tapAt}}}],
  [8.85,{uke:{arm:{L:tapUp}}}],
  [9.1,{uke:{arm:{L:tapAt}}}],
  [9.35,{uke:{arm:{L:tapUp}}}],
  [9.6,{uke:{arm:{L:tapAt}}}],
- [10.6,{tori:{y:.34,h:30,arm:{L:W3(-.30,.06,-.34)}},uke:{arm:{L:W3(-.10,.12,-.50)}}}]],
+ [10.6,{tori:{y:.36,h:30,arm:{L:W3(-.36,.05,.50)}},uke:{arm:{L:W3(-.10,.12,-.50)}}}]],
  names:F=>({tori:[F.tori.hip[0],F.tori.hip[1]+.45,F.tori.hip[2]],uke:[F.uke.legR.H[0]-.15,F.uke.legR.H[1]+.12,F.uke.legR.H[2]+.2]}),
- glow:{s:3.2,e:8.6,limbs:{'U.R.arm':'gold','T.L.arm':'force'}},
+ glow:{s:3.2,e:8.6,limbs:{'U.R.arm':'gold','T.L.arm':'force','T.R.arm':'force'}},
  stamp:{s:8.6,e:10.4,big:'参った',small:'MAITTA'},
  annotate:(api,F)=>{const {t,C}=api,U=F.uke,T=F.tori;let a;
   a=win(t,0,1.6);
@@ -91,11 +95,11 @@ Judo.register3d({
   api.tag('cabeça cola no braço de Uke',T.head,3,-7,C.force,a);
   api.tag('braço por trás do pescoço',T.armL.E,6,4,C.force,a);
   a=win(t,4.9,6.8);
-  api.tag('desce para o lado oposto ao da cabeça',T.hip,6,-5,C.force,a);
+  api.tag('desce para o lado do braço preso',T.hip,6,-5,C.force,a);
   a=win(t,6.7,9.0);
   api.tag('ombro de Uke fecha um lado',U.armR.E,-2,-9,C.gold,a);
   api.ring(U.neck,.09,C.info,a);
-  api.tag('braço de Tori fecha o outro',T.armL.E,-6,5,C.force,a);
+  api.tag('braço de Tori fecha o outro',T.armR.E,-1,7,C.force,a);
   api.tag('quadril baixo, cotovelos juntos',T.hip,3,4,C.force,a);
   a=win(t,8.7,10.4);
   api.tag('Uke bate: solte na hora',U.armL.H,5,-4,C.uke,a);}

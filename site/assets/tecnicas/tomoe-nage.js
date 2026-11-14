@@ -5,13 +5,13 @@
    e cai de costas além da cabeça dele, em x>1. */
 const uke0={x:-.32,y:.93,z:0,yaw:0,pitch:4,h:0,
  leg:{R:W3(-.26,.07,.13),L:W3(-.40,.07,-.12)},
- arm:{R:B('o',.13,.40,.08),L:B('o',.13,.40,-.08)},
+ arm:{R:B('o',.13,.40,-.08),L:B('o',.13,.40,.08)},
  pole:{armR:[-.4,-.8,.5],armL:[-.4,-.8,-.5]}};
 const tori0={x:.32,y:.93,z:0,yaw:180,pitch:4,h:0,
  leg:{R:W3(.28,.07,-.13),L:W3(.40,.07,.12)},
- arm:{R:B('o',.14,.42,.08),L:B('o',.14,.42,-.08)},
+ arm:{R:B('o',.14,.42,-.08),L:B('o',.14,.42,.08)},
  pole:{armR:[-.4,-.8,.5],armL:[-.4,-.8,-.5]}};
-const belt=B('o',.21,.10,0);
+const belt=B('o',.25,.10,0);
 Judo.register3d({
  id:'tomoe-nage', name:'Tomoe Nage', kanji:'巴投',
  cls:'Nage-waza · Ma-sutemi-waza', group:'nage',
@@ -55,26 +55,34 @@ Judo.register3d({
  [0,{uke:uke0,tori:tori0}],
  [1.2,{}],
  /* kuzushi: puxa para frente e passo curto entre os pés de Uke */
- [2.0,{tori:{x:.14,y:.88,pitch:6,leg:{L:W3(-.06,.07,.08)}},
-       uke:{x:-.30,pitch:16,h:8,leg:{R:W3(-.30,.11,.25),L:W3(-.42,.11,-.25)}}}],
+ [2.0,{tori:{x:.18,y:.88,pitch:6,leg:{L:W3(-.02,.07,.08)}},
+       uke:{x:-.32,pitch:14,h:6,pole:{armR:[-.2,-.6,1],armL:[-.2,-.6,-1]},leg:{R:W3(-.30,.11,.25),L:W3(-.42,.11,-.25)}}}],
  [2.5,{}],
- /* tsukuri: senta junto aos pés de Uke, pé direito na barriga */
- [3.2,{tori:{x:-.10,y:.30,pitch:-42,h:22,leg:{R:belt,L:W3(-.48,.07,.10)},
-        pole:{legR:[1,.3,-.3],legL:[1,.4,.4]}},
-       uke:{x:-.30,y:.87,pitch:40,h:12,leg:{R:W3(-.30,.11,.25),L:W3(-.42,.11,-.25)}}}],
- [3.9,{}],
- /* kake: rola de costas, a perna estende e os braços puxam por cima da cabeça */
- [4.4,{tori:{x:-.14,y:.14,pitch:-90,h:10,leg:{L:W3(-.55,.07,.16)}},
-       uke:{x:-.14,y:.72,pitch:80,h:0,gf:0,leg:{R:B('s',-.08,-.86,.12),L:B('s',-.10,-.84,-.12)},
-        arm:{R:B('s',.30,.40,.18),L:B('s',.30,.40,-.18)}}}],
- [4.85,{tori:{arm:{R:B('o',.14,.42,.08),L:B('o',.14,.42,-.08)}},
-        uke:{x:.30,y:1.08,pitch:150,h:30,leg:{R:B('s',.12,-.66,.13),L:B('s',.10,-.64,-.11)}}}],
- [5.25,{tori:{leg:{R:W3(.05,.62,-.10)}},
-        uke:{x:1.16,y:.86,pitch:215,h:35,leg:{R:B('s',.14,-.62,.14),L:B('s',.12,-.60,-.12)},arm:{R:B('s',.24,.30,-.06),L:B('s',.24,.34,.06)}}}],
- /* queda: Uke de costas além da cabeça de Tori, ukemi */
- [5.6,{tori:{leg:{R:W3(-.55,.07,-.16)},pole:{legR:[1,.4,-.4]}},
-       uke:{x:1.62,y:.13,pitch:270,h:25,gf:1,leg:{R:W3(2.12,.07,.20),L:W3(2.12,.07,-.20)},
-        arm:{R:W3(1.42,.07,.48),L:W3(1.42,.07,-.48)},pole:{legR:[1,.5,.3],legL:[1,.5,-.3],armR:[0,0,1],armL:[0,0,-1]}}}],
+ /* Daqui em diante conforme o vídeo da Kodokan (巴投 / Tomoe-nage).
+    tsukuri: Tori agacha fundo e senta quase no calcanhar esquerdo, entre os pés de Uke, tronco ainda
+    quase ereto; a sola direita sobe até a faixa e os braços seguram Uke dobrado sobre ele. */
+ [3.2,{tori:{x:-.04,y:.30,pitch:-26,h:22,leg:{R:belt,L:W3(-.02,.07,.12)},
+        pole:{legR:[.3,1,-.3],legL:[1,.6,.4]}},
+       uke:{x:-.32,y:.86,pitch:38,h:12,arm:{R:B('o',.14,.30,-.12),L:B('o',.14,.30,.12)},leg:{R:W3(-.30,.09,.31),L:W3(-.42,.09,-.31)}}}],
+ [3.9,{tori:{x:-.07,y:.22,pitch:-55,h:25},uke:{x:-.28,y:.88,pitch:52}}],
+ /* kake: Tori rola de costas; Uke vem por cima, apoiado no pé, o tronco mergulha rumo à cabeça de Tori
+    e os pés deixam o chão por trás */
+ [4.4,{tori:{x:-.12,y:.14,pitch:-90,h:12,leg:{L:W3(-.42,.07,.28)},pole:{legR:[.8,1,-.3]}},
+       uke:{x:-.14,y:.95,pitch:95,h:10,gf:0,leg:{R:W3(-.62,.30,.30),L:W3(-.66,.36,-.30)},
+        arm:{R:B('s',.30,.40,.18),L:B('s',.30,.40,-.18)},pole:{legR:[1,-.3,.2],legL:[1,-.3,-.2]}}}],
+ /* a perna estende: Uke de cabeça para baixo, a cabeça desce junto à cabeça de Tori, pernas sobem */
+ [4.85,{tori:{arm:{R:B('o',.14,.36,-.17),L:B('o',.14,.36,.17)},pole:{armR:[.3,.2,1],armL:[.3,.2,-1]}},
+        uke:{x:.22,y:1.08,pitch:155,h:20,leg:{R:B('s',.10,-.84,.14),L:B('s',.06,-.84,-.14)},
+         arm:{R:B('s',.40,.30,.24),L:B('s',.40,.30,-.24)},pole:{legR:[1,0,.2],legL:[1,0,-.2]}}}],
+ /* quase vertical, invertido, o quadril passa por cima da cabeça de Tori; a perna de Tori fica no alto */
+ [5.1,{tori:{leg:{R:W3(-.04,.92,-.10)},arm:{R:B('o',.16,.30,-.18),L:B('o',.16,.30,.18)}},
+       uke:{x:.70,y:.98,pitch:205,h:15,leg:{R:B('s',.05,-.86,.15),L:B('s',.02,-.86,-.15)}}}],
+ [5.35,{uke:{x:1.12,y:.62,pitch:240,h:20,leg:{R:B('s',.10,-.85,.16),L:B('s',.08,-.85,-.16)},
+         arm:{R:B('s',.25,.20,.45),L:B('s',.25,.20,-.45)}}}],
+ /* queda: Uke de costas, estendido, cabeça junto à cabeça de Tori; Tori continua deitado com a perna direita no alto */
+ [5.6,{tori:{leg:{R:W3(-.08,.86,-.12)},pole:{legR:[1,1,0]}},
+       uke:{x:1.50,y:.13,pitch:270,h:25,gf:1,leg:{R:W3(2.30,.08,.20),L:W3(2.30,.08,-.20)},
+        arm:{R:W3(1.42,.07,.46),L:W3(1.42,.07,-.46)},pole:{legR:[1,.5,.3],legL:[1,.5,-.3],armR:[0,0,1],armL:[0,0,-1]}}}],
  [6.6,{uke:{h:-5}}],
  [9,{}]],
  glow:{s:2.6,e:5.0,limbs:{'T.R.leg':'force'}},

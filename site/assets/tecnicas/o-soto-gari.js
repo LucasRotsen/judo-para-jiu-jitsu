@@ -50,22 +50,29 @@ Judo.register3d({
  keys:[
  [0,{uke:uke0,tori:tori0}],
  [1,{}],
- [2.0,{tori:{x:.0,y:.88,z:.26,yaw:186,pitch:6,leg:{L:W3(-.16,.07,.42),R:W3(.20,.07,.12)},arm:{R:B('o',.14,.42,-.08)}},
-       uke:{x:-.34,y:.89,pitch:-8,leg:{R:W3(-.28,.07,.17),L:W3(-.40,.10,-.17)}}}],
- [2.9,{tori:{x:-.10,y:.86,z:.34,yaw:184,pitch:10,leg:{L:W3(-.18,.07,.46),R:W3(-.06,.34,.30)},pole:{legR:[1,-.3,.3]}},
-       uke:{x:-.36,pitch:-11}}],
- [3.5,{tori:{x:-.12,y:.86,z:.34,pitch:14,leg:{R:W3(-.60,.24,.25)}},
-       uke:{x:-.37,y:.89,pitch:-13}}],
+ /* kuzushi: o pé esquerdo de Tori pisa fundo ao lado (por fora) do pé direito de Uke; o pé direito acompanha
+    rente ao chão. Uke é levado para trás, sobre o calcanhar direito. */
+ [2.0,{tori:{x:.02,y:.89,z:.24,yaw:184,pitch:6,leg:{L:W3(-.16,.07,.44),R:W3(.24,.07,.08)},arm:{R:B('o',.14,.42,-.08)}},
+       uke:{x:-.33,y:.90,pitch:-8,leg:{R:W3(-.27,.07,.17),L:W3(-.40,.07,-.17)},arm:{L:SL('armR',.45)},pole:{armL:[-.3,-.9,-.3]}}}],
+ /* o pé direito sai do chão por trás, ainda longe da perna de Uke */
+ [2.9,{tori:{x:-.08,y:.88,z:.32,pitch:10,leg:{L:W3(-.18,.07,.46),R:W3(.18,.16,.28)},pole:{legR:[1,-.2,.15]}},
+       uke:{x:-.35,y:.89,pitch:-11}}],
+ /* tsukuri: a perna direita passa estendida, como um pêndulo, por fora da perna direita de Uke e para trás dela */
+ [3.5,{tori:{x:-.12,y:.87,z:.34,pitch:12,leg:{R:W3(-.56,.20,.27)},pole:{legR:[1,-.1,.2]}},
+       uke:{x:-.36,y:.89,pitch:-13}}],
  [4.0,{}],
- [4.4,{tori:{x:-.10,y:.81,pitch:34,leg:{R:W3(-.30,.56,.25)},pole:{legR:[1,-.6,.3]}},
-       uke:{x:-.47,y:.80,pitch:-40,h:18,leg:{R:W3(-.12,.30,.0),L:W3(-.44,.07,-.17)},arm:{L:B('s',.1,.3,-.5)},pole:{legR:[.4,0,-1]}}}],
- [4.75,{tori:{x:-.08,y:.80,pitch:50,leg:{R:W3(.30,.92,.30)},arm:{R:B('s',.30,.30,.14)}},
-        uke:{x:-.62,y:.46,pitch:-66,h:24,arm:{R:B('s',.36,.30,.30)},leg:{R:W3(-.10,.66,.0),L:W3(-.24,.36,-.18)}}}],
- [5.15,{tori:{x:-.85,y:.66,z:.40,yaw:166,pitch:44,leg:{R:W3(-.62,.10,.40),L:W3(-.86,.07,.86)},pole:{legR:[1,-.2,.15]}},
-        uke:{x:-.72,y:.13,pitch:-88,h:28,leg:{R:W3(-.24,.20,.30),L:W3(-.28,.10,-.22)},arm:{R:W3(-.90,.70,.60),L:B('s',-.05,0,-.55)}}}],
- [5.6,{}],
- [6.4,{tori:{x:-.95,y:.62,z:.40,yaw:160,pitch:48,h:-10,leg:{R:W3(-.68,.07,.42),L:W3(-.98,.07,.88)},arm:{R:B('s',.22,.24,.2)}},
-       uke:{h:20,leg:{R:W3(-.17,.07,.30),L:W3(-.20,.07,-.26)},arm:{R:W3(-.90,.70,.60)}}}],
+ /* kake: a perna volta com força, panturrilha contra panturrilha, e leva a perna direita de Uke junto */
+ [4.4,{tori:{x:-.12,y:.84,pitch:36,h:-10,leg:{R:W3(-.18,.42,.30)},pole:{legR:[1,-.4,.2]}},
+       uke:{x:-.44,y:.82,pitch:-38,h:18,leg:{R:W3(-.08,.34,.06),L:W3(-.44,.07,-.17)},arm:{L:B('s',.1,.3,-.5)},pole:{legR:[.6,.3,0]}}}],
+ /* gangorra: a perna sobe atrás e o tronco desce; Uke cai de costas */
+ [4.75,{tori:{x:-.14,y:.82,pitch:66,h:-25,leg:{R:W3(.46,1.02,.32)},pole:{legR:[-1,-.2,.1]}},
+        uke:{x:-.58,y:.46,pitch:-66,h:24,arm:{R:B('s',.36,.30,.30)},leg:{R:W3(-.18,.62,-.04),L:W3(-.28,.34,-.20)}}}],
+ [5.15,{tori:{x:-.15,y:.80,pitch:72,h:-30,leg:{R:W3(.52,1.12,.32)}},
+        uke:{x:-.62,y:.13,z:.02,pitch:-88,h:28,leg:{R:W3(.04,.22,.20),L:W3(.0,.10,-.20)},arm:{R:B('o',.46,.12,.18),L:B('s',-.05,0,-.55)}}}],
+ [5.6,{tori:{pitch:70,leg:{R:W3(.50,1.06,.32)}}}],
+ /* zanshin: a perna desce, Tori fica de pé curvado sobre Uke, ainda com a manga */
+ [6.4,{tori:{x:-.10,y:.84,pitch:42,h:-12,leg:{R:W3(.22,.07,.38)},pole:{legR:[1,-.2,.15]},arm:{R:B('s',.30,.20,.16)}},
+       uke:{h:20,leg:{R:W3(.10,.07,.08),L:W3(.06,.07,-.26)}}}],
  [8,{}]],
  names:F=>F.t>4.6?{uke:[F.uke.head[0]-.1,F.uke.head[1]+.36,F.uke.head[2]]}:{},
  glow:{s:3.0,e:4.9,limbs:{'T.R.leg':'force','U.R.leg':'gold'}},
