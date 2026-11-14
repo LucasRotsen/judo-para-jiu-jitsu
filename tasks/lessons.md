@@ -56,3 +56,7 @@
 - Regra: técnica em que um membro aperta o corpo do outro de propósito (triângulo, mata-leão, kata-gatame) declara `aperto:{s,e,limbs,tol}`; corretor e medidor respeitam. Antes de mexer em keyframe, renderizar com `cru=1`: se a pose crua está certa e a resolvida não, o defeito é do corretor.
 - Regra: relatório de subagente não substitui olhar. Toda técnica entregue tem que ter o quadro da posição final comparado por mim com uma referência, não só os números.
 - Regra: a vista principal da página tem que ser a que mostra a técnica (no triângulo, por trás da cabeça de Tori), não uma diagonal genérica.
+
+## 2026-11-14 — Joelho na barriga: "Ficou excelente. Use como aprendizado" (usuário)
+- O que funcionou: (1) foto de referência do usuário; (2) render `cru=1` contra resolvido para saber se o erro é do keyframe ou do corretor; (3) descrever a foto em pontos do corpo (onde está o joelho, o pé, o quadril, o tronco, cada mão) e calcular esses pontos no mundo, conferindo comprimentos de coxa/canela/braço; (4) declarar `aperto` quando um membro pesa no outro; (5) render de perto no ângulo da foto antes de entregar; (6) dizer o que ainda difere.
+- Regra: repetir exatamente esse roteiro em toda correção de pose.

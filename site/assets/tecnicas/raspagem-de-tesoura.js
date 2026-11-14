@@ -52,11 +52,13 @@ Judo.register3d({
  [1.4,{}],
  [2.0,{tori:{leg:{R:B('o',.02,-.02,-.42),L:B('o',.04,.0,.45)},pole:{legR:[-.75,.5,-.25],legL:[.2,.1,-1]}}}],
  [2.3,{tori:{leg:{R:B('o',.26,.04,-.10)},pole:{legR:[.75,-1,.75]}}}],
- [2.6,{tori:{x:-.08,z:.24,roll:-35,h:25,leg:{R:B('o',.20,.08,.26),L:W3(.58,.06,-.42)},
-        pole:{legR:[.25,-1,.25],legL:[.38,0,-.98],armR:[-.4,-.2,.9]}},
-       uke:{pitch:48,x:.40,h:-5,arm:{R:B('o',.12,.30,-.10),L:B('o',-.02,.16,.30)},pole:{armL:[-.3,.3,-.9],armR:[-.3,.3,.9]}}}],
- [3.4,{tori:{x:-.08,z:.24,roll:-38,leg:{R:B('o',.20,.08,.26),L:W3(.60,.06,-.40)},pole:{legR:[.25,-1,.25]}},
-       uke:{pitch:58,x:.41,y:.42,h:5,arm:{R:B('o',.14,.32,-.08),L:B('o',-.02,.16,.30)}}}],
+ /* tesoura armada, conferida com foto de referência: Tori de lado, joelho de cima alto no peito de Uke com a
+    canela atravessada do quadril direito ao ombro esquerdo dele; perna de baixo no chão, por fora do joelho de Uke */
+ [2.6,{tori:{x:.05,z:.24,roll:-48,h:25,leg:{R:B('o',.16,.04,.22),L:W3(.36,.06,-.52)},
+        pole:{legR:[.6,-.1,.8],legL:[.38,0,-.98],armR:[-.4,-.2,.9]}},
+       uke:{pitch:34,x:.42,h:-5,arm:{R:B('o',.12,.30,-.10),L:B('o',-.02,.16,.30)},pole:{armL:[-.3,.3,-.9],armR:[-.3,.3,.9]}}}],
+ [3.4,{tori:{x:.05,z:.24,roll:-50,leg:{R:B('o',.16,.04,.22),L:W3(.36,.06,-.52)},pole:{legR:[.6,-.1,.8]}},
+       uke:{pitch:38,x:.42,y:.42,h:5,arm:{R:B('o',.14,.32,-.08),L:B('o',-.02,.16,.30)}}}],
  [4.5,{}],
  [5.0,{tori:{roll:-55,leg:{R:B('o',.18,.25,.32),L:W3(.62,.06,-.16)},pole:{legL:[.8,-.3,0]}},
        uke:{x:.41,y:.50,z:-.12,roll:40,pitch:62,arm:{R:B('o',.16,.20,-.12)},leg:{R:W3(.66,.14,-.06),L:W3(.60,.30,.14)}}}],
@@ -71,6 +73,8 @@ Judo.register3d({
  [7.0,{tori:{arm:{R:B('o',.14,.38,.05)},x:.48,y:.35,z:-.46,roll:-180,pitch:-178,h:15,leg:{R:B('o',-.1,-.25,-.3),L:B('o',-.1,-.25,.3)},pole:{legR:[1,.25,-.25],legL:[1,.25,.25],armR:[-.3,-.4,.8]}},
        uke:{arm:{L:B('o',.05,-.02,.2)}}}],
  [8.6,{}]],
+ /* a canela de Tori empurra a barriga e o peito de Uke de propósito */
+ aperto:{s:2.2,e:5.8,limbs:['T.R.leg'],tol:.09},
  names:F=>({tori:[F.tori.head[0],Math.max(F.tori.head[1],F.tori.hip[1])+.2,F.tori.head[2]],
   uke:[F.uke.hip[0]+.2,Math.max(F.uke.head[1],F.uke.hip[1])+.24,F.uke.hip[2]-.1]}),
  glow:{s:2.8,e:6.2,limbs:{'T.R.leg':'force','T.L.leg':'gold'}},
