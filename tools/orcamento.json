@@ -24,12 +24,12 @@
   "treme": 0.7
  },
  "o-goshi": {
-  "cruza": 4.48,
-  "proprio": 1.5,
+  "cruza": 3.08,
+  "proprio": 0.24,
   "salto": 0,
-  "dobra": 5.32,
-  "erro": 1.56,
-  "treme": 6.53
+  "dobra": 3.52,
+  "erro": 1.08,
+  "treme": 3.57
  },
  "uchi-mata": {
   "cruza": 2.5,
