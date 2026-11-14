@@ -42,3 +42,10 @@
 - Regra: quando o mesmo defeito volta depois de corrigido caso a caso, parar de corrigir caso a caso. Aqui a causa era de modelo (keyframe interpolado em linha reta + IK sem colisão + ordenação por profundidade), e a correção foi no modelo (`fisica.js` + WebGL com profundidade).
 - Regra (refina a de 06/11): "não remendar no motor" vale para remendo que quebra o contato. Um solucionador que mantém o membro encostado na superfície, com continuidade, é o modelo certo; ainda assim, cada técnica é conferida em folha de quadros.
 - Regra: artefato gerado que depende de dois lados (`site/assets/assado/` depende das técnicas e de `fisica.js`) precisa de checagem de frescor (`tools/assar.js --check`). Mudei o formato e rodei a página com arquivos velhos: os bonecos flutuaram.
+
+## 2026-11-14 — "Braço pelo lado errado", Kata Gatame "horrível": a técnica estava errada, não só a física
+- Erro: escrevi e "corrigi" poses de memória. O medidor de penetração não sabe se o braço passa pelo flanco certo, se Uke cai onde cai de verdade ou se a imobilização parece a imobilização. Só quem treina viu.
+- Regra: técnica nova ou refeita parte de um vídeo de referência (canal KODOKAN: vários ângulos, câmera lenta). Extrair quadros com ffmpeg, renderizar o boneco no mesmo ângulo (`tools/folha.js ... cam=`) e comparar lado a lado, em pelo menos lateral, frente e de cima. Vídeo e quadros ficam fora do repositório.
+- Fato medido: detector de pose 2D (YOLO-pose) acompanha os dois enquanto estão em pé e separados, e se perde assim que os corpos se sobrepõem na projeção. Captura automática não serve para a parte que importa; rotoscopia manual serve.
+- Regra: cambalhota com torção em ângulos de Euler: fazer a torção com o corpo invertido (pitch passando por 180, yaw fazendo a torção, roll mantendo a inclinação). Torcer com roll cruzando 90 achata o corpo no meio do voo.
+- Regra: numa projeção de quadril Uke roda em volta do quadril, pela frente de Tori. Se ele passa acima dos ombros de Tori, está errado.
