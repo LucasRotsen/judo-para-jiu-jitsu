@@ -60,3 +60,7 @@
 ## 2026-11-14 — Joelho na barriga: "Ficou excelente. Use como aprendizado" (usuário)
 - O que funcionou: (1) foto de referência do usuário; (2) render `cru=1` contra resolvido para saber se o erro é do keyframe ou do corretor; (3) descrever a foto em pontos do corpo (onde está o joelho, o pé, o quadril, o tronco, cada mão) e calcular esses pontos no mundo, conferindo comprimentos de coxa/canela/braço; (4) declarar `aperto` quando um membro pesa no outro; (5) render de perto no ângulo da foto antes de entregar; (6) dizer o que ainda difere.
 - Regra: repetir exatamente esse roteiro em toda correção de pose.
+
+## 2026-11-15 — Tesoura: "é o joelho que cruza o peito, não a canela" (usuário, com vídeo do Roger Gracie)
+- Erro: li a primeira foto (vista de cima, por trás da cabeça) como "canela atravessada na barriga" e ainda escrevi isso nos textos da página. Uma foto num só ângulo não mostra qual parte da perna faz contato.
+- Regra: antes de posar, dizer em uma frase QUAL parte do corpo toca ONDE ("joelho cruza o peito; pé engancha no quadril") e conferir essa frase com uma segunda imagem de outro ângulo, ou perguntar. Se o texto da página descreve o contato, ele muda junto com a pose.

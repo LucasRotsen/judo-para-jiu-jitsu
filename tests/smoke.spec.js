@@ -74,7 +74,7 @@ test('pose física vem assada com a página: coxa, canela e braços de Tori fica
     const J = window.Judo, def = J.techs['raspagem-de-tesoura'], f = J.fisica; let pior = 0;
     if (!def._assado) return 99;
     for (let t = 0; t <= def.end; t += .1) { const F = J.solve(def, t), A = f.capsulas(F.tori), B = f.capsulas(F.uke).filter((c) => c.g === 'tronco');
-      for (const a of A) { if (a.g === 'tronco' || a.g === 'cabeca' || a.s === 2) continue; /* a ponta do pé ainda entra por instantes: está no orçamento */ for (const b of B) pior = Math.max(pior, a.r + b.r - f.seg(a.a, a.b, b.a, b.b)); } }
+      for (const a of A) { if (a.g === 'tronco' || a.g === 'cabeca' || a.s === 2) continue; /* a ponta do pé ainda entra por instantes: está no orçamento */ /* aperto declarado pela técnica (o joelho de Tori empurra o peito de Uke de propósito) não conta */ for (const b of B) pior = Math.max(pior, a.r + b.r - f.seg(a.a, a.b, b.a, b.b) - (/^(arm|leg)/.test(a.g) ? f.aperto(def, t, 'tori', a.g, b.g) : 0)); } }
     return pior;
   });
   // 9 cm: tolera o aperto de um instante (hoje 7,6 cm por 0,06 s); antes da pose física a canela ficava 18 cm dentro por segundos
