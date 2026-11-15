@@ -128,12 +128,12 @@
   "treme": 3.87
  },
  "raspagem-de-tesoura": {
-  "cruza": 1.18,
-  "proprio": 0.38,
+  "cruza": 0.46,
+  "proprio": 0.2,
   "salto": 0,
-  "dobra": 2.14,
+  "dobra": 1.84,
   "erro": 0,
-  "treme": 4.53
+  "treme": 3.6
  },
  "kata-gatame": {
   "cruza": 0.08,
