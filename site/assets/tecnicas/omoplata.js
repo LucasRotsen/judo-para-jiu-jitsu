@@ -1,7 +1,7 @@
 (()=>{const {W3,B,SL,win}=Judo;
 /* Mundo 3D: y para cima. Uke começa ajoelhado na guarda, de frente para -x (direita de Uke = -z).
    Tori começa deitado de costas, cabeça para -x (yaw 180, pitch 90, roll 180 = de costas, direita = +z).
-   A chave é no braço DIREITO de Uke: a perna ESQUERDA de Tori passa por cima do ombro direito de Uke.
+   A chave é no braço DIREITO de Uke: a perna ESQUERDA de Tori entra por dentro do braço (pela axila) e fecha por cima do ombro direito de Uke.
    Ao girar, o roll de Tori vai de 180 a 0 (deitado → de lado → sentado de frente para -x, ao lado do ombro de Uke). */
 const ukeBase={x:.34,y:.40,z:0,yaw:180,pitch:35,roll:0,h:-20,
  leg:{R:W3(.57,.07,-.17),L:W3(.57,.07,.17)},arm:{R:B('o',.12,.05,-.12),L:B('o',.12,.05,.12)},
@@ -16,10 +16,10 @@ Judo.register3d({
  id:'omoplata', name:'Omoplata', kanji:'', group:'ne', cls:'Jiu-jitsu · Chave de ombro',
  bjj:'Omoplata',
  why:'Chave de ombro com as pernas que nasce da guarda. Quando Uke defende o triângulo, a omoplata está a um giro de distância.',
- summary:'Chave de ombro com as pernas, a partir da guarda. Tori passa a perna por cima do ombro de Uke, gira para o lado, senta e leva o tronco à frente: o braço preso torce o ombro de Uke.',
+ summary:'Chave de ombro com as pernas, a partir da guarda. Tori passa a perna por dentro do braço de Uke e por cima do ombro, gira para o lado, senta e leva o tronco à frente: o braço preso torce o ombro de Uke.',
  reading:[{k:'Omoplata',r:'omoplata',m:'escápula, em português'}],
  facts:[['Origem','Jiu-jitsu. No judô a mesma torção de ombro aparece como variação de ude-garami com as pernas (ashi-sankaku-garami).'],
-  ['Qual perna passa','A do lado do braço atacado. Aqui o braço direito de Uke fica preso, então a perna esquerda de Tori passa por cima do ombro direito dele.'],
+  ['Qual perna passa','A do lado do braço atacado. Aqui o braço direito de Uke fica preso, então a perna esquerda de Tori entra por dentro desse braço, pela axila, e fecha por cima do ombro direito dele.'],
   ['Onde fica a mão de Uke','Presa na lateral do quadril de Tori, com o cotovelo dobrado. Se o braço esticar, a chave some.'],
   ['No jiu-jitsu','Ataque clássico da guarda, combinado com triângulo e chave de braço: o mesmo controle de punho abre os três.']],
  errors:[['Não controlar a cintura','Sem o braço por cima das costas, Uke rola para a frente e sai da posição.'],
@@ -36,9 +36,9 @@ Judo.register3d({
  {s:1.4,e:3.4,kanji:'崩し',ro:'Kuzushi',pt:'Quebrar a postura e criar ângulo',
   d:'Tori abre a guarda, apoia o pé direito no quadril de Uke e escapa o quadril para o lado. O braço direito de Uke fica no tatame, ao lado do quadril de Tori.',
   l:['Fuga de quadril: Tori deixa de estar reto embaixo de Uke.','O pé no quadril mantém a distância.','O braço atacado fica longe do corpo de Uke.']},
- {s:3.4,e:5.2,kanji:'入り',ro:'Entrada',pt:'Perna por cima do ombro',
-  d:'A perna esquerda de Tori sobe e passa por cima do ombro direito de Uke, por fora do braço. A canela desce pelas costas de Uke e empurra a cabeça dele para baixo.',
-  l:['A perna que passa é a do lado do braço atacado.','A canela entra por fora, pelas costas, nunca pela frente do rosto.','Uke começa a ser achatado contra o tatame.']},
+ {s:3.4,e:5.2,kanji:'入り',ro:'Entrada',pt:'Perna por dentro do braço',
+  d:'Com o punho de Uke preso no quadril, Tori sobe o quadril e a perna esquerda entra por dentro do braço direito de Uke: a coxa sobe pela axila, a dobra do joelho encaixa em cima do ombro e a canela atravessa as costas. O braço de Uke fica enrolado na perna de Tori, e é daí que vem a chave.',
+  l:['A perna que passa é a do lado do braço atacado.','A perna entra por dentro do braço, pela axila. Por fora não existe chave.','Uke começa a ser achatado contra o tatame.']},
  {s:5.2,e:7.4,kanji:'回転',ro:'Kaiten',pt:'Girar e sentar',
   d:'Tori gira de lado, leva o quadril para junto do ombro de Uke e senta, de frente para o mesmo lado que Uke. O braço direito de Uke fica dobrado entre as pernas de Tori, com a mão presa no quadril dele. O braço esquerdo de Tori passa por cima das costas de Uke.',
   l:['Tori senta: deitado, a chave não existe.','O braço por cima das costas impede o rolamento.','Uke fica achatado, de barriga para baixo.']},
@@ -94,7 +94,7 @@ Judo.register3d({
   api.tag('pé no quadril, fuga de quadril',T.legR.H,7,3,C.force,a);
   api.tag('braço atacado no tatame',U.armR.H,-7,3.4,C.info,a);
   a=win(t,3.6,5.4);
-  api.tag('perna passa por cima do ombro',T.legL.E,-6,-3.4,C.force,a);
+  api.tag('perna por dentro do braço, pela axila',T.legL.E,-6,-3.4,C.force,a);
   a=win(t,5.4,7.6);
   api.tag('braço por cima das costas: Uke não rola',T.armL.H,3,-3.6,C.force,a);
   api.tag('mão de Uke presa no quadril',U.armR.H,-5,4.2,C.gold,a);
