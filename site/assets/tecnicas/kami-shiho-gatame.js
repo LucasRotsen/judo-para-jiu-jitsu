@@ -11,8 +11,9 @@ const toriBase={x:-.62,y:.52,z:0,yaw:0,pitch:6,h:12,
  leg:{R:W3(-1.04,.06,.27),L:W3(-1.04,.06,-.27)},arm:{R:B('s',.2,.02,.17),L:B('s',.2,.02,-.17)},
  pole:{legR:[1,-.6,.35],legL:[1,-.6,-.35],armR:[0,-1,.6],armL:[0,-1,-.6]}};
 const belt={R:B('o',.02,.1,.25),L:B('o',.02,.1,-.25)};
-const lying={x:-.70,y:.45,pitch:105,h:-15,leg:{R:W3(-.90,.05,.2),L:W3(-.90,.05,-.2)},arm:belt,
- pole:{legR:[1,-.4,.6],legL:[1,-.4,-.6],armR:[.2,-1,.45],armL:[.2,-1,-.45]}};
+/* de joelhos, como no vídeo da Kodokan: joelhos abertos no tatame ao lado da cabeça de Uke, canelas deitadas, quadril recuado */
+const lying={x:-.66,y:.36,pitch:100,h:-15,leg:{R:W3(-.84,.06,.30),L:W3(-.84,.06,-.30)},arm:belt,
+ pole:{legR:[.6,.8,.7],legL:[.6,.8,-.7],armR:[.2,-1,.45],armL:[.2,-1,-.45]}};
 const ukePinned={arm:{R:B('o',-.13,.40,.16),L:B('o',-.13,.40,-.16)},pole:{armR:[.4,-.5,1],armL:[.4,-.5,-1]}};
 Judo.register3d({
  id:'kami-shiho-gatame', name:'Kami Shiho Gatame', kanji:'上四方固',
@@ -59,13 +60,13 @@ Judo.register3d({
  [2.4,{tori:{x:-.6,y:.44,pitch:50,h:20,arm:{R:B('o',.04,.44,.32),L:B('o',.04,.44,-.32)},pole:{armR:[.4,-.3,1],armL:[.4,-.3,-1]}},
        uke:{arm:{R:W3(.05,.30,.42),L:W3(.05,.30,-.42)},pole:{armR:[.3,.6,1],armL:[.3,.6,-1]}}}],
  [3.2,{tori:lying,uke:ukePinned}],
- [3.6,{tori:{y:.43}}],
+ [3.6,{tori:{y:.35}}],
  [5.2,{}],
  [5.8,{uke:{x:.30,y:.30,pitch:-106,h:-20,leg:{R:W3(.78,.07,.22),L:W3(.78,.07,-.22)}},tori:{x:-.66,y:.52,pitch:98}}],
  [6.4,{uke:{y:.24,pitch:-100},tori:{x:-.78,y:.32,pitch:90,leg:{R:W3(-1.4,.06,.48),L:W3(-1.4,.06,-.48)},pole:{legR:[.3,-1,.2],legL:[.3,-1,-.2]}}}],
  [7.0,{uke:{x:.35,y:.13,pitch:-90,h:-8,leg:{R:W3(1.0,.08,.22),L:W3(1.0,.08,-.22)}},tori:{x:-.74,y:.34,pitch:92}}],
  [7.6,{}],
- [8.4,{tori:{x:-.70,y:.43,pitch:105,leg:lying.leg,pole:lying.pole}}],
+ [8.4,{tori:{x:-.66,y:.35,pitch:100,leg:lying.leg,pole:lying.pole}}],
  [10,{}]],
  names:F=>({uke:[F.uke.legR.H[0]-.1,.42,F.uke.legR.H[2]+.1],tori:[F.tori.hip[0]-.4,F.tori.hip[1]+.25,F.tori.hip[2]+.35]}),
  glow:{s:1.8,e:4.0,limbs:{'T.R.arm':'force','T.L.arm':'force'}},

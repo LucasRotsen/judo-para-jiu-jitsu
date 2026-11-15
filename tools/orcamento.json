@@ -72,12 +72,12 @@
   "treme": 2.7
  },
  "kami-shiho-gatame": {
-  "cruza": 0,
+  "cruza": 0.16,
   "proprio": 0,
   "salto": 0,
   "dobra": 0,
   "erro": 0,
-  "treme": 0.9
+  "treme": 0.73
  },
  "sankaku-jime": {
   "cruza": 0.46,
