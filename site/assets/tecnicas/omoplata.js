@@ -65,12 +65,13 @@ Judo.register3d({
  [5.2,{}],
  /* giro: Tori continua de costas e a cabeça segue rodando para o lado dos pés de Uke (yaw 118 -> 0), sem voltar;
     só então senta (pitch 88 -> 192, que nesta parametrização é sentado de frente para -x) */
- [5.6,{tori:{x:.08,y:.15,z:-.24,yaw:72,roll:180,pitch:88,leg:{R:W3(-.22,.08,-.40)},pole:{legR:[1,0,.5],armL:[.3,.3,-1],armR:[-.5,0,1]},arm:{L:B('o',-.14,.22,.02),R:W3(.02,.05,-1.0)}},uke:{x:.48,y:.34,pitch:76,leg:{R:W3(.98,.07,-.17),L:W3(.98,.07,.17)},pole:{legR:[0,-1,.15],legL:[0,-1,-.15]}}}],
+ [5.4,{tori:{arm:{R:B('s',.30,.40,.30)},leg:{R:W3(-.12,.12,.12)},pole:{armR:[.6,0,1]}}}],
+ [5.6,{tori:{x:.08,y:.15,z:-.24,yaw:72,roll:180,pitch:88,leg:{R:W3(-.22,.08,-.40)},pole:{legR:[1,0,.5],armL:[.3,.3,-1],armR:[.6,0,1]},arm:{L:B('o',-.22,.26,.02),R:W3(.02,.05,-1.0)}},uke:{x:.48,y:.34,pitch:76,leg:{R:W3(.98,.07,-.17),L:W3(.98,.07,.17)},pole:{legR:[0,-1,.15],legL:[0,-1,-.15]}}}],
  [6.0,{tori:{x:.10,y:.16,z:-.32,yaw:32,roll:180,pitch:98,h:10,leg:{L:B('o',-.24,.42,0),R:W3(-.26,.08,-.52)},
-        arm:{L:B('o',-.14,.10,-.08),R:W3(.30,.05,-.85)}},
+        arm:{L:B('o',-.22,.14,-.04),R:W3(.30,.05,-.85)}},
        uke:{x:.52,y:.22,pitch:82,h:-20,leg:{R:W3(1.30,.07,-.16),L:W3(1.30,.07,.16)},arm:{R:handOnHip,L:W3(-.20,.06,.32)},pole:{armR:[-.3,.4,1],legR:[-1,0,.1],legL:[-1,0,-.1]}}}],
  [6.4,{uke:{arm:{R:handOnHip}},tori:{x:.12,y:.16,z:-.38,yaw:10,pitch:128,leg:{L:B('o',-.26,.50,-.10),R:W3(-.36,.10,-.24)},
-        arm:{L:B('o',-.14,.08,-.10),R:W3(.34,.05,-.84)},pole:{legL:[1,.6,0],legR:[1,.4,.5]}}}],
+        arm:{L:B('o',-.21,.10,-.06),R:W3(.34,.05,-.84)},pole:{legL:[1,.6,0],legR:[1,.4,.5]}}}],
  [6.8,{tori:{x:.14,y:.13,z:-.43,yaw:0,pitch:165,leg:{L:W3(-.42,.30,-.24),R:W3(-.52,.10,-.36)},arm:{R:W3(.22,.05,-.80)},pole:{legL:[.4,1,.2]}}}],
  [7.2,{tori:{x:.15,y:.12,z:-.45,yaw:0,roll:180,pitch:192,h:5,leg:{L:W3(-.60,.09,-.04),R:W3(-.58,.18,-.18)},
         arm:{L:W3(.46,.24,.18),R:W3(.12,.06,-.78)},pole:{legL:[0,1,-.3],legR:[0,.6,1],armL:[0,1,.2],armR:[0,-.5,-1]}},

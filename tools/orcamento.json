@@ -120,12 +120,12 @@
   "treme": 1.43
  },
  "omoplata": {
-  "cruza": 0.26,
-  "proprio": 0.76,
+  "cruza": 0.3,
+  "proprio": 0.52,
   "salto": 0,
-  "dobra": 3.9,
+  "dobra": 3.66,
   "erro": 0,
-  "treme": 2.73
+  "treme": 3.1
  },
  "raspagem-de-tesoura": {
   "cruza": 0.46,
