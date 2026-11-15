@@ -64,3 +64,5 @@
 ## 2026-11-15 — Tesoura: "é o joelho que cruza o peito, não a canela" (usuário, com vídeo do Roger Gracie)
 - Erro: li a primeira foto (vista de cima, por trás da cabeça) como "canela atravessada na barriga" e ainda escrevi isso nos textos da página. Uma foto num só ângulo não mostra qual parte da perna faz contato.
 - Regra: antes de posar, dizer em uma frase QUAL parte do corpo toca ONDE ("joelho cruza o peito; pé engancha no quadril") e conferir essa frase com uma segunda imagem de outro ângulo, ou perguntar. Se o texto da página descreve o contato, ele muda junto com a pose.
+
+- Omoplata, sentido do giro (correção do usuário): depois de encaixar a perna por dentro do braço, Tori continua de costas e a cabeça segue rodando para o lado das pernas de Uke; só então senta. Eu tinha feito a cabeça ir até o lado e voltar. Regra: em giros no chão, escrever antes por onde a CABEÇA de Tori passa (início, meio, fim) e conferir numa vista de cima que ela não volta pelo caminho por onde veio.
