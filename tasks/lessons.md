@@ -66,3 +66,8 @@
 - Regra: antes de posar, dizer em uma frase QUAL parte do corpo toca ONDE ("joelho cruza o peito; pé engancha no quadril") e conferir essa frase com uma segunda imagem de outro ângulo, ou perguntar. Se o texto da página descreve o contato, ele muda junto com a pose.
 
 - Omoplata, sentido do giro (correção do usuário): depois de encaixar a perna por dentro do braço, Tori continua de costas e a cabeça segue rodando para o lado das pernas de Uke; só então senta. Eu tinha feito a cabeça ir até o lado e voltar. Regra: em giros no chão, escrever antes por onde a CABEÇA de Tori passa (início, meio, fim) e conferir numa vista de cima que ela não volta pelo caminho por onde veio.
+
+## 2026-11-16 — Commit com teste falhando, de novo (erro meu, pego por mim)
+- Erro: encadeei teste e commit com `;` e o commit entrou com 2 testes de PWA falhando. Causa da falha: `sw.js` (gerado, fora do git) lista TODOS os arquivos de `site/assets/tecnicas/`; havia dois arquivos de técnica ainda fora do catálogo quando rodei o build, depois os tirei da pasta, e o precache do service worker passou a pedir arquivos inexistentes (instalação falha em silêncio e o usuário fica com a versão velha em cache).
+- Regra: teste e commit sempre com `&&`, nunca `;`. Ler a linha "N passed / N failed" antes de qualquer `git commit`.
+- Regra: técnica em construção não fica em `site/assets/tecnicas/` na hora do build. Ou está no catálogo, ou está fora da pasta. Depois de mover arquivo de técnica, rodar o build de novo.
