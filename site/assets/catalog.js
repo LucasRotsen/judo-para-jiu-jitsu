@@ -5,6 +5,7 @@ window.JUDO_CATALOG = [
  {"id": "o-uchi-gari", "name": "O Uchi Gari", "group": "nage"},
  {"id": "o-goshi", "name": "O Goshi", "group": "nage"},
  {"id": "harai-goshi", "name": "Harai Goshi", "group": "nage"},
+ {"id": "tai-otoshi", "name": "Tai Otoshi", "group": "nage"},
  {"id": "uchi-mata", "name": "Uchi Mata", "group": "nage"},
  {"id": "de-ashi-barai", "name": "De Ashi Barai", "group": "nage"},
  {"id": "tomoe-nage", "name": "Tomoe Nage", "group": "nage"},
@@ -23,5 +24,6 @@ window.JUDO_CATALOG = [
  {"id": "raspagem-de-gancho", "name": "Raspagem de gancho", "group": "ne", "origin": "bjj"},
  {"id": "raspagem-pendular", "name": "Raspagem pendular", "group": "ne", "origin": "bjj"},
  {"id": "guilhotina", "name": "Guilhotina", "group": "ne", "origin": "bjj"},
+ {"id": "kimura", "name": "Kimura", "group": "ne", "origin": "bjj"},
  {"id": "kata-gatame", "name": "Kata Gatame", "group": "ne"}
 ];

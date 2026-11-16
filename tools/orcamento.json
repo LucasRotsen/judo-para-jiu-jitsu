@@ -39,6 +39,14 @@
   "erro": 0.16,
   "treme": 3.83
  },
+ "tai-otoshi": {
+  "cruza": 0.16,
+  "proprio": 0.78,
+  "salto": 0,
+  "dobra": 1.88,
+  "erro": 0,
+  "treme": 2.8
+ },
  "uchi-mata": {
   "cruza": 1.58,
   "proprio": 0.76,
@@ -182,6 +190,14 @@
   "dobra": 7.72,
   "erro": 0,
   "treme": 3.77
+ },
+ "kimura": {
+  "cruza": 0.46,
+  "proprio": 0.44,
+  "salto": 0,
+  "dobra": 4.38,
+  "erro": 0,
+  "treme": 4.33
  },
  "kata-gatame": {
   "cruza": 0.08,
