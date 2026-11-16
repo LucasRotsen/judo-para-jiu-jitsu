@@ -79,6 +79,22 @@
   "erro": 0,
   "treme": 2.27
  },
+ "ko-uchi-gari": {
+  "cruza": 0.04,
+  "proprio": 0.04,
+  "salto": 0,
+  "dobra": 0.52,
+  "erro": 0,
+  "treme": 0.6
+ },
+ "sumi-gaeshi": {
+  "cruza": 0,
+  "proprio": 0.38,
+  "salto": 0,
+  "dobra": 0.16,
+  "erro": 0,
+  "treme": 1.43
+ },
  "tate-shiho-gatame": {
   "cruza": 0.34,
   "proprio": 0.16,
@@ -126,6 +142,22 @@
   "dobra": 27.82,
   "erro": 0,
   "treme": 8.13
+ },
+ "okuri-eri-jime": {
+  "cruza": 0,
+  "proprio": 0.04,
+  "salto": 0,
+  "dobra": 6.6,
+  "erro": 0,
+  "treme": 0.63
+ },
+ "juji-jime": {
+  "cruza": 0.06,
+  "proprio": 0.34,
+  "salto": 0,
+  "dobra": 0.12,
+  "erro": 0,
+  "treme": 1.13
  },
  "juji-gatame": {
   "cruza": 0.1,
@@ -198,6 +230,38 @@
   "dobra": 4.38,
   "erro": 0,
   "treme": 4.33
+ },
+ "raspagem-de-quadril": {
+  "cruza": 0.34,
+  "proprio": 0.74,
+  "salto": 0,
+  "dobra": 4.72,
+  "erro": 0,
+  "treme": 1.43
+ },
+ "chave-de-pe-reta": {
+  "cruza": 0.02,
+  "proprio": 0,
+  "salto": 0,
+  "dobra": 0,
+  "erro": 0,
+  "treme": 1.03
+ },
+ "passagem-joelho-cruzado": {
+  "cruza": 0.26,
+  "proprio": 0.08,
+  "salto": 0,
+  "dobra": 1.36,
+  "erro": 0,
+  "treme": 1.33
+ },
+ "saida-da-montada": {
+  "cruza": 0.16,
+  "proprio": 0.4,
+  "salto": 0,
+  "dobra": 0.86,
+  "erro": 0.22,
+  "treme": 2.7
  },
  "kata-gatame": {
   "cruza": 0.08,
