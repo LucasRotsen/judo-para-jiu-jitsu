@@ -41,6 +41,8 @@ const pose = (def, t) => (cru ? J.pose3(def, t) : J.solve(def, t));
 const LIM = { cruza: Number(process.env.CRUZA || .035), proprio: .05, salto: 6, erro: .12 };
 let total = { cruza: 0, proprio: 0, salto: 0, dobra: 0, erro: 0, treme: 0 };
 const medido = {};
+/* JUDO_EXTRA=id1,id2: mede técnicas ainda fora do catálogo (em construção) */
+for (const id of (process.env.JUDO_EXTRA || '').split(',').filter(Boolean)) if (!J.CATALOG.some((c) => c.id === id)) J.CATALOG.push({ id });
 for (const c of J.CATALOG) {
   const def = J.techs[c.id]; if (!def || !def.is3d || (only.length && !only.includes(c.id))) continue;
   const ev = { cruza: new Map(), proprio: new Map(), salto: new Map(), dobra: new Map(), erro: new Map(), treme: new Map() };

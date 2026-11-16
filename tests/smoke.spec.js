@@ -114,7 +114,7 @@ test('busca acha técnica pelo nome no jiu-jitsu, sem acento', async ({ page }) 
   await page.locator('#q').fill('');
   await page.locator('.chip[data-g="ne"]').click();
   await page.locator('#q').fill('gatame');
-  await expect(page.locator('a.tcard:visible')).toHaveCount(4);
+  await expect(page.locator('a.tcard:visible')).toHaveCount(6);
 });
 
 test('câmera livre: com Girar ligado, arrastar o palco muda o ângulo sem pausar', async ({ page }) => {

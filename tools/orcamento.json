@@ -31,6 +31,14 @@
   "erro": 1.08,
   "treme": 3.77
  },
+ "harai-goshi": {
+  "cruza": 0.48,
+  "proprio": 0.22,
+  "salto": 0,
+  "dobra": 1.82,
+  "erro": 0.16,
+  "treme": 3.83
+ },
  "uchi-mata": {
   "cruza": 1.58,
   "proprio": 0.76,
@@ -78,6 +86,22 @@
   "dobra": 0,
   "erro": 0,
   "treme": 0.73
+ },
+ "kesa-gatame": {
+  "cruza": 0.32,
+  "proprio": 0.4,
+  "salto": 0,
+  "dobra": 0.3,
+  "erro": 0,
+  "treme": 1.2
+ },
+ "yoko-shiho-gatame": {
+  "cruza": 0,
+  "proprio": 0,
+  "salto": 0,
+  "dobra": 0,
+  "erro": 0,
+  "treme": 0.77
  },
  "sankaku-jime": {
   "cruza": 0.46,
@@ -134,6 +158,30 @@
   "dobra": 1.84,
   "erro": 0,
   "treme": 3.6
+ },
+ "raspagem-de-gancho": {
+  "cruza": 0.42,
+  "proprio": 0.6,
+  "salto": 0,
+  "dobra": 4.18,
+  "erro": 0,
+  "treme": 2.47
+ },
+ "raspagem-pendular": {
+  "cruza": 0.12,
+  "proprio": 0.72,
+  "salto": 0,
+  "dobra": 3.22,
+  "erro": 0,
+  "treme": 2.17
+ },
+ "guilhotina": {
+  "cruza": 1.72,
+  "proprio": 2.94,
+  "salto": 0,
+  "dobra": 7.72,
+  "erro": 0,
+  "treme": 3.77
  },
  "kata-gatame": {
   "cruza": 0.08,
