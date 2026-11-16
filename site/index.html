@@ -6,8 +6,8 @@
 <title>Judô para Jiu-Jitsu</title>
 <meta name="description" content="Técnicas de judô animadas quadro a quadro para quem treina jiu-jitsu: fases do golpe, erros comuns, segurança e o nome de cada técnica no jiu-jitsu.">
 <link rel="canonical" href="https://lucasrotsen.github.io/judo-para-jiu-jitsu/">
-<meta name="theme-color" content="#ECEFEA" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0F1511" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0E1112" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#050607" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Judô para Jiu-Jitsu">
 <meta property="og:locale" content="pt_BR">
@@ -22,52 +22,69 @@
 <meta name="apple-mobile-web-app-title" content="Judô p/ BJJ">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Shippori+Mincho:wght@600;800&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-<main class="page">
-  <header class="ihero">
-    <div>
-      <div class="eyebrow">Catálogo animado · 34 técnicas</div>
-      <h1>Judô para <em>Jiu-Jitsu</em></h1>
-      <p class="lede">Quedas e controles do judô explicados quadro a quadro, para quem treina jiu-jitsu. Cada técnica tem uma animação com as fases do golpe, os pontos de atenção, os erros comuns e o nome que ela recebe no jiu-jitsu.</p>
+<header class="site-top"><div class="wrap">
+<a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>Judô para Jiu-Jitsu</a>
+<nav class="site-nav" aria-label="Site"><a href="index.html#catalogo">Técnicas</a><a href="simulador.html">Simulador</a></nav>
+</div></header>
+<main class="home-main">
+  <section class="hero band" aria-labelledby="hero-t">
+    <div class="wrap hero-in">
+      <div class="hero-t">
+        <p class="eyebrow">Catálogo animado · 34 técnicas em 3D</p>
+        <h1 id="hero-t">Veja o golpe.<br>Gire a cena.<br><em>Entenda por quê.</em></h1>
+      </div>
+      <div class="hero-side">
+        <p class="lede">Quedas e controles do judô explicados quadro a quadro, para quem treina jiu-jitsu. Cada técnica tem uma animação com as fases do golpe, os pontos de atenção, os erros comuns e o nome que ela recebe no jiu-jitsu.</p>
+        <div class="ctas">
+          <a class="cta primary" href="#catalogo">Abrir o catálogo</a>
+          <a class="cta" href="simulador.html">Montar uma posição</a>
+        </div>
+        <div class="legend" aria-label="Legenda">
+          <div><span class="sw"></span><span><b>Tori</b>, de gi branco, aplica a técnica</span></div>
+          <div><span class="sw u"></span><span><b>Uke</b>, de gi azul, recebe a técnica</span></div>
+        </div>
+      </div>
     </div>
-    <div class="legend" aria-label="Legenda">
-      <div><span class="sw"></span><span><b>Tori</b>, de gi branco, aplica a técnica</span></div>
-      <div><span class="sw u"></span><span><b>Uke</b>, de gi azul, recebe a técnica</span></div>
-      <div><span class="hint-hover">Passe o mouse num card para ver a animação</span><span class="hint-touch">Role a página: o card que estiver na tela anima sozinho</span></div>
+  </section>
+
+  <div class="page">
+  <section class="catalog" id="catalogo" aria-labelledby="cat-t">
+    <div class="cat-head">
+      <h2 id="cat-t">Catálogo</h2>
+      <div class="search">
+        <label for="q">Buscar pelo nome</label>
+        <input id="q" type="search" placeholder="triângulo, mata-leão, kimura, 背負…" autocomplete="off">
+      </div>
     </div>
-  </header>
-
-  <a class="sim-cta" href="simulador.html">
-    <span class="eyebrow">Novo · Simulador</span>
-    <b>E se ele pegar a sua manga e puxar?</b>
-    <span>Monte a situação com os bonecos e veja as suas opções, com o porquê de cada uma. →</span>
-  </a>
-
-  <div class="filters" role="group" aria-label="Filtrar técnicas">
-    <button class="chip" data-g="all" aria-pressed="true">Todas</button>
-    <button class="chip" data-g="nage" aria-pressed="false">Nage-waza · em pé</button>
-    <button class="chip" data-g="ne" aria-pressed="false">Ne-waza · no chão</button>
-    <button class="chip" data-g="bjj" aria-pressed="false" hidden>Do jiu-jitsu</button>
-    <button class="chip" data-g="fav" aria-pressed="false" hidden>★ Favoritas</button>
-    <p class="progress" id="progress" aria-live="polite"></p>
-  </div>
-  <div class="search">
-    <label for="q" class="sr-only">Buscar técnica</label>
-    <input id="q" type="search" placeholder="Buscar: triângulo, mata-leão, kimura, 背負…" autocomplete="off">
+    <div class="filters" role="group" aria-label="Filtrar técnicas">
+      <button class="chip" data-g="all" aria-pressed="true">Todas</button>
+      <button class="chip" data-g="nage" aria-pressed="false">Nage-waza · em pé</button>
+      <button class="chip" data-g="ne" aria-pressed="false">Ne-waza · no chão</button>
+      <button class="chip" data-g="bjj" aria-pressed="false" hidden>Do jiu-jitsu</button>
+      <button class="chip" data-g="fav" aria-pressed="false" hidden>★ Favoritas</button>
+      <p class="progress" id="progress" aria-live="polite"></p>
+    </div>
     <p class="search-empty" id="qempty" hidden>Nenhuma técnica encontrada.</p>
-  </div>
+    <p class="cat-hint"><span class="hint-hover">Passe o mouse num cartão para ver a animação.</span><span class="hint-touch">Role a página: o cartão que estiver na tela anima sozinho.</span> A faixa colorida indica o grupo: preta em pé, azul no chão, vermelha do jiu-jitsu.</p>
+    <section class="grid" id="grid" aria-label="Técnicas"></section>
+  </section>
 
-  <h2 class="sr-only">Técnicas</h2>
-  <section class="grid" id="grid" aria-label="Técnicas"></section>
+  <a class="sim-cta band" href="simulador.html">
+    <span class="eyebrow">Simulador</span>
+    <b>E se ele pegar a sua manga e puxar?</b>
+    <span>Monte a situação com os bonecos e veja as suas opções, com o porquê de cada uma.</span>
+    <span class="cta">Abrir o simulador</span>
+  </a>
 
   <section class="guide">
     <div>
       <h2>Como ler as animações</h2>
       <p>Toda projeção do judô tem três tempos: <b>kuzushi</b> (tirar o equilíbrio), <b>tsukuri</b> (entrar e encaixar) e <b>kake</b> (executar). A linha do tempo de cada técnica segue essa ordem.</p>
-      <p>Setas vermelhas mostram força e direção. Linhas pontilhadas azuis mostram o caminho do corpo de Uke. Use 0,25× para estudar os detalhes.</p>
+      <p>Setas vermelhas mostram força e direção. Linhas pontilhadas azuis mostram o caminho do corpo de Uke. Use 0,25× para estudar os detalhes, e o botão Girar para ver de qualquer ângulo.</p>
     </div>
     <div>
       <h2>Judô e jiu-jitsu</h2>
@@ -88,8 +105,13 @@
   </section>
 
   <p class="foot">Nomes e classificações seguem o Kodokan. Os nomes no jiu-jitsu são os mais usados nas academias brasileiras.</p>
+  </div>
 </main>
 
+<footer class="site-foot"><div class="wrap">
+<span>Material de estudo. Aprenda e treine com um professor, em tatame.</span>
+<span class="mono">Funciona offline depois da primeira visita</span>
+</div></footer>
 <script src="assets/catalog.js"></script>
 <script src="assets/engine.js"></script>
 <script src="assets/engine3d.js"></script>

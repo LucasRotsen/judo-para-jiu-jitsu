@@ -27,9 +27,20 @@ def load_catalog() -> list[tuple[str, str]]:
 
 CATALOG = load_catalog()
 FONTS = (
-    "https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800"
-    "&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap"
+    "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900"
+    "&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500"
+    "&family=Shippori+Mincho:wght@600;800&display=swap"
 )
+SITE_TOP = """<header class="site-top"><div class="wrap">
+<a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>Judô para Jiu-Jitsu</a>
+<nav class="site-nav" aria-label="Site"><a href="index.html#catalogo">Técnicas</a><a href="simulador.html">Simulador</a></nav>
+</div></header>
+"""
+SITE_FOOT = """<footer class="site-foot"><div class="wrap">
+<span>Material de estudo. Aprenda e treine com um professor, em tatame.</span>
+<span class="mono">Funciona offline depois da primeira visita</span>
+</div></footer>
+"""
 
 HEAD = """<!doctype html>
 <html lang="pt-BR">
@@ -39,8 +50,8 @@ HEAD = """<!doctype html>
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{url}">
-<meta name="theme-color" content="#ECEFEA" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0F1511" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0E1112" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#050607" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{site}">
 <meta property="og:locale" content="pt_BR">
@@ -61,6 +72,7 @@ HEAD = """<!doctype html>
 <body>
 """
 
+
 SCRIPTS = (
     '<script src="assets/catalog.js"></script>\n'
     '<script src="assets/engine.js"></script>\n<script src="assets/engine3d.js"></script>\n'
@@ -74,7 +86,7 @@ def head(title: str, desc: str, path: str, image: str) -> str:
     esc = {k: html.escape(v, quote=True) for k, v in
            {"title": title, "desc": desc, "url": BASE_URL + path,
             "image": BASE_URL + image, "site": SITE_NAME, "fonts": FONTS}.items()}
-    return HEAD.format(**esc)
+    return HEAD.format(**esc) + SITE_TOP
 
 
 def summary_of(tid: str) -> str:
@@ -88,7 +100,7 @@ def summary_of(tid: str) -> str:
 def technique_page(tid: str, name: str) -> str:
     title = f"{name} · {SITE_NAME}"
     return (head(title, summary_of(tid), f"{tid}.html", f"og/{tid}.png")
-            + '<main class="page" id="app"></main>\n' + SCRIPTS
+            + '<main class="page" id="app"></main>\n' + SITE_FOOT + SCRIPTS
             + f'<script src="assets/tecnicas/{tid}.js"></script>\n'
             + f'<script src="assets/assado/{tid}.js"></script>\n'
             + f"<script>Judo.mountPage('{tid}');</script>\n</body>\n</html>\n")
@@ -98,7 +110,7 @@ def index_page() -> str:
     body = (ROOT / "tools" / "templates" / "index.body.html").read_text(encoding="utf-8")
     body = body.replace("{{N}}", str(len(CATALOG)))
     techs = "".join(f'<script src="assets/tecnicas/{tid}.js"></script>\n' for tid, _ in CATALOG)
-    return (head(SITE_NAME, SITE_DESC, "", "og/index.png") + body + "\n" + SCRIPTS + techs
+    return (head(SITE_NAME, SITE_DESC, "", "og/index.png") + body + "\n" + SITE_FOOT + SCRIPTS + techs
             + '<script src="assets/assado/capas.js"></script>\n'
             + "<script>Judo.mountIndex();</script>\n</body>\n</html>\n")
 
@@ -130,7 +142,7 @@ SIM_DESC = (
 
 def simulator_page() -> str:
     return (head(f"Simulador · {SITE_NAME}", SIM_DESC, "simulador.html", "og/index.png")
-            + '<main class="page" id="app"></main>\n' + SCRIPTS
+            + '<main class="page" id="app"></main>\n' + SITE_FOOT + SCRIPTS
             + '<script src="assets/simulador/situacoes.js"></script>\n'
             + '<script src="assets/simulador/simulador.js"></script>\n'
             + "<script>JudoSim.mount();</script>\n</body>\n</html>\n")
