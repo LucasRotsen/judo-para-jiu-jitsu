@@ -327,6 +327,70 @@
   "erro": 0.22,
   "treme": 2.7
  },
+ "chave-de-braco-da-guarda": {
+  "cruza": 0.16,
+  "proprio": 0.3,
+  "salto": 0,
+  "dobra": 13.6,
+  "erro": 0,
+  "treme": 2.7
+ },
+ "estrangulamento-em-laco": {
+  "cruza": 0.32,
+  "proprio": 0,
+  "salto": 0,
+  "dobra": 0.1,
+  "erro": 0,
+  "treme": 1.5
+ },
+ "raspagem-tripe": {
+  "cruza": 0,
+  "proprio": 0.44,
+  "salto": 0,
+  "dobra": 3,
+  "erro": 0,
+  "treme": 1.03
+ },
+ "raspagem-de-foice": {
+  "cruza": 0.5,
+  "proprio": 0.86,
+  "salto": 0,
+  "dobra": 0.62,
+  "erro": 0.16,
+  "treme": 2.27
+ },
+ "raspagem-meia-guarda": {
+  "cruza": 0.66,
+  "proprio": 0.9,
+  "salto": 0,
+  "dobra": 5.72,
+  "erro": 0.28,
+  "treme": 5.1
+ },
+ "abrir-e-passar-a-guarda": {
+  "cruza": 0.14,
+  "proprio": 0.14,
+  "salto": 0,
+  "dobra": 0.26,
+  "erro": 0,
+  "treme": 2
+ },
+ "passagem-por-baixo": {
+  "cruza": 0.12,
+  "proprio": 0,
+  "salto": 0,
+  "dobra": 0.2,
+  "erro": 0,
+  "treme": 1.77
+ },
+ "passagem-arrastando-a-perna": {
+  "cruza": 0.1,
+  "proprio": 0.18,
+  "salto": 0,
+  "dobra": 0,
+  "erro": 0,
+  "treme": 0.97
+ },
  "kata-gatame": {
   "cruza": 0.08,
   "proprio": 0,

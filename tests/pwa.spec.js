@@ -14,7 +14,8 @@ test('depois da primeira visita, abre outra técnica offline', async ({ page, co
   await page.goto('/');
   await page.evaluate(() => navigator.serviceWorker.ready);
   await page.reload();
-  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
+  // o precache cresce com o catálogo (52 páginas): sob carga paralela a instalação passa de 5 s
+  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller), { timeout: 20000 }).toBe(true);
   await context.setOffline(true);
   await page.goto('/hadaka-jime.html');
   await expect(page.locator('h1')).toContainText('Hadaka');

@@ -41,5 +41,13 @@ window.JUDO_CATALOG = [
  {"id": "chave-de-pe-reta", "name": "Chave de pé reta", "group": "ne", "origin": "bjj"},
  {"id": "passagem-joelho-cruzado", "name": "Passagem de joelho cruzado", "group": "ne", "origin": "bjj"},
  {"id": "saida-da-montada", "name": "Saída da montada (upa)", "group": "ne", "origin": "bjj"},
+ {"id": "chave-de-braco-da-guarda", "name": "Chave de braço da guarda", "group": "ne", "origin": "bjj"},
+ {"id": "estrangulamento-em-laco", "name": "Estrangulamento em laço", "group": "ne", "origin": "bjj"},
+ {"id": "raspagem-tripe", "name": "Raspagem tripé", "group": "ne", "origin": "bjj"},
+ {"id": "raspagem-de-foice", "name": "Raspagem de foice", "group": "ne", "origin": "bjj"},
+ {"id": "raspagem-meia-guarda", "name": "Raspagem da meia-guarda", "group": "ne", "origin": "bjj"},
+ {"id": "abrir-e-passar-a-guarda", "name": "Abrir a guarda fechada e passar", "group": "ne", "origin": "bjj"},
+ {"id": "passagem-por-baixo", "name": "Passagem por baixo da perna", "group": "ne", "origin": "bjj"},
+ {"id": "passagem-arrastando-a-perna", "name": "Passagem arrastando a perna", "group": "ne", "origin": "bjj"},
  {"id": "kata-gatame", "name": "Kata Gatame", "group": "ne"}
 ];
