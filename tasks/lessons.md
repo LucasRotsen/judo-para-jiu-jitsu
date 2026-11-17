@@ -71,3 +71,8 @@
 - Erro: encadeei teste e commit com `;` e o commit entrou com 2 testes de PWA falhando. Causa da falha: `sw.js` (gerado, fora do git) lista TODOS os arquivos de `site/assets/tecnicas/`; havia dois arquivos de técnica ainda fora do catálogo quando rodei o build, depois os tirei da pasta, e o precache do service worker passou a pedir arquivos inexistentes (instalação falha em silêncio e o usuário fica com a versão velha em cache).
 - Regra: teste e commit sempre com `&&`, nunca `;`. Ler a linha "N passed / N failed" antes de qualquer `git commit`.
 - Regra: técnica em construção não fica em `site/assets/tecnicas/` na hora do build. Ou está no catálogo, ou está fora da pasta. Depois de mover arquivo de técnica, rodar o build de novo.
+
+## 2026-11-16 — Quedas na vertical de ponta-cabeça (pego por mim em 5 de 16 técnicas novas)
+- Erro recorrente dos subagentes: copiar a cambalhota de outra técnica ou do vídeo e deixar Uke na vertical, cabeça perto do tatame e pernas para o teto. Um judoca lê isso como pilão (queda de cabeça, proibida). Os números (cruza/proprio/erro) não pegam isso.
+- Regra: em toda projeção, olhar a vista principal a cada 0,1 s na queda e medir cabeça/ombro/quadril a cada 0,05 s. Com a cabeça abaixo de ~0,5 m, o corpo tem que estar de lado e perto da horizontal; ombro/costas tocam antes da cabeça; `h` positivo (queixo no peito).
+- Regra: pôr isso no brief do subagente desde o início (está no fim do BRIEF2), não só na revisão.
