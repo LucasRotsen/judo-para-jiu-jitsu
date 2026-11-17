@@ -87,6 +87,17 @@ test('filtro de grupo esconde os cards do outro grupo', async ({ page }) => {
   await expect(page.locator('a.tcard:visible')).toHaveCount(CATALOG.filter((c) => c.group === 'ne').length);
 });
 
+test('drill: filtro mostra só drills e cada golpe linka a página da técnica', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('.chip[data-g="drill"]').click();
+  await expect(page.locator('a.tcard:visible')).toHaveCount(CATALOG.filter((c) => c.group === 'drill').length);
+  await page.goto('/drill-quadril-kimura-guilhotina.html#fase=4');
+  await expect(page.locator('#phtec')).toHaveAttribute('href', 'kimura.html');
+  await page.goto('/drill-quadril-kimura-guilhotina.html#fase=3');
+  await page.reload();
+  await expect(page.locator('#phtec')).toBeHidden();
+});
+
 test('link direto para uma fase abre a animação nela', async ({ page }) => {
   await page.goto('/tate-shiho-gatame.html#fase=Upa');
   await expect(page.locator('#pht')).toContainText('Upa');

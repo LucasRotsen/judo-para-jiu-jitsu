@@ -2,7 +2,7 @@
 <body style="margin:0">
 <script>window.onerror=(m,s,l)=>{document.body.insertAdjacentHTML('afterbegin','<pre style="color:red;font-size:20px">'+m+' @'+s+':'+l+'</pre>');};</script>
 <script src="../site/assets/catalog.js"></script><script src="../site/assets/engine.js"></script><script src="../site/assets/engine3d.js"></script><script src="../site/assets/fisica.js"></script><script src="../site/assets/corpo-gl.js"></script>
-<script>const Q=new URLSearchParams(location.hash.slice(1));if(Q.get('capsulas'))Judo.semGL=true;if(Q.get('cru'))Judo.solve=null;document.write('<script src="../site/assets/tecnicas/'+Q.get('id')+'.js"><\/script>');</script>
+<script>const Q=new URLSearchParams(location.hash.slice(1));if(Q.get('capsulas'))Judo.semGL=true;if(Q.get('cru'))Judo.solve=null;{const c=(window.JUDO_CATALOG||[]).find(x=>x.id===Q.get('id'));for(const u of (c&&c.usa)||[])document.write('<script src="../site/assets/tecnicas/'+u+'.js"><\/script>');}document.write('<script src="../site/assets/tecnicas/'+Q.get('id')+'.js"><\/script>');</script>
 <script>
 addEventListener('load',()=>{const def=Judo.techs[Q.get('id')];if(!def)throw new Error('técnica não registrada');
  const tq=Q.get('t')||'0',ts=/^auto/.test(tq)?Array.from({length:+tq.slice(5)||6},(_,i)=>+((i+.5)/(+tq.slice(5)||6)*def.end).toFixed(2)):tq.split(',').map(Number),W=+(Q.get('w')||600),H=W/1.5,cols=+(Q.get('cols')||3),annot=Q.get('annot')!=='0';

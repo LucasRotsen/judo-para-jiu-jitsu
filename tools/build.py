@@ -25,7 +25,15 @@ def load_catalog() -> list[tuple[str, str]]:
     return [(c["id"], c["name"]) for c in items]
 
 
+def load_deps() -> dict[str, list[str]]:
+    """Drills reaproveitam os keyframes de outras técnicas (campo "usa" do catálogo)."""
+    src = CATALOG_JS.read_text(encoding="utf-8")
+    items = json.loads(src[src.index("[") : src.rindex("]") + 1])
+    return {c["id"]: c.get("usa", []) for c in items}
+
+
 CATALOG = load_catalog()
+DEPS = load_deps()
 FONTS = (
     "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900"
     "&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500"
@@ -101,6 +109,7 @@ def technique_page(tid: str, name: str) -> str:
     title = f"{name} · {SITE_NAME}"
     return (head(title, summary_of(tid), f"{tid}.html", f"og/{tid}.png")
             + '<main class="page" id="app"></main>\n' + SITE_FOOT + SCRIPTS
+            + "".join(f'<script src="assets/tecnicas/{d}.js"></script>\n' for d in DEPS.get(tid, []))
             + f'<script src="assets/tecnicas/{tid}.js"></script>\n'
             + f'<script src="assets/assado/{tid}.js"></script>\n'
             + f"<script>Judo.mountPage('{tid}');</script>\n</body>\n</html>\n")

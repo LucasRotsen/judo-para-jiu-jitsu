@@ -264,7 +264,7 @@ function mountPage(id){
   </div>
   <section class="phase" aria-label="Fase atual" aria-live="polite">
    <div class="ph-step" id="phn"></div><div class="ph-kanji" id="phk" lang="ja"></div>
-   <h2 id="pht"></h2><p id="phd"></p><h3>O que observar</h3><ul id="phl"></ul>
+   <h2 id="pht"></h2><p id="phd"></p><h3>O que observar</h3><ul id="phl"></ul><a class="ph-tec" id="phtec" hidden></a>
   </section>
  </section>
  <section class="seq"><h2>Sequência</h2><div class="strip" id="strip" style="--n:${PH.length}"></div></section>
@@ -304,6 +304,7 @@ for(const k of Object.keys(pills)){paint(k,!!saved[k][id]);$('#'+k).onclick=()=>
   $('#phn').textContent=`Fase ${i+1} de ${PH.length}`;$('#phk').textContent=p.kanji;
   $('#pht').innerHTML=`${esc(p.ro)}<span>${esc(p.pt)}</span>`;$('#phd').textContent=p.d;
   $('#phl').innerHTML=p.l.map(x=>`<li>${esc(x)}</li>`).join('');
+  {const a=$('#phtec'),d=p.tec&&techs[p.tec];a.hidden=!d;if(d){a.href=p.tec+'.html';a.textContent=`Ver a técnica: ${d.name} →`;}}
   segs.forEach((s,j)=>s.classList.toggle('on',j===i));thumbs.forEach((s,j)=>s.el.classList.toggle('on',j===i));}
  function setPlay(p){playing=p;$('#playTxt').textContent=p?'Pausar':'Animar';
   $('#playIcon').innerHTML=p?'<path d="M4 2h3v12H4zM9 2h3v12H9z"/>':'<path d="M4 2v12l10-6z"/>';}
@@ -317,7 +318,7 @@ for(const k of Object.keys(pills)){paint(k,!!saved[k][id]);$('#'+k).onclick=()=>
 const hint=$('.drag-hint'),hideHint=()=>hint&&hint.classList.add('gone');setTimeout(hideHint,4000);
 const ob=$('#orbita');if(ob)ob.onclick=()=>{girar=!girar;ob.setAttribute('aria-pressed',girar);ob.classList.toggle('on',girar);cv.style.cursor=girar?'move':'';cv.style.touchAction=girar?'none':'';if(!girar){orb=null;render();}};
 cv.addEventListener('pointerdown',e=>{if(e.button)return;hideHint();
-  if(girar){const v0=orb||def.views[mv],a0=v0.a,e0=v0.e,X=e.clientX,Y=e.clientY;let mexeu=false;cv.setPointerCapture(e.pointerId);
+  if(girar){const v0=orb||(window.Judo.vistaEm?window.Judo.vistaEm(def.views[mv],t):def.views[mv]),a0=v0.a,e0=v0.e,X=e.clientX,Y=e.clientY;let mexeu=false;cv.setPointerCapture(e.pointerId);
    const mvo=ev=>{const dx=ev.clientX-X,dy=ev.clientY-Y;if(!mexeu&&Math.hypot(dx,dy)<6)return;mexeu=true;
     orb={name:'Câmera livre',a:a0-dx*.45,e:clamp(e0+dy*.35,3,89),center:v0.center,span:v0.span,bias:v0.bias};if(!playing)render();};
    const upo=()=>{cv.removeEventListener('pointermove',mvo);cv.removeEventListener('pointerup',upo);cv.removeEventListener('pointercancel',upo);if(!mexeu)$('#play').click();};
@@ -353,7 +354,7 @@ function mountIndex(){
  readTheme();const grid=document.getElementById('grid'),chips=document.querySelectorAll('.chip');
  const cards=CATALOG.map((c,i)=>{const def=techs[c.id];const a=document.createElement('a');a.className='tcard';a.href=c.id+'.html';a.dataset.group=c.group;a.dataset.origin=c.origin||'judo';
   a.innerHTML=`<div class="tc-cv"><canvas></canvas></div><div class="tc-body">
-   <div class="tc-meta"><span class="tc-num">${String(i+1).padStart(2,'0')}</span><span class="tc-grp ${c.origin==='bjj'?'bjj':c.group}">${c.origin==='bjj'?'Jiu-jitsu':c.group==='nage'?'Nage-waza':'Ne-waza'}</span></div>
+   <div class="tc-meta"><span class="tc-num">${String(i+1).padStart(2,'0')}</span><span class="tc-grp ${c.group==='drill'?'drill':c.origin==='bjj'?'bjj':c.group}">${c.group==='drill'?'Drill':c.origin==='bjj'?'Jiu-jitsu':c.group==='nage'?'Nage-waza':'Ne-waza'}</span></div>
    <h3>${esc(c.name)} <span lang="ja">${def?def.kanji:''}</span></h3>
    <p class="tc-bjj">${def?esc(def.bjj):'Em preparação'}</p>
    <p class="tc-why">${def?esc(def.why):''}</p></div>`;

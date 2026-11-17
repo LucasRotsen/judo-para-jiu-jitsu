@@ -108,6 +108,7 @@ h1{font-family:var(--f-head);font-weight:900;font-stretch:118%;text-transform:up
 .tc-body{padding:14px 16px 18px;display:grid;gap:6px;align-content:start;border-top:4px solid var(--g-nage)}
 .tcard[data-group="ne"] .tc-body{border-top-color:var(--g-ne)}
 .tcard[data-origin="bjj"] .tc-body{border-top-color:var(--g-bjj)}
+.tcard[data-group="drill"] .tc-body{border-top-color:var(--accent)}
 .tc-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .tc-num{position:absolute;left:0;top:0;background:var(--band);color:var(--band-ink);font-size:13px;letter-spacing:.04em;padding:5px 10px}
 .tc-grp{white-space:nowrap;margin-left:auto}
@@ -212,6 +213,7 @@ h1{font-family:var(--f-head);font-weight:900;font-stretch:118%;text-transform:up
 .phase ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
 .phase li{position:relative;padding-left:20px;font-size:15px}
 .phase li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;background:var(--accent)}
+.ph-tec{justify-self:start;margin-top:4px;font-weight:600;color:var(--accent-text);text-decoration:underline;text-underline-offset:3px;min-height:44px;display:inline-flex;align-items:center}
 
 /* sequência e fichas */
 .seq h2,.cards h2{font-family:var(--f-head);font-weight:900;font-stretch:110%;text-transform:uppercase;font-size:24px;margin:0 0 14px}

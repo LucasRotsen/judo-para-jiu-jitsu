@@ -23,8 +23,69 @@ function register3d(def){
   merge(n,o);n.t=t;K.push(n);prev=n;}
  def.K=K;def.end=K[K.length-1].t;def.is3d=true;def.first=def.first||'uke';
  def.views=def.views||[{name:'Lateral',a:0,e:8,center:[0,.6,0],span:3.2}];
- J.techs[def.id]=def;return def;}
+ J.techs[def.id]=def;resolverDrills();return def;}
 function merge(a,b){for(const k in b){const v=b[k];if(v&&typeof v==='object'&&!Array.isArray(v)){if(!a[k]||typeof a[k]!=='object')a[k]={};merge(a[k],v);}else a[k]=v;}return a;}
+
+/* ---------- drills: trechos de técnicas já registradas, ligados por pontes (a reação de Uke) ----------
+   def.passos: {tec:'id',de,ate} usa os keyframes da técnica entre de e ate (os dois têm que ser keyframes dela);
+               {ponte:[[dt,parcial],...],aperto?,glow?,notas?(api,F,t)} keyframes novos, dt contado do fim do passo anterior.
+   O primeiro keyframe de cada trecho entra `entrada` s (padrão .6) depois do fim do passo anterior.
+   Os dados vêm das técnicas de origem: corrigir uma técnica corrige o drill. */
+const ESPERA=[];
+function drill(def){ESPERA.push(def);resolverDrills();}
+function resolverDrills(){for(let i=ESPERA.length-1;i>=0;i--){const d=ESPERA[i];
+ if(d.passos.every(p=>!p.tec||J.techs[p.tec])){ESPERA.splice(i,1);compor(d);}}}
+/* (yaw,pitch,roll) e (yaw+180,pitch+180,180-roll) são o mesmo corpo; cada técnica escolheu uma.
+   Escolhe a escrita e as voltas de 360 mais próximas do estado anterior, para a interpolação não girar o boneco. */
+const volta=(a,ref)=>a+360*Math.round((ref-a)/360);
+function alinhar(K,prev){
+ for(const w of ['uke','tori']){const p=prev[w],o=K[0][w];
+  const cands=[[o.yaw,o.pitch,o.roll,false],[o.yaw+180,o.pitch+180,180-o.roll,true]].map(([y,pi,r,flip])=>{
+   const Y=volta(y,p.yaw),P=volta(pi,p.pitch),R=volta(r,p.roll);
+   return {flip,dy:Y-y,dp:P-pi,dr:R-r,custo:Math.abs(Y-p.yaw)+Math.abs(P-p.pitch)+Math.abs(R-p.roll)};});
+  const c=cands[0].custo<=cands[1].custo?cands[0]:cands[1];
+  for(const k of K){const q=k[w];if(c.flip){q.yaw+=180;q.pitch+=180;q.roll=180-q.roll;}q.yaw+=c.dy;q.pitch+=c.dp;q.roll+=c.dr;}}}
+const lista=x=>x?Array.isArray(x)?x:[x]:[];
+function compor(def){
+ const keys=[],aperto=[],glow=[],trechos=[];let T=0,prev=null;
+ for(const p of def.passos){
+  if(p.tec){const src=J.techs[p.tec],K=src.K.filter(k=>k.t>=p.de-1e-6&&k.t<=p.ate+1e-6).map(k=>JSON.parse(JSON.stringify(k)));
+   if(!K.length||Math.abs(K[0].t-p.de)>1e-6||Math.abs(K[K.length-1].t-p.ate)>1e-6)
+    throw new Error(`${def.id}: ${p.tec} não tem keyframes em ${p.de} e ${p.ate}`);
+   const t0=prev?T+(p.entrada||.6):0,off=t0-p.de;
+   /* a entrada (do fim do passo anterior até o trecho) fica com o passo anterior: sem notas do golpe que ainda não começou */
+   if(trechos.length)trechos[trechos.length-1].e=t0;
+   if(prev)alinhar(K,prev);
+   for(const k of K){const t=k.t+off;delete k.t;keys.push([t,k]);}
+   for(const a of lista(src.aperto)){const s=Math.max(a.s,p.de),e=Math.min(a.e,p.ate);if(e>s)aperto.push(Object.assign({},a,{s:s+off,e:e+off}));}
+   for(const g of lista(src.glow)){const s=Math.max(g.s,p.de),e=Math.min(g.e,p.ate);if(e>s)glow.push(Object.assign({},g,{s:s+off,e:e+off}));}
+   T=p.ate+off;trechos.push({s:t0,e:T,off,src});prev=K[K.length-1];}
+  else{const t0=T;
+   for(const [dt,o] of p.ponte){keys.push([T=t0+dt,o]);}
+   for(const a of lista(p.aperto))aperto.push(Object.assign({},a,{s:a.s+t0,e:a.e+t0}));
+   for(const g of lista(p.glow))glow.push(Object.assign({},g,{s:g.s+t0,e:g.e+t0}));
+   trechos.push({s:t0,e:T,off:-t0,notas:p.notas});
+   /* estado completo no fim da ponte, para alinhar o próximo trecho */
+   const st=JSON.parse(JSON.stringify(prev));for(const [,o] of p.ponte)merge(st,o);prev=st;}}
+ const trechoEm=t=>trechos.find(r=>t>=r.s&&t<=r.e)||trechos[trechos.length-1];
+ const ult=trechos.filter(r=>r.src).pop();
+ /* vista "Acompanhar": a vista principal de cada técnica, girando suavemente nas pontes */
+ const ancoras=trechos.filter(r=>r.src).flatMap(r=>[[r.s,r.src.views[0]],[r.e,r.src.views[0]]]);
+ def.views=[{name:'Acompanhar',segue:ancoras}].concat(def.views||[]);
+ Object.assign(def,{keys,aperto:aperto.concat(lista(def.aperto)),glow,trechos,
+  stamp:ult.src.stamp&&Object.assign({},ult.src.stamp,{s:ult.src.stamp.s+ult.off,e:ult.src.stamp.e+ult.off}),
+  names:F=>{const r=trechoEm(F.t);return r.src&&r.src.names?r.src.names(F):{};},
+  annotate:(api,F,vi)=>{const r=trechoEm(api.t);
+   if(r.src&&r.src.annotate)r.src.annotate(Object.assign({},api,{t:api.t-r.off}),F,vi);
+   else if(r.notas)r.notas(api,F,api.t+r.off);}});
+ register3d(def);}
+function vistaEm(v,t){if(!v||!v.segue)return v;const A=v.segue;let i=0;while(i<A.length-1&&t>A[i+1][0])i++;
+ const [t0,a]=A[i],[t1,b]=A[Math.min(i+1,A.length-1)];if(t1<=t0)return Object.assign({},a,{name:v.name});
+ const u=clamp((t-t0)/(t1-t0),0,1),k=u*u*(3-2*u),mix=(x,y)=>x+(y-x)*k,da=((b.a-a.a)%360+540)%360-180;
+ return {name:v.name,a:a.a+da*k,e:mix(a.e,b.e),span:mix(a.span,b.span),center:[0,1,2].map(i=>mix(a.center[i],b.center[i]))};}
+/* brilho ativo no instante t: técnicas têm um; drills, um por trecho */
+function glowEm(def,t){const g=def.glow;if(!Array.isArray(g))return g;let b=null,ba=0;
+ for(const x of g){const a=J.win(t,x.s,x.e);if(a>ba){ba=a;b=x;}}return b||g[0];}
 
 function tan(a,b,c){const d0=b-a,d1=c-b;if(d0*d1<=0)return 0;const m=(d0+d1)/2,lim=3*Math.min(Math.abs(d0),Math.abs(d1));return Math.sign(m)*Math.min(Math.abs(m),lim);}
 function herm(p,u){const m1=tan(p[0],p[1],p[2]),m2=tan(p[1],p[2],p[3]),u2=u*u,u3=u2*u;
@@ -104,7 +165,7 @@ function makeView(w,h,view){const cam=camera(view),sc=Math.min(w,h*1.5)/view.spa
 
 /* ---------- primitives ---------- */
 function pal(who,C){return who==='U'?{gi:C.uke,gi2:C['uke-2'],line:C['uke-line'],lapel:C['uke-2']}:{gi:C.tori,gi2:C['tori-2'],line:C['tori-line'],lapel:C['tori-2']};}
-function buildPrims(F,def,ga){const P=[],g=def.glow;
+function buildPrims(F,def,ga){const P=[],g=glowEm(def,F.t);
  for(const [who,o] of [['T',F.tori],['U',F.uke]]){
   const cap=(a,b,r,kind,side,extra)=>P.push(Object.assign({k:'cap',a,b,r,kind,side,who},extra||{}));
   for(const s of [1,-1])cap(bp(o,0,.12,.07*s),bp(o,0,.42,.07*s),.125,'gi',s>0?'R':'L');
@@ -153,8 +214,8 @@ function shadow(ctx,V,o){const k=clamp(1-o.hip[1]/1.6,.3,1);ctx.save();ctx.globa
  ctx.fill();ctx.restore();}
 
 function draw3d(ctx,w,h,def,t,opts,vi){
- const C=J.C,view=opts.view||def.views[vi]||def.views[0],V=makeView(w,h,view),F=opts.F||(J.solve||pose3)(def,t);
- const g=def.glow,ga=opts.glow!==undefined?opts.glow:(opts.annot&&g?J.win(t,g.s,g.e):0);
+ const C=J.C,view=opts.view||vistaEm(def.views[vi]||def.views[0],t),V=makeView(w,h,view),F=opts.F||(J.solve||pose3)(def,t);
+ const g=glowEm(def,t),ga=opts.glow!==undefined?opts.glow:(opts.annot&&g?J.win(t,g.s,g.e):0);
  floor(ctx,V,C);
  /* membro "fantasma" só no palco com anotações; em miniatura o pontilhado vira ruído */
  const xk=opts.xray||(opts.annot&&def.xray&&J.win(t,def.xray.s,def.xray.e)>0?def.xray.key:null);
@@ -181,5 +242,5 @@ function makeApi(ctx,V,F){const P=J.prim;return {ctx,V,F,t:F.t,C:J.C,D,win:J.win
  arc:(c,ax,ay,r,a0,a1,col,al)=>{if(!(al>0))return;const pts=[];for(let i=0;i<=24;i++){const a=(a0+(a1-a0)*i/24)*D;pts.push(add(c,add(mul(ax,r*Math.cos(a)),mul(ay,r*Math.sin(a)))));}
   for(let i=0;i<pts.length-2;i++)P.dashed(ctx,V,pts[i],pts[i+1],col,al,Math.max(2,V.fs*.2));P.arrow(ctx,V,pts[pts.length-3],pts[pts.length-1],col,al);}};}
 
-Object.assign(J,{register3d,pose3,draw3d,W3,B,_3d:{torsos,alvo,tipoAlvo,pegando,pes,rootOf,ik3,bp,bv,LEN,LIMBS,makeView,makeApi,floor,shadow,frame}});
+Object.assign(J,{register3d,drill,glowEm,vistaEm,pose3,draw3d,W3,B,_3d:{torsos,alvo,tipoAlvo,pegando,pes,rootOf,ik3,bp,bv,LEN,LIMBS,makeView,makeApi,floor,shadow,frame}});
 })();
