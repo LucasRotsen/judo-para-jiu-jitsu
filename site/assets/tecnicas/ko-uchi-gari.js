@@ -17,7 +17,7 @@ Judo.register3d({
  why:'Ataque curto, sem dar as costas e sem entrar fundo. Tori fica de pé, de frente para Uke, e quando ele cai já está na frente das pernas dele, pronto para passar a guarda.',
  summary:'Pequena ceifada por dentro. Tori empurra Uke para trás, sobre o calcanhar direito, passa o pé direito por dentro, entre os pés dele, e encosta a sola atrás do calcanhar direito de Uke. A sola ceifa esse pé para frente, na direção dos dedos dele, enquanto as mãos empurram para trás e para baixo. Sem o apoio, Uke cai de costas.',
  reading:[{k:'小',r:'ko',m:'pequeno'},{k:'内',r:'uchi',m:'por dentro'},{k:'刈',r:'gari',m:'ceifada'}],
- facts:[['Grupo','Nage-waza (projeções) › Ashi-waza (técnicas de perna)'],['Gokyo','1º grupo (Dai-ikkyo)'],
+ facts:[['Grupo','Nage-waza (projeções) › Ashi-waza (técnicas de perna)'],['Gokyo','2º grupo (Dai-nikyo)'],
   ['Qual pé ceifa qual','O pé direito de Tori ceifa o pé direito de Uke, por dentro. O contato é a sola de Tori contra a parte de trás do calcanhar de Uke.'],
   ['Direção da ceifada','Para onde apontam os dedos do pé de Uke. O pé dele desliza para frente rente ao chão e o corpo fica para trás.'],
   ['Diferença para o o uchi gari','No o uchi gari a perna inteira engancha a perna esquerda de Uke e a ceifa em arco para fora. No ko uchi gari é só o pé, contra o calcanhar do pé direito, num movimento curto.'],

@@ -95,6 +95,70 @@
   "erro": 0,
   "treme": 1.43
  },
+ "ko-soto-gari": {
+  "cruza": 0.04,
+  "proprio": 0,
+  "salto": 0,
+  "dobra": 0,
+  "erro": 0,
+  "treme": 0.4
+ },
+ "sasae-tsurikomi-ashi": {
+  "cruza": 0.04,
+  "proprio": 0.5,
+  "salto": 0,
+  "dobra": 1.66,
+  "erro": 0.02,
+  "treme": 2.8
+ },
+ "okuri-ashi-barai": {
+  "cruza": 0,
+  "proprio": 0,
+  "salto": 0,
+  "dobra": 0.06,
+  "erro": 0,
+  "treme": 1.83
+ },
+ "koshi-guruma": {
+  "cruza": 0.36,
+  "proprio": 0.6,
+  "salto": 0.04,
+  "dobra": 1.72,
+  "erro": 0,
+  "treme": 7.8
+ },
+ "hane-goshi": {
+  "cruza": 0.44,
+  "proprio": 0.78,
+  "salto": 0,
+  "dobra": 3.24,
+  "erro": 0.22,
+  "treme": 4.8
+ },
+ "kata-guruma": {
+  "cruza": 0,
+  "proprio": 0,
+  "salto": 0,
+  "dobra": 0.14,
+  "erro": 0.06,
+  "treme": 2.63
+ },
+ "tani-otoshi": {
+  "cruza": 0,
+  "proprio": 0,
+  "salto": 0,
+  "dobra": 0,
+  "erro": 0,
+  "treme": 0.27
+ },
+ "ura-nage": {
+  "cruza": 0.28,
+  "proprio": 0.1,
+  "salto": 0,
+  "dobra": 0.42,
+  "erro": 0,
+  "treme": 2.53
+ },
  "tate-shiho-gatame": {
   "cruza": 0.34,
   "proprio": 0.16,
