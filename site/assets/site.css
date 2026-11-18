@@ -299,3 +299,56 @@ h1{font-family:var(--f-head);font-weight:900;font-stretch:118%;text-transform:up
 .orbita{position:absolute;right:0;top:0;font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;min-height:44px;padding:0 14px;border:0;background:var(--band);color:var(--band-ink);cursor:pointer}
 .orbita:hover{background:#2A3032}
 .orbita.on{background:var(--accent);color:var(--accent-ink)}
+
+/* ---------- mapa de posições ---------- */
+.mapa-h{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0;font-weight:500}
+.mapa-h span{color:var(--ink)}
+.mapa-sel{display:grid;gap:12px}
+.mapa-sel .chips{display:flex;flex-wrap:wrap;gap:8px}
+.mapa-sel #mlado{padding-top:12px;border-top:1px solid var(--line)}
+.mapa-dia{display:grid;gap:8px}
+.mapa-svg{overflow-x:auto;background:var(--surface);border:1px solid var(--line)}
+.mapa-svg svg{display:block;width:100%;min-width:720px;height:auto}
+.m-ar{stroke:var(--line);stroke-width:2}
+.m-ar.on{stroke:var(--accent);stroke-width:3.5}
+.mk-off{fill:var(--line)} .mk-on{fill:var(--accent)}
+.m-no{cursor:pointer}
+.m-no rect{fill:var(--surface);stroke:var(--ink);stroke-width:1.5}
+.m-no text{fill:var(--ink);font-family:var(--f-body);font-size:15px;font-weight:600;text-anchor:middle}
+.m-no.fim rect{fill:var(--band);stroke:var(--band)} .m-no.fim text{fill:var(--band-ink)}
+.m-no.sel rect{fill:var(--ink);stroke:var(--ink)} .m-no.sel text{fill:var(--bg)}
+.m-no:hover rect{stroke-width:3}
+.m-no:focus-visible{outline:none} .m-no:focus-visible rect{stroke:var(--info);stroke-width:4}
+.mapa-leg{margin:0;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.mapa-leg .lg{display:inline-block;width:22px;height:3px;background:var(--line)} .mapa-leg .lg.on{background:var(--accent);height:4px}
+.mapa-ops{display:grid;gap:18px}
+.mapa-ops>h2{font-family:var(--f-head);font-weight:900;font-stretch:110%;text-transform:uppercase;font-size:clamp(26px,3.4vw,36px);line-height:1.05;margin:0;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.mapa-sub{margin:-6px 0 0;color:var(--muted)}
+.m-grupo{display:grid;gap:10px}
+.m-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.m-op{display:grid;grid-template-rows:auto 1fr;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--ink);min-width:0}
+.m-op[data-tipo="finalizacao"],.m-op[data-tipo="drill"]{border-top-color:var(--accent)}
+.m-op[data-tipo="raspagem"],.m-op[data-tipo="fuga"]{border-top-color:var(--g-ne)}
+.m-op.sem{border-style:dashed;border-top-style:solid}
+.m-cv{display:block;aspect-ratio:3/2;background:var(--tatami)}
+.m-cv canvas{width:100%;height:100%;display:block}
+.m-cv.vazio{display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--muted);font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;aspect-ratio:6/1}
+.m-body{display:grid;gap:6px;padding:12px 14px 14px;align-content:start}
+.m-tipo{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.m-body h3{margin:0;font-family:var(--f-head);font-weight:800;font-stretch:108%;text-transform:uppercase;font-size:19px;line-height:1.15}
+.m-body h3 a{text-decoration:none} .m-body h3 a:hover{text-decoration:underline;text-underline-offset:3px}
+.m-gat,.m-nota{margin:0;font-size:15px} .m-nota{color:var(--muted)}
+.m-dest{justify-self:start;margin-top:4px;min-height:44px;padding:0 12px;border:1px solid var(--ink);background:var(--surface);cursor:pointer;font-weight:600;text-align:left}
+.m-dest:hover{background:var(--ink);color:var(--bg)}
+.m-dest.fim{display:inline-flex;align-items:center;gap:6px;min-height:0;padding:0;border:0;color:var(--accent-text);cursor:default;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.m-dest.fim::before{content:"";width:8px;height:8px;background:var(--accent)}
+.m-dest.fim:hover{background:none;color:var(--accent-text)}
+@media (max-width:599px){
+ .m-grid{grid-template-columns:1fr;gap:10px}
+ .m-op{grid-template-columns:116px minmax(0,1fr);grid-template-rows:none}
+ .m-cv{aspect-ratio:auto;min-height:100%}
+ .m-cv.vazio{aspect-ratio:auto;font-size:10px;text-align:center;padding:4px}
+ .m-body{padding:10px 12px 12px}
+ .m-body h3{font-size:16px}
+ .m-gat,.m-nota{font-size:14px}}
+.mapa-contra .m-op{opacity:.95}

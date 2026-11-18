@@ -41,7 +41,7 @@ FONTS = (
 )
 SITE_TOP = """<header class="site-top"><div class="wrap">
 <a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>Judô para Jiu-Jitsu</a>
-<nav class="site-nav" aria-label="Site"><a href="index.html#catalogo">Técnicas</a><a href="simulador.html">Simulador</a></nav>
+<nav class="site-nav" aria-label="Site"><a href="index.html#catalogo">Técnicas</a><a href="mapa.html">Mapa</a><a href="simulador.html">Simulador</a></nav>
 </div></header>
 """
 SITE_FOOT = """<footer class="site-foot"><div class="wrap">
@@ -157,13 +157,55 @@ def simulator_page() -> str:
             + "<script>JudoSim.mount();</script>\n</body>\n</html>\n")
 
 
+MAPA_DESC = (
+    "Mapa de posições: escolha onde você está e veja as técnicas que saem dali, "
+    "o que o oponente precisa fazer para cada uma abrir e onde você termina."
+)
+GRAFO_JS = SITE / "assets" / "grafo.js"
+
+
+def check_grafo() -> None:
+    """Toda técnica do catálogo aparece no grafo; toda aresta aponta para posição e técnica existentes."""
+    src = GRAFO_JS.read_text(encoding="utf-8")
+    g = json.loads(src[src.index("{") : src.rindex("}") + 1])
+    pos = {p["id"]: p for p in g["posicoes"]}
+    ids = {tid for tid, _ in CATALOG}
+    usados = {p.get("tec") for p in g["posicoes"]}
+    erros = []
+    for a in g["arestas"] + g.get("sequencias", []):
+        for ponta in [a["de"]] + ([a["para"]] if "para" in a else []):
+            if ponta[0] not in pos or ponta[1] not in pos[ponta[0]]["lados"]:
+                erros.append(f"posição/lado inexistente: {ponta}")
+        if a.get("tec"):
+            if a["tec"] not in ids:
+                erros.append(f"técnica fora do catálogo: {a['tec']}")
+            usados.add(a["tec"])
+        elif not a.get("nome"):
+            erros.append(f"aresta sem técnica e sem nome: {a}")
+    for tid in sorted(ids - usados):
+        erros.append(f"técnica do catálogo fora do grafo: {tid}")
+    if erros:
+        raise SystemExit("grafo.js:\n  " + "\n  ".join(erros))
+
+
+def mapa_page() -> str:
+    techs = "".join(f'<script src="assets/tecnicas/{tid}.js"></script>\n' for tid, _ in CATALOG)
+    return (head(f"Mapa de posições · {SITE_NAME}", MAPA_DESC, "mapa.html", "og/index.png")
+            + '<main class="page" id="app"></main>\n' + SITE_FOOT + SCRIPTS + techs
+            + '<script src="assets/assado/capas.js"></script>\n'
+            + '<script src="assets/grafo.js"></script>\n<script src="assets/mapa.js"></script>\n'
+            + "<script>JudoMapa.mount();</script>\n</body>\n</html>\n")
+
+
 def main() -> None:
+    check_grafo()
     (SITE / "index.html").write_text(index_page(), encoding="utf-8")
     (SITE / "simulador.html").write_text(simulator_page(), encoding="utf-8")
+    (SITE / "mapa.html").write_text(mapa_page(), encoding="utf-8")
     for tid, name in CATALOG:
         (SITE / f"{tid}.html").write_text(technique_page(tid, name), encoding="utf-8")
     (SITE / "sw.js").write_text(service_worker(), encoding="utf-8")
-    print("ok", len(CATALOG) + 2, "páginas + sw.js")
+    print("ok", len(CATALOG) + 3, "páginas + sw.js")
 
 
 if __name__ == "__main__":
