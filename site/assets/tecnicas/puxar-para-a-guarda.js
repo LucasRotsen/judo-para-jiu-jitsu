@@ -37,6 +37,11 @@ Judo.register3d({
  safety:['Sente de forma controlada, nunca se jogue de costas com o peso de Uke vindo junto.',
   'Uke não deve cair com os joelhos travados: dobre as pernas e ajoelhe.',
   'Nas competições de faixas mais baixas, confira se a regra permite puxar. Treine com orientação de um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.peR',b:'U.quadril',s:1.4,e:2.6,txt:'Tori põe o pé direito no quadril de Uke'},
+  {c:'lado',a:'T.peR',de:'U.quadril',lado:'esquerda',s:1.4,e:2.6,min:.0,txt:'o pé direito vai no quadril ESQUERDO de Uke'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'abaixo',s:5.0,e:'fim',min:.1,txt:'Uke cai de joelhos entre as pernas de Tori'}],
  phases:[
  {s:0,e:1.2,kanji:'1',ro:'Pegada',pt:'Gola e manga',
   d:'Tori e Uke estão de pé, de frente. Tori segura a gola de Uke com a mão direita e a manga direita dele com a esquerda.',

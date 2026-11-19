@@ -33,6 +33,10 @@ Judo.register3d({
  safety:['Solte imediatamente quando o parceiro bater (no tatame, nele ou com a voz). Nunca aperte de uma vez.',
   'O laço aperta rápido e o parceiro pode não perceber a tempo. Aperte devagar no treino.',
   'Pratique só com orientação de um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.maoR',de:'U.pescoco',lado:'direita',s:1.0,e:7.6,txt:'a mão direita de Tori entra funda na gola DIREITA de Uke'},
+  {c:'contato',a:'T.antebracoR',b:'U.pescoco',s:5.2,e:7.6,txt:'o laço: o antebraço direito fica atrás do pescoço e a gola cruza a garganta'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Pegada',pt:'Mão funda na gola',
   d:'Tori está de costas com a guarda fechada. A mão direita entra funda na gola direita de Uke, polegar por dentro, até o lado do pescoço. A mão esquerda segura a manga direita de Uke.',

@@ -31,6 +31,11 @@ Judo.register3d({
  safety:['Treine devagar: quem é raspado cai sentado e rola para trás com o queixo no peito.',
   'O pé do quadril empurra, não chuta. Nada de pisar no joelho de Uke.',
   'Ao levantar em base, mantenha a mão livre na frente do rosto e não pise no parceiro.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.maoL',b:'U.peR',s:2.6,e:7.0,txt:'a mão ESQUERDA de Tori segura o calcanhar DIREITO de Uke'},
+  {c:'contato',a:'T.peL',b:'U.canelaR',s:2.8,e:5.6,txt:'o pé esquerdo engancha atrás do mesmo tornozelo'},
+  {c:'lado',a:'T.peR',de:'U.quadril',lado:'esquerda',s:2.8,e:5.6,min:.0,txt:'o pé DIREITO empurra o quadril ESQUERDO de Uke'}],
  phases:[
  {s:0,e:1.8,kanji:'1',ro:'Uke em pé',pt:'Guarda aberta, pés no quadril',
   d:'Uke se levantou dentro da guarda. Tori está de costas, com os dois pés nos quadris dele, a mão direita segura a manga esquerda de Uke e a esquerda segura a manga direita. As mãos de Uke pressionam os joelhos de Tori.',

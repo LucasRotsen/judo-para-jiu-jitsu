@@ -33,6 +33,12 @@ Judo.register3d({
  safety:['Nos ganchos, os pés empurram as coxas, não chutam a virilha.',
   'Quem vira de bruços apoia os joelhos e os cotovelos, sem cair com o peito no chão.',
   'Treine a transição devagar e com orientação de um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.peito',de:'U.peito',lado:'tras',s:5.0,e:'fim',min:.1,txt:'Tori deita o peito nas costas de Uke'},
+  {c:'lado',a:'T.maoR',de:'U.peito',lado:'frente',s:4.2,e:'fim',min:.0,txt:'cinto de segurança: a mão direita passa por cima do ombro até o peito de Uke'},
+  {c:'lado',a:'T.peR',de:'U.quadril',lado:'frente',s:5.6,e:'fim',min:.0,txt:'gancho: o pé direito fica na frente do quadril de Uke, por dentro da coxa'},
+  {c:'lado',a:'T.peL',de:'U.quadril',lado:'frente',s:5.6,e:'fim',min:.0,txt:'gancho: o pé esquerdo fica na frente do quadril de Uke, por dentro da coxa'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Montada',pt:'Tori sentado no quadril',
   d:'Tori está montado, sentado no quadril de Uke e virado para a cabeça dele. Uke empurra o quadril de Tori procurando espaço.',

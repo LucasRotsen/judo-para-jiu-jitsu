@@ -28,6 +28,11 @@ Judo.register3d({
  safety:['Solte imediatamente quando o parceiro bater (no tatame, nele ou com a voz). Nunca aperte de uma vez.',
   'Aplique devagar no treino. O estrangulamento sanguíneo leva à perda de consciência em segundos.',
   'Pratique só com orientação de um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'tras',s:0,e:7.9,min:.1,txt:'Tori fica atrás de Uke, com Uke sentado entre as pernas dele'},
+  {c:'contato',a:'T.antebracoR',b:'U.pescoco',s:4.4,e:7.9,txt:'o antebraço direito de Tori envolve o pescoço de Uke'},
+  {c:'lado',a:'T.maoL',de:'U.cabeca',lado:'tras',s:4.8,e:7.9,min:.03,txt:'na figura-4, a mão esquerda vai atrás da cabeça de Uke'}],
  phases:[
  {s:0,e:2.2,kanji:'後',ro:'Costas',pt:'Ganchos e cinto de segurança',
   d:'Tori está sentado atrás de Uke, peito colado nas costas dele. Os calcanhares entram por dentro das coxas de Uke (ganchos) e os braços fecham o cinto de segurança: o direito por cima do ombro, o esquerdo por baixo da axila.',

@@ -26,6 +26,11 @@ Judo.register3d({
  safety:['A queda de o soto gari é para trás e rápida: Uke precisa dominar o ushiro ukemi (queda para trás) com o queixo no peito.',
   'No treino, ceife com a panturrilha, nunca com o calcanhar contra o joelho de Uke.',
   'Tori mantém a manga até Uke tocar o tatame.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.coxaR',b:'U.coxaR',s:4.0,e:4.6,txt:'a perna direita de Tori ceifa a perna direita de Uke'},
+  {c:'lado',a:'T.joelhoR',de:'U.joelhoR',lado:'tras',s:4.0,e:4.4,min:.1,txt:'a perna de Tori passa por trás da perna de Uke, não pela frente'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:6.0,e:'fim',min:.5,txt:'Uke cai de costas à frente de Tori'}],
  phases:[
  {s:0,e:1,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Pegada clássica: a mão esquerda de Tori segura a manga direita de Uke (hikite) e a mão direita segura a gola esquerda (tsurite). Postura natural, distância de um braço dobrado.',

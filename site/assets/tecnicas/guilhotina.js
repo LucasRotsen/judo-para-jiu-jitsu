@@ -31,6 +31,10 @@ Judo.register3d({
  safety:['Solte imediatamente quando o parceiro bater (no tatame, nele ou com a voz). Nunca aperte de uma vez.',
   'A guilhotina pressiona a traqueia e a coluna cervical. Aperte devagar, e não puxe o pescoço para cima com tranco.',
   'Pratique só com orientação de um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.antebracoR',b:'U.pescoco',s:4.4,e:7.6,txt:'o antebraço direito de Tori volta por baixo da garganta de Uke'},
+  {c:'lado',a:'U.cabeca',de:'T.peito',lado:'direita',s:4.0,e:7.6,min:.05,txt:'a cabeça de Uke fica sob a axila DIREITA de Tori'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Guarda fechada',pt:'Uke abaixa a cabeça',
   d:'Tori está de costas com as pernas cruzadas nas costas de Uke. Uke apoia as mãos na barriga de Tori e começa a abaixar a cabeça para o lado direito de Tori.',

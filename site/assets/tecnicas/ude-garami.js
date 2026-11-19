@@ -34,6 +34,12 @@ Judo.register3d({
  safety:['Chave de ombro machuca rápido e sem aviso: gire devagar e pare na hora em que o parceiro bater ou disser “bati”.',
   'Nunca dê tranco nem gire até o fim no treino. Uma lesão de ombro pode levar meses para sarar.',
   'Quem recebe bate cedo, antes de sentir dor forte. Pratique só com a orientação de um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.joelhoR',de:'U.tronco',lado:'direita',s:0,e:'fim',min:.2,txt:'Tori fica nos 100 quilos pelo lado direito de Uke (joelho direito)'},
+  {c:'lado',a:'T.joelhoL',de:'U.tronco',lado:'direita',s:0,e:'fim',min:.2,txt:'Tori fica nos 100 quilos pelo lado direito de Uke (joelho esquerdo)'},
+  {c:'contato',a:'T.maoL',b:'U.maoL',s:3.0,e:8.6,txt:'a mão esquerda de Tori segura o punho ESQUERDO de Uke, o braço de longe'},
+  {c:'lado',a:'U.maoL',de:'U.cotoveloL',lado:'acima',s:4.8,e:6.6,min:.03,txt:'o antebraço de Uke aponta para a cabeça dele (americana), não para os pés'}],
  phases:[
  {s:0,e:1.4,kanji:'横四方',ro:'100 quilos',pt:'Uke empurra com o braço de longe',
   d:'Tori está nos 100 quilos, peito sobre o peito de Uke. Para criar espaço, Uke empurra o pescoço de Tori com o braço esquerdo, o de longe.',

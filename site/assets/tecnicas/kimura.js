@@ -37,6 +37,10 @@ Judo.register3d({
  safety:['Chave de ombro machuca rápido e sem aviso: gire devagar e pare na hora em que o parceiro bater.',
   'Nunca dê tranco nem leve a mão até o fim no treino. Uma lesão de ombro pode levar meses para sarar.',
   'Quem recebe bate cedo e não tenta rolar com o braço preso. Pratique com um professor por perto.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.maoL',b:'U.maoR',s:1.8,e:'fim',txt:'a mão esquerda de Tori segura o punho DIREITO de Uke'},
+  {c:'contato',a:'T.antebracoR',b:'U.bracoR',s:4.0,e:'fim',txt:'o braço direito de Tori passa por cima do tríceps e entra por dentro do braço de Uke'}],
  phases:[
  {s:0,e:1.8,kanji:'1',ro:'Guarda fechada',pt:'Uke apoia a mão',
   d:'Tori está de costas com a guarda fechada e puxa Uke com as pernas. Para não cair, Uke apoia a mão direita no tatame, ao lado da cintura de Tori. A mão esquerda de Tori segura esse punho.',

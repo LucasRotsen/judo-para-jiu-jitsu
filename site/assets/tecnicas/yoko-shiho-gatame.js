@@ -39,6 +39,12 @@ Judo.register3d({
  safety:['Peso no peito sim, antebraço cravado na garganta de Uke não.',
   'Uke bate (maitta) se sentir falta de ar. Tori alivia na hora.',
   'Treine a fuga e o bloqueio devagar, aumentando a resistência aos poucos.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:1.6,e:'fim',min:.15,txt:'Tori fica do lado DIREITO de Uke'},
+  {c:'contato',a:'T.peito',b:'U.peito',s:3.8,e:5.4,txt:'osaekomi: o peito de Tori atravessado sobre o peito de Uke'},
+  {c:'contato',a:'T.antebracoL',b:'U.pescoco',s:3.8,e:'fim',txt:'o braço esquerdo de Tori passa por baixo do pescoço de Uke'},
+  {c:'contato',a:'T.maoR',b:'U.quadril',s:3.8,e:'fim',txt:'a mão direita de Tori entra entre as pernas de Uke, na faixa'}],
  phases:[
  {s:0,e:1.6,kanji:'姿勢',ro:'Shisei',pt:'Posição de partida',
   d:'Uke está de costas no tatame. Tori ajoelha junto ao lado direito dele, de frente para Uke, com o tronco ereto.',

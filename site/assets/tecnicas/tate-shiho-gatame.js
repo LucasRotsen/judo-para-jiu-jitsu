@@ -23,6 +23,12 @@ Judo.register3d({
   ['Base estreita no upa','Quando Uke ergue o quadril, Tori precisa abrir as mãos para a frente e para os lados da ponte.']],
  safety:['Na montada alta, cuidado com o peso sobre o peito e o pescoço do parceiro. Pressão sem objetivo só machuca.',
   'Treine as fugas e a manutenção em ritmo progressivo, com um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:0,e:1.6,min:.15,txt:'Tori começa no lado direito de Uke'},
+  {c:'lado',a:'T.joelhoR',de:'U.quadril',lado:'esquerda',s:4.4,e:6.0,min:.08,txt:'montado: o joelho direito de Tori fica do lado esquerdo de Uke'},
+  {c:'lado',a:'T.joelhoL',de:'U.quadril',lado:'direita',s:4.4,e:6.0,min:.08,txt:'montado: o joelho esquerdo de Tori fica do lado direito de Uke'},
+  {c:'contato',a:'T.peito',b:'U.peito',s:9.2,e:'fim',txt:'osaekomi: depois da ponte, Tori volta peito no peito'}],
  phases:[
  {s:0,e:2.2,kanji:'横',ro:'Lateral',pt:'Peito no peito',
   d:'Tori começa ao lado de Uke, de joelhos e com o peito pressionando o peito dele. Uke está de costas e empurra o quadril de Tori para criar espaço.',

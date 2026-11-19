@@ -34,6 +34,11 @@ Judo.register3d({
  safety:['Uke precisa dominar a queda para trás (ushiro ukemi): queixo no peito e braço batendo no tatame.',
   'Tori não cai com o peso sobre as pernas ou o joelho de Uke: o corpo de Tori vai para o lado, ao lado de Uke.',
   'Comece devagar, só sentando e encaixando a perna, com Uke sentando junto.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.peL',b:'U.peL',s:3.4,e:4.6,frac:.6,txt:'a perna esquerda de Tori fica estendida por trás dos calcanhares de Uke'},
+  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'tras',s:3.8,e:4.6,min:.1,txt:'Tori passa para trás de Uke antes de sentar'},
+  {c:'lado',a:'U.cabeca',de:'T.quadril',lado:'acima',s:6.5,e:'fim',min:.5,txt:'no fim os dois ficam deitados com a cabeça para o mesmo lado'}],
  phases:[
  {s:0,e:1.2,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Pegada direita: Tori segura a manga direita de Uke com a mão esquerda e a gola esquerda com a mão direita. Os dois em postura natural.',

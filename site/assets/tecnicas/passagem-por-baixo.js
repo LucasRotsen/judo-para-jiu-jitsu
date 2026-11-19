@@ -42,6 +42,11 @@ Judo.register3d({
  safety:['Empilhar dobra o pescoço de Uke: pressão aos poucos e atenção ao tapa.',
   'Os joelhos de Uke não são torcidos: a perna de baixo vai reto para o peito dele.',
   'Treine primeiro com Uke cooperando, depois com resistência leve.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'U.coxaR',b:'T.ombroL',s:4.0,e:8.2,tol:.06,txt:'a coxa direita de Uke fica no ombro esquerdo de Tori'},
+  {c:'contato',a:'T.cabeca',b:'U.barriga',s:4.2,e:6.2,txt:'empilhando, a cabeça de Tori fica colada na barriga de Uke'},
+  {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:9.0,e:'fim',min:.15,txt:'Tori anda para o lado do braço de baixo e cai no lado direito de Uke'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Guarda aberta',pt:'Tori de joelhos',
   d:'Uke está de costas, com os pés no quadril de Tori. Tori fica de joelhos entre as pernas dele, tronco ereto, as mãos nos joelhos de Uke.',

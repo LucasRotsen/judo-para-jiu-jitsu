@@ -31,6 +31,12 @@ Judo.register3d({
  safety:['Solte imediatamente quando o parceiro bater (no tatame, nele ou com a voz). Nunca aperte de uma vez.',
   'Aplique devagar no treino. O estrangulamento sanguíneo leva à perda de consciência em segundos.',
   'Pratique só com orientação de um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'tras',s:0,e:7.8,min:.1,txt:'Tori fica atrás de Uke'},
+  {c:'lado',a:'T.cabeca',de:'U.cabeca',lado:'esquerda',s:1.8,e:7.8,min:.05,txt:'a cabeça de Tori fica do lado ESQUERDO da cabeça de Uke'},
+  {c:'contato',a:'T.antebracoR',b:'U.pescoco',s:5.8,e:7.8,txt:'o braço direito cruza a garganta de Uke'},
+  {c:'contato',a:'T.antebracoL',b:'U.ombroL',s:2.6,e:7.8,txt:'a mão esquerda entra por baixo da axila esquerda de Uke'}],
  phases:[
  {s:0,e:1.8,kanji:'後',ro:'Costas',pt:'Ajoelhado atrás de Uke',
   d:'Uke está sentado com as pernas estendidas. Tori se ajoelha logo atrás, com o peito colado nas costas dele e as mãos nos ombros de Uke.',

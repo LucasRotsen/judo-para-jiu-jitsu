@@ -37,6 +37,12 @@ Judo.register3d({
  safety:['A ponte é com os pés e o quadril. O pescoço não faz força.',
   'Quem está por cima não crava o antebraço na garganta de quem foge.',
   'Treine o movimento sozinho (camarão no tatame) antes de treinar com parceiro, e com orientação de um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'U.quadril',de:'T.tronco',lado:'direita',s:0,e:1.6,min:.15,txt:'Uke começa nos 100 quilos do lado direito de Tori'},
+  {c:'contato',a:'T.antebracoL',b:'U.pescoco',s:2.0,e:4.6,txt:'enquadrar: o antebraço esquerdo de Tori no pescoço de Uke'},
+  {c:'giro',a:'T.cabeca',centro:'T.quadril',s:6.4,e:8.2,txt:'ao repor a guarda, a cabeça de Tori vai de -x para -z sem voltar'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'abaixo',s:8.4,e:'fim',min:.1,txt:'no fim Uke fica entre as pernas de Tori, na guarda'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'100 quilos',pt:'Uke por cima, atravessado',
   d:'Tori está de costas e Uke está atravessado sobre o peito dele, do lado direito, com o braço por baixo do pescoço. Tori mantém o cotovelo direito colado ao corpo.',

@@ -34,6 +34,11 @@ Judo.register3d({
  safety:['O cotovelo machuca antes de doer muito: suba o quadril devagar e solte na primeira batida.',
   'Nunca dê tranco no final. A pressão aumenta aos poucos, sempre.',
   'Quem recebe bate cedo e não tenta girar o braço para fora com força. Pratique com um professor por perto.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.peR',de:'U.quadril',lado:'esquerda',s:3.8,e:5.4,min:.0,txt:'o pé direito de Tori vai no quadril ESQUERDO de Uke'},
+  {c:'lado',a:'T.cabeca',de:'U.quadril',lado:'esquerda',s:5.8,e:'fim',min:.1,txt:'Tori gira: a cabeça vai para o lado do joelho esquerdo de Uke'},
+  {c:'contato',a:'T.canelaL',b:'U.pescoco',s:6.0,e:'fim',txt:'a perna esquerda de Tori passa por cima da nuca de Uke'}],
  phases:[
  {s:0,e:1.8,kanji:'1',ro:'Guarda fechada',pt:'Uke apoia as mãos no peito',
   d:'Você puxou para a guarda e fechou as pernas nas costas de Uke. Para não ser puxado, ele apoia as mãos no seu peito e segura a gola. Esse braço apoiado é o alvo.',

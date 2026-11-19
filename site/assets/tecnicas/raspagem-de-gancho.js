@@ -30,6 +30,11 @@ Judo.register3d({
  safety:['Treine devagar: quem é raspado precisa saber cair de costas sem apoiar a mão presa.',
   'Não force o gancho contra o joelho de Uke; ele fica na parte de dentro da coxa, perto da virilha.',
   'Ao subir para o controle lateral, desça o peso aos poucos sobre o peito do parceiro.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.maoR',de:'U.peito',lado:'tras',s:0,e:3.4,min:.03,txt:'esgrima: o braço direito de Tori passa sob a axila esquerda de Uke, mão nas costas'},
+  {c:'contato',a:'T.canelaR',b:'U.coxaL',s:3.4,e:5.2,txt:'o gancho DIREITO (peito do pé e canela) levanta por baixo da coxa esquerda de Uke'},
+  {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:7.6,e:'fim',min:.1,txt:'Uke cai de costas e Tori sobe no controle lateral pelo lado direito dele'}],
  phases:[
  {s:0,e:1.8,kanji:'1',ro:'Guarda borboleta',pt:'Ganchos, esgrima e braço',
   d:'Tori está sentado com os joelhos abertos e os dois pés por dentro das coxas de Uke, que está ajoelhado. O braço direito de Tori passa por baixo da axila esquerda de Uke (esgrima) e a mão esquerda segura o braço direito dele acima do cotovelo.',
