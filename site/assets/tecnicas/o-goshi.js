@@ -87,14 +87,14 @@ Judo.register3d({
         arm:{R:B('o',.28,.20,-.12),L:B('s',.1,.25,-.45)}}}],
  /* de cabeça para baixo à frente de Tori, barriga virada para ele; a torção acontece aqui */
  [5.75,{tori:{yaw:408,pitch:62,roll:-8,h:25},
-       uke:{x:.28,y:.95,z:.12,yaw:0,pitch:180,roll:40,h:-18,leg:{R:B('s',.22,-.82,.15),L:B('s',.30,-.78,-.13)},
+       uke:{x:.28,y:1.12,z:.12,yaw:0,pitch:180,roll:40,h:15,leg:{R:B('s',.22,-.82,.15),L:B('s',.30,-.78,-.13)},
         arm:{R:B('o',.32,.16,-.12)}}}],
  [6.0,{tori:{y:.86,yaw:402,pitch:58,roll:0,h:20,arm:{R:B('s',.34,.16,.10)}},
-       uke:{x:.38,y:.66,z:.16,yaw:-55,pitch:230,roll:20,h:-22,leg:{R:B('s',.26,-.80,.15),L:B('s',.32,-.76,-.13)},
+       uke:{x:.40,y:.78,z:.16,yaw:-55,pitch:248,roll:20,h:22,leg:{R:B('s',.26,-.80,.15),L:B('s',.32,-.76,-.13)},
         arm:{R:B('o',.34,.14,-.10),L:B('s',.05,.05,-.50)}}}],
  /* queda: de costas, atravessado à frente de Tori, cabeça junto ao pé esquerdo dele */
  [6.35,{tori:{x:-.06,y:.80,z:-.22,yaw:392,pitch:50,roll:0,h:10,arm:{L:B('s',.40,.05,-.05),R:B('s',.38,.12,.08)}},
-       uke:{x:.44,y:.14,z:.18,yaw:-90,pitch:270,roll:0,h:-25,gf:1,leg:{R:W3(.30,.07,1.02),L:W3(.60,.07,.98)},
+       uke:{x:.44,y:.14,z:.18,yaw:-90,pitch:270,roll:0,h:20,gf:1,leg:{R:W3(.30,.07,1.02),L:W3(.60,.07,.98)},
         arm:{R:SL('armL',1),L:W3(.98,.05,-.02)},pole:{legR:[0,1,0],legL:[0,1,0]}}}],
  [6.6,{}],
  [7.6,{tori:{y:.82,pitch:46,h:5},uke:{h:-30}}],

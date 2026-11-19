@@ -78,7 +78,9 @@ Judo.register3d({
  [5.5,{}],
  /* kake (conferido com o vídeo da Kodokan 一本背負投): Tori dobra fundo o tronco, quase na horizontal, com os
     joelhos flexionados. Uke deita no alto das costas dele, passa por cima do ombro direito, fica de cabeça para
-    baixo bem à frente do rosto de Tori e a cabeça desce até os pés dele; as pernas passam por cima por último. */
+    baixo bem à frente do rosto de Tori e a cabeça desce até os pés dele; as pernas passam por cima por último.
+    Sem pilão: de ponta-cabeça o quadril de Uke ainda está alto; quando a cabeça desce abaixo de 0,5 m o corpo já
+    passou de 45° e vem deitando de costas; queixo no peito (h positivo) a queda inteira (tools/contratos.js). */
  [5.85,{tori:{y:.80,yaw:362,pitch:55,h:25},
        uke:{x:-.18,y:1.12,z:.06,yaw:2,pitch:62,h:15,gf:0,leg:{R:B('s',.35,-.75,.12),L:B('s',.30,-.76,-.12)},
         arm:{R:B('o',.20,.48,.17),L:B('s',-.05,.30,-.42)}}}],
@@ -86,19 +88,19 @@ Judo.register3d({
        uke:{x:.05,y:1.36,z:.16,yaw:4,pitch:112,roll:-10,h:5,leg:{R:B('s',.40,-.74,.13),L:B('s',.34,-.75,-.11)},
         arm:{R:B('o',.26,.42,.14),L:B('s',-.20,-.05,-.36)}}}],
  [6.40,{tori:{y:.84,yaw:376,pitch:75,h:10,arm:{R:B('s',.32,.36,.24)}},
-       uke:{x:.47,y:1.24,z:.02,yaw:6,pitch:160,roll:-20,h:-10,leg:{R:B('s',.20,-.82,.14),L:B('s',.16,-.82,-.10)},
+       uke:{x:.45,y:1.32,z:.02,yaw:6,pitch:172,roll:-20,h:15,leg:{R:B('s',.20,-.82,.14),L:B('s',.16,-.82,-.10)},
         arm:{R:B('o',.34,.32,.10),L:B('s',-.35,.30,-.25)}}}],
- [6.70,{tori:{y:.84,yaw:374,pitch:74,h:12,arm:{R:B('s',.32,.22,.22)}},
-       uke:{x:.68,y:.92,z:.0,yaw:7,pitch:205,roll:-18,h:-18,leg:{R:B('s',.18,-.82,.13),L:B('s',.14,-.82,-.11)},
+ [6.70,{tori:{y:.84,yaw:374,pitch:74,h:12,arm:{R:B('s',.30,.30,.34)}},
+       uke:{x:.82,y:1.04,z:.0,yaw:7,pitch:228,roll:-18,h:25,leg:{R:B('s',.18,-.82,.13),L:B('s',.14,-.82,-.11)},
         arm:{R:B('o',.40,.22,.18)}}}],
  [7.0,{tori:{y:.83,yaw:368,pitch:70,h:15,arm:{R:B('s',.34,.20,.18)}},
-       uke:{x:.84,y:.55,z:-.02,yaw:6,pitch:240,roll:-8,h:-20,leg:{R:B('s',.12,-.85,.12),L:B('s',.08,-.84,-.12)},
+       uke:{x:.98,y:.60,z:-.02,yaw:6,pitch:258,roll:-8,h:30,leg:{R:B('s',.12,-.85,.12),L:B('s',.08,-.84,-.12)},
         arm:{R:B('o',.42,.15,.10),L:B('s',.05,0,-.50)}}}],
  /* queda: de costas, cabeça logo à frente dos pés de Tori, corpo esticado para a frente e um pouco para a esquerda dele */
  [7.4,{tori:{y:.80,yaw:362,pitch:68,h:10},
-       uke:{x:.35+DX,y:.14,z:-.02,yaw:5,pitch:270,roll:0,h:-20,gf:1,leg:{R:W3(1.12+DX,.07,.16),L:W3(1.09+DX,.07,-.24)},
+       uke:{x:.35+DX,y:.14,z:-.02,yaw:5,pitch:270,roll:0,h:25,gf:1,leg:{R:W3(1.12+DX,.07,.16),L:W3(1.09+DX,.07,-.24)},
         arm:{R:B('s',.50,.38,.10),L:B('s',0,.15,-.48)}}}],
- [8.4,{tori:{y:.80,pitch:60,h:8},uke:{h:-25}}],
+ [8.4,{tori:{y:.80,pitch:60,h:8},uke:{h:15}}],
  [9.0,{}],
  /* norte-sul: Tori recua, ajoelha junto à cabeça de Uke e deita peito contra peito */
  [9.8,{tori:{x:-.26,y:.62,yaw:360,pitch:40,h:15,leg:{R:W3(-.60,.07,.24),L:W3(-.52,.07,-.24)},

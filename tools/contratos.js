@@ -7,6 +7,7 @@
                                                                          a está daquele lado de `de`, nos eixos do dono de `de`
      {c:'giro',    a:'T.cabeca', centro:'U.quadril', s, e, volta=25}      a gira em volta do centro (visto de cima) sem voltar mais que `volta` graus
    E uma regra que vale para toda técnica, sem declarar: ninguém fica de ponta-cabeça com a cabeça perto do chão (pilão).
+     {c:'pilao', cabeca:.38, txt}  exceção declarada (limite de altura da cabeça menor), com o motivo
    Partes: cabeca pescoco peito barriga tronco quadril, e com lado R/L: ombro coxa joelho canela pe braco cotovelo antebraco mao.
    Uso: node tools/contratos.js [-v] [--portao] [id ...]
         node tools/contratos.js --historico   (erros já apontados pelo usuário, em versões antigas do git, têm que falhar) */
@@ -108,17 +109,20 @@ function avaliar(J, def, c) {
 /* regra global: cabeça abaixo de 0,5 m com o tronco mais de 45° de cabeça para baixo (u.y < -0,7) = queda de cabeça.
    A ponte (upa) tem a cabeça no chão e o tronco a ~33°: não conta. */
 function pilao(J, def) {
+  /* exceção declarada pela técnica: {c:'pilao', cabeca:.38, txt:'por quê'} (projeção de sacrifício: Uke passa invertido
+     apoiado no pé de Tori, sem cair de cabeça). Fica visível na lista de contratos. */
+  const ex = (def.contratos || []).find((c) => c.c === 'pilao'), lim = ex && ex.cabeca !== undefined ? ex.cabeca : .5;
   const out = [];
   for (const w of ['tori', 'uke']) { let n = 0, pior = { t: 0, v: 0 };
     for (let t = 0; t <= def.end + 1e-9; t += DT) { const o = J.solve(def, t)[w];
-      if (o.head[1] < .5 && o.u[1] < -.7) { n++; if (-o.u[1] > pior.v) pior = { t, v: -o.u[1] }; } }
+      if (o.head[1] < lim && o.u[1] < -.7) { n++; if (-o.u[1] > pior.v) pior = { t, v: -o.u[1] }; } }
     /* 0,1 s de passagem é tolerado (rolamento) */
     if (n * DT > .1) out.push({ txt: `${w === 'tori' ? 'Tori' : 'Uke'} de ponta-cabeça com a cabeça perto do chão por ${(n * DT).toFixed(2)} s (pior @${pior.t.toFixed(2)}s)`, ok: false, pior }); }
   return out;
 }
 
 function verificar(J, def, contratos) {
-  const res = (contratos || []).map((c) => { try { return { c, ...avaliar(J, def, c) }; } catch (e) { return { c, ok: false, txt: 'erro: ' + e.message }; } });
+  const res = (contratos || []).filter((c) => c.c !== 'pilao').map((c) => { try { return { c, ...avaliar(J, def, c) }; } catch (e) { return { c, ok: false, txt: 'erro: ' + e.message }; } });
   return res.concat(pilao(J, def).map((r) => ({ c: { c: 'pilao', txt: 'ninguém cai de cabeça' }, ...r })));
 }
 const rotulo = (c) => c.txt || `${c.c} ${c.a || ''}${c.b ? ' × ' + c.b : ''}${c.de ? ' (' + c.lado + ' de ' + c.de + ')' : ''}${c.centro ? ' em volta de ' + c.centro : ''}`;
@@ -164,7 +168,7 @@ function main() {
   }
   /* catraca: quedas de cabeça já conhecidas ficam em contratos-pendentes.json até serem corrigidas; nenhuma nova entra */
   const PEND = path.join(__dirname, 'contratos-pendentes.json'), pend = fs.existsSync(PEND) ? JSON.parse(fs.readFileSync(PEND, 'utf8')) : {};
-  const novos = falhas.filter((f) => !(pend[f.id] || []).includes(f.regra)), resolvidos = Object.entries(pend).flatMap(([id, rs]) => rs.filter((r) => !falhas.some((f) => f.id === id && f.regra === r)).map((r) => `${id}: ${r}`));
+  const novos = falhas.filter((f) => !(pend[f.id] || []).includes(f.regra)), resolvidos = Object.entries(pend).filter(([id]) => !only.length || only.includes(id)).flatMap(([id, rs]) => rs.filter((r) => !falhas.some((f) => f.id === id && f.regra === r)).map((r) => `${id}: ${r}`));
   console.log(`${n} técnicas, ${comContrato} com contrato próprio; ${quebrados} contrato(s) quebrado(s), ${quebrados - novos.length} já pendente(s)`);
   if (resolvidos.length) console.log('resolvido(s), tire de contratos-pendentes.json: ' + resolvidos.join('; '));
   if (portao && (novos.length || resolvidos.length)) process.exit(1);

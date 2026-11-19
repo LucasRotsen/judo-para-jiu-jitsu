@@ -34,6 +34,8 @@ Judo.register3d({
  safety:['Uke precisa dominar o rolamento para frente (zempo kaiten ukemi) antes de receber sumi gaeshi.',
   'Uke rola por cima do ombro e cai de costas, nunca de cabeça: queixo no peito o tempo todo.',
   'Comece devagar, com Tori só sentando e encaixando o gancho, sem levantar.'],
+ /* contratos (tools/contratos.js): exceção declarada à regra de queda de cabeça, com o motivo */
+ contratos:[{c:'pilao',cabeca:.38,txt:'sumi gaeshi: Uke passa invertido por cima de Tori, levantado pelo peito do pé na coxa; a cabeça fica a ~40 cm do tatame e ele cai de costas'}],
  phases:[
  {s:0,e:1.3,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Pegada direita: Tori segura a gola esquerda de Uke com a mão direita e a manga direita com a esquerda. Uke segura igual, com os braços mais esticados e o tronco um pouco à frente.',
@@ -77,10 +79,10 @@ Judo.register3d({
        uke:{x:.56,y:1.10,z:.32,yaw:-10,pitch:170,roll:-12,h:32,
         leg:{R:B('s',.10,-.82,.16),L:B('s',.18,-.80,-.14)},pole:{legR:[1,0,.2],legL:[1,0,-.2],armR:[0,-.3,1]}}}],
  /* rola sobre o ombro direito: os ombros descem antes da cabeça, queixo no peito */
- [5.3,{uke:{x:.85,y:.95,z:.40,yaw:-13,pitch:212,roll:-10,h:34,
+ [5.3,{uke:{x:.87,y:1.10,z:.40,yaw:-13,pitch:214,roll:-10,h:34,
         leg:{R:B('s',.22,-.80,.16),L:B('s',.28,-.78,-.14)}}}],
  [5.55,{tori:{arm:{R:W3(.77,.40,-.40)},pole:{armR:[0,-.3,1]}},
-       uke:{x:1.20,y:.52,z:.43,yaw:-15,pitch:250,roll:-6,h:34,
+       uke:{x:1.22,y:.62,z:.43,yaw:-15,pitch:258,roll:-6,h:34,
         leg:{R:B('s',.32,-.76,.16),L:B('s',.36,-.74,-.14)}}}],
  [5.8,{uke:{x:1.50,y:.24,z:.45,yaw:-16,pitch:265,roll:-2,h:32}}],
  /* queda: de costas, cabeça perto da cabeça de Tori, na diagonal para +z */

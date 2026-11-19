@@ -81,13 +81,13 @@ Judo.register3d({
        uke:{x:.08,y:1.15,z:-.48,yaw:20,pitch:145,roll:-22,h:-10,leg:{R:B('s',-.05,-.86,.14),L:B('s',-.12,-.84,-.12)},
         arm:{R:B('o',.34,.10,-.30),L:B('s',.1,.25,-.45)}}}],
  /* Uke chega ao chão de costas, pernas ainda no ar; a cabeça não toca primeiro */
- [5.8,{uke:{x:.36,y:1.10,z:-.60,yaw:26,pitch:205,roll:-18,h:-20}}],
- [5.9,{uke:{x:.52,y:.74,z:-.63,yaw:28,pitch:236,roll:-14,h:-25}}],
+ [5.8,{uke:{x:.40,y:1.15,z:-.60,yaw:26,pitch:212,roll:-18,h:15}}],
+ [5.9,{uke:{x:.54,y:.86,z:-.63,yaw:28,pitch:248,roll:-14,h:20}}],
  [6.0,{tori:{y:.84,yaw:388,pitch:72,h:30,leg:{R:W3(-.85,1.24,-.08)}},
-       uke:{x:.66,y:.40,z:-.64,yaw:30,pitch:254,roll:-12,h:-25,leg:{R:B('s',.25,-.80,.12),L:B('s',.20,-.80,-.14)},
+       uke:{x:.66,y:.44,z:-.64,yaw:30,pitch:262,roll:-12,h:22,leg:{R:B('s',.25,-.80,.12),L:B('s',.20,-.80,-.14)},
         arm:{R:B('o',.36,.06,-.28),L:B('s',.05,.05,-.50)}}}],
  [6.3,{tori:{y:.84,yaw:392,pitch:68,h:25,leg:{R:W3(-.84,1.18,-.06)},arm:{R:SL('armR',.2)}},
-       uke:{x:.80,y:.14,z:-.62,yaw:30,pitch:268,roll:0,h:-25,gf:1,leg:{R:W3(1.50,.20,-.80),L:W3(1.42,.25,-1.05)},
+       uke:{x:.80,y:.14,z:-.62,yaw:30,pitch:268,roll:0,h:20,gf:1,leg:{R:W3(1.50,.20,-.80),L:W3(1.42,.25,-1.05)},
         arm:{R:B('o',.38,.02,-.20),L:B('s',0,.15,-.48)}}}],
  /* zanshin: a perna desce só depois de Uke assentar; Tori fica de pé, curvado, com as duas mãos na manga */
  [6.8,{tori:{y:.86,pitch:58,h:15,leg:{R:W3(-.32,.55,.02)},pole:{legR:[1,-.2,.15]}},

@@ -30,6 +30,8 @@ Judo.register3d({
  safety:['Uke precisa dominar o rolamento para frente (zempo kaiten ukemi) antes de receber tomoe nage.',
   'Comece com Uke ajoelhado ou com a projeção pela metade, sem lançar.',
   'O pé empurra, não chuta: pressão contínua na faixa.'],
+ /* contratos (tools/contratos.js): exceção declarada à regra de queda de cabeça, com o motivo */
+ contratos:[{c:'pilao',cabeca:.38,txt:'tomoe nage: Uke passa invertido por cima de Tori, apoiado no pé dele na barriga; a cabeça fica a ~40 cm do tatame e ele cai de costas'}],
  phases:[
  {s:0,e:1.2,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Tori e Uke se seguram de frente. Tori pega as duas golas ou a gola e a manga, com os cotovelos próximos do corpo.',
@@ -76,8 +78,8 @@ Judo.register3d({
          arm:{R:B('s',.40,.30,.24),L:B('s',.40,.30,-.24)},pole:{legR:[1,0,.2],legL:[1,0,-.2]}}}],
  /* quase vertical, invertido, o quadril passa por cima da cabeça de Tori; a perna de Tori fica no alto */
  [5.1,{tori:{leg:{R:W3(-.04,.92,-.10)},arm:{R:B('o',.16,.30,-.18),L:B('o',.16,.30,.18)}},
-       uke:{x:.70,y:.98,pitch:205,h:15,leg:{R:B('s',.05,-.86,.15),L:B('s',.02,-.86,-.15)}}}],
- [5.35,{uke:{x:1.12,y:.62,pitch:240,h:20,leg:{R:B('s',.10,-.85,.16),L:B('s',.08,-.85,-.16)},
+       uke:{x:.72,y:1.16,pitch:205,h:20,leg:{R:B('s',.05,-.86,.15),L:B('s',.02,-.86,-.15)}}}],
+ [5.35,{uke:{x:1.14,y:.74,pitch:254,h:22,leg:{R:B('s',.10,-.85,.16),L:B('s',.08,-.85,-.16)},
          arm:{R:B('s',.25,.20,.45),L:B('s',.25,.20,-.45)}}}],
  /* queda: Uke de costas, estendido, cabeça junto à cabeça de Tori; Tori continua deitado com a perna direita no alto */
  [5.6,{tori:{leg:{R:W3(-.08,.86,-.12)},pole:{legR:[1,1,0]}},
