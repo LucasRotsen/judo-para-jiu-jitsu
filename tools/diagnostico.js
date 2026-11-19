@@ -104,7 +104,9 @@ for (const c of J.CATALOG) {
 console.log('TOTAL (segundos somados)', Object.entries(total).map(([k, v]) => `${k} ${v.toFixed(1)}`).join('  '));
 /* Portão de regressão: cada técnica tem um orçamento (segundos somados por categoria) em tools/orcamento.json.
    --gravar regrava o orçamento com o estado atual; --portao falha se alguma técnica piorou além da folga. */
-if (gravar) { fs.writeFileSync(ORC, JSON.stringify(medido, null, 1) + '\n'); console.log('orçamento gravado em', ORC); }
+/* com ids na linha de comando, grava só esses e mantém o resto do orçamento (antes apagava as outras técnicas) */
+if (gravar) { const base = only.length && fs.existsSync(ORC) ? JSON.parse(fs.readFileSync(ORC, 'utf8')) : {};
+  fs.writeFileSync(ORC, JSON.stringify({ ...base, ...medido }, null, 1) + '\n'); console.log('orçamento gravado em', ORC); }
 if (portao) {
   const orc = JSON.parse(fs.readFileSync(ORC, 'utf8')); let ruim = 0;
   for (const [id, m] of Object.entries(medido)) for (const k of ['cruza', 'proprio', 'salto', 'erro', 'treme']) {
