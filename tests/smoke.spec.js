@@ -140,3 +140,19 @@ test('câmera livre: com Girar ligado, arrastar o palco muda o ângulo sem pausa
   await page.locator('#orbita').click();
   await expect(page.locator('#vname')).not.toHaveText('Câmera livre');
 });
+
+test('"Parece errado" pausa e abre issue com técnica, segundo e link para o quadro', async ({ page }) => {
+  await page.goto('/o-goshi.html');
+  await page.evaluate(() => window.JudoPlayer.seek(4.4));
+  const flag = page.locator('#flag');
+  await flag.evaluate((a) => a.addEventListener('click', (e) => e.preventDefault()));
+  await flag.click();
+  const href = await flag.getAttribute('href');
+  const u = new URL(href);
+  expect(u.origin + u.pathname).toBe('https://github.com/LucasRotsen/judo-para-jiu-jitsu/issues/new');
+  expect(u.searchParams.get('title')).toBe('Parece errado: O Goshi em 4,40 s');
+  const body = u.searchParams.get('body');
+  expect(body).toContain('o-goshi.html#t=4.40');
+  expect(body).toContain('<!-- tecnica=o-goshi t=4.40');
+  await expect(page.locator('#playTxt')).toHaveText('Animar');
+});

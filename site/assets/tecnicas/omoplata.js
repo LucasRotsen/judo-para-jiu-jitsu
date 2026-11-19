@@ -29,6 +29,10 @@ Judo.register3d({
  safety:['O ombro é frágil: aplique devagar, centímetro por centímetro, e solte assim que o parceiro bater.',
   'O rolamento para a frente é a defesa natural da omoplata. No treino, deixe o parceiro rolar em vez de forçar a finalização.',
   'Pratique a posição sem a inclinação final até os dois dominarem a mecânica, e sempre com um professor por perto.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'giro',a:'T.cabeca',centro:'T.quadril',s:3.4,e:6.8,txt:'visto de cima, a cabeça de Tori gira em volta do próprio quadril sem voltar pelo caminho (até sentar)'},
+  {c:'contato',a:'T.coxaL',b:'U.ombroR',s:5.2,e:11,txt:'a perna esquerda de Tori fecha por cima do ombro direito de Uke'}],
  phases:[
  {s:0,e:1.4,kanji:'組み手',ro:'Guarda fechada',pt:'Controle do punho',
   d:'Tori está de costas com a guarda fechada. A mão esquerda dele prende o punho direito de Uke, o braço que vai ser atacado.',

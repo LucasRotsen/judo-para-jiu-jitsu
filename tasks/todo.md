@@ -27,3 +27,29 @@ corpo: 217 s → 38 s. O que resta e por quê:
 - "Simular daqui" faz uma entrada de 0,9 s da pose montada até o início da técnica gravada; não
   adapta a técnica à pose (ex.: se o usuário trocou os bonecos de lado, eles voltam).
 
+
+## 2026-11-19 — Contratos por técnica + botão "isso parece errado" (etapas A e F)
+
+Objetivo: o computador pega sozinho os erros que hoje só o usuário pega (parte errada do corpo
+no contato, lado trocado, cabeça voltando no giro, queda de cabeça).
+
+- [x] `tools/contratos.js`: partes do corpo nomeadas (T.joelhoR, U.peito...) e regras:
+      contato, longe, lado, giro sem volta, e "ninguém cai de cabeça" (vale para toda técnica)
+- [x] Contratos declarados como dados em `def.contratos` (o motor ignora)
+- [x] Validação com erros históricos (`--historico`): as 4 versões antigas falham, as atuais passam
+- [x] Portão no build e na CI, com catraca (`tools/contratos-pendentes.json`)
+- [x] F: "⚑ Parece errado" no player → issue no GitHub com técnica, segundo, fase, ângulo e link
+- [ ] Testes, commit, push
+
+### Revisão
+
+- Os 4 erros que o usuário já tinha apontado são pegos pelos contratos atuais nas versões antigas do git.
+- Calibração honesta: 3 contratos falharam nas versões BOAS na primeira escrita. Em todos o erro era
+  meu, de anatomia ou de régua, não da animação: (1) o joelho do escudo fica a 9 cm do peito porque o gi
+  e o corretor deixam folga; o que separa o certo do errado é o pé ficar na cintura esquerda (no erro, a
+  canela cruzava a barriga até o lado direito); (2) no triângulo fechado o joelho vai para o outro lado da
+  cabeça; o essencial é a coxa por cima do ombro esquerdo; (3) o giro da omoplata se mede em volta do
+  próprio quadril de Tori, vista de cima, até ele sentar.
+- A regra global achou 5 quedas de cabeça que ninguém tinha visto (Ippon Seoi Nage, O Goshi, Uchi Mata,
+  Tomoe Nage, Sumi Gaeshi): Uke vertical com a cabeça a 30 cm do tatame. Ficam na catraca até corrigir.
+- Limite: contrato só pega o que foi escrito. 4 de 53 técnicas têm contrato próprio.

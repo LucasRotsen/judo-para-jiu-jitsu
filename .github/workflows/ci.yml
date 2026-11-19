@@ -21,6 +21,8 @@ jobs:
         run: python3 tools/build.py && git diff --exit-code -- site
       - name: Poses físicas assadas estão em dia com as técnicas e com fisica.js
         run: node tools/assar.js --check
+      - name: Contratos das técnicas (parte certa do corpo, lado certo, sem queda de cabeça)
+        run: node tools/contratos.js --assado --portao
       - run: npm test
       - name: Movimento físico (nada atravessa, nada salta) dentro do orçamento
         run: node tools/diagnostico.js --portao

@@ -193,6 +193,8 @@ h1{font-family:var(--f-head);font-weight:900;font-stretch:118%;text-transform:up
 .tog{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:14px;color:var(--muted);cursor:pointer}
 .tog input{accent-color:var(--band-accent);width:18px;height:18px}
 .clock{margin-left:auto;font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.flag{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 8px;border-radius:8px;white-space:nowrap}
+.flag:hover,.flag:focus-visible{color:var(--accent-text);text-decoration:underline}
 .timeline{position:relative;display:flex;gap:4px;margin:6px 16px 16px;height:44px;cursor:pointer;touch-action:none;user-select:none}
 .seg{flex-basis:0;min-width:0;border:0;padding:0 8px;background:var(--bg);color:var(--ink);border-bottom:4px solid var(--line);
   display:flex;flex-direction:column;justify-content:center;align-items:flex-start;text-align:left;overflow:hidden;cursor:pointer}

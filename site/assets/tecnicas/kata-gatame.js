@@ -36,6 +36,10 @@ Judo.register3d({
  safety:['Solte imediatamente quando o parceiro bater ou disser “bati”.',
   'Aperte de forma progressiva: o estrangulamento sanguíneo faz efeito em poucos segundos.',
   'Pratique o encaixe sem apertar. O aperto completo só com um professor por perto.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.cabeca',de:'U.cabeca',lado:'direita',s:3.6,e:6.6,txt:'a cabeça de Tori encosta do lado direito do rosto de Uke'},
+  {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:7.4,e:10.6,txt:'Tori desmonta para o lado direito de Uke, o mesmo da cabeça'}],
  phases:[
  {s:0,e:1.4,kanji:'馬乗り',ro:'Montada',pt:'Uke empurra',
   d:'Tori está montado sobre o quadril de Uke. Para tirar Tori de cima, Uke estica os braços e empurra o peito dele.',

@@ -25,6 +25,10 @@ Judo.register3d({
  safety:['Solte imediatamente quando o parceiro bater na perna, no corpo ou no tatame, ou disser “bati”.',
   'Aperte de forma progressiva. Um estrangulamento sanguíneo leva segundos para fazer efeito.',
   'Pratique a trava sem apertar. O aperto completo só com um professor por perto.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.coxaR',b:'U.pescoco',s:5.6,e:10.6,txt:'o triângulo fecha no pescoço: a coxa direita de Tori fica atrás do pescoço de Uke'},
+  {c:'contato',a:'T.coxaR',b:'U.ombroL',s:5.6,e:10.6,tol:.10,txt:'a coxa direita de Tori fica por cima do ombro ESQUERDO de Uke (até 10 cm da articulação do ombro)'}],
  phases:[
  {s:0,e:1.2,kanji:'組み手',ro:'Guarda fechada',pt:'Controle dos punhos',
   d:'Tori está de costas com as pernas cruzadas nas costas de Uke. Uke apoia as mãos na barriga de Tori para manter a postura, e Tori controla os dois punhos.',

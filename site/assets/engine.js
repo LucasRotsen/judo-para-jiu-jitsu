@@ -225,6 +225,7 @@ const Progress={KEY:'jpj:v1',
  toggle(set,id){return this.update(d=>{if(d[set][id])delete d[set][id];else d[set][id]=Date.now();})[set][id]!==undefined;}};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const GROUP={nage:'Nage-waza · projeção',ne:'Ne-waza · solo'};
+const REPO='https://github.com/LucasRotsen/judo-para-jiu-jitsu',BASE='https://lucasrotsen.github.io/judo-para-jiu-jitsu/';
 const DEFAULT_SAFETY=['Pratique apenas com um professor qualificado, em tatame, e com um parceiro que conhece a técnica.',
  'Comece devagar e sem resistência. Repita a entrada muitas vezes antes de aplicar com força.'];
 
@@ -259,6 +260,7 @@ function mountPage(id){
      <button data-s="0.25" aria-pressed="false">0,25×</button><button data-s="0.5" aria-pressed="false">0,5×</button><button data-s="1" aria-pressed="true">1×</button></div>
     <label class="tog"><input type="checkbox" id="ann" checked> Anotações</label>
     <span class="clock" id="clock">0,0 s</span>
+    <a class="flag" id="flag" href="${REPO}/issues/new" target="_blank" rel="noopener" title="Abre uma issue no GitHub com a técnica e o segundo exato, para corrigir o movimento">⚑ Parece errado</a>
    </div>
    <div class="timeline" id="tl" aria-label="Linha do tempo"><div class="playhead" id="ph"></div></div>
   </div>
@@ -314,6 +316,11 @@ for(const k of Object.keys(pills)){paint(k,!!saved[k][id]);$('#'+k).onclick=()=>
  $('#next').onclick=()=>jump((phaseAt(t)+1)%PH.length);
  root.querySelectorAll('.speed button').forEach(b=>b.onclick=()=>{speed=+b.dataset.s;Progress.update(d=>{d.speed=speed;});root.querySelectorAll('.speed button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
  $('#ann').onchange=e=>{annot=e.target.checked;render();};
+ /* "Parece errado": pausa e abre uma issue já com técnica, segundo, fase e ângulo; o link volta para o mesmo quadro */
+ $('#flag').addEventListener('click',e=>{setPlay(false);render();const i=phaseAt(t),p=PH[i],ts=t.toFixed(2),vista=orb?'Câmera livre':def.is3d?def.views[mv].name:'';
+  const pag=`${BASE}${id}.html#t=${ts}`;
+  const corpo=`**O que está estranho** (ex.: perna atravessando, braço do lado errado, queda de cabeça):\n\n\n---\n- Técnica: ${def.name} (\`${id}\`)\n- Momento: ${ts} s, fase ${i+1} (${p.ro}: ${p.pt})\n- Ângulo: ${vista}\n- Ver o quadro: ${pag}\n\n<!-- tecnica=${id} t=${ts} vista=${mv} -->`;
+  e.currentTarget.href=`${REPO}/issues/new?title=${encodeURIComponent(`Parece errado: ${def.name} em ${ts.replace('.',',')} s`)}&body=${encodeURIComponent(corpo)}`;});
  /* Toque no palco: arrastar na horizontal avança/volta o tempo; toque simples alterna play/pausa. */
 const hint=$('.drag-hint'),hideHint=()=>hint&&hint.classList.add('gone');setTimeout(hideHint,4000);
 const ob=$('#orbita');if(ob)ob.onclick=()=>{girar=!girar;ob.setAttribute('aria-pressed',girar);ob.classList.toggle('on',girar);cv.style.cursor=girar?'move':'';cv.style.touchAction=girar?'none':'';if(!girar){orb=null;render();}};

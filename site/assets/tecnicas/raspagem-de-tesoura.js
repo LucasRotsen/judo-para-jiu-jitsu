@@ -26,6 +26,10 @@ Judo.register3d({
  safety:['Treine a raspagem devagar e com um parceiro que sabe cair de lado.',
   'Cuidado com o joelho de quem é raspado: a perna de baixo corta na altura do joelho, não chuta a articulação.',
   'Ao subir para a montada, apoie os joelhos no tatame em vez de cair com o peso sobre o parceiro.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.joelhoR',b:'U.peito',s:3.0,e:4.5,tol:.12,txt:'escudo: o joelho direito fica no peito de Uke (até 12 cm: o gi e o corretor deixam folga)'},
+  {c:'lado',a:'T.peR',de:'U.quadril',lado:'esquerda',s:3.0,e:4.5,txt:'a canela desce até a cintura ESQUERDA de Uke, sem atravessar a barriga'}],
  phases:[
  {s:0,e:1.4,kanji:'1',ro:'Guarda fechada',pt:'Gola e manga',
   d:'Tori está de costas com as pernas cruzadas nas costas de Uke. A mão direita segura a gola direita de Uke, alta, e a mão esquerda segura a manga direita.',
