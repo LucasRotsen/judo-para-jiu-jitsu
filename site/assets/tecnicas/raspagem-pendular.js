@@ -26,6 +26,10 @@ Judo.register3d({
  safety:['Treine devagar e com um parceiro que sabe cair de lado.',
   'O braço preso pela manga não tem como amortecer a queda: Uke cai sobre o ombro, então controle a velocidade.',
   'Ao subir para a montada, apoie os joelhos no tatame em vez de cair com o peso sobre o parceiro.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.maoL',b:'U.antebracoR',s:0,e:5.2,txt:'a mão esquerda de Tori segura a manga DIREITA de Uke'},
+  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'frente',s:7.6,e:'fim',min:.1,txt:'Uke cai de costas e Tori sobe montado'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Guarda fechada',pt:'Manga e gola',
   d:'Tori está de costas com as pernas cruzadas nas costas de Uke. A mão esquerda segura a manga direita de Uke, no punho, e a mão direita segura a gola esquerda dele.',

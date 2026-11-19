@@ -31,6 +31,11 @@ Judo.register3d({
  safety:['Aplique devagar. A chave de braço machuca o cotovelo antes de doer muito: solte assim que o parceiro bater.',
   'Nunca dê um tranco ao subir o quadril. A pressão aumenta aos poucos.',
   'Pratique com um professor qualificado e com parceiro que sabe bater a tempo.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'U.bracoR',b:'T.coxaR',s:5.6,e:'fim',txt:'o braço direito de Uke fica entre as coxas de Tori (coxa direita)'},
+  {c:'contato',a:'U.bracoR',b:'T.coxaL',s:5.6,e:'fim',txt:'o braço direito de Uke fica entre as coxas de Tori (coxa esquerda)'},
+  {c:'lado',a:'T.cabeca',de:'U.tronco',lado:'direita',s:5.6,e:'fim',min:.3,txt:'Tori cai de costas para o lado do braço atacado, em cruz'}],
  phases:[
  {s:0,e:1.8,kanji:'縦',ro:'Montada',pt:'Uke empurra',
   d:'Tori está montado e Uke empurra o peito dele com os dois braços esticados para criar espaço. Braços esticados, longe do corpo, são a porta da chave de braço.',

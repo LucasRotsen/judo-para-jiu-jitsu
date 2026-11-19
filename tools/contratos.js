@@ -164,7 +164,7 @@ function main() {
   }
   /* catraca: quedas de cabeça já conhecidas ficam em contratos-pendentes.json até serem corrigidas; nenhuma nova entra */
   const PEND = path.join(__dirname, 'contratos-pendentes.json'), pend = fs.existsSync(PEND) ? JSON.parse(fs.readFileSync(PEND, 'utf8')) : {};
-  const novos = falhas.filter((f) => !(pend[f.id] || []).includes(f.regra)), resolvidos = Object.entries(pend).flatMap(([id, rs]) => rs.filter((r) => !falhas.some((f) => f.id === id && f.regra === r)).map((r) => `${id}: ${r}`));
+  const novos = falhas.filter((f) => !(pend[f.id] || []).includes(f.regra)), resolvidos = Object.entries(pend).filter(([id]) => !only.length || only.includes(id)).flatMap(([id, rs]) => rs.filter((r) => !falhas.some((f) => f.id === id && f.regra === r)).map((r) => `${id}: ${r}`));
   console.log(`${n} técnicas, ${comContrato} com contrato próprio; ${quebrados} contrato(s) quebrado(s), ${quebrados - novos.length} já pendente(s)`);
   if (resolvidos.length) console.log('resolvido(s), tire de contratos-pendentes.json: ' + resolvidos.join('; '));
   if (portao && (novos.length || resolvidos.length)) process.exit(1);

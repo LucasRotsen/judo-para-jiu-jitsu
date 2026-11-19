@@ -36,6 +36,11 @@ Judo.register3d({
  safety:['Arraste a perna sem torcer o joelho de Uke: o quadril dele vira junto com a perna.',
   'Desça o peito com controle, sem cair com o peso sobre as costelas.',
   'Treine primeiro com Uke cooperando, depois com resistência leve.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'U.joelhoR',de:'U.quadril',lado:'esquerda',s:3.0,e:5.6,min:.05,txt:'Tori arrasta a perna: os joelhos de Uke apontam para o lado esquerdo dele'},
+  {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:7.6,e:'fim',min:.15,txt:'Tori termina no lado DIREITO de Uke, o oposto ao que as pernas apontam'},
+  {c:'contato',a:'T.peito',b:'U.peito',s:7.6,e:'fim',txt:'peito no peito'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Pegada',pt:'Tornozelo e joelho',
   d:'Uke está de costas com a guarda aberta e os pés no quadril de Tori. Tori fica em pé, com base, e segura a calça da perna direita de Uke: a mão direita no tornozelo e a mão esquerda no joelho.',

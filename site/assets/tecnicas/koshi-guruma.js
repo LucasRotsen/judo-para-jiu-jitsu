@@ -32,6 +32,13 @@ Judo.register3d({
  safety:['Pratique com orientação de um professor, em tatame, e com um parceiro que domina o ukemi.',
   'O braço no pescoço guia o giro, não estrangula: não aperte a garganta.',
   'Tori mantém a manga presa até Uke tocar o tatame e não cai junto por cima dele.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.maoR',b:'U.pescoco',s:2.8,e:5.2,txt:'a mão direita de Tori fica na nuca de Uke'},
+  {c:'lado',a:'T.maoR',de:'U.pescoco',lado:'tras',s:2.8,e:5.2,min:.05,txt:'o braço envolve o pescoço por trás: a mão fica atrás do pescoço, não na frente'},
+  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'direita',s:4.2,e:5.0,txt:'o quadril de Tori passa além do quadril de Uke, para a direita dele'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:6.5,e:'fim',min:.6,txt:'Uke roda por cima do quadril e cai de costas à frente de Tori'},
+  {c:'lado',a:'U.cabeca',de:'T.quadril',lado:'esquerda',s:7.0,e:'fim',min:.05,txt:'a cabeça de Uke cai um pouco para a esquerda de Tori'}],
  phases:[
  {s:0,e:1,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Tori segura a manga direita de Uke com a mão esquerda e a gola esquerda com a mão direita.',

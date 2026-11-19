@@ -28,6 +28,11 @@ Judo.register3d({
  safety:['Na ponte, empurre com os pés e o quadril, não com o pescoço. O peso fica nos ombros.',
   'Quem é rolado não deve apoiar o braço preso esticado no chão: caia com o ombro encolhido.',
   'Treine devagar e com um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.peL',b:'U.peR',s:4.6,e:5.4,txt:'o pé esquerdo de Tori prende o pé DIREITO de Uke, do mesmo lado do braço preso'},
+  {c:'contato',a:'U.antebracoR',b:'T.peito',s:2.6,e:5.4,txt:'o braço DIREITO de Uke fica preso contra o peito de Tori'},
+  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'frente',s:8.0,e:'fim',min:.1,txt:'Uke tomba e Tori termina por cima, dentro da guarda'}],
  phases:[
  {s:0,e:2.0,kanji:'1',ro:'Montada',pt:'Uke por cima, mãos no peito',
   d:'Tori está de costas e Uke está montado no quadril dele, joelhos no chão dos dois lados e mãos apoiadas no peito de Tori. Tori mantém os cotovelos fechados junto ao corpo.',

@@ -36,6 +36,11 @@ Judo.register3d({
  safety:['Empurre o joelho de Uke para baixo com a mão, sem torcer a articulação.',
   'O joelho de Tori desliza por cima da coxa de Uke; não cai com o peso em cima do joelho dele.',
   'Treine primeiro com Uke abrindo sem resistência, depois com resistência leve.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.maoL',b:'U.quadril',s:0,e:1.6,txt:'postura: as mãos de Tori no quadril de Uke'},
+  {c:'contato',a:'T.canelaR',b:'U.coxaR',s:6.6,e:8.2,txt:'o joelho e a canela direitos de Tori atravessam por cima da coxa direita de Uke'},
+  {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:8.6,e:'fim',min:.15,txt:'Tori termina no controle lateral pelo lado direito de Uke'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Postura',pt:'Costas retas, mãos no quadril',
   d:'Uke está de costas com as pernas fechadas na cintura de Tori e os tornozelos cruzados nas costas dele. Tori senta nos calcanhares com as costas retas e a cabeça alta, e apoia as duas mãos no quadril de Uke, na faixa.',

@@ -33,6 +33,11 @@ Judo.register3d({
   'Nunca gire o corpo de forma explosiva com o pé preso. A pressão vem do quadril estendendo aos poucos.',
   'Uke não deve girar de repente para escapar: isso transfere a força para o joelho.',
   'Pratique com um professor por perto e com parceiro que sabe bater a tempo.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.antebracoL',b:'U.canelaR',s:4.0,e:7.8,txt:'o braço ESQUERDO de Tori abraça o tornozelo DIREITO de Uke'},
+  {c:'lado',a:'T.peL',de:'U.quadril',lado:'direita',s:4.2,e:7.8,min:.0,txt:'a perna de fora (esquerda) fica com o pé no quadril direito de Uke'},
+  {c:'contato',a:'T.peR',b:'U.barriga',s:5.2,e:7.8,txt:'a perna de dentro (direita) passa entre as pernas de Uke, pé na barriga'}],
  phases:[
  {s:0,e:1.6,kanji:'組み手',ro:'Guarda aberta',pt:'Pés no quadril',
   d:'Uke está de costas com a guarda aberta e os pés no quadril de Tori. Tori está em pé entre as pernas dele, com as mãos nos joelhos de Uke.',

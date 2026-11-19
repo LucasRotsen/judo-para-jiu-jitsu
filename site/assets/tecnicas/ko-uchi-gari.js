@@ -29,6 +29,11 @@ Judo.register3d({
  safety:['Uke precisa dominar o ushiro ukemi: queixo no peito e braços batendo no tatame.',
   'Ceife com a sola, nunca com o calcanhar ou com a canela contra o tornozelo de Uke.',
   'Tori acompanha a queda com um passo e fica de pé, sem despencar sobre Uke.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.peR',b:'U.peR',s:3.1,e:4.1,txt:'a sola direita de Tori encosta no calcanhar direito de Uke'},
+  {c:'lado',a:'T.peR',de:'U.peR',lado:'tras',s:3.1,e:3.6,txt:'a sola fica atrás do calcanhar, para ceifar na direção dos dedos'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:5.2,e:'fim',min:.4,txt:'Uke cai reto para trás, à frente de Tori'}],
  phases:[
  {s:0,e:1,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Pegada clássica: a mão esquerda de Tori na manga direita de Uke e a mão direita na gola esquerda. Os dois em postura natural.',

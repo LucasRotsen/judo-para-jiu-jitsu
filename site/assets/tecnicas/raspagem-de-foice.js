@@ -33,6 +33,11 @@ Judo.register3d({
  safety:['Faça devagar no treino: quem é raspado cai sentado e precisa saber apoiar as mãos atrás e recolher o queixo.',
   'A perna de baixo corta no calcanhar, nunca chuta a parte de trás do joelho.',
   'Ao levantar, não caia com o peso sobre a perna presa do parceiro.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.maoL',b:'U.peR',s:3.4,e:7.6,txt:'a mão esquerda de Tori segura o calcanhar DIREITO de Uke'},
+  {c:'lado',a:'T.peL',de:'U.quadril',lado:'esquerda',s:4.0,e:5.4,min:.0,txt:'a perna de cima tem o pé no quadril ESQUERDO de Uke'},
+  {c:'lado',a:'T.peR',de:'U.peL',lado:'tras',s:4.0,e:5.4,txt:'a foice: a perna de baixo fica atrás do calcanhar esquerdo de Uke'}],
  phases:[
  {s:0,e:1.8,kanji:'1',ro:'Guarda aberta',pt:'Uke em pé',
   d:'Tori puxou para a guarda e Uke ficou em pé. Tori está sentado para trás, com os dois pés no quadril de Uke e as mãos nas mangas dele. Uke segura a calça de Tori.',

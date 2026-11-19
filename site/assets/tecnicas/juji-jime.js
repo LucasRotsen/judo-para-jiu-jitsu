@@ -32,6 +32,12 @@ Judo.register3d({
  safety:['Solte imediatamente quando o parceiro bater (no tatame, nele ou com a voz). Nunca aperte de uma vez.',
   'O estrangulamento de gola é sanguíneo e chega à perda de consciência em segundos. Aperte devagar no treino.',
   'Pratique só com orientação de um professor qualificado.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.antebracoR',b:'U.pescoco',s:5.4,e:7.6,txt:'o antebraço direito de Tori fica na frente da garganta'},
+  {c:'contato',a:'T.antebracoL',b:'U.pescoco',s:5.4,e:7.6,txt:'o antebraço esquerdo cruza por cima, fazendo o X'},
+  {c:'lado',a:'T.maoR',de:'U.pescoco',lado:'direita',s:3.0,e:7.6,txt:'a mão direita de Tori entra funda na gola DIREITA de Uke'},
+  {c:'lado',a:'T.maoL',de:'U.pescoco',lado:'esquerda',s:4.8,e:7.6,txt:'a mão esquerda cruza e pega a gola ESQUERDA de Uke'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Guarda fechada',pt:'Controle dos punhos',
   d:'Tori está de costas com as pernas cruzadas nas costas de Uke. Uke apoia as mãos na barriga de Tori para manter a postura, e Tori segura os punhos dele.',

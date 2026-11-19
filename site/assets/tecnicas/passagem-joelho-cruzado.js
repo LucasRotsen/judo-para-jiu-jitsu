@@ -35,6 +35,12 @@ Judo.register3d({
  safety:['O joelho desliza por cima da coxa de Uke; não cai com o peso sobre o joelho dele.',
   'Desça o peito com controle sobre o peito de Uke.',
   'Treine primeiro com Uke cooperando, depois com resistência leve.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.maoL',b:'U.joelhoR',s:1.8,e:4.2,txt:'a mão esquerda de Tori prende o joelho DIREITO de Uke no chão'},
+  {c:'contato',a:'T.canelaR',b:'U.coxaR',s:3.6,e:6.2,txt:'o joelho e a canela direitos de Tori atravessam por cima da coxa direita de Uke'},
+  {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:8.4,e:'fim',min:.15,txt:'Tori passa para o lado do joelho: termina no lado direito de Uke'},
+  {c:'contato',a:'T.peito',b:'U.peito',s:7.8,e:'fim',tol:.06,txt:'peito no peito (até 6 cm: os dois gis)'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Pegada',pt:'Gola e joelho',
   d:'Uke está de costas com os joelhos para cima. Tori fica em pé nos pés dele, curvado, a mão direita na gola de Uke e a mão esquerda no joelho direito dele.',

@@ -40,6 +40,11 @@ Judo.register3d({
   'Uke rola por cima do ombro de Tori e toca o tatame com o ombro e as costas, com o queixo no peito. Nunca de cabeça.',
   'Comece só com a entrada e o levantamento, devolvendo Uke ao chão em pé. A queda completa vem depois, devagar e com Uke preparado.',
   'Tori também cai de costas com o queixo no peito, e solta a pegada a tempo de Uke fazer o ukemi.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.cabeca',de:'U.peito',lado:'direita',s:2.8,e:4.8,txt:'a cabeça de Tori encosta no lado direito do peito de Uke'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'esquerda',s:6.5,e:'fim',min:.3,txt:'Uke passa por cima do ombro ESQUERDO de Tori'},
+  {c:'lado',a:'U.cabeca',de:'T.quadril',lado:'acima',s:6.5,e:'fim',min:.1,txt:'Uke termina de costas, com a cabeça ao lado da cabeça de Tori'}],
  phases:[
  {s:0,e:2.1,kanji:'攻撃',ro:'Kōgeki',pt:'O ataque de Uke',
   d:'Uke avança com o pé direito e levanta o punho direito para golpear de cima para baixo, como no nage-no-kata. Tori espera o golpe com os joelhos destravados.',

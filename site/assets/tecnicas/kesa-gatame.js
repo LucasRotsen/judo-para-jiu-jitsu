@@ -37,6 +37,10 @@ Judo.register3d({
  safety:['O controle vem do peso no peito, não de espremer o pescoço. Braço em volta do pescoço não é estrangulamento.',
   'Uke bate (maitta) se sentir dor no ombro ou falta de ar. Tori alivia na hora.',
   'Treine a ponte de Uke e a resposta de Tori com resistência leve primeiro, aumentando aos poucos.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:3.2,e:'fim',min:.1,txt:'Tori senta do lado DIREITO de Uke'},
+  {c:'contato',a:'T.antebracoR',b:'U.pescoco',s:3.6,e:'fim',txt:'o braço direito de Tori passa por baixo do pescoço de Uke'}],
  phases:[
  {s:0,e:1.4,kanji:'姿勢',ro:'Shisei',pt:'Chegada pelo lado',
   d:'Uke está de costas no tatame. Tori chega pelo lado direito dele e ajoelha na altura da faixa, de frente para Uke: joelho esquerdo no chão, pé direito plantado.',

@@ -27,6 +27,11 @@ Judo.register3d({
  safety:['Treine primeiro em movimento lento, com Uke andando para frente, até sentir o tempo do passo.',
   'Varra com a sola do pé, nunca com o peito do pé ou com o calcanhar contra o tornozelo.',
   'Mantenha a manga presa e puxada para cima, para Uke cair de lado amortecido, e não sobre o ombro.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.peL',b:'U.peR',s:3.2,e:3.9,txt:'o pé esquerdo de Tori varre o pé direito de Uke'},
+  {c:'contato',a:'T.joelhoR',b:'U.barriga',s:6.2,e:'fim',txt:'no fim, o joelho direito de Tori fica na barriga de Uke'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:4.8,e:'fim',min:.3,txt:'Uke cai à frente de Tori'}],
  phases:[
  {s:0,e:1,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Pegada clássica: a mão esquerda de Tori na manga direita de Uke e a mão direita na gola esquerda. Os dois em postura natural, prontos para se deslocar.',

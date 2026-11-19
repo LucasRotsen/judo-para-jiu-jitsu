@@ -35,6 +35,11 @@ Judo.register3d({
  safety:['Treine devagar: quem é raspado cai de lado e de costas, sem tentar apoiar a mão aberta no tatame.',
   'Segure o calcanhar ou a calça; não torça o pé do parceiro.',
   'Ao subir por cima, desça o peso aos poucos sobre o parceiro.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.coxaL',b:'U.coxaR',s:0,e:1.8,txt:'meia-guarda: as pernas de Tori prendem a perna DIREITA de Uke'},
+  {c:'contato',a:'T.maoR',b:'U.peR',s:4.2,e:7.6,txt:'a mão de fora (direita) pega o calcanhar direito de Uke'},
+  {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:8.4,e:'fim',min:.1,txt:'Uke cai de lado e Tori sobe por cima pelo lado direito dele'}],
  phases:[
  {s:0,e:1.8,kanji:'1',ro:'Meia-guarda',pt:'Perna presa e esgrima',
   d:'Tori está de costas com as pernas prendendo a perna direita de Uke, que está por cima. O braço esquerdo de Tori passa por baixo do braço direito de Uke (esgrima) e a mão vai às costas dele. A mão direita apoia no quadril esquerdo de Uke.',

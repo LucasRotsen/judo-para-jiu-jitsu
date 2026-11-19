@@ -34,6 +34,12 @@ Judo.register3d({
  safety:['Pratique com orientação de um professor, em tatame, e com um parceiro que domina o ukemi.',
   'Repita a entrada (uchikomi) muitas vezes antes de projetar.',
   'Tori mantém a manga presa até Uke tocar o tatame. É ela que protege a cabeça de Uke na queda.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.coxaR',b:'U.canelaR',s:4.8,e:5.4,txt:'a perna direita reta de Tori, na altura do joelho, bloqueia a canela direita de Uke'},
+  {c:'lado',a:'T.canelaR',de:'U.canelaR',lado:'frente',s:4.6,e:5.2,txt:'a perna de Tori fica NA FRENTE da canela de Uke (sem encaixe de quadril)'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:7.0,e:'fim',min:.5,txt:'Uke cai à frente de Tori'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'esquerda',s:7.0,e:'fim',min:.15,txt:'as pernas de Uke ficam para a frente e para a esquerda de Tori'}],
  phases:[
  {s:0,e:1.2,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Tori segura a manga direita de Uke com a mão esquerda e a gola com a mão direita. Os dois em postura natural.',

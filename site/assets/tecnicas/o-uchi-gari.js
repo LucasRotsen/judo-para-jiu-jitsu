@@ -26,6 +26,11 @@ Judo.register3d({
  safety:['Uke precisa dominar o ukemi para trás (ushiro ukemi): queixo no peito e braços batendo no tatame.',
   'Tori não despenca sobre Uke: acompanha a queda com um passo e fica de pé.',
   'Pratique primeiro o gancho parado, sem projetar, até o movimento da perna ficar limpo.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.coxaR',b:'U.coxaL',s:2.9,e:4.0,txt:'o gancho entra por dentro: a perna direita de Tori contra a perna esquerda de Uke'},
+  {c:'lado',a:'T.peR',de:'U.peL',lado:'tras',s:3.2,e:4.0,txt:'o pé direito de Tori engancha por trás do calcanhar esquerdo de Uke'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:5.0,e:'fim',min:.4,txt:'Uke cai de costas à frente de Tori, que fica dentro da guarda'}],
  phases:[
  {s:0,e:1,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Pegada clássica: a mão esquerda de Tori na manga direita de Uke e a direita na gola esquerda. Os dois em postura natural.',

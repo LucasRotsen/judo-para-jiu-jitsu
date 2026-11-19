@@ -28,6 +28,12 @@ Judo.register3d({
  safety:['Treine devagar e com um parceiro que sabe cair de lado sem apoiar a mão.',
   'Quem recebe não deve tentar travar a queda com o braço preso: o ombro fica exposto.',
   'Ao subir para a montada, apoie os joelhos no tatame em vez de cair com o peso sobre o parceiro.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'contato',a:'T.bracoL',b:'U.ombroR',s:4.2,e:5.4,tol:.06,txt:'o braço esquerdo de Tori passa por cima do ombro DIREITO de Uke (até 6 cm da articulação do ombro)'},
+  {c:'contato',a:'T.antebracoL',b:'U.bracoR',s:4.0,e:5.4,txt:'e prende o braço direito de Uke junto ao corpo'},
+  {c:'lado',a:'T.maoR',de:'T.quadril',lado:'direita',s:2.4,e:5.4,min:.1,txt:'Tori senta com a mão DIREITA apoiada atrás'},
+  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'frente',s:8.0,e:'fim',min:.1,txt:'Uke cai de costas e Tori sobe montado'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Guarda fechada',pt:'Uke ergue a postura',
   d:'Tori está de costas com a guarda fechada. Uke senta para trás, ergue o tronco e apoia as mãos no quadril de Tori para abrir a guarda.',
