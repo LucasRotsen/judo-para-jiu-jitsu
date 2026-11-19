@@ -49,6 +49,9 @@ window.JUDO_CATALOG = [
  {"id": "abrir-e-passar-a-guarda", "name": "Abrir a guarda fechada e passar", "group": "ne", "origin": "bjj"},
  {"id": "passagem-por-baixo", "name": "Passagem por baixo da perna", "group": "ne", "origin": "bjj"},
  {"id": "passagem-arrastando-a-perna", "name": "Passagem arrastando a perna", "group": "ne", "origin": "bjj"},
+ {"id": "fuga-de-quadril", "name": "Fuga de quadril (repor a guarda)", "group": "ne", "origin": "bjj"},
+ {"id": "puxar-para-a-guarda", "name": "Puxar para a guarda", "group": "ne", "origin": "bjj"},
+ {"id": "tomar-as-costas", "name": "Tomar as costas", "group": "ne", "origin": "bjj"},
  {"id": "kata-gatame", "name": "Kata Gatame", "group": "ne"},
  {"id": "drill-quadril-kimura-guilhotina", "name": "Drill: quadril, kimura, guilhotina", "group": "drill", "origin": "bjj", "usa": ["raspagem-de-quadril", "kimura", "guilhotina"]}
 ];

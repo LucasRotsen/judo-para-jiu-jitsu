@@ -39,7 +39,7 @@ window.JUDO_GRAFO = {
   {"tec": "kata-guruma", "tipo": "projecao", "de": ["em-pe", "pe"], "para": ["controle-lateral", "cima"], "gatilho": "Uke puxado para a frente e para a direita, manga para cima", "nota": "Tori termina em pé e desce para o 100 quilos."},
   {"tec": "tani-otoshi", "tipo": "projecao", "de": ["em-pe", "pe"], "para": ["controle-lateral", "cima"], "gatilho": "Uke com o peso para trás, nos calcanhares", "nota": "Tori termina deitado ao lado de Uke e vira por cima."},
   {"tec": "ura-nage", "tipo": "projecao", "de": ["em-pe", "pe"], "para": ["controle-lateral", "cima"], "gatilho": "Uke avança para atacar de frente", "nota": "Os dois terminam deitados; Tori vira por cima."},
-  {"tec": null, "nome": "Puxar para a guarda", "tipo": "puxar", "de": ["em-pe", "pe"], "para": ["guarda-fechada", "baixo"], "gatilho": "Com pegada na gola e na manga, sentar e fechar as pernas na cintura de Uke"},
+  {"tec": "puxar-para-a-guarda", "nome": "Puxar para a guarda", "tipo": "puxar", "de": ["em-pe", "pe"], "para": ["guarda-fechada", "baixo"], "gatilho": "Com pegada na gola e na manga, sentar e fechar as pernas na cintura de Uke"},
 
   {"tec": "chave-de-braco-da-guarda", "tipo": "finalizacao", "de": ["guarda-fechada", "baixo"], "para": ["finalizado", "fim"], "gatilho": "Uke apoia as mãos no seu peito"},
   {"tec": "sankaku-jime", "tipo": "finalizacao", "de": ["guarda-fechada", "baixo"], "para": ["finalizado", "fim"], "gatilho": "Um braço de Uke dentro e outro fora das suas pernas"},
@@ -69,13 +69,13 @@ window.JUDO_GRAFO = {
   {"tec": null, "nome": "Passar o joelho para a montada", "tipo": "transicao", "de": ["controle-lateral", "cima"], "para": ["montada", "cima"], "gatilho": "Uke com os braços longe do quadril"},
   {"tec": null, "nome": "Subir para o joelho na barriga", "tipo": "transicao", "de": ["controle-lateral", "cima"], "para": ["joelho-na-barriga", "cima"], "gatilho": "Uke empurra para criar espaço"},
   {"tec": null, "nome": "Girar para o norte-sul", "tipo": "transicao", "de": ["controle-lateral", "cima"], "para": ["norte-sul", "cima"], "gatilho": "Uke vira para o seu lado para fugir"},
-  {"tec": null, "nome": "Fuga de quadril e repor a guarda", "tipo": "fuga", "de": ["controle-lateral", "baixo"], "para": ["guarda-fechada", "baixo"], "gatilho": "Cotovelo e joelho colados, espaço para pôr o joelho na frente"},
+  {"tec": "fuga-de-quadril", "nome": "Fuga de quadril e repor a guarda", "tipo": "fuga", "de": ["controle-lateral", "baixo"], "para": ["guarda-fechada", "baixo"], "gatilho": "Cotovelo e joelho colados, espaço para pôr o joelho na frente"},
   {"tec": null, "nome": "Virar de quatro", "tipo": "fuga", "de": ["controle-lateral", "baixo"], "para": ["tartaruga", "baixo"], "gatilho": "Tori alivia o peso do peito"},
   {"tec": null, "nome": "Do joelho na barriga para a montada", "tipo": "transicao", "de": ["joelho-na-barriga", "cima"], "para": ["montada", "cima"], "gatilho": "Uke empurra o joelho e deixa o quadril livre"},
 
   {"tec": "juji-gatame", "tipo": "finalizacao", "de": ["montada", "cima"], "para": ["finalizado", "fim"], "gatilho": "Uke empurra o seu peito com os braços esticados"},
   {"tec": "kata-gatame", "tipo": "finalizacao", "de": ["montada", "cima"], "para": ["finalizado", "fim"], "gatilho": "Uke empurra com um braço esticado"},
-  {"tec": null, "nome": "Tomar as costas", "tipo": "transicao", "de": ["montada", "cima"], "para": ["costas", "cima"], "gatilho": "Uke vira de lado para fugir"},
+  {"tec": "tomar-as-costas", "nome": "Tomar as costas", "tipo": "transicao", "de": ["montada", "cima"], "para": ["costas", "cima"], "gatilho": "Uke vira de lado para fugir"},
   {"tec": "saida-da-montada", "tipo": "fuga", "de": ["montada", "baixo"], "para": ["guarda-fechada", "cima"], "gatilho": "Uke com as mãos no seu peito e o peso para a frente"},
 
   {"tec": "hadaka-jime", "tipo": "finalizacao", "de": ["costas", "cima"], "para": ["finalizado", "fim"], "gatilho": "Uke deixa o pescoço exposto"},
