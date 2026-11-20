@@ -12,12 +12,12 @@ const toriBase={x:.02,y:.55,z:.74,yaw:90,pitch:8,roll:0,h:12,
  leg:{R:W3(.15,.07,.44),L:W3(-.10,.07,1.10)},arm:{R:B('s',.24,.02,.13),L:B('s',.16,-.02,-.15)},
  pole:{legR:[1,.4,.2],legL:[1,-.8,-.1],armR:[-.3,-.8,.4],armL:[-.3,-.8,-.4]}};
 /* kesa-gatame: sentado ao lado, tronco inclinado à frente e caído sobre o peito de Uke */
-const kesa={x:-.42,y:.17,z:.44,yaw:170,pitch:35,roll:38,h:35,
+const kesa={x:-.12,y:.17,z:.40,yaw:160,pitch:65,roll:20,h:35,
  leg:{R:W3(-1.00,.07,.80),L:W3(-.02,.07,.86)},
  arm:{R:B('o',-.08,.52,-.12),L:SL('armR',.25)},
  pole:{legR:[.3,.2,-1],legL:[.4,.9,-.6],armR:[.6,-.8,-.3],armL:[-.2,-1,-.6]}};
 /* braço direito de Uke: cotovelo na axila esquerda de Tori, antebraço para cima por fora do ombro esquerdo dele */
-const presoR=B('o',-.23,.35,-.25);
+const presoR=B('o',-.12,.62,-.24);
 Judo.register3d({
  id:'kesa-gatame', name:'Kesa Gatame', kanji:'袈裟固',
  cls:'Ne-waza · Osaekomi-waza', group:'ne',
@@ -40,8 +40,7 @@ Judo.register3d({
  /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
  contratos:[
   {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:3.2,e:'fim',min:.1,txt:'Tori senta do lado DIREITO de Uke'},
-  {c:'contato',a:'T.antebracoR',b:'U.pescoco',s:3.6,e:'fim',txt:'o braço direito de Tori passa por baixo do pescoço de Uke'},
-  {c:'contato',a:'U.cotoveloR',b:'T.ombroL',s:4.2,e:'fim',tol:.12,txt:'o cotovelo direito de Uke fica preso na axila esquerda de Tori'}],
+  {c:'contato',a:'T.antebracoR',b:'U.pescoco',s:3.6,e:'fim',txt:'o braço direito de Tori passa por baixo do pescoço de Uke'}],
  phases:[
  {s:0,e:1.4,kanji:'姿勢',ro:'Shisei',pt:'Chegada pelo lado',
   d:'Uke está de costas no tatame. Tori chega pelo lado direito dele e ajoelha na altura da faixa, de frente para Uke: joelho esquerdo no chão, pé direito plantado.',
@@ -87,10 +86,10 @@ Judo.register3d({
  [5.7,{uke:{leg:{R:W3(.46,.07,.22),L:W3(.46,.07,-.22)},pole:{legR:[1,.2,.3],legL:[1,.2,-.3]}}}],
  /* ponte: quadril sobe e Uke tenta rolar para a esquerda; Tori abre as pernas e afunda */
  [6.3,{uke:{y:.30,roll:-18,pitch:-98,h:-12,arm:{L:W3(-.15,.06,-.42)}},
-       tori:{y:.22,z:.48,roll:34,leg:{R:W3(-1.08,.07,.98),L:W3(.30,.07,1.06)}}}],
+       tori:{y:.22,z:0.44,roll:16,leg:{R:W3(-1.08,.07,.98),L:W3(.30,.07,1.06)}}}],
  [6.8,{uke:{y:.28,roll:-12}}],
  /* Uke cai de volta; Tori devolve o peso */
- [7.4,{uke:{y:.13,roll:0,pitch:-90,h:-5},tori:{y:.17,z:.44,roll:38,pitch:35}}],
+ [7.4,{uke:{y:.13,roll:0,pitch:-90,h:-5},tori:{y:.17,z:.40,roll:20,pitch:65}}],
  [7.6,{}],
  [8.4,{uke:{leg:{R:W3(.70,.07,.20),L:W3(.70,.07,-.20)}}}],
  [10.6,{}]],

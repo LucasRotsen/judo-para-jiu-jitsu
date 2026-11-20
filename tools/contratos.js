@@ -24,6 +24,7 @@ function carregar(assets, assado = false) {
   for (const f of fs.readdirSync(path.join(assets, 'tecnicas'))) run('tecnicas/' + f);
   /* --assado: usa as poses já assadas (o build acabou de gerá-las); sem isso, assa em memória (lento, sempre fresco) */
   if (assado) for (const f of fs.readdirSync(path.join(assets, 'assado'))) if (f !== 'capas.js') run('assado/' + f);
+  ctx.window.Judo.__vm = ctx; /* para ferramentas que recarregam uma técnica alterada no mesmo contexto */
   return ctx.window.Judo;
 }
 

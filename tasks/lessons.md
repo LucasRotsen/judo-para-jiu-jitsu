@@ -78,12 +78,14 @@
 - Regra: pôr isso no brief do subagente desde o início (está no fim do BRIEF2), não só na revisão.
 
 ## 2026-11-19 — Harai Goshi: "o adversário cai pro lado contrário. Noção básica de física entre os corpos" (usuário)
-- Erro: a animação (e o texto e o contrato que escrevemos em cima dela) faz Uke cair para o lado ESQUERDO dele,
-  quando o braço direito de Tori, a varrida da perna direita e o próprio kuzushi da página ("mais para o lado
-  direito dele") o levam para o canto frente-direita. O contrato foi escrito a partir do texto da técnica, e o texto
-  descrevia a animação errada: contrato copiado de texto errado só tranca o erro.
-- Regra: em toda projeção, o lado da queda sai da física, não do texto: a queda vai para o canto do kuzushi, pelo lado
-  do braço e da perna que aplicam. Conferir lado da queda × direção do kuzushi (fatos da página) antes de escrever
-  contrato, e escrever o contrato como "Uke cai para o lado X dele".
-- Regra: ajuste fino de keyframes não muda a direção de uma queda. Trocar o lado da queda é refazer a fase aérea
-  (por onde o quadril de Uke passa, por cima de qual quadril/coxa de Tori), a partir de referência.
+- Erro: Uke passava por cima das costas de Tori e caía com a cabeça junto ao pé ESQUERDO dele. No vídeo da Kodokan
+  (qTo8HlAAkOo, repetição em 50-54 s, de frente para Tori) Uke passa por cima do quadril DIREITO, contorna a frente
+  e cai com a cabeça e os ombros junto ao pé DIREITO de Tori, pernas para a frente-esquerda dele.
+- Erro meu na verificação: li uma repetição de costas (36-39 s) com a câmera do lado errado e quase contradisse o
+  usuário. Regra: para decidir esquerda/direita num vídeo, usar a repetição em que o ROSTO de Tori aparece no fim,
+  e conferir a pegada (mão direita na gola) antes de concluir.
+- Erro anterior: o contrato tinha sido escrito a partir do texto da página, que descrevia a animação errada.
+  Contrato copiado de texto errado só tranca o erro. Regra: contrato de projeção sai do vídeo (por cima de qual
+  quadril Uke passa; onde caem a cabeça e os ombros), não do texto.
+- Regra: trocar o lado de uma queda é refazer a fase aérea. Aqui bastou deslocar a trajetória de Uke para o lado
+  certo, crescendo ao longo do voo, e mover junto a perna que varre (o contrato da varrida pegou quando ficou para trás).
