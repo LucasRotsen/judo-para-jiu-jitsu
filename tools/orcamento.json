@@ -360,12 +360,12 @@
   "treme": 2.27
  },
  "raspagem-meia-guarda": {
-  "cruza": 0.66,
-  "proprio": 0.9,
+  "cruza": 0.58,
+  "proprio": 1.18,
   "salto": 0,
-  "dobra": 5.72,
-  "erro": 0.28,
-  "treme": 5.1
+  "dobra": 3.56,
+  "erro": 0,
+  "treme": 4.67
  },
  "abrir-e-passar-a-guarda": {
   "cruza": 0.14,

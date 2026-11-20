@@ -66,9 +66,9 @@ Judo.register3d({
  [1.8,{}],
  /* vira sobre o lado esquerdo, de frente para -z (yaw 45, pitch -45, roll -90 é o mesmo que de lado com a cabeça para -x) */
  [2.7,{tori:{x:.13,y:.24,z:.16,arm:{R:B('o',.04,.0,-.14)},pole:{armR:[0,.3,1]},yaw:45,pitch:-45,roll:-90,h:30,
-        leg:{R:W3(.56,.06,-.20),L:W3(.62,.27,-.02)},pole:{legR:[.6,.2,1],legL:[.6,-.4,1],armL:[1,.2,-.2]}},
+        leg:{R:W3(0.81,.06,-.20),L:W3(0.87,.27,-.02)},pole:{legR:[.6,.2,1],legL:[.6,-.4,1],armL:[1,.2,-.2]}},
        uke:{x:.14,y:.38,z:.04,pitch:80}}],
- [3.6,{tori:{x:.16,z:.16,leg:{R:W3(.48,.06,-.14),L:W3(.46,.27,.0)}},uke:{x:.18,y:.42,z:.02}}],
+ [3.6,{tori:{x:.16,z:.16,leg:{R:W3(0.73,.06,-.14),L:W3(0.71,.27,.0)}},uke:{x:.18,y:.42,z:.02}}],
  /* solta as pernas: recolhe os joelhos e leva os pés para trás */
  [4.0,{tori:{leg:{R:W3(.36,.08,.34),L:W3(.20,.08,.40)},arm:{R:B('s',.32,-.05,.22)},pole:{legR:[1,.5,.3],legL:[1,.5,.3]}}}],
  /* desliza para baixo, a cabeça vai em direção ao quadril de Uke */
@@ -98,6 +98,8 @@ Judo.register3d({
  [10.6,{}]],
  /* pernas de Tori prendem a perna de Uke; a esgrima abraça as costas; a mão de fora segura o calcanhar */
  aperto:[{s:0,e:4.2,limbs:['T.R.leg','T.L.leg'],tol:.10,tudo:true},
+  /* a perna presa de Uke também aperta contra as pernas de Tori: é a trava da meia-guarda */
+  {s:0,e:6.0,limbs:['U.R.leg'],tol:.08,tudo:true},
   {s:0,e:10.6,limbs:['T.L.arm','U.R.arm'],tol:.10,tudo:true},
   {s:4.6,e:7.6,limbs:['T.R.arm'],tol:.10,tudo:true}],
  names:F=>({tori:[F.tori.head[0],Math.max(F.tori.head[1],F.tori.hip[1])+.3,F.tori.head[2]],
