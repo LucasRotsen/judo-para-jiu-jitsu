@@ -72,11 +72,11 @@ Judo.register3d({
  [2.6,{tori:{arm:{R:B('o',-.10,.58,.04)}},uke:{x:-.30,y:.97,pitch:18,h:12}}],
  /* tsukuri: giro para a esquerda sobre o pé direito; o quadril passa além do quadril direito de Uke */
  [3.2,{tori:{x:.06,y:.88,z:.06,yaw:275,pitch:10,leg:{L:W3(.24,.14,.08)},pole:{armR:[-.6,.6,.4]}},
-       uke:{arm:{R:B('o',.18,.50,-.18)},pole:{armR:[.2,-.8,-.2]}}}],
- [3.5,{tori:{x:-.02,y:.86,z:.14,yaw:318,pitch:14,leg:{L:W3(.04,.12,-.04)}},uke:{z:0.05,pitch:33,roll:15.0,yaw:-6.0,arm:{R:B('o',.24,.52,-.26)}}}],
+       uke:{arm:{R:B('o',.22,.48,.06)},pole:{armR:[.2,-.8,-.2]}}}],
+ [3.5,{tori:{x:-.02,y:.86,z:.14,yaw:318,pitch:14,leg:{L:W3(.04,.12,-.04)}},uke:{z:0.05,pitch:33,roll:15.0,yaw:-6.0,arm:{R:B('o',.22,.48,.06)}}}],
  [3.9,{tori:{x:-.08,y:.80,z:.18,yaw:352,pitch:22,h:8,leg:{L:W3(-.14,.07,.03),R:W3(-.04,.07,.34)},
         arm:{R:B('o',-.10,.56,.02),L:SL('armR',.5)},pole:{armR:[-.8,.5,.3],armL:[.3,-.6,-.6]}},
-       uke:{x:-.31,y:.97,z:.10,pitch:50,roll:30,yaw:-12,h:16,arm:{R:B('o',.20,.40,-.22),L:B('o',-.20,.40,.12)},pole:{armL:[.2,-.5,-.6],armR:[.2,-.8,-.3]}}}],
+       uke:{x:-.31,y:.97,z:.10,pitch:50,roll:30,yaw:-12,h:16,arm:{R:B('o',.22,.48,.06),L:B('o',-.20,.40,.12)},pole:{armL:[.2,-.5,-.6],armR:[.2,-.8,-.3]}}}],
  [4.4,{tori:{yaw:358,pitch:28},uke:{pitch:54,roll:30}}],
  /* kake: as pernas estendem, o tronco curva e gira para a esquerda; Uke sai do chão com os dois pés juntos,
     carregado no quadril direito de Tori, e já começa a torcer (yaw e roll) para rodar pela frente dele */
