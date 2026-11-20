@@ -31,7 +31,8 @@ Judo.register3d({
   'Comece com Uke ajoelhado ou com a projeção pela metade, sem lançar.',
   'O pé empurra, não chuta: pressão contínua na faixa.'],
  /* contratos (tools/contratos.js): exceção declarada à regra de queda de cabeça, com o motivo */
- contratos:[{c:'pilao',cabeca:.38,txt:'tomoe nage: Uke passa invertido por cima de Tori, apoiado no pé dele na barriga; a cabeça fica a ~40 cm do tatame e ele cai de costas'},
+ contratos:[{c:'contato',a:'T.peR',b:'U.barriga',s:3.6,e:4.6,tol:.06,txt:'a sola direita de Tori fica na barriga de Uke, na faixa'},
+  {c:'pilao',cabeca:.38,txt:'tomoe nage: Uke passa invertido por cima de Tori, apoiado no pé dele na barriga; a cabeça fica a ~40 cm do tatame e ele cai de costas'},
   {c:'lado',a:'U.quadril',de:'T.quadril',lado:'acima',s:5.6,e:6.6,min:.4,txt:'Uke passa por cima de Tori e cai além da cabeça dele'}],
  phases:[
  {s:0,e:1.2,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
@@ -64,10 +65,12 @@ Judo.register3d({
  /* Daqui em diante conforme o vídeo da Kodokan (巴投 / Tomoe-nage).
     tsukuri: Tori agacha fundo e senta quase no calcanhar esquerdo, entre os pés de Uke, tronco ainda
     quase ereto; a sola direita sobe até a faixa e os braços seguram Uke dobrado sobre ele. */
- [3.2,{tori:{x:-.04,y:.30,pitch:-26,h:22,leg:{R:belt,L:W3(-.02,.07,.12)},
-        pole:{legR:[.3,1,-.3],legL:[1,.6,.4]}},
+ [3.2,{tori:{x:0.16,y:.30,pitch:-26,h:22,leg:{R:W3(-.20,.55,-.04),L:W3(-.02,.07,.12)},
+        pole:{legR:[1,.4,-.1],legL:[1,.6,.4]}},
        uke:{x:-.32,y:.86,pitch:38,h:12,arm:{R:B('o',.14,.30,-.12),L:B('o',.14,.30,.12)},leg:{R:W3(-.30,.09,.31),L:W3(-.42,.09,-.31)}}}],
- [3.9,{tori:{x:-.07,y:.22,pitch:-55,h:25},uke:{x:-.28,y:.88,pitch:52}}],
+ /* a sola só encosta na faixa com o tronco já deitando: o joelho fica na frente do peito, não dentro dele */
+ [3.6,{tori:{pitch:-46,leg:{R:belt},pole:{legR:[.6,1,-.2]}}}],
+ [3.9,{tori:{x:0.13,y:.22,pitch:-55,h:25},uke:{x:-.28,y:.88,pitch:52}}],
  /* kake: Tori rola de costas; Uke vem por cima, apoiado no pé, o tronco mergulha rumo à cabeça de Tori
     e os pés deixam o chão por trás */
  [4.4,{tori:{x:-.12,y:.14,pitch:-90,h:12,leg:{L:W3(-.42,.07,.28)},pole:{legR:[.8,1,-.3]}},

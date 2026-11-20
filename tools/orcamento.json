@@ -64,12 +64,12 @@
   "treme": 1.53
  },
  "tomoe-nage": {
-  "cruza": 1.42,
-  "proprio": 0.5,
+  "cruza": 0.2,
+  "proprio": 0,
   "salto": 0,
-  "dobra": 1.4,
+  "dobra": 0,
   "erro": 0,
-  "treme": 1.77
+  "treme": 1.93
  },
  "morote-gari": {
   "cruza": 0.2,
@@ -120,12 +120,12 @@
   "treme": 1.83
  },
  "koshi-guruma": {
-  "cruza": 0.36,
-  "proprio": 0.6,
-  "salto": 0.04,
-  "dobra": 1.72,
+  "cruza": 0.62,
+  "proprio": 0.64,
+  "salto": 0,
+  "dobra": 0.6,
   "erro": 0,
-  "treme": 7.8
+  "treme": 5.7
  },
  "hane-goshi": {
   "cruza": 0.44,

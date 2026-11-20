@@ -134,6 +134,7 @@ const HISTORICO = [
   { id: 'kata-gatame', commit: '1f58843', erro: 'cabeça de Tori e desmontada do lado errado (14/11)' },
   { id: 'sankaku-jime', commit: '4ffa025', erro: 'corretor empurrava a perna para longe do pescoço (14/11)' },
   { id: 'omoplata', commit: 'a3de539', erro: 'cabeça de Tori ia até o lado e voltava (15/11)' },
+  { id: 'koshi-guruma', commit: 'b0bb766', erro: 'no giro, a cabeça de Uke ia para trás do ombro esquerdo de Tori (20/11)' },
 ];
 
 function main() {
