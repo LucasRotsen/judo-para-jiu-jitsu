@@ -4,7 +4,7 @@
    O braço direito de Tori passa por cima do ombro esquerdo de Uke e envolve o pescoço por trás, com a
    mão na nuca. No giro o quadril de Tori passa bem além do quadril de Uke, para a direita (+z), mais
    fundo que no o goshi. Uke roda por cima do quadril direito de Tori e cai de costas à frente dele, com a
-   cabeça perto dos pés de Tori, um pouco para a esquerda dele, e as pernas apontando para longe.
+   cabeça perto do pé direito de Tori: o braço direito no pescoço segura Uke daquele lado, como no harai goshi.
    Poses conferidas com o vídeo da Kodokan (腰車 / Koshi-guruma). */
 const uke0={x:-.27,y:.93,z:0,yaw:0,pitch:4,h:0,
  leg:{R:W3(-.26,.07,.13),L:W3(-.40,.07,-.12)},
@@ -39,7 +39,8 @@ Judo.register3d({
   {c:'lado',a:'U.cabeca',de:'T.quadril',lado:'direita',s:3.7,e:5.1,min:.1,txt:'no giro, a cabeça de Uke fica sobre o ombro DIREITO de Tori, presa pelo braço no pescoço'},
   {c:'lado',a:'T.quadril',de:'U.quadril',lado:'direita',s:4.2,e:5.0,txt:'o quadril de Tori passa além do quadril de Uke, para a direita dele'},
   {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:6.5,e:'fim',min:.6,txt:'Uke roda por cima do quadril e cai de costas à frente de Tori'},
-  {c:'lado',a:'U.cabeca',de:'T.quadril',lado:'esquerda',s:7.0,e:'fim',min:.05,txt:'a cabeça de Uke cai um pouco para a esquerda de Tori'}],
+  {c:'lado',a:'U.cabeca',de:'T.quadril',lado:'direita',s:7.0,e:'fim',min:.15,txt:'Uke cai à DIREITA de Tori: o braço direito no pescoço não deixa ele ir para o outro lado'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'direita',s:5.5,e:'fim',min:.1,txt:'Uke passa pelo quadril direito de Tori e cai à direita dele'}],
  phases:[
  {s:0,e:1,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Tori segura a manga direita de Uke com a mão esquerda e a gola esquerda com a mão direita.',
@@ -51,10 +52,10 @@ Judo.register3d({
   d:'Tori gira para a esquerda sobre o pé direito, leva o pé esquerdo para trás e fica de costas para Uke, com os joelhos dobrados. O quadril passa bem além do quadril direito de Uke. O braço no pescoço cola o peito de Uke nas costas de Tori.',
   l:['Quadril de Tori além do quadril de Uke, não só à frente.','Joelhos dobrados, quadril abaixo da faixa de Uke.','Peito de Uke colado nas costas de Tori.']},
  {s:4.4,e:6.2,kanji:'掛け',ro:'Kake',pt:'A roda',
-  d:'Tori estende as pernas, curva o tronco e continua o giro para a esquerda, puxando a manga e o pescoço. Uke roda por cima do quadril de Tori, as pernas sobem pelo lado direito dele e a cabeça desce pela frente. Uke cai de costas à frente de Tori.',
+  d:'Tori estende as pernas, curva o tronco e continua o giro para a esquerda, puxando a manga e o pescoço. Uke roda por cima do quadril direito de Tori, as pernas passam por cima e a cabeça desce pela frente, do lado direito. Uke cai de costas à frente e à direita de Tori.',
   l:['Eixo da roda: o quadril de Tori.','As pernas estendem, o tronco curva e gira.','Hikite puxa a manga até o próprio quadril.']},
  {s:6.2,e:10,kanji:'残心',ro:'Zanshin',pt:'Controle da queda',
-  d:'Uke cai de costas à frente de Tori, com a cabeça perto dos pés dele, um pouco para a esquerda, e as pernas apontando para longe. O braço direito de Tori já soltou o pescoço e se junta à mão esquerda na manga. Tori termina de pé, curvado, sem cair junto.',
+  d:'Uke cai de costas à frente de Tori, com a cabeça perto do pé direito dele e as pernas apontando para longe. O braço direito de Tori já soltou o pescoço e se junta à mão esquerda na manga. Tori termina de pé, curvado, sem cair junto.',
   l:['Manga segura até o fim.','Uke faz ukemi com o queixo no peito.','Tori fica de pé, sem cair junto.']}],
  rep:[.5,2.2,3.9,5.3,8.0], cover:5.2,
  views:[
@@ -86,26 +87,26 @@ Judo.register3d({
         arm:{R:B('o',.40,.34,-.34),L:B('s',.40,.40,-.20)},pole:{armR:[.5,.3,1]}}}],
  /* Uke roda em volta do quadril de Tori, deitado de lado, nunca na vertical de ponta-cabeça;
     a manga puxada para cima mantém a cabeça longe do chão */
- [5.38,{tori:{yaw:394,pitch:60,roll:-18,h:32,arm:{R:B('s',.32,.28,.30)},pole:{armR:[-.3,-.5,1]}},
-       uke:{x:.04,y:1.30,z:-.04,yaw:26,pitch:105,roll:-10,h:12,leg:{R:B('s',-.20,-.80,.16),L:B('s',-.12,-.84,-.12)},arm:{R:B('o',.42,.28,-.30)}}}],
+ [5.38,{tori:{yaw:394,pitch:60,roll:-12,h:32,arm:{R:B('s',.32,.28,.30)},pole:{armR:[-.3,-.5,1]}},
+       uke:{x:0.13,y:1.30,z:0.08,yaw:26,pitch:105,roll:-10,h:12,leg:{R:B('s',-.20,-.80,.16),L:B('s',-.12,-.84,-.12)},arm:{R:B('o',.42,.28,-.30)}}}],
  [5.55,{tori:{y:.88,yaw:400,pitch:62,roll:-12,h:30,arm:{R:B('s',.15,.05,.36)},pole:{armR:[-.3,-.5,1]}},
-       uke:{x:.19,y:1.04,z:-.56,yaw:34,pitch:150,roll:-78,h:25,leg:{R:W3(-.40,1.10,-.90),L:W3(-.46,1.00,-1.04)},
+       uke:{x:0.41,y:1.22,z:-0.28,yaw:34,pitch:150,roll:-78,h:25,leg:{R:W3(-0.18,1.10,-0.62),L:W3(-0.24,1.00,-0.76)},
         arm:{R:B('o',.38,.24,-.24),L:B('s',.1,.25,-.45)}}}],
  /* Uke chega ao chão DE LADO, deitado: o quadril desce junto com os ombros, o ombro e o lado das costas
     tocam antes da cabeça, cabeça recolhida e acima dos ombros, pernas por último. A manga puxada para
     cima segura o tronco. */
- [5.66,{uke:{x:.46,y:.76,z:-.84,yaw:34,pitch:200,roll:-84,h:30,leg:{R:W3(.40,.92,-1.42),L:W3(.26,.86,-1.50)}}}],
- [5.80,{tori:{pitch:58,roll:0},uke:{x:.70,y:.50,z:-.80,yaw:34,pitch:245,roll:-70,h:38,leg:{R:W3(1.06,.62,-1.24),L:W3(.94,.58,-1.36)},arm:{R:B('o',.42,.26,-.20)}}}],
- [5.92,{uke:{x:.70,y:.30,z:-.76,pitch:258,roll:-40,h:40,leg:{R:W3(1.22,.44,-1.06),L:W3(1.10,.40,-1.24)}}}],
+ [5.66,{uke:{x:0.80,y:.76,z:-0.41,yaw:34,pitch:200,roll:-84,h:30,leg:{R:W3(0.74,.92,-0.99),L:W3(0.60,.86,-1.07)}}}],
+ [5.80,{tori:{pitch:58,roll:0},uke:{x:1.04,y:.50,z:-0.37,yaw:34,pitch:245,roll:-70,h:38,leg:{R:W3(1.40,.62,-0.81),L:W3(1.28,.58,-0.93)},arm:{R:B('o',.42,.26,-.20)}}}],
+ [5.92,{uke:{x:1.04,y:.30,z:-0.33,pitch:258,roll:-40,h:40,leg:{R:W3(1.56,.44,-0.63),L:W3(1.44,.40,-0.81)}}}],
  [6.05,{tori:{y:.86,yaw:398,pitch:54,h:25},
-       uke:{x:.72,y:.19,z:-.70,yaw:35,pitch:264,roll:-12,h:40,leg:{R:W3(1.36,.34,-.96),L:W3(1.22,.36,-1.18)},
+       uke:{x:1.06,y:.19,z:-0.27,yaw:35,pitch:264,roll:-12,h:40,leg:{R:W3(1.70,.34,-0.53),L:W3(1.56,.36,-0.75)},
         arm:{R:B('o',.42,.20,-.20),L:B('s',.05,.05,-.50)}}}],
- [6.18,{uke:{x:.72,y:.15,z:-.66,pitch:268,roll:-4,h:35}}],
+ [6.18,{uke:{x:1.06,y:.15,z:-0.23,pitch:268,roll:-4,h:35}}],
  [6.3,{tori:{y:.84,yaw:398,pitch:56,h:22,arm:{R:SL('armR',.25)}},
-       uke:{x:.72,y:.14,z:-.62,yaw:35,pitch:268,roll:0,h:25,gf:1,leg:{R:W3(1.40,.20,-.92),L:W3(1.24,.25,-1.16)},
+       uke:{x:1.06,y:.14,z:-0.19,yaw:35,pitch:268,roll:0,h:25,gf:1,leg:{R:W3(1.74,.20,-0.49),L:W3(1.58,.25,-0.73)},
         arm:{R:B('o',.38,.02,-.18),L:B('s',0,.15,-.48)}}}],
  /* zanshin: Tori de pé, curvado, as duas mãos na manga */
- [6.8,{tori:{y:.84,pitch:50,h:15},uke:{leg:{R:W3(1.40,.07,-.94),L:W3(1.26,.07,-1.18)}}}],
+ [6.8,{tori:{y:.84,pitch:50,h:15},uke:{leg:{R:W3(1.74,.07,-0.51),L:W3(1.60,.07,-0.75)}}}],
  [7.3,{tori:{y:.84,pitch:46,h:10},uke:{h:15}}],
  [10,{}]],
  names:F=>({tori:[F.tori.head[0],Math.max(F.tori.head[1],F.tori.hip[1])+.30,F.tori.head[2]+.30],uke:[F.uke.hip[0],Math.max(F.uke.head[1],F.uke.hip[1])+.30,F.uke.hip[2]-.38]}),

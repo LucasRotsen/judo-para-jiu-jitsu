@@ -120,12 +120,12 @@
   "treme": 1.83
  },
  "koshi-guruma": {
-  "cruza": 0.62,
-  "proprio": 0.64,
+  "cruza": 0.46,
+  "proprio": 1.02,
   "salto": 0,
-  "dobra": 0.6,
-  "erro": 0,
-  "treme": 5.7
+  "dobra": 0.4,
+  "erro": 0.02,
+  "treme": 4.57
  },
  "hane-goshi": {
   "cruza": 0.44,

@@ -135,6 +135,7 @@ const HISTORICO = [
   { id: 'sankaku-jime', commit: '4ffa025', erro: 'corretor empurrava a perna para longe do pescoço (14/11)' },
   { id: 'omoplata', commit: 'a3de539', erro: 'cabeça de Tori ia até o lado e voltava (15/11)' },
   { id: 'koshi-guruma', commit: 'b0bb766', erro: 'no giro, a cabeça de Uke ia para trás do ombro esquerdo de Tori (20/11)' },
+  { id: 'koshi-guruma', commit: '9fa1644', erro: 'Uke caía à esquerda de Tori, com o braço direito dele no pescoço (20/11)' },
 ];
 
 function main() {
