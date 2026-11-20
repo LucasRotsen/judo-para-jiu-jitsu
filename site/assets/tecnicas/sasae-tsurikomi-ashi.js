@@ -113,7 +113,9 @@ Judo.register3d({
         arm:{R:W3(.66,.66,.30),L:W3(.68,.05,-.16)},pole:{legR:[1,0,.1],legL:[1,0,-.1]}}}],
  [8.0,{tori:{y:.79,pitch:44,h:15},uke:{h:18}}],
  [10.5,{}]],
- aperto:{s:4.0,e:5.4,limbs:['T.L.leg'],tol:.10,tudo:true},
+ aperto:[{s:4.0,e:5.8,limbs:['T.L.leg'],tol:.10,tudo:true},
+  /* a canela de Uke apoia na sola que bloqueia: o tornozelo encosta, o joelho não vira */
+  {s:4.0,e:5.8,limbs:['U.R.leg'],tol:.10,tudo:true}],
  names:F=>({tori:[F.tori.head[0]+.12,Math.max(F.tori.head[1],F.tori.hip[1])+.22,F.tori.head[2]],
   uke:[F.uke.hip[0]-.15,Math.max(F.uke.head[1],F.uke.hip[1])+.22,F.uke.hip[2]]}),
  glow:{s:3.9,e:5.6,limbs:{'T.L.leg':'force'}},

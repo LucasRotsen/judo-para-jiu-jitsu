@@ -104,12 +104,12 @@
   "treme": 0.4
  },
  "sasae-tsurikomi-ashi": {
-  "cruza": 0.04,
+  "cruza": 0,
   "proprio": 0.5,
   "salto": 0,
-  "dobra": 1.66,
+  "dobra": 0.26,
   "erro": 0.02,
-  "treme": 2.8
+  "treme": 2.87
  },
  "okuri-ashi-barai": {
   "cruza": 0,
