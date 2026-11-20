@@ -94,3 +94,8 @@
 - Medi o quadril de Uke no ponto mais alto do voo, nos eixos de Tori, e três projeções (uchi-mata, hane-goshi, koshi-guruma) pareciam "passar pelas costas", como o harai goshi errado. Os vídeos da Kodokan mostraram que estavam certas: no hane-goshi, no uchi-mata e no koshi-guruma Uke cai à frente e à esquerda de Tori (cabeça junto ao pé de apoio); no harai goshi a cabeça cai junto ao pé direito.
 - Regra: um número suspeito é só um suspeito. Antes de mexer, ver a referência. E não generalizar o lado da queda de uma projeção para outra.
 - Regra também testada e descartada: "joelho do lado errado do próprio quadril". Os 30 maiores casos no catálogo eram todos legítimos (base aberta, pernas arrastadas, joelho cruzado). O que separa erro de acerto é atravessar a outra perna (PROPRIO) ou a dobra virar (DOBRA), e isso já é medido.
+
+## 2026-11-20 — Koshi-guruma e tomoe-nage: o limite de movimento escondia defeitos que o diagnóstico já media
+- Tomoe-nage: o diagnóstico marcava "joelho R de Tori dobra para o lado errado" havia tempo, mas o limite de movimento gravado aceitava. Limite gravado não pode ser tratado como "ok": é uma lista de defeitos conhecidos esperando conserto.
+- Causa no tomoe: o keyframe punha a sola na faixa com o tronco ainda ereto; o joelho certo ficaria dentro do próprio peito e o corretor físico escolhia o joelho ao contrário. Regra: quando o corretor inverte um joelho, procurar o que a posição certa atravessaria (rodar a pose crua contra as cápsulas) antes de mexer no polo.
+- Koshi-guruma: cada pose isolada parecia boa, mas no giro Uke ficava ereto e a cabeça ia para trás do ombro esquerdo de Tori. Regra: em projeção com o braço no pescoço, contratar onde a cabeça de Uke fica durante o giro, não só no fim.
