@@ -81,11 +81,11 @@ Judo.register3d({
  [2.45,{uke:{pitch:18,arm:{R:B('o',-.05,.52,-.04)},pole:{armR:[.2,.6,1]}},
        tori:{x:.00,y:.64,z:.42,yaw:115,pitch:24,h:10,leg:{L:W3(-.18,.07,.42),R:W3(.26,.07,.26)},
         arm:{R:B('s',.25,.25,.20),L:B('s',.25,.25,-.20)},pole:{armR:[-.2,-.7,.6],armL:[-.2,-.7,-.6]}}}],
- [2.8,{uke:{arm:{R:B('o',-.10,.36,-.02)},pole:{armR:[.2,.8,.6]}},
+ [2.8,{uke:{arm:{R:B('o',-.06,.30,.26)},pole:{armR:[.3,.8,.6]}},
        tori:{x:-.30,y:.58,z:.36,yaw:55,pitch:24,h:12,leg:{L:W3(-.48,.07,.24),R:W3(.02,.07,.46)}}}],
  /* atrás e ao lado de Uke: pé esquerdo atrás do calcanhar direito dele, braço esquerdo pelas costas, mão na barriga.
     O braço direito de Uke, que errou o golpe, fica por cima das costas de Tori. */
- [3.2,{uke:{x:-.20,pitch:16,arm:{R:B('o',-.14,.34,-.04),L:B('s',.22,.12,-.20)},pole:{armR:[.2,.8,.6],armL:[-.2,-.7,-.5]}},
+ [3.2,{uke:{x:-.20,pitch:16,arm:{R:B('o',-.06,.30,.26),L:B('s',.22,.12,-.20)},pole:{armR:[.3,.8,.6],armL:[-.2,-.7,-.5]}},
        tori:{x:-.44,y:.56,z:.30,yaw:20,pitch:24,h:14,leg:{L:W3(-.52,.07,.20),R:W3(-.16,.07,.52)},
         arm:{L:abraco,R:barriga},pole:{armL:[-.4,-.4,-.8],armR:[.2,-.5,.9],legL:[.8,0,.3],legR:[1,-.1,.4]}}}],
  [3.8,{tori:{y:.52,pitch:22}}],
