@@ -8,6 +8,7 @@
      {c:'giro',    a:'T.cabeca', centro:'U.quadril', s, e, volta=25}      a gira em volta do centro (visto de cima) sem voltar mais que `volta` graus
    E uma regra que vale para toda técnica, sem declarar: ninguém fica de ponta-cabeça com a cabeça perto do chão (pilão).
      {c:'pilao', cabeca:.38, txt}  exceção declarada (limite de altura da cabeça menor), com o motivo
+   E outra: antebraço e canela não atravessam o próprio tronco (eixo a menos de ~2 cm do centro, > 0,1 s).
    Partes: cabeca pescoco peito barriga tronco quadril, e com lado R/L: ombro coxa joelho canela pe braco cotovelo antebraco mao.
    Uso: node tools/contratos.js [-v] [--portao] [id ...]
         node tools/contratos.js --historico   (erros já apontados pelo usuário, em versões antigas do git, têm que falhar) */
@@ -122,9 +123,25 @@ function pilao(J, def) {
   return out;
 }
 
+/* regra global: braço, antebraço ou canela não atravessa o PRÓPRIO tronco. Encostar é natural (braço colado no
+   peito, antebraço no flanco); atravessar é o eixo do membro chegar perto do centro do tronco (folga < -12 cm)
+   por mais de 0,1 s. Pegou os cotovelos que passavam por dentro do peito no koshi-guruma, hane-goshi e drill. */
+const ATRAVESSA = ['antebraco', 'canela']; /* o braço nasce no ombro, dentro do volume do tronco: sempre "encosta" */
+function atravessa(J, def) {
+  const out = [];
+  for (const w of ['T', 'U']) for (const k of ATRAVESSA) for (const s of ['R', 'L']) {
+    let n = 0, pior = { t: 0, v: 0 };
+    for (let t = 0; t <= def.end + 1e-9; t += DT) { const g = folga(J.solve(def, t), `${w}.${k}${s}`, `${w}.tronco`);
+      if (g < -.12) { n++; if (-g > pior.v) pior = { t, v: -g }; } }
+    if (n * DT > .1) out.push({ txt: `${w === 'T' ? 'Tori' : 'Uke'}: ${k} ${s} atravessa o próprio tronco por ${(n * DT).toFixed(2)} s (pior ${(pior.v * 100).toFixed(0)} cm @${pior.t.toFixed(2)}s)`, ok: false, pior });
+  }
+  return out;
+}
+
 function verificar(J, def, contratos) {
   const res = (contratos || []).filter((c) => c.c !== 'pilao').map((c) => { try { return { c, ...avaliar(J, def, c) }; } catch (e) { return { c, ok: false, txt: 'erro: ' + e.message }; } });
-  return res.concat(pilao(J, def).map((r) => ({ c: { c: 'pilao', txt: 'ninguém cai de cabeça' }, ...r })));
+  return res.concat(pilao(J, def).map((r) => ({ c: { c: 'pilao', txt: 'ninguém cai de cabeça' }, ...r })),
+    atravessa(J, def).map((r) => ({ c: { c: 'atravessa', txt: 'nenhum membro atravessa o próprio tronco' }, ...r })));
 }
 const rotulo = (c) => c.txt || `${c.c} ${c.a || ''}${c.b ? ' × ' + c.b : ''}${c.de ? ' (' + c.lado + ' de ' + c.de + ')' : ''}${c.centro ? ' em volta de ' + c.centro : ''}`;
 
@@ -149,7 +166,7 @@ function main() {
       const atual = J.techs[h.id], dir = fs.mkdtempSync(path.join(os.tmpdir(), 'contrato-'));
       execSync(`git archive ${h.commit} site/assets | tar -x -C ${dir}`, { cwd: RAIZ });
       const V = carregar(path.join(dir, 'site', 'assets')), velho = V.techs[h.id];
-      const rn = verificar(J, atual, atual.contratos).filter((r) => r.c.c !== 'pilao'), rv = verificar(V, velho, atual.contratos).filter((r) => r.c.c !== 'pilao');
+      const rn = verificar(J, atual, atual.contratos).filter((r) => r.c.c !== 'pilao' && r.c.c !== 'atravessa'), rv = verificar(V, velho, atual.contratos).filter((r) => r.c.c !== 'pilao' && r.c.c !== 'atravessa');
       const atualOk = rn.length && rn.every((r) => r.ok), pegou = rv.some((r) => !r.ok);
       if (!atualOk || !pegou) falhas++;
       console.log(`${pegou && atualOk ? 'ok ' : 'XX '} ${h.id} @${h.commit}: ${h.erro}`);
@@ -165,7 +182,7 @@ function main() {
     const def = J.techs[c.id]; if (!def || !def.is3d || def.trechos || (only.length && !only.includes(c.id))) continue;
     n++; if (def.contratos && def.contratos.length) comContrato++;
     const rs = verificar(J, def, def.contratos), ruins = rs.filter((r) => !r.ok); quebrados += ruins.length;
-    for (const r of ruins) falhas.push({ id: c.id, regra: r.c.c === 'pilao' ? 'pilao' : rotulo(r.c) });
+    for (const r of ruins) falhas.push({ id: c.id, regra: r.c.c === 'pilao' || r.c.c === 'atravessa' ? r.c.c : rotulo(r.c) });
     if (ruins.length || verbose) {
       console.log(`${ruins.length ? 'XX ' : 'ok '} ${c.id}`);
       for (const r of verbose ? rs : ruins) console.log(`     ${r.ok ? '·' : '✗'} ${rotulo(r.c)}: ${r.txt}`);
