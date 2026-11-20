@@ -29,7 +29,8 @@ Judo.register3d({
  /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
  contratos:[
   {c:'contato',a:'T.maoL',b:'U.antebracoR',s:0,e:5.2,txt:'a mão esquerda de Tori segura a manga DIREITA de Uke'},
-  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'frente',s:7.6,e:'fim',min:.1,txt:'Uke cai de costas e Tori sobe montado'}],
+  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'frente',s:7.6,e:'fim',min:.1,txt:'Uke cai de costas e Tori sobe montado'},
+  {c:'contato',a:'T.antebracoR',b:'U.coxaL',s:2.6,e:5.4,tol:.08,txt:'o braço direito de Tori passa por baixo da perna esquerda de Uke'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Guarda fechada',pt:'Manga e gola',
   d:'Tori está de costas com as pernas cruzadas nas costas de Uke. A mão esquerda segura a manga direita de Uke, no punho, e a mão direita segura a gola esquerda dele.',

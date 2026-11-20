@@ -37,7 +37,7 @@ Judo.register3d({
  contratos:[
   {c:'lado',a:'T.peR',de:'U.quadril',lado:'direita',s:4.6,e:5.2,txt:'a perna direita de Tori varre pelo lado de fora da coxa direita de Uke'},
   {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:6.5,e:'fim',min:.6,txt:'Uke roda por cima do quadril e cai de costas à frente de Tori'},
-  {c:'lado',a:'U.cabeca',de:'T.quadril',lado:'esquerda',s:7.0,e:'fim',min:.05,txt:'a cabeça de Uke cai perto do pé esquerdo de Tori'}],
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'direita',s:6.0,e:'fim',min:.3,txt:'Uke cai para o lado DIREITO dele (o canto do kuzushi), não para o esquerdo'}],
  phases:[
  {s:0,e:1,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Tori segura a manga direita de Uke com a mão esquerda e a gola esquerda com a mão direita.',

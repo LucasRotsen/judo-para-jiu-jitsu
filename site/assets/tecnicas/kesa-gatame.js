@@ -40,7 +40,8 @@ Judo.register3d({
  /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
  contratos:[
   {c:'lado',a:'T.quadril',de:'U.tronco',lado:'direita',s:3.2,e:'fim',min:.1,txt:'Tori senta do lado DIREITO de Uke'},
-  {c:'contato',a:'T.antebracoR',b:'U.pescoco',s:3.6,e:'fim',txt:'o braço direito de Tori passa por baixo do pescoço de Uke'}],
+  {c:'contato',a:'T.antebracoR',b:'U.pescoco',s:3.6,e:'fim',txt:'o braço direito de Tori passa por baixo do pescoço de Uke'},
+  {c:'contato',a:'U.cotoveloR',b:'T.ombroL',s:4.2,e:'fim',tol:.12,txt:'o cotovelo direito de Uke fica preso na axila esquerda de Tori'}],
  phases:[
  {s:0,e:1.4,kanji:'姿勢',ro:'Shisei',pt:'Chegada pelo lado',
   d:'Uke está de costas no tatame. Tori chega pelo lado direito dele e ajoelha na altura da faixa, de frente para Uke: joelho esquerdo no chão, pé direito plantado.',

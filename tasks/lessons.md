@@ -76,3 +76,14 @@
 - Erro recorrente dos subagentes: copiar a cambalhota de outra técnica ou do vídeo e deixar Uke na vertical, cabeça perto do tatame e pernas para o teto. Um judoca lê isso como pilão (queda de cabeça, proibida). Os números (cruza/proprio/erro) não pegam isso.
 - Regra: em toda projeção, olhar a vista principal a cada 0,1 s na queda e medir cabeça/ombro/quadril a cada 0,05 s. Com a cabeça abaixo de ~0,5 m, o corpo tem que estar de lado e perto da horizontal; ombro/costas tocam antes da cabeça; `h` positivo (queixo no peito).
 - Regra: pôr isso no brief do subagente desde o início (está no fim do BRIEF2), não só na revisão.
+
+## 2026-11-19 — Harai Goshi: "o adversário cai pro lado contrário. Noção básica de física entre os corpos" (usuário)
+- Erro: a animação (e o texto e o contrato que escrevemos em cima dela) faz Uke cair para o lado ESQUERDO dele,
+  quando o braço direito de Tori, a varrida da perna direita e o próprio kuzushi da página ("mais para o lado
+  direito dele") o levam para o canto frente-direita. O contrato foi escrito a partir do texto da técnica, e o texto
+  descrevia a animação errada: contrato copiado de texto errado só tranca o erro.
+- Regra: em toda projeção, o lado da queda sai da física, não do texto: a queda vai para o canto do kuzushi, pelo lado
+  do braço e da perna que aplicam. Conferir lado da queda × direção do kuzushi (fatos da página) antes de escrever
+  contrato, e escrever o contrato como "Uke cai para o lado X dele".
+- Regra: ajuste fino de keyframes não muda a direção de uma queda. Trocar o lado da queda é refazer a fase aérea
+  (por onde o quadril de Uke passa, por cima de qual quadril/coxa de Tori), a partir de referência.

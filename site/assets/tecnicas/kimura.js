@@ -40,7 +40,8 @@ Judo.register3d({
  /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
  contratos:[
   {c:'contato',a:'T.maoL',b:'U.maoR',s:1.8,e:'fim',txt:'a mão esquerda de Tori segura o punho DIREITO de Uke'},
-  {c:'contato',a:'T.antebracoR',b:'U.bracoR',s:4.0,e:'fim',txt:'o braço direito de Tori passa por cima do tríceps e entra por dentro do braço de Uke'}],
+  {c:'contato',a:'T.antebracoR',b:'U.bracoR',s:4.0,e:'fim',txt:'o braço direito de Tori passa por cima do tríceps e entra por dentro do braço de Uke'},
+  {c:'lado',a:'U.cabeca',de:'T.peito',lado:'direita',s:7.0,e:'fim',min:.15,txt:'a cabeça de Uke fica do lado DIREITO de Tori na finalização'}],
  phases:[
  {s:0,e:1.8,kanji:'1',ro:'Guarda fechada',pt:'Uke apoia a mão',
   d:'Tori está de costas com a guarda fechada e puxa Uke com as pernas. Para não cair, Uke apoia a mão direita no tatame, ao lado da cintura de Tori. A mão esquerda de Tori segura esse punho.',
