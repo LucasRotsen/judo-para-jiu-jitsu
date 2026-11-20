@@ -72,9 +72,9 @@ Judo.register3d({
  /* tsukuri: giro para a esquerda sobre o pé direito; pé esquerdo entre os pés de Uke */
  [3.2,{tori:{x:.08,y:.88,z:.0,yaw:275,pitch:10,leg:{L:W3(.24,.14,.06)},arm:{R:B('o',.13,.36,-.11)},pole:{armR:[.2,-1,.3]}},
        uke:{arm:{R:B('o',.18,.54,-.14),L:B('s',.24,.20,-.32)},pole:{armR:[.2,-.4,1]}}}],
- [3.5,{tori:{x:.0,y:.86,yaw:310,pitch:14,leg:{L:W3(.06,.12,-.14)}}}],
+ [3.5,{tori:{pole:{armR:[-.2,-.3,1]},x:.0,y:.86,yaw:310,pitch:14,leg:{L:W3(.06,.12,-.14)}}}],
  [3.8,{tori:{x:-.07,y:.84,z:.0,yaw:345,pitch:18,h:8,leg:{L:W3(-.10,.07,-.10),R:W3(-.04,.07,.12)},
-        arm:{R:B('o',.14,.32,-.10),L:SL('armR',.5)},pole:{armR:[.4,-1,.2],armL:[.3,-.6,-.6]}},
+        arm:{R:B('o',.14,.32,-.10),L:SL('armR',.5)},pole:{armR:[-.2,-.3,1],armL:[.3,-.6,-.6]}},
        uke:{x:-.31,y:.97,pitch:22,h:14,arm:{R:B('o',.18,.48,-.10),L:B('o',-.20,.40,.12)},pole:{armL:[.2,-.5,-.6],armR:[0,.6,1]}}}],
  /* a perna direita sobe dobrada, joelho para fora: a face externa da canela encosta por dentro da perna direita de Uke */
  [4.15,{tori:{y:.83,leg:{R:B('s',-.08,-.56,.06)},pole:{legR:[.3,.1,1]}}}],
@@ -88,7 +88,8 @@ Judo.register3d({
         arm:{R:B('o',.32,.40,-.30),L:B('s',.40,.40,-.20)},pole:{armR:[.5,.3,1]}}}],
  /* Uke passa por cima do quadril direito de Tori; a cabeça desce pelo lado esquerdo, à frente dele,
     deitado de lado (roll), nunca na vertical de ponta-cabeça; a manga puxada mantém a cabeça longe do chão. */
- [5.38,{tori:{arm:{R:B('o',.05,.44,-.06)}},uke:{x:-0.06,y:1.12,z:-0.08,yaw:30,pitch:105,roll:-28,h:-8,leg:{R:B('s',-.20,-.80,.16),L:B('s',-.12,-.84,-.12)}}}],
+ /* Uke já passou do quadril: a mão direita solta a gola pelo lado de fora, o cotovelo não entra no tronco */
+ [5.38,{tori:{arm:{R:B('s',-.10,.36,.30)},pole:{armR:[-.3,-.3,1]}},uke:{x:-0.06,y:1.12,z:-0.08,yaw:30,pitch:105,roll:-28,h:-8,leg:{R:B('s',-.20,-.80,.16),L:B('s',-.12,-.84,-.12)}}}],
  [5.55,{tori:{y:.88,yaw:378,pitch:60,h:28,leg:{R:B('s',-.72,-.06,.22)},arm:{R:B('s',.15,.05,.36)},pole:{armR:[-.3,-.5,1]}},
        uke:{x:0.10,y:1.0,z:-0.30,yaw:34,pitch:132,roll:-50,h:10,leg:{R:B('s',-.05,-.84,.14),L:B('s',-.02,-.82,-.12)},
         arm:{R:B('o',.38,.24,-.24),L:B('s',.1,.25,-.45)}}}],
