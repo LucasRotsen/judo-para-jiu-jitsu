@@ -41,6 +41,8 @@ Judo.drill({
       recentra o quadril e o braço direito passa por cima das costas, chegando à pegada da guilhotina */
    /* primeiro os braços saem da figura-4: o direito sobe (não atravessa as costas de Uke), o esquerdo vai pelo lado de fora do corpo */
    [.15,{tori:{arm:{R:W3(-.04,.48,-.16)},pole:{armR:[0,1,-.3]}}}],
+   /* a mão esquerda sai da figura-4 pela frente do corpo, não por dentro do peito */
+   [.25,{tori:{arm:{L:W3(.30,.38,-.36)},pole:{armL:[-.3,0,-1]}}}],
    [.35,{tori:{arm:{R:W3(.12,.80,-.02),L:W3(-.06,.26,-.62)},pole:{armR:[0,1,.2],armL:[-.3,0,-1]}}}],
    [.6,{uke:{x:.50,pitch:85,yaw:190,h:10,arm:{R:W3(.30,.06,-.10)},pole:{armR:[.3,0,-.9]}},
         tori:{x:.0,z:-.20,yaw:135,pitch:178,h:15,arm:{L:W3(-.40,.06,-.30),R:W3(.30,.62,.10)},pole:{armL:[-.6,0,-.6],armR:[0,1,.3]}}}],
