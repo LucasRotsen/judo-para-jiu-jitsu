@@ -2,7 +2,8 @@
 /* Mundo 3D: y para cima. Uke começa em x<0 olhando para +x (direita de Uke = +z, esquerda = -z).
    Tori começa em x>0 olhando para -x (yaw 180) e gira para a esquerda até ficar de costas (yaw ~345).
    A perna direita de Tori entra entre as pernas de Uke e sobe pela face interna da coxa esquerda
-   dele (lado -z). Uke gira por cima e cai de costas à frente de Tori, no lado -z, como no o goshi. */
+   dele (lado -z). Uke gira por cima e cai de costas à frente de Tori, com a cabeça do lado do pé direito dele (o braço
+   direito gira Uke) e as pernas na diagonal para a esquerda, como no vídeo da Kodokan (内股). */
 const uke0={x:-.27,y:.93,z:0,yaw:0,pitch:4,h:0,
  leg:{R:W3(-.26,.07,.13),L:W3(-.40,.07,-.12)},
  arm:{R:B('o',.13,.40,.08),L:B('o',.14,.24,-.27)},
@@ -32,7 +33,8 @@ Judo.register3d({
   'Tori mantém a manga presa até Uke tocar o tatame.'],
  /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
  contratos:[
-  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:6.2,e:7.0,min:.6,txt:'Uke gira por cima da coxa de Tori e cai de costas à frente dele'}],
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:6.2,e:7.0,min:.6,txt:'Uke gira por cima da coxa de Tori e cai de costas à frente dele'},
+  {c:'lado',a:'U.cabeca',de:'T.quadril',lado:'direita',s:6.2,e:7.2,min:.03,txt:'a cabeça de Uke cai do lado do pé direito de Tori: o braço direito gira Uke, ele não vai para a esquerda'}],
  phases:[
  {s:0,e:1,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Tori segura a manga direita de Uke com a mão esquerda e a gola com a mão direita, alta, perto da nuca.',
@@ -84,27 +86,27 @@ Judo.register3d({
        uke:{x:.08,y:1.15,z:-.48,yaw:20,pitch:145,roll:-22,h:-10,leg:{R:B('s',-.05,-.86,.14),L:B('s',-.12,-.84,-.12)},
         arm:{R:B('o',.34,.10,-.30),L:B('s',.1,.25,-.45)}}}],
  /* Uke chega ao chão de costas, pernas ainda no ar; a cabeça não toca primeiro */
- [5.8,{uke:{x:.40,y:1.15,z:-.60,yaw:26,pitch:212,roll:-18,h:15}}],
- [5.9,{uke:{x:.54,y:.86,z:-.63,yaw:28,pitch:248,roll:-14,h:20}}],
+ [5.8,{uke:{x:0.43,y:1.15,z:-0.55,yaw:26,pitch:212,roll:-18,h:15}}],
+ [5.9,{uke:{x:0.60,y:.86,z:-0.54,yaw:28,pitch:248,roll:-14,h:20}}],
  [6.0,{tori:{y:.84,yaw:388,pitch:72,h:30,leg:{R:W3(-.85,1.24,-.08)}},
-       uke:{x:.66,y:.44,z:-.64,yaw:30,pitch:262,roll:-12,h:22,leg:{R:B('s',.25,-.80,.12),L:B('s',.20,-.80,-.14)},
+       uke:{x:0.74,y:.44,z:-0.51,yaw:30,pitch:262,roll:-12,h:22,leg:{R:B('s',.25,-.80,.12),L:B('s',.20,-.80,-.14)},
         arm:{R:B('o',.36,.06,-.28),L:B('s',.05,.05,-.50)}}}],
  [6.3,{tori:{y:.84,yaw:392,pitch:68,h:25,leg:{R:W3(-.84,1.18,-.06)},arm:{R:SL('armR',.2)}},
-       uke:{x:.80,y:.14,z:-.62,yaw:30,pitch:268,roll:0,h:20,gf:1,leg:{R:W3(1.50,.20,-.80),L:W3(1.42,.25,-1.05)},
+       uke:{x:0.88,y:.14,z:-0.49,yaw:30,pitch:268,roll:0,h:20,gf:1,leg:{R:W3(1.58,.20,-0.67),L:W3(1.50,.25,-0.92)},
         arm:{R:B('o',.38,.02,-.20),L:B('s',0,.15,-.48)}}}],
  /* zanshin: a perna desce só depois de Uke assentar; Tori fica de pé, curvado, com as duas mãos na manga */
  [6.8,{tori:{y:.86,pitch:58,h:15,leg:{R:W3(-.32,.55,.02)},pole:{legR:[1,-.2,.15]}},
-       uke:{leg:{R:W3(1.50,.07,-.82),L:W3(1.45,.07,-1.05)}}}],
+       uke:{leg:{R:W3(1.58,.07,-0.69),L:W3(1.53,.07,-0.92)}}}],
  [7.2,{tori:{y:.86,pitch:55,h:10,leg:{R:W3(-.06,.07,.16)}},uke:{h:-30}}],
  [7.5,{}],
  /* kesa-gatame */
- [8.0,{tori:{x:.18,y:.72,z:.24,yaw:470,pitch:38,h:10,leg:{R:W3(.12,.07,.46)},pole:{legR:[.3,.2,1]}}}],
- [8.4,{tori:{x:.45,y:.42,z:.08,yaw:530,pitch:30,roll:15,h:10,
-        leg:{R:W3(.15,.07,.28),L:W3(1.0,.10,.30)},arm:{R:B('o',-.04,.64,-.24),L:SL('armR',.35)},
+ [8.0,{tori:{x:0.26,y:.72,z:0.37,yaw:470,pitch:38,h:10,leg:{R:W3(0.20,.07,0.59)},pole:{legR:[.3,.2,1]}}}],
+ [8.4,{tori:{x:0.53,y:.42,z:0.21,yaw:530,pitch:30,roll:15,h:10,
+        leg:{R:W3(0.23,.07,0.41),L:W3(1.08,.10,0.43)},arm:{R:B('o',-.04,.64,-.24),L:SL('armR',.35)},
         pole:{legR:[.6,.4,.6],legL:[-.2,-.4,-.3],armR:[.2,-.4,1]}},
        uke:{h:-15,arm:{R:B('o',.30,.36,-.20)},pole:{armR:[.6,.6,.3]}}}],
- [9.1,{tori:{x:.60,y:.20,z:-.12,yaw:565,pitch:15,roll:35,h:-5,
-        leg:{R:W3(.12,.07,.22),L:W3(1.25,.07,.05)},arm:{R:B('o',-.08,.66,-.16),L:SL('armR',.3)},
+ [9.1,{tori:{x:0.68,y:.20,z:0.01,yaw:565,pitch:15,roll:35,h:-5,
+        leg:{R:W3(0.20,.07,0.35),L:W3(1.33,.07,0.18)},arm:{R:B('o',-.08,.66,-.16),L:SL('armR',.3)},
         pole:{legR:[.4,.7,.3],legL:[-.3,-.3,-.4],armR:[.6,-.2,1],armL:[-.6,-.6,-.6]}},
        uke:{h:-10,arm:{R:B('o',.30,.34,-.20),L:B('s',.05,.25,-.45)}}}],
  [10.2,{}]],

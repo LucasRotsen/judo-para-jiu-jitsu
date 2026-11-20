@@ -48,12 +48,12 @@
   "treme": 2.8
  },
  "uchi-mata": {
-  "cruza": 2.08,
-  "proprio": 1.28,
+  "cruza": 1.68,
+  "proprio": 1.48,
   "salto": 0,
-  "dobra": 8.16,
+  "dobra": 8.6,
   "erro": 0,
-  "treme": 4.53
+  "treme": 4.43
  },
  "de-ashi-barai": {
   "cruza": 0.04,
@@ -129,11 +129,11 @@
  },
  "hane-goshi": {
   "cruza": 0.44,
-  "proprio": 0.78,
+  "proprio": 0.94,
   "salto": 0,
-  "dobra": 3.24,
+  "dobra": 3.26,
   "erro": 0.22,
-  "treme": 4.8
+  "treme": 4.67
  },
  "kata-guruma": {
   "cruza": 0,
