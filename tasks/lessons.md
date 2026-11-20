@@ -99,3 +99,8 @@
 - Tomoe-nage: o diagnóstico marcava "joelho R de Tori dobra para o lado errado" havia tempo, mas o limite de movimento gravado aceitava. Limite gravado não pode ser tratado como "ok": é uma lista de defeitos conhecidos esperando conserto.
 - Causa no tomoe: o keyframe punha a sola na faixa com o tronco ainda ereto; o joelho certo ficaria dentro do próprio peito e o corretor físico escolhia o joelho ao contrário. Regra: quando o corretor inverte um joelho, procurar o que a posição certa atravessaria (rodar a pose crua contra as cápsulas) antes de mexer no polo.
 - Koshi-guruma: cada pose isolada parecia boa, mas no giro Uke ficava ereto e a cabeça ia para trás do ombro esquerdo de Tori. Regra: em projeção com o braço no pescoço, contratar onde a cabeça de Uke fica durante o giro, não só no fim.
+
+## 2026-11-20 — Koshi-guruma: eu "confirmei" o lado errado da queda porque o contrato veio do próprio código
+- O contrato antigo dizia "a cabeça de Uke cai um pouco para a esquerda de Tori", copiado do comentário da técnica. Na checagem do lado da queda, medi a animação contra esse contrato e concluí que estava certa. O usuário apontou: com o braço direito de Tori no pescoço, Uke não pode cair à esquerda dele.
+- Regra: contrato de lado de queda nunca sai do texto ou do comentário existente; sai da física da pegada (de que lado está o braço que gira Uke) e da repetição do vídeo em que o rosto de Tori aparece. Se as duas fontes discordam, a dúvida vai explícita no relatório, não vira "confirmado".
+- Regra: quando o usuário dá um princípio físico ("o braço que aplica define o lado da queda"), aplicar a todas as projeções do mesmo tipo e medir, não só à que ele citou.
