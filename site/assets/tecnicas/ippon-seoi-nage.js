@@ -31,6 +31,10 @@ Judo.register3d({
  safety:['Aprenda e pratique apenas com um professor qualificado, em tatame, e com um parceiro que já domina o ukemi (técnica de queda).',
   'Comece sem projetar: repita só a entrada (uchikomi) muitas vezes antes de executar a queda completa.',
   'Tori nunca solta a manga durante a queda. É ela que mantém a cabeça de Uke longe do chão.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:7.3,e:8.2,min:.6,txt:'Uke passa por cima do ombro e cai de costas à frente de Tori'},
+  {c:'lado',a:'U.cabeca',de:'T.quadril',lado:'frente',s:7.3,e:8.2,min:.3,txt:'a cabeça de Uke cai junto aos pés de Tori, à frente dele'}],
  phases:[
  {s:0,e:1.2,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Tori segura a manga direita de Uke com a mão esquerda e a gola com a mão direita. Os dois começam em postura natural (shizentai), com joelhos destravados.',

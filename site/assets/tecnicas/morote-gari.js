@@ -35,7 +35,8 @@ Judo.register3d({
  contratos:[
   {c:'contato',a:'T.ombroL',b:'U.quadril',s:2.6,e:4.0,frac:.6,txt:'o ombro esquerdo de Tori entra no quadril de Uke'},
   {c:'lado',a:'T.cabeca',de:'U.quadril',lado:'esquerda',s:2.6,e:4.0,min:.05,txt:'a cabeça de Tori fica por fora, do lado esquerdo de Uke'},
-  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'frente',s:5.0,e:'fim',min:.15,txt:'Uke cai de costas e Tori termina por cima'}],
+  {c:'lado',a:'T.quadril',de:'U.quadril',lado:'frente',s:5.0,e:'fim',min:.15,txt:'Uke cai de costas e Tori termina por cima'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:4.2,e:'fim',min:.6,txt:'Uke cai de costas à frente de Tori, que avança por cima'}],
  phases:[
  {s:0,e:1.0,kanji:'構え',ro:'Kamae',pt:'Guarda em pé',
   d:'Tori e Uke se estudam sem pegada fixa, como é comum no jiu-jitsu. Tori mantém os joelhos dobrados e as mãos à frente, controlando a distância.',

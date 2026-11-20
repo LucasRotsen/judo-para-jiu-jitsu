@@ -31,7 +31,8 @@ Judo.register3d({
   'Comece com Uke ajoelhado ou com a projeção pela metade, sem lançar.',
   'O pé empurra, não chuta: pressão contínua na faixa.'],
  /* contratos (tools/contratos.js): exceção declarada à regra de queda de cabeça, com o motivo */
- contratos:[{c:'pilao',cabeca:.38,txt:'tomoe nage: Uke passa invertido por cima de Tori, apoiado no pé dele na barriga; a cabeça fica a ~40 cm do tatame e ele cai de costas'}],
+ contratos:[{c:'pilao',cabeca:.38,txt:'tomoe nage: Uke passa invertido por cima de Tori, apoiado no pé dele na barriga; a cabeça fica a ~40 cm do tatame e ele cai de costas'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'acima',s:5.6,e:6.6,min:.4,txt:'Uke passa por cima de Tori e cai além da cabeça dele'}],
  phases:[
  {s:0,e:1.2,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Tori e Uke se seguram de frente. Tori pega as duas golas ou a gola e a manga, com os cotovelos próximos do corpo.',

@@ -35,7 +35,8 @@ Judo.register3d({
   'Uke rola por cima do ombro e cai de costas, nunca de cabeça: queixo no peito o tempo todo.',
   'Comece devagar, com Tori só sentando e encaixando o gancho, sem levantar.'],
  /* contratos (tools/contratos.js): exceção declarada à regra de queda de cabeça, com o motivo */
- contratos:[{c:'pilao',cabeca:.38,txt:'sumi gaeshi: Uke passa invertido por cima de Tori, levantado pelo peito do pé na coxa; a cabeça fica a ~40 cm do tatame e ele cai de costas'}],
+ contratos:[{c:'pilao',cabeca:.38,txt:'sumi gaeshi: Uke passa invertido por cima de Tori, levantado pelo peito do pé na coxa; a cabeça fica a ~40 cm do tatame e ele cai de costas'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'acima',s:5.8,e:6.8,min:.4,txt:'Uke passa por cima de Tori e cai além da cabeça dele'}],
  phases:[
  {s:0,e:1.3,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Pegada direita: Tori segura a gola esquerda de Uke com a mão direita e a manga direita com a esquerda. Uke segura igual, com os braços mais esticados e o tronco um pouco à frente.',

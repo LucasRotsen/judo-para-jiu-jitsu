@@ -30,6 +30,10 @@ Judo.register3d({
  safety:['Pratique com orientação de um professor, em tatame, e com um parceiro que domina o ukemi.',
   'Repita a entrada (uchikomi) muitas vezes antes de projetar.',
   'Tori mantém a manga presa até Uke tocar o tatame. No kesa-gatame, não force o pescoço: o controle vem do peso, não do aperto.'],
+ /* contratos (tools/contratos.js): o que tem que ser verdade no movimento, conferido em todo build */
+ contratos:[
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'direita',s:5.4,e:6.0,min:.15,txt:'Uke roda em volta do quadril DIREITO de Tori, não pelas costas'},
+  {c:'lado',a:'U.quadril',de:'T.quadril',lado:'frente',s:6.3,e:7.0,min:.4,txt:'Uke cai de costas atravessado à frente de Tori'}],
  phases:[
  {s:0,e:1,kanji:'組み方',ro:'Kumikata',pt:'A pegada',
   d:'Tori segura a manga direita de Uke com a mão esquerda e a gola com a mão direita. Na entrada, a mão direita solta a gola e vai para as costas de Uke.',

@@ -89,3 +89,8 @@
   quadril Uke passa; onde caem a cabeça e os ombros), não do texto.
 - Regra: trocar o lado de uma queda é refazer a fase aérea. Aqui bastou deslocar a trajetória de Uke para o lado
   certo, crescendo ao longo do voo, e mover junto a perna que varre (o contrato da varrida pegou quando ficou para trás).
+
+## 2026-11-20 — Lado da queda: cada projeção tem o seu, e a medida "no pico do voo" engana
+- Medi o quadril de Uke no ponto mais alto do voo, nos eixos de Tori, e três projeções (uchi-mata, hane-goshi, koshi-guruma) pareciam "passar pelas costas", como o harai goshi errado. Os vídeos da Kodokan mostraram que estavam certas: no hane-goshi, no uchi-mata e no koshi-guruma Uke cai à frente e à esquerda de Tori (cabeça junto ao pé de apoio); no harai goshi a cabeça cai junto ao pé direito.
+- Regra: um número suspeito é só um suspeito. Antes de mexer, ver a referência. E não generalizar o lado da queda de uma projeção para outra.
+- Regra também testada e descartada: "joelho do lado errado do próprio quadril". Os 30 maiores casos no catálogo eram todos legítimos (base aberta, pernas arrastadas, joelho cruzado). O que separa erro de acerto é atravessar a outra perna (PROPRIO) ou a dobra virar (DOBRA), e isso já é medido.
