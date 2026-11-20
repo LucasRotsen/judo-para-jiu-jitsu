@@ -3,7 +3,7 @@
    Uke ajoelhado na guarda (yaw 180: direita de Uke = -z). Tori segura a manga DIREITA de Uke com a mão esquerda.
    O braço direito de Tori passa por baixo da perna ESQUERDA de Uke (lado +z); a perna direita de Tori balança
    como pêndulo e a esquerda corta pelas costas de Uke. Uke cai para a direita dele (-z), o lado da manga presa. */
-const sleeve=SL('armR',.85), collar=B('o',.21,.40,-.07), underKnee=W3(.31,.11,.30), elbowIn=[-.5,-.6,-.7];
+const sleeve=SL('armR',.85), collar=B('o',.21,.40,-.07), underKnee=W3(.36,.18,.20), elbowIn=[-.5,-.6,-.7];
 const ukeBase={x:.40,y:.40,z:0,yaw:180,pitch:45,roll:0,h:-20,
  leg:{R:W3(.68,.07,-.17),L:W3(.68,.07,.17)},arm:{R:B('o',.12,.05,-.12),L:B('o',.12,.05,.12)}};
 const toriBase={x:0,y:.15,z:0,yaw:0,pitch:-72,roll:0,h:30,
@@ -30,7 +30,8 @@ Judo.register3d({
  contratos:[
   {c:'contato',a:'T.maoL',b:'U.antebracoR',s:0,e:5.2,txt:'a mão esquerda de Tori segura a manga DIREITA de Uke'},
   {c:'lado',a:'T.quadril',de:'U.quadril',lado:'frente',s:7.6,e:'fim',min:.1,txt:'Uke cai de costas e Tori sobe montado'},
-  {c:'contato',a:'T.antebracoR',b:'U.coxaL',s:2.6,e:5.4,tol:.08,txt:'o braço direito de Tori passa por baixo da perna esquerda de Uke'}],
+  {c:'contato',a:'T.antebracoR',b:'U.coxaL',s:2.6,e:5.4,tol:.08,txt:'o braço direito de Tori passa por baixo da perna esquerda de Uke'},
+  {c:'lado',a:'U.joelhoL',de:'U.quadril',lado:'esquerda',s:0,e:5.4,min:.05,txt:'o joelho esquerdo de Uke fica do lado esquerdo dele (a perna não cruza por baixo do corpo)'}],
  phases:[
  {s:0,e:1.6,kanji:'1',ro:'Guarda fechada',pt:'Manga e gola',
   d:'Tori está de costas com as pernas cruzadas nas costas de Uke. A mão esquerda segura a manga direita de Uke, no punho, e a mão direita segura a gola esquerda dele.',
@@ -61,7 +62,7 @@ Judo.register3d({
  /* braço direito por dentro e por baixo da perna esquerda de Uke; tronco gira para esse lado; perna esquerda alta nas costas */
  [3.0,{tori:{z:-.06,yaw:30,roll:18,pitch:-58,h:25,arm:{R:underKnee},leg:{R:W3(.45,.08,.55),L:B('o',-.10,.30,.24)},
         pole:{armR:elbowIn,armL:[-.6,-.2,-.7],legR:[.6,.6,.4],legL:[1,-.3,-.5]}},
-       uke:{pitch:55,x:.40,h:-5,arm:{L:B('o',.13,.06,.08),R:B('o',.16,.32,-.24)},pole:{armR:[-.3,-.3,.9],armL:[-.3,-.3,-.9]}}}],
+       uke:{pitch:55,x:.40,h:-5,arm:{L:B('o',.13,.06,.08),R:B('o',.16,.32,-.24)},pole:{armR:[-.3,-.3,.9],armL:[-.3,-.3,-.9],legL:[1,-.3,.2]}}}],
  [3.4,{}],
  /* pêndulo: a perna direita esticada desce para o lado... */
  [4.1,{tori:{yaw:14,leg:{R:W3(.15,.12,.80)},pole:{legR:[.6,.3,.6]}}}],

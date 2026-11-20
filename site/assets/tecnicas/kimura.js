@@ -86,7 +86,7 @@ Judo.register3d({
         pole:{armR:[-.5,.3,.9],armL:[.2,-.6,-.8]}}}],
  /* perna esquerda de Tori por cima das costas de Uke; ombro direito dele sobre o peito de Tori */
  [6.8,{tori:{x:.02,z:.12,roll:180,pitch:100,yaw:172,h:20,leg:{L:B('o',-.14,.12,.12),R:W3(.48,.06,.40)},pole:{legL:[1,-.5,-.6],legR:[1,0,.4]}},
-       uke:{x:-.085,y:.46,z:-.38,yaw:255,pitch:106,roll:5,h:20,arm:{R:behind,L:W3(.12,.04,.38)},
+       uke:{x:-.10,y:.46,z:-.24,yaw:245,pitch:106,roll:5,h:20,arm:{R:behind,L:W3(.12,.04,.38)},
         leg:{R:W3(-.18,.07,-.82),L:W3(.20,.07,-.80)},pole:{legR:[1,0,.1],legL:[1,0,-.1],armR:[-.5,.2,1],armL:[.3,-.5,-.8]}}}],
  [7.6,{}],
  [8.6,{tori:{pitch:108,h:30},uke:{arm:{R:crank}}}],

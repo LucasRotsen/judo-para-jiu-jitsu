@@ -272,12 +272,12 @@
   "treme": 2.47
  },
  "raspagem-pendular": {
-  "cruza": 0.12,
-  "proprio": 0.72,
+  "cruza": 0.16,
+  "proprio": 0.68,
   "salto": 0,
-  "dobra": 3.22,
+  "dobra": 4.72,
   "erro": 0,
-  "treme": 2.17
+  "treme": 2.1
  },
  "guilhotina": {
   "cruza": 1.72,
@@ -288,12 +288,12 @@
   "treme": 3.77
  },
  "kimura": {
-  "cruza": 0.46,
-  "proprio": 0.44,
+  "cruza": 0.58,
+  "proprio": 0.96,
   "salto": 0,
-  "dobra": 4.38,
+  "dobra": 4.98,
   "erro": 0,
-  "treme": 4.33
+  "treme": 6.47
  },
  "raspagem-de-quadril": {
   "cruza": 0.34,
