@@ -104,3 +104,9 @@
 - O contrato antigo dizia "a cabeça de Uke cai um pouco para a esquerda de Tori", copiado do comentário da técnica. Na checagem do lado da queda, medi a animação contra esse contrato e concluí que estava certa. O usuário apontou: com o braço direito de Tori no pescoço, Uke não pode cair à esquerda dele.
 - Regra: contrato de lado de queda nunca sai do texto ou do comentário existente; sai da física da pegada (de que lado está o braço que gira Uke) e da repetição do vídeo em que o rosto de Tori aparece. Se as duas fontes discordam, a dúvida vai explícita no relatório, não vira "confirmado".
 - Regra: quando o usuário dá um princípio físico ("o braço que aplica define o lado da queda"), aplicar a todas as projeções do mesmo tipo e medir, não só à que ele citou.
+
+## "aperto" com tudo:true esconde perna atravessando o corpo (23/11)
+- A chave de braço da guarda tinha a canela direita de Tori DENTRO do tronco de Uke por 5 s (19 cm). O diagnóstico não acusava porque o aperto (tol .10, tudo:true, de 4 s até o fim) descontava a penetração.
+- Regra: toda técnica com aperto tem que passar na medida CRUA (folga sem aperto, scratchpad/pen.js / scan.js). Aperto é para o membro que pressiona, nunca para o que atravessa (folga < -12 cm na canela/pé = atravessa).
+- Geometria antes de ajustar polo: se a coxa (43 cm) não alcança passar por cima da cabeça do outro, nenhum polo resolve; é preciso mudar o corpo (Uke quebra a postura, quadril de Tori sobe), como na técnica real.
+- Perna que fecha um anel em volta do tronco do outro só chega lá passando pela ponta (cabeça ou quadril): conferir a topologia da transição, não só a pose final.

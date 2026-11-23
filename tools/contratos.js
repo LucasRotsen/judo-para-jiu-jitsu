@@ -155,6 +155,7 @@ const HISTORICO = [
   { id: 'koshi-guruma', commit: '9fa1644', erro: 'Uke caía à esquerda de Tori, com o braço direito dele no pescoço (20/11)' },
   { id: 'hane-goshi', commit: '90c804e', erro: 'a cabeça de Uke caía à esquerda de Tori (20/11)' },
   { id: 'uchi-mata', commit: '90c804e', erro: 'a cabeça de Uke caía à esquerda de Tori (20/11)' },
+  { id: 'chave-de-braco-da-guarda', commit: '698c9e1', erro: 'a canela direita de Tori atravessava o tronco de Uke por 5 s, escondida pelo aperto (23/11)' },
 ];
 
 function main() {
