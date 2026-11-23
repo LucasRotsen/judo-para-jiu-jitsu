@@ -138,10 +138,29 @@ function atravessa(J, def) {
   return out;
 }
 
+/* regra global: joelho dobrado ao contrário (a canela vai para a FRENTE da coxa) por mais de 0,3 s.
+   "Frente" é a frente do corpo levada junto com a coxa (do mesmo jeito que fisica.anatomia). O cotovelo fica de fora:
+   o giro do úmero não é modelado e a medida dele não é confiável. Pegou a chave de braço com a canela sobre a nuca.
+   Coxa aberta para o lado (borboleta) ou joelho no peito ficam de fora: ali a direção da canela depende do giro do quadril. */
+function joelho(J, def) {
+  const add = (a, b) => a.map((v, i) => v + b[i]), mul = (a, k) => a.map((v) => v * k);
+  const leva = (v, de, para) => { const k = 1 + dot(de, para); if (k < .08) return null; const s = add(de, para), c = dot(s, v) / k; return add(sub(v, mul(s, c)), mul(para, 2 * dot(de, v))); };
+  const inv = (o, X) => { const l1 = Math.hypot(...sub(X.E, X.root)) || 1, l2 = Math.hypot(...sub(X.H, X.E)) || 1, d = mul(sub(X.E, X.root), 1 / l1), s = mul(sub(X.H, X.E), 1 / l2);
+    const p = sub(s, mul(d, dot(s, d))), pl = Math.hypot(...p); if (pl < .25) return 0;
+    /* só onde a medida vale: coxa aberta para o lado (|d·r| > .5) ou passando do peito (d·-u < -.5) depende do giro do quadril, que não é medido */
+    if (Math.abs(dot(d, o.r)) > .5 || dot(d, mul(o.u, -1)) < -.5) return 0; const fw = leva(o.f, mul(o.u, -1), d); if (!fw) return 0; const a = -dot(p, fw) / pl; return a < -.5 ? -a : 0; };
+  const out = [];
+  for (const w of ['tori', 'uke']) for (const s of ['R', 'L']) { let n = 0, pior = { t: 0, v: 0 };
+    for (let t = 0; t <= def.end + 1e-9; t += DT) { const o = J.solve(def, t)[w], v = inv(o, o['leg' + s]); if (v > 0) { n++; if (v > pior.v) pior = { t, v }; } }
+    if (n * DT > .3) out.push({ txt: `${w === 'tori' ? 'Tori' : 'Uke'}: joelho ${s} dobra ao contrário por ${(n * DT).toFixed(2)} s (pior @${pior.t.toFixed(2)}s)`, ok: false, pior }); }
+  return out;
+}
+
 function verificar(J, def, contratos) {
   const res = (contratos || []).filter((c) => c.c !== 'pilao').map((c) => { try { return { c, ...avaliar(J, def, c) }; } catch (e) { return { c, ok: false, txt: 'erro: ' + e.message }; } });
   return res.concat(pilao(J, def).map((r) => ({ c: { c: 'pilao', txt: 'ninguém cai de cabeça' }, ...r })),
-    atravessa(J, def).map((r) => ({ c: { c: 'atravessa', txt: 'nenhum membro atravessa o próprio tronco' }, ...r })));
+    atravessa(J, def).map((r) => ({ c: { c: 'atravessa', txt: 'nenhum membro atravessa o próprio tronco' }, ...r })),
+    joelho(J, def).map((r) => ({ c: { c: 'joelho', txt: 'nenhum joelho dobra ao contrário' }, ...r })));
 }
 const rotulo = (c) => c.txt || `${c.c} ${c.a || ''}${c.b ? ' × ' + c.b : ''}${c.de ? ' (' + c.lado + ' de ' + c.de + ')' : ''}${c.centro ? ' em volta de ' + c.centro : ''}`;
 
@@ -156,6 +175,7 @@ const HISTORICO = [
   { id: 'hane-goshi', commit: '90c804e', erro: 'a cabeça de Uke caía à esquerda de Tori (20/11)' },
   { id: 'uchi-mata', commit: '90c804e', erro: 'a cabeça de Uke caía à esquerda de Tori (20/11)' },
   { id: 'chave-de-braco-da-guarda', commit: '698c9e1', erro: 'a canela direita de Tori atravessava o tronco de Uke por 5 s, escondida pelo aperto (23/11)' },
+  { id: 'chave-de-braco-da-guarda', commit: 'b46a6e9', joelho: true, erro: 'o joelho esquerdo de Tori dobrava ao contrário, canela sobre a nuca para o lado da cabeça dele (23/11)' },
 ];
 
 function main() {
@@ -167,7 +187,7 @@ function main() {
       const atual = J.techs[h.id], dir = fs.mkdtempSync(path.join(os.tmpdir(), 'contrato-'));
       execSync(`git archive ${h.commit} site/assets | tar -x -C ${dir}`, { cwd: RAIZ });
       const V = carregar(path.join(dir, 'site', 'assets')), velho = V.techs[h.id];
-      const rn = verificar(J, atual, atual.contratos).filter((r) => r.c.c !== 'pilao' && r.c.c !== 'atravessa'), rv = verificar(V, velho, atual.contratos).filter((r) => r.c.c !== 'pilao' && r.c.c !== 'atravessa');
+      const rn = verificar(J, atual, atual.contratos).filter((r) => r.c.c !== 'pilao' && r.c.c !== 'atravessa' && (r.c.c !== 'joelho' || h.joelho)), rv = verificar(V, velho, atual.contratos).filter((r) => r.c.c !== 'pilao' && r.c.c !== 'atravessa' && (r.c.c !== 'joelho' || h.joelho));
       const atualOk = rn.length && rn.every((r) => r.ok), pegou = rv.some((r) => !r.ok);
       if (!atualOk || !pegou) falhas++;
       console.log(`${pegou && atualOk ? 'ok ' : 'XX '} ${h.id} @${h.commit}: ${h.erro}`);

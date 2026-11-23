@@ -110,3 +110,5 @@
 - Regra: toda técnica com aperto tem que passar na medida CRUA (folga sem aperto, scratchpad/pen.js / scan.js). Aperto é para o membro que pressiona, nunca para o que atravessa (folga < -12 cm na canela/pé = atravessa).
 - Geometria antes de ajustar polo: se a coxa (43 cm) não alcança passar por cima da cabeça do outro, nenhum polo resolve; é preciso mudar o corpo (Uke quebra a postura, quadril de Tori sobe), como na técnica real.
 - Perna que fecha um anel em volta do tronco do outro só chega lá passando pela ponta (cabeça ou quadril): conferir a topologia da transição, não só a pose final.
+- Corrigir um cruzamento não pode criar outro defeito: depois do primeiro conserto da chave de braço, o joelho esquerdo de Tori dobrava ao contrário por 5 s (canela indo para o lado da cabeça de Tori). Toda correção de perna passa também pelo invertido (scratchpad/invertido.js), não só pela folga.
+- Deitado de costas, o calcanhar só volta para o próprio quadril: a canela nunca aponta para o lado da cabeça de quem está deitado. Na dúvida, abrir a referência em vídeo ANTES de ajustar polos (Lepri: pernas para o alto, a coxa prende a cabeça).

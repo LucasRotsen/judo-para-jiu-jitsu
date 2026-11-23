@@ -328,12 +328,12 @@
   "treme": 2.7
  },
  "chave-de-braco-da-guarda": {
-  "cruza": 0.82,
-  "proprio": 1.02,
+  "cruza": 2.94,
+  "proprio": 0.7,
   "salto": 0,
-  "dobra": 14.56,
-  "erro": 0.94,
-  "treme": 5.67
+  "dobra": 15.48,
+  "erro": 0.42,
+  "treme": 6.23
  },
  "estrangulamento-em-laco": {
   "cruza": 0.32,

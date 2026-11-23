@@ -5,7 +5,8 @@
    Tori prende o braço no peito, põe o pé direito no quadril esquerdo de Uke e gira deitado: a cabeça de Tori
    vai para +z (rumo ao joelho esquerdo de Uke, yaw 180 -> 285) e o quadril sai para o lado do braço.
    No fim o corpo de Tori fica atravessado sob Uke: o ombro direito de Uke entre as coxas, o cotovelo acima
-   do quadril de Tori, a perna esquerda de Tori por cima da nuca e o pé direito ainda no quadril de Uke.
+   do quadril de Tori, a coxa esquerda de Tori prendendo a cabeça de Uke (pé para o alto) e o pé direito ainda no quadril.
+   A canela nunca dobra para o lado da cabeça de Tori: deitado de costas, o calcanhar só volta para o próprio quadril.
    Uke tem a postura quebrada (cabeça baixa) e o quadril de Tori sobe: só assim a perna passa por cima da cabeça. */
 const ukeBase={x:.34,y:.40,z:0,yaw:180,pitch:42,roll:0,h:-15,
  leg:{R:W3(.57,.07,-.17),L:W3(.57,.07,.17)},arm:{R:B('o',.14,.24,-.08),L:B('o',.14,.24,.08)},
@@ -30,7 +31,7 @@ Judo.register3d({
   ['Mesma família','É a juji-gatame do judô, só que saindo de baixo. Se Uke defende puxando o braço, o mesmo giro abre o triângulo e a omoplata.']],
  errors:[['Ficar reto embaixo','Sem girar o quadril, a perna não passa por cima da cabeça e o cotovelo fica abaixo do quadril. Gire até ficar atravessado.'],
   ['Soltar o braço para girar','Se as mãos largam o punho durante o giro, Uke recolhe o braço. Prenda primeiro, gire depois.'],
-  ['Perna solta na cabeça','Se a perna esquerda não pesa na nuca, Uke levanta a postura e empilha Tori. Os calcanhares puxam Uke para baixo.'],
+  ['Perna solta na cabeça','Se a perna esquerda não pesa na cabeça, Uke levanta a postura e empilha Tori. A coxa prende a cabeça para baixo.'],
   ['Polegar para baixo','Com o polegar de Uke para baixo, a força escapa para o ombro. O polegar aponta para cima antes de subir o quadril.']],
  safety:['O cotovelo machuca antes de doer muito: suba o quadril devagar e solte na primeira batida.',
   'Nunca dê tranco no final. A pressão aumenta aos poucos, sempre.',
@@ -39,7 +40,7 @@ Judo.register3d({
  contratos:[
   {c:'lado',a:'T.peR',de:'U.quadril',lado:'esquerda',s:3.8,e:5.4,min:.0,txt:'o pé direito de Tori vai no quadril ESQUERDO de Uke'},
   {c:'lado',a:'T.cabeca',de:'U.quadril',lado:'esquerda',s:5.8,e:'fim',min:.1,txt:'Tori gira: a cabeça vai para o lado do joelho esquerdo de Uke'},
-  {c:'contato',a:'T.canelaL',b:'U.pescoco',s:6.0,e:'fim',txt:'a perna esquerda de Tori passa por cima da nuca de Uke'},
+  {c:'contato',a:'T.coxaL',b:'U.cabeca',s:6.5,e:'fim',txt:'a coxa esquerda de Tori prende a cabeça de Uke para baixo, com o pé para o alto (referência Lepri)'},
   {c:'longe',a:'T.canelaR',b:'U.tronco',s:5.4,e:'fim',min:-.10,txt:'a canela direita de Tori não atravessa o tronco de Uke (fica no quadril, por baixo)'},
   {c:'longe',a:'T.canelaL',b:'U.cabeca',s:5.4,e:'fim',min:-.10,txt:'a perna esquerda passa POR CIMA da cabeça de Uke, não por dentro'}],
  phases:[
@@ -53,8 +54,8 @@ Judo.register3d({
   d:'Tori abre a guarda e apoia o pé direito no quadril esquerdo de Uke, do lado oposto ao braço preso. Usando o pé como apoio, gira deitado: o quadril sai para o lado do braço e a cabeça vai rumo ao joelho esquerdo de Uke. A perna esquerda sobe alta nas costas dele.',
   l:['Pé no quadril do lado oposto ao braço.','Girar, não ficar reto embaixo de Uke.','A cabeça vai rumo ao joelho do outro lado.']},
  {s:5.4,e:7.6,kanji:'4',ro:'Perna na cabeça',pt:'Atravessado embaixo de Uke',
-  d:'A perna esquerda de Tori passa por cima da cabeça de Uke e pesa na nuca, o pé direito segue no quadril controlando a distância, e os joelhos fecham no braço. Tori está atravessado embaixo de Uke, com o ombro dele entre as coxas e o cotovelo acima do quadril.',
-  l:['Perna esquerda por cima da cabeça, puxando para baixo.','Joelhos fechados no braço.','Cotovelo de Uke acima do quadril de Tori.']},
+  d:'A perna esquerda de Tori sobe por cima da cabeça de Uke e a coxa prende a cabeça para baixo, com o pé para o alto. O pé direito segue no quadril controlando a distância, e os joelhos fecham no braço. Tori está atravessado embaixo de Uke, com o ombro dele entre as coxas e o cotovelo acima do quadril.',
+  l:['Perna esquerda por cima da cabeça, a coxa prende a cabeça para baixo.','Joelhos fechados no braço.','Cotovelo de Uke acima do quadril de Tori.']},
  {s:7.6,e:11,kanji:'極め',ro:'Kime',pt:'Polegar para cima e subir o quadril',
   d:'Com o polegar de Uke apontando para cima, Tori segura o punho no peito e sobe o quadril devagar. O cotovelo é estendido sobre o quadril. Uke bate três vezes e Tori solta na hora.',
   l:['Polegar de Uke para cima.','As mãos seguram o punho, o quadril sobe.','Bateu, soltou. Sem exceção.']}],
@@ -77,11 +78,12 @@ Judo.register3d({
  /* a mão esquerda de Uke sai da cintura de Tori por fora, antes do giro passar por ela */
  [5.7,{uke:{arm:{L:W3(.30,.28,.26)},pole:{armL:[-.7,.2,-.7]}}}],
  /* a perna esquerda sobe alta e passa por cima da cabeça de Uke, sem raspar nela */
- [5.9,{tori:{leg:{L:W3(-.26,.94,-.04)},pole:{legL:[.6,-1,-.3]}}}],
+ [5.9,{tori:{leg:{L:W3(-.26,.94,-.04),R:W3(.45,.30,.22)},pole:{legL:[.6,-1,-.3]}}}],
  /* perna esquerda por cima da cabeça, pé direito no quadril; Uke quebra a postura e o quadril de Tori sobe */
- [6.1,{tori:{x:-.10,y:.22,z:-.14,yaw:285,leg:{L:W3(-.14,.78,.16),R:W3(.55,.25,.22)},pole:{legL:[.3,-1,0],legR:[.5,.3,1]}},
-       uke:{x:.40,pitch:84,h:40,arm:{L:tapAt},leg:{R:W3(.64,.07,-.17),L:W3(.64,.07,.17)},pole:{armL:[-.2,-.5,-1],legR:[1,-.2,.1],legL:[1,-.2,-.1]}}}],
- [6.8,{tori:{leg:{L:W3(-.14,.54,.16),R:W3(.55,.25,.22)}},uke:{pitch:94,h:50}}],
+ [6.1,{tori:{x:-.10,y:.22,z:-.14,yaw:285,leg:{L:W3(-.62,.90,-.30),R:W3(.55,.25,.22)},pole:{legL:[.5,1,.3],legR:[.5,.3,1]}},
+       uke:{x:.40,z:.06,pitch:72,h:30,arm:{L:tapAt},leg:{R:W3(.64,.07,-.17),L:W3(.64,.07,.17)},pole:{armL:[-.2,-.5,-1],legR:[1,-.2,.1],legL:[1,-.2,-.1]}}}],
+ [6.45,{uke:{pitch:86,h:42}}],
+ [6.8,{tori:{leg:{L:W3(-.64,.84,-.30),R:W3(.55,.25,.22)}},uke:{pitch:94,h:50}}],
  [7.6,{}],
  /* polegar para cima, quadril sobe devagar */
  [8.3,{tori:{y:.22},uke:{arm:{R:esticado}}}],
